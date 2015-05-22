@@ -1,0 +1,94 @@
+<?php
+class ENota {
+	private $id;
+	private $titolo;
+	private $testo;
+	private $immagine;
+	private $posizione;
+	private $colore;
+	
+	public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore) {
+		$this->setTitolo($_titolo);
+		$this->setTesto($_testo);
+		$this->setImmagine($_immagine);
+		$this->setPosizione($_posizione);
+		$this->setColore($_colore);
+	}
+	
+	public function setId($_id) {
+		$this->id = $_id;
+	}
+	
+	public function setTitolo($_titolo) {
+		$pattern = '/[[:alnum:]\']{0,40}/';
+		if (preg_match($pattern, $_titolo)) {
+			$this->titolo = $_titolo;
+		} else {
+			throw new Exception("Titolo non valido!");
+		}
+	}
+	
+	public function setTesto($_testo) {
+		$pattern = '/[*]{0,255}/';
+		if (preg_match($pattern, $_testo)) {
+			$this->testo = $_testo;
+		} else {
+			throw new Exception("Testo non valido!");
+		}
+	}
+
+	public function setImmagine($_immagine) {
+		$this->immagine = $_immagine;
+	}
+
+	public function setPosizione($_posizione) {
+		$pattern = '/[0-9]{0,11}/';
+		if (preg_match($pattern,$_posizione)) {
+			$this->posizione = $_posizione;
+		} else {
+			throw new Exception("Posizione non valida!");
+		}
+	}
+	
+	public function setColore($_colore) {
+		$pattern = '/^#?(([a-f]|[0-9]){3})?(([a-f]|[0-9]){3})?$/';
+		if (preg_match($pattern,$_colore)) {
+			$this->colore = $_colore;
+		} else {
+			throw new Exception("Colore non valido!");
+		}
+	}
+	
+	public function getId() {
+		return $this->id;
+	}
+	
+	public function getTitolo() {
+		return $this->titolo;
+	}
+	
+	public function getTesto() {
+		return $this->testo;
+	}
+	
+	public function getImmagine() {
+		return $this->immagine;
+	}
+	
+	public function getColore() {
+		return $this->colore;
+	}
+	
+	public function getPosizione() {
+		return $this->posizione;
+	}
+	
+	
+}
+?>
+
+
+
+
+
+
