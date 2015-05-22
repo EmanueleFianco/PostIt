@@ -22,4 +22,6 @@ print($cart->getPosizione());
 print($cart->getColore());
 print_r($cart->getContenuto());
 
+//aggiungo commento Sono Gioele!!
+
 ?>
