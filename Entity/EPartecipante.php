@@ -1,21 +1,25 @@
 <?php
 
-public class EPartecipanti{
+class EPartecipante{
 	
 	private $username;
 	private $email;
 	private $immagine;
+	private $amministratore = FALSE;
 	
 	
-	public function __construct($_user,$_immag,$_email)
+	public function __construct($_user,$_immag,$_email, $_amministratore = NULL)
 	{
-		$this->setUser($_user);
+		$this->setUsername($_user);
 		$this->setImmagine($_immag);
 		$this->setEmail($_email);
-	
+		if (isset($_amministratore)) {
+			$this->setAmministratore($_amministratore);
+		}
+
 	}
 	
-	public function setUser($_user)
+	public function setUsername($_user)
 	{
 		$pattern='/^[[:alpha:]]{5,10}/';
 		if(preg_match($pattern,$_user))
@@ -30,14 +34,7 @@ public class EPartecipanti{
 	
 	public function setImmagine($_immag)
 	{
-		if(filter_var($_immag, FILTER_VALIDATE_URL))
-		{
 			$this->immagine=$_immag;
-		}
-		else
-		{
-			throw new Exception("indirizzo immagine non valido");
-		}
 	}
 	
 	
@@ -50,6 +47,14 @@ public class EPartecipanti{
 		else
 		{
 			throw new Exception("email non valida");
+		}
+	}
+	
+	public function setAmministratore($_amministratore) {
+		if (is_bool($_amministratore)) {
+		$this->amministratore = $_amministratore;
+		} else {
+			throw new Exception("Valore di amministratore non valido");
 		}
 	}
 	
@@ -66,6 +71,10 @@ public class EPartecipanti{
 	public function getImmagine()
 	{
 		return $this->immagine;
+	}
+	
+	public function getAmministratore() {
+		return $this->amministratore;
 	}
 }
 
