@@ -1,0 +1,27 @@
+#div1 {
+border: solid;
+height: 500px;
+background-color: #6699cc;
+width: 1800px;
+cursor: pointer;
+}
+
+div {
+float: left;
+font-size: 25pt;
+margin-left: 30px;
+margin-top: 30px;
+height:200px;
+width: 550px;
+border: solid;
+background-color: #336666;
+text-align: center;
+}
+
+p {
+font-size: 30pt;
+font-weight: 900;
+font-family: "Courier";
+color:	#66cccc;
+
+}
