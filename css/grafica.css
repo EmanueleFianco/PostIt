@@ -1,24 +1,71 @@
 
+body{
+    background-color: #6688cc;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+
+}
+
+.banner{
+    float: left;
+    
+    border-width: 0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-color: #d2691e;
+}
 
 
-#div1 {
-border: solid;
-height: 80%;
+.main{
+float: left;
+height:100%;
 background-color: #6699cc;
-width: 90%;
-cursor: pointer;
+
+}
+
+#nota_space{
+    cursor: pointer;
+     float: left;
+     width: 80%;
+     height: 100%;
+     background-color: #444444;
+     margin-left: 2%;
+}
+
+#menu_button{
+    cursor: pointer;
+    width: 80px;
+    height: 30px;
+    background-color: #cccccc;
+    margin-top: 5px;
+    margin-left: 10px;
+    text-align: center;
+    font-family: "Courier";
+
+}
+
+#menu_window{
+    float: left;
+    background-color: #aaaaaa;
+    width: 10%;
+    height: 100%;
+}
+
+.nota{
+float: left;
+border:solid;
+width: 30%;
+background-color: #aaaaaa;
+margin-top: 2%;
+margin-left: 2%;
 }
 
 div {
-float: left;
 font-size: 1rem;
-margin-left: 30px;
-margin-top: 30px;
-height:25%;
-width: 30%;
-border: solid;
-background-color: #336666;
+width: 100%;
 text-align: center;
+background-color:#66cccc; 
 }
 
 p {
@@ -27,6 +74,8 @@ font-weight: 900;
 font-family: "Courier";
 color:	#66cccc;
 }
+
+
 
 @media screen and (min-width: 400px) {
     html{
