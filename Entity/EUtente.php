@@ -11,7 +11,7 @@ class EUtente
     private $stato_attivazione;
 
 
-    public function __construct($user,$_pass,$_nome,$_cognome,$_immagine,$_email)
+    public function __construct($_user,$_pass,$_nome,$_cognome,$_immagine,$_email)
     {
     	$this->setUser($_user);
     	$this->setPass($_pass);
@@ -45,6 +45,7 @@ class EUtente
     
     public function setImmagine($_immag)
     {
+<<<<<<< HEAD
        if(filter_var($immag, FILTER_VALIDATE_URL))
        {
            $this->immagine=$_immag;
@@ -53,6 +54,9 @@ class EUtente
        {
            throw new Exception("indirizzo immagine non valido");
        }
+=======
+    	$this->immagine=$immag;
+>>>>>>> 39d9967af6c7c080ae870af0695a4657772410cd
     }
     
     public function setEmail($_email) 
