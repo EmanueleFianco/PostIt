@@ -19,4 +19,5 @@ class EGruppo extends ECartella {
 	public function getPartecipanti() {
 		return $this->partecipanti;
 	}
+	
 }

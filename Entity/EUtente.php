@@ -11,10 +11,10 @@ class EUtente
     private $stato_attivazione;
 
 
-    public function __construct($_user,$_pass,$_nome,$_cognome,$_immagine,$_email)
+    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email)
     {
-    	$this->setUser($_user);
-    	$this->setPass($_pass);
+    	$this->setUsername($_username);
+    	$this->setPassword($_password);
     	$this->setImmagine($_immagine);
     	$this->setNome($_nome);
     	$this->setCognome($_cognome);
@@ -24,12 +24,12 @@ class EUtente
 
     }
 
-    public function setUser($_user)
+    public function setUsername($_username)
     {
-    	$pattern='/^[[:alpha:]]{5,10}/';
-        if(preg_match($pattern,$_user))
+    	$pattern='/^[[:alnum:]]{5,15}$/';
+        if(preg_match($pattern,$_username))
         {
-            $this->username=$_user;
+            $this->username=$_username;
         }
         else
             {
@@ -37,10 +37,13 @@ class EUtente
             }
     }
     
-    public function setPass($_pass)
-    {
-        $this->password=md5($_pass);
-        
+    public function setPassword($_password) {
+		$pattern = '/^[[:alnum:][:punct:]]{6,20}$/';   
+    	if (preg_match( $pattern, $_password )) {
+    		$this->password = md5($_password);
+    	} else {
+    		throw new Exception("Password non valida!");
+    	}
     }
     
     public function setImmagine($_immag)
@@ -57,18 +60,26 @@ class EUtente
         }
         else
         {
-            throw new Exception("email non valida");
+            throw new Exception("Email non valida");
         }
     }
     
-    public function setNome($_nome)
-    {
-        $this->nome=$_nome;
+    public function setNome($_nome) {
+		$pattern = '/^[[:alpha:] \']{2,30}$/';   
+    	if (preg_match( $pattern, $_nome )) {
+    		$this->nome = ucwords($_nome);
+    	} else {
+    		throw new Exception("Nome non valido!");
+    	}
     }
     
-    public function setCognome($_cognome)
-    {
-        $this->cognome=$_cognome;
+    public function setCognome($_cognome){
+    	$pattern = '/^[[:alpha:] \']{2,30}$/';
+    	if (preg_match( $pattern, $_cognome )) {
+    		$this->cognome = ucwords($_cognome);
+    	} else {
+    		throw new Exception("Cognome non valido!");
+    	}
     }
     /**
     * la funzione uniqid genera un codice casuale calcolato con i millisec attuali di 13 caratteri
@@ -84,8 +95,6 @@ class EUtente
         $this->stato_attivazione=$_stato;
     }
     
-    
-  //***************************************************************************//
     
     public function getNome()
     {

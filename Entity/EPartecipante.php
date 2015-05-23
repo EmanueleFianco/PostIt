@@ -5,13 +5,13 @@ class EPartecipante{
 	private $username;
 	private $email;
 	private $immagine;
-	private $amministratore = FALSE;
+	private $amministratore;
 	
 	
-	public function __construct($_user,$_immag,$_email, $_amministratore = NULL)
+	public function __construct($_username,$_immagine,$_email, $_amministratore = FALSE)
 	{
-		$this->setUsername($_user);
-		$this->setImmagine($_immag);
+		$this->setUsername($_username);
+		$this->setImmagine($_immagine);
 		$this->setEmail($_email);
 		if (isset($_amministratore)) {
 			$this->setAmministratore($_amministratore);
@@ -19,12 +19,12 @@ class EPartecipante{
 
 	}
 	
-	public function setUsername($_user)
+	public function setUsername($_username)
 	{
-		$pattern='/^[[:alpha:]]{5,10}/';
-		if(preg_match($pattern,$_user))
+		$pattern='/^[[:alnum:]]{5,15}$/';
+		if(preg_match($pattern,$_username))
 		{
-			$this->username=$_user;
+			$this->username=$_username;
 		}
 		else
 		{
@@ -32,9 +32,9 @@ class EPartecipante{
 		}
 	}
 	
-	public function setImmagine($_immag)
+	public function setImmagine($_immagine)
 	{
-			$this->immagine=$_immag;
+			$this->immagine=$_immagine;
 	}
 	
 	
@@ -46,7 +46,7 @@ class EPartecipante{
 		}
 		else
 		{
-			throw new Exception("email non valida");
+			throw new Exception("Email non valida");
 		}
 	}
 	
@@ -58,7 +58,6 @@ class EPartecipante{
 		}
 	}
 	
-	/***********************************************************/
 	public function getUsername()
 	{
 		return $this->username;

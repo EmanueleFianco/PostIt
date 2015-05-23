@@ -21,7 +21,9 @@ class ENota {
 	
 	public function setTitolo($_titolo) {
 		$pattern = '/[[:alnum:]\']{0,40}/';
-		if (preg_match($pattern, $_titolo)) {
+		if (trim($_titolo) == '') {
+			$this->titolo = 'Titolo';
+		} elseif (preg_match($pattern, $_titolo)) {
 			$this->titolo = $_titolo;
 		} else {
 			throw new Exception("Titolo non valido!");
@@ -29,7 +31,7 @@ class ENota {
 	}
 	
 	public function setTesto($_testo) {
-		$pattern = '/[*]{0,255}/';
+		$pattern = '/[*]{0,600}/';
 		if (preg_match($pattern, $_testo)) {
 			$this->testo = $_testo;
 		} else {
@@ -51,11 +53,13 @@ class ENota {
 	}
 	
 	public function setColore($_colore) {
-		$pattern = '/^#?(([a-f]|[0-9]){3})?(([a-f]|[0-9]){3})?$/';
-		if (preg_match($pattern,$_colore)) {
-			$this->colore = $_colore;
+	$pattern='/^#?([a-f]|[0-9]){6}?$/';
+		if(preg_match($pattern, $_colore)){
+			$this->colore=$_colore;
+		} elseif (!$_colore) {
+			$this->colore = '#ff0000';						//SCEGLIERE IL COLORE DI DEFAULT
 		} else {
-			throw new Exception("Colore non valido!");
+			throw new Exception("Colore Cartella Non Valido!");
 		}
 	}
 	

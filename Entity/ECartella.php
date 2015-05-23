@@ -43,11 +43,12 @@ class ECartella{
 	}
 	
 	public function setColore($_colore){
-		$pattern='/^#?(([a-f]|[0-9]){3})?(([a-f]|[0-9]){3})?$/';
+		$pattern='/^#?([a-f]|[0-9]){6}?$/';
 		if(preg_match($pattern, $_colore)){
 			$this->colore=$_colore;
-		}
-		else {
+		} elseif (!$_colore) {
+			$this->colore = '#ff0000';						//SCEGLIERE IL COLORE DI DEFAULT
+		} else {
 			throw new Exception("Colore Cartella Non Valido!");
 		}
 	}
@@ -56,7 +57,7 @@ class ECartella{
 		$this->contenuto = $_contenuto;
 	}
 	
-	public function Push($_contenuto){
+	public function Push(ENota $_contenuto){
 		$this->contenuto[]=$_contenuto;
 	}
 	
@@ -79,11 +80,5 @@ class ECartella{
 	public function getContenuto(){
 		return $this->contenuto;
 	}
-	
-	
-	
 }
-
-
-
 ?>

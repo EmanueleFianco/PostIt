@@ -20,7 +20,7 @@ $a[]=$n1;
 $a[]=$n2;
 $a[]=$n3;
 $a[]=$pro1;
-$cart=new ECartella(0, "Note", 4, "#f506f1", $a);
+$cart=new ECartella(0, "Note", 4, '', $a);
 $utente=new EUtente("fabss","password","fabio","di sabatino","http://127.0.0.1/postIt","prova@example.com");
 
 
