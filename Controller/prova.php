@@ -17,7 +17,7 @@ $a[]=$n2;
 $a[]=$n3;
 $cart=new ECartella(0, "Note", 4, "#f506f1", $a);
 $utente=new EUtente("fabss","password","fabio","di sabatino","http://127.0.0.1/postIt","prova@example.com");
-var_dump($n3);
+
 
 echo json_encode(array( "titolo"=>$n3->getTitolo(),
 						"testo"=>$n3->getTesto(),

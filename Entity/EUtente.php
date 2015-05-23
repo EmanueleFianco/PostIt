@@ -27,7 +27,7 @@ class EUtente
     public function setUser($_user)
     {
     	$pattern='/^[[:alpha:]]{5,10}/';
-        if(preg_match($pattern,$user))
+        if(preg_match($pattern,$_user))
         {
             $this->username=$_user;
         }
