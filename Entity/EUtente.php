@@ -11,11 +11,11 @@ class EUtente
     private $stato_attivazione;
 
 
-    public function __construct($user,$pass,$_nome,$_cognome,$immag,$_email)
+    public function __construct($user,$_pass,$_nome,$_cognome,$_immagine,$_email)
     {
-    	$this->setUser($user);
-    	$this->setPass($pass);
-    	$this->setImmagine($immag);
+    	$this->setUser($_user);
+    	$this->setPass($_pass);
+    	$this->setImmagine($_immagine);
     	$this->setNome($_nome);
     	$this->setCognome($_cognome);
     	$this->setEmail($_email);
@@ -24,12 +24,12 @@ class EUtente
 
     }
 
-    public function setUser($user)
+    public function setUser($_user)
     {
     	$pattern='/^[[:alpha:]]{5,10}/';
         if(preg_match($pattern,$user))
         {
-            $this->username=$user;
+            $this->username=$_user;
         }
         else
             {
@@ -37,17 +37,17 @@ class EUtente
             }
     }
     
-    public function setPass($pass)
+    public function setPass($_pass)
     {
-        $this->password=md5($pass);
+        $this->password=md5($_pass);
         
     }
     
-    public function setImmagine($immag)
+    public function setImmagine($_immag)
     {
        if(filter_var($immag, FILTER_VALIDATE_URL))
        {
-           $this->immagine=$immag;
+           $this->immagine=$_immag;
        }
        else
        {
@@ -85,9 +85,9 @@ class EUtente
         return uniqid();
     }
     
-    public function setStato($stato)
+    public function setStato($_stato)
     {
-        $this->stato_attivazione=$stato;
+        $this->stato_attivazione=$_stato;
     }
     
     
