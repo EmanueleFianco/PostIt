@@ -13,7 +13,7 @@ $(function (){
 			datatype: 'json',
 			success: function(com){
 				var array = jQuery.parseJSON(com);
-				$elem.append( "<div><p>"+array.username+" :" + array.titolo +"</p>"+array.testo+"</div>" ); 		
+				$elem.append( "<div><p>"+array.username+" :" + array.ora +"</p>"+array.testo+"</div>" ); 		
 			},
 			error: function(){
 				alert('ERRORE');
