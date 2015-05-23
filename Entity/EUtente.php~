@@ -45,8 +45,18 @@ class EUtente
     
     public function setImmagine($_immag)
     {
-    	$this->immagine=$_immag;
-
+<<<<<<< HEAD
+       if(filter_var($immag, FILTER_VALIDATE_URL))
+       {
+           $this->immagine=$_immag;
+       }
+       else
+       {
+           throw new Exception("indirizzo immagine non valido");
+       }
+=======
+    	$this->immagine=$immag;
+>>>>>>> 39d9967af6c7c080ae870af0695a4657772410cd
     }
     
     public function setEmail($_email) 
