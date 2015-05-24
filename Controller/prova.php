@@ -24,8 +24,8 @@ $cart=new ECartella(0, "Note", 4, '', $a);
 $utente=new EUtente("fabss","password","fabio","di sabatino","http://127.0.0.1/postIt","prova@example.com");
 
 
-echo json_encode(array( "titolo"=>$pro1->getTitolo(),
-						"testo"=>$pro1->getTesto(),
+echo json_encode(array( "titolo"=>$n1->getTitolo(),
+						"testo"=>$n1->getTesto(),
 						"username"=>$utente->getUsername(),
 						"ora"=>$pro1->getOraDataAvviso()->format('Y-m-d H:i:s')
 						)); 

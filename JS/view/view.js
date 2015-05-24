@@ -3,7 +3,9 @@ var View = function(){
 	
 }
 
-View.prototype.aggiungi = function(){
+
+
+View.prototype.aggiungiNota = function(tmpl){
 
 	$(function (){
 	var $elem = $('#nota_space');
@@ -13,7 +15,8 @@ View.prototype.aggiungi = function(){
 			datatype: 'json',
 			success: function(com){
 				var array = jQuery.parseJSON(com);
-				$elem.append( "<div class=nota><p>"+array.username+" :" + array.ora +"</p>"+array.testo+"</div>" ); 		
+				var html = Mustache.to_html(tmpl,array);
+				$elem.append(html); 		
 			},
 			error: function(){
 				alert('ERRORE');
@@ -26,23 +29,32 @@ View.prototype.aggiungi = function(){
 		
 
 View.prototype.disegna = function(){
+	
+	$.ajax({
+		type: 'GET',
+		url : 'JS/view/Template/Main.tmpl',
+		success: function(tmpl){
+			var html = Mustache.to_html(tmpl);
+			$("body").append(html);
+			
+			
+		// ----------------------------		
+		},
+		error: function(){
+			alert('ERRORE');
+		}
+	});
 
-
-
-	var $elem = $("body");
-
-	$elem.append('<div id=banner class=Banner></div>');
-	$elem.append('<div id=main class=main></div>');
-
-	$("#banner").append('<div id=menu_button>Menu</div>');
-	$("#main").append('<div id=menu_window></div>');
-	$("#main").append('<div id=nota_space></div>');
-
-
-	$("#nota_space").click(function(){
-		control.Instanzia();
-  	});
-
+	// risposta ajax asincrona per cui codice non bloccante... la 
+	// risposta arriva dopo di eseguire il codice seguente per cui 
+	// esso delega al body il click
+	
+	$('#body').delegate("#nota_space", "click", function(){
+			
+					control.InstanziaNota("JS/view/Template/Nota.tmpl");
+			});
+	
+	
 }
 
 

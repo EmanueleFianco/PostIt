@@ -5,15 +5,28 @@ var Controllore = function(){
 	this.numeroDiv=0;
 }
 
-Controllore.prototype.Instanzia = function(){
+Controllore.prototype.InstanziaNota = function(tmpl){
 
-if(Number(this.numeroDiv)<7){
-	if(Number(this.numeroDiv)!=0){
-		this.view.aggiungi();
+if(Number(this.numeroDiv)<6){
+		this.getTmpl(tmpl,this.view.aggiungiNota);
 		this.numeroDiv++;
 	}
-	else{this.numeroDiv++;}
+
 }
 
+Controllore.prototype.getTmpl = function(tmpl,Funzione){
 
-};
+	$.ajax({
+		type: 'GET',
+		url : tmpl,
+		success: function(com){
+			Funzione(com);
+		},
+		// ----------------------------		
+		
+		error: function(){
+			alert('ERRORE');
+		}
+	});
+	
+}

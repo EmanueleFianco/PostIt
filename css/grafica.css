@@ -52,6 +52,16 @@ background-color: #6699cc;
     height: 100%;
 }
 
+.TitoloNota{
+	font-size: 1.5rem;
+	font-weight: 900;
+	font-family: "Courier";
+	color:	#330000;
+}
+.username{
+	font-size: 0.7rem;
+}
+
 .nota{
 float: left;
 border:solid;
@@ -68,12 +78,6 @@ text-align: center;
 background-color:#66cccc; 
 }
 
-p {
-font-size: 1.5rem;
-font-weight: 900;
-font-family: "Courier";
-color:	#66cccc;
-}
 
 
 
