@@ -31,7 +31,7 @@ class ENota {
 	}
 	
 	public function setTesto($_testo) {
-		$pattern = '/[*]{0,600}/';
+		$pattern = '/[.]{0,600}/';
 		if (preg_match($pattern, $_testo)) {
 			$this->testo = $_testo;
 		} else {
@@ -44,7 +44,7 @@ class ENota {
 	}
 
 	public function setPosizione($_posizione) {
-		$pattern = '/[0-9]{0,11}/';
+		$pattern = '/^[0-9]{0,11}$/';
 		if (preg_match($pattern,$_posizione)) {
 			$this->posizione = $_posizione;
 		} else {
@@ -53,10 +53,10 @@ class ENota {
 	}
 	
 	public function setColore($_colore) {
-	$pattern='/^#?([a-f]|[0-9]){6}?$/';
+	$pattern='/^#([a-f]|[0-9]){6}$/';
 		if(preg_match($pattern, $_colore)){
 			$this->colore=$_colore;
-		} elseif (!$_colore) {
+		} elseif (!trim($_colore)) {
 			$this->colore = '#ff0000';						//SCEGLIERE IL COLORE DI DEFAULT
 		} else {
 			throw new Exception("Colore Cartella Non Valido!");

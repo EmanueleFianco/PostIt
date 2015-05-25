@@ -33,23 +33,23 @@ class ECartella{
 	}
 	
 	public function setPosizione($_posizione){
-		$pattern='/[0-9]{0,11}/';
+		$pattern='/^[0-9]{0,11}$/';
 		if(preg_match($pattern, $_posizione)){
 			$this->posizione=$_posizione;
 		}
 		else {
-			throw new Exception("Posizione Cartella Non Valida");
+			throw new Exception("Posizione cartella non valida");
 		}
 	}
 	
 	public function setColore($_colore){
-		$pattern='/^#?([a-f]|[0-9]){6}?$/';
+		$pattern='/^#([a-f]|[0-9]){6}$/';
 		if(preg_match($pattern, $_colore)){
 			$this->colore=$_colore;
-		} elseif (!$_colore) {
+		} elseif (!trim($_colore)) {
 			$this->colore = '#ff0000';						//SCEGLIERE IL COLORE DI DEFAULT
 		} else {
-			throw new Exception("Colore Cartella Non Valido!");
+			throw new Exception("Colore cartella non valido!");
 		}
 	}
 	

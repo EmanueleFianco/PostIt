@@ -5,17 +5,15 @@ class EPartecipante{
 	private $username;
 	private $email;
 	private $immagine;
-	private $amministratore;
+	private $tipologia;
 	
 	
-	public function __construct($_username,$_immagine,$_email, $_amministratore = FALSE)
+	public function __construct($_username,$_immagine,$_email, $_tipologia)
 	{
 		$this->setUsername($_username);
 		$this->setImmagine($_immagine);
 		$this->setEmail($_email);
-		if (isset($_amministratore)) {
-			$this->setAmministratore($_amministratore);
-		}
+		$this->setTipologia($_tipologia);
 
 	}
 	
@@ -50,11 +48,12 @@ class EPartecipante{
 		}
 	}
 	
-	public function setAmministratore($_amministratore) {
-		if (is_bool($_amministratore)) {
-		$this->amministratore = $_amministratore;
+	public function setTipologia($_tipologia) {
+		$_tipologia = trim($_tipologia);
+		if (($_tipologia == 'admin') || ($_tipologia == 'partecipante')) {
+		$this->tipologia = $_tipologia;
 		} else {
-			throw new Exception("Valore di amministratore non valido");
+			throw new Exception("Valore di tipologia non valido");
 		}
 	}
 	
