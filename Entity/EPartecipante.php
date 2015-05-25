@@ -49,7 +49,6 @@ class EPartecipante{
 	}
 	
 	public function setTipologia($_tipologia) {
-		$_tipologia = trim($_tipologia);
 		if (($_tipologia == 'admin') || ($_tipologia == 'partecipante')) {
 		$this->tipologia = $_tipologia;
 		} else {

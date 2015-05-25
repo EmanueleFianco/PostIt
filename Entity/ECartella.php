@@ -2,7 +2,7 @@
 
 class ECartella{
 	 
-	 private $id;
+	 private $id; //Da accertarsi che serve realmente nel dominio e non solo nel db
 	 private $nome;
 	 private $posizione;
 	 private $colore;
@@ -23,6 +23,7 @@ class ECartella{
 	}
 	
 	public function setNome($_nome){
+		$_nome = trim($_nome);
 		$pattern = '/[[:alpha:] \']{2,30}/';
 	if(preg_match($pattern, $_nome)){
 			$this->nome=$_nome;

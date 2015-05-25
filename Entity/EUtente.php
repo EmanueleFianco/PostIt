@@ -9,9 +9,10 @@ class EUtente
     private $email;
     private $codice_attivazione;
     private $stato_attivazione;
+    private $tipo_utente;
 
 
-    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email)
+    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email,$_tipo_utente)
     {
     	$this->setUsername($_username);
     	$this->setPassword($_password);
@@ -21,12 +22,13 @@ class EUtente
     	$this->setEmail($_email);
     	$this->codice_attivazione=EUtente::generaCodice();
         $this->stato_attivazione=false;
+        $this->setTipoUtente($_tipo_utente);
 
     }
 
     public function setUsername($_username)
     {
-    	$pattern='/^[[:alnum:]]{5,15}$/';
+    	$pattern='/^[[:alnum:]]{5,15}$/'; //Si deve aggiungere anche la possibilità di inserire caratteri come -_
         if(preg_match($pattern,$_username))
         {
             $this->username=$_username;
@@ -95,6 +97,15 @@ class EUtente
         $this->stato_attivazione=$_stato;
     }
     
+    public function setTipoUtente($_tipo_utente) {
+    	if (($_tipo_utente == 'admin') || ($_tipo_utente == 'normale')) {
+    		$this->tipo_utente = $_tipo_utente;
+    	} else {
+    		throw new Exception("Valore di tipo utente non valido");
+    	}
+    	
+    }
+    
     
     public function getNome()
     {
@@ -134,6 +145,10 @@ class EUtente
     public function isActive()
     {
         return $this->stato_attivazione;
+    }
+    
+    public function getTipoUtente() {
+    	return $this->tipo_utente;
     }
     
     

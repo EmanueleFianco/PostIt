@@ -1,6 +1,6 @@
 <?php
 class ENota {
-	private $id;
+	private $id; //Da accertarsi che serve realmente nel dominio e non solo nel db
 	private $titolo;
 	private $testo;
 	private $immagine;
@@ -20,7 +20,7 @@ class ENota {
 	}
 	
 	public function setTitolo($_titolo) {
-		$pattern = '/[[:alnum:]\']{0,40}/';
+		$pattern = '/[[:alnum:]\']{0,40}/'; //Vedere se è meglio mettere $pattern = '/[.]{0,40}/';
 		if (trim($_titolo) == '') {
 			$this->titolo = 'Titolo';
 		} elseif (preg_match($pattern, $_titolo)) {
