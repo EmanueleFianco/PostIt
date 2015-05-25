@@ -1,6 +1,7 @@
 
 var View = function(){
 	
+	
 }
 
 
@@ -16,7 +17,9 @@ View.prototype.aggiungiNota = function(tmpl){
 			success: function(com){
 				var array = jQuery.parseJSON(com);
 				var html = Mustache.to_html(tmpl,array);
-				$elem.append(html); 		
+				$elem.append(html);
+				$(".nota").last().hide();
+				$(".nota").last().fadeIn(1500);
 			},
 			error: function(){
 				alert('ERRORE');
@@ -24,6 +27,9 @@ View.prototype.aggiungiNota = function(tmpl){
 		});
 
 });
+	
+	
+	$(this).fadeIn();
 
 }
 		
@@ -36,7 +42,7 @@ View.prototype.disegna = function(){
 		success: function(tmpl){
 			var html = Mustache.to_html(tmpl);
 			$("body").append(html);
-			
+			$("#menu_window").hide();
 			
 		// ----------------------------		
 		},
@@ -50,9 +56,11 @@ View.prototype.disegna = function(){
 	// esso delega al body il click
 	
 	$('#body').delegate("#nota_space", "click", function(){
-			
 					control.InstanziaNota("JS/view/Template/Nota.tmpl");
 			});
+	$('#body').delegate("#menu_button", "click", function(){
+		$("#menu_window").fadeToggle( "slow", "linear" );
+});
 	
 	
 }
