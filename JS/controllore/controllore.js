@@ -7,7 +7,7 @@ var Controllore = function(){
 
 Controllore.prototype.InstanziaNota = function(tmpl){
 
-if(Number(this.numeroDiv)<6){
+if(Number(this.numeroDiv)<9){
 		this.getTmpl(tmpl,this.view.aggiungiNota);
 		this.numeroDiv++;
 	}

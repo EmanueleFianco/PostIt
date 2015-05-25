@@ -1,6 +1,6 @@
 
 body{
-    background-color: #6688cc;
+    background-color: #D6D7D9;
     margin-left: 0px;
     margin-top: 0px;
     margin-right: 0px;
@@ -20,7 +20,7 @@ body{
 .main{
 float: left;
 height:100%;
-background-color: #6699cc;
+background-color: #E6E1E1;
 
 }
 
@@ -29,7 +29,7 @@ background-color: #6699cc;
      float: left;
      width: 80%;
      height: 100%;
-     background-color: #444444;
+     background-color: #DDDEE1;
      margin-left: 2%;
 }
 
@@ -37,36 +37,41 @@ background-color: #6699cc;
     cursor: pointer;
     width: 80px;
     height: 30px;
-    background-color: #cccccc;
+    background-color: #d2991e;
     margin-top: 5px;
     margin-left: 10px;
     text-align: center;
-    font-family: "Courier";
+    font-family: "Comic Sans MS";
 
 }
 
 #menu_window{
     float: left;
-    background-color: #aaaaaa;
+    background-color: #CFD6E7;
     width: 10%;
     height: 100%;
 }
 
 .TitoloNota{
+	
 	font-size: 1.5rem;
 	font-weight: 900;
 	font-family: "Courier";
 	color:	#330000;
 }
 .username{
+	margin-left: 5px;
+	margin-top: 5px;
 	font-size: 0.7rem;
+	text-align: left;
+	width: 30%
 }
 
 .nota{
 float: left;
-border:solid;
 width: 30%;
-background-color: #aaaaaa;
+height: 25%;
+background-color: #E0E2E6;
 margin-top: 2%;
 margin-left: 2%;
 }
@@ -75,7 +80,7 @@ div {
 font-size: 1rem;
 width: 100%;
 text-align: center;
-background-color:#66cccc; 
+
 }
 
 
