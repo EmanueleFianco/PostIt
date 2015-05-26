@@ -6,15 +6,13 @@ class ENota {
 	private $immagine;
 	private $posizione;
 	private $colore;
-	private $ultimo_a_modificare;
 	
-	public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore,EPartecipante $_ultimo_a_modificare) {
+	public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore) {
 		$this->setTitolo($_titolo);
 		$this->setTesto($_testo);
 		$this->setImmagine($_immagine);
 		$this->setPosizione($_posizione);
 		$this->setColore($_colore);
-		$this->setUltimoAModificare($_ultimo_a_modificare);
 	}
 	
 	public function setId($_id) {
@@ -23,9 +21,7 @@ class ENota {
 	
 	public function setTitolo($_titolo) {
 		$pattern = '/[.]{0,40}/';   //Vedere se è meglio mettere $pattern = '/[[:alnum:]\']{0,40}/';
-		if (trim($_titolo) == '') {
-			$this->titolo = 'Titolo';
-		} elseif (preg_match($pattern, $_titolo)) {
+		if (preg_match($pattern, $_titolo)) {
 			$this->titolo = $_titolo;
 		} else {
 			throw new Exception("Titolo non valido!");
@@ -58,15 +54,9 @@ class ENota {
 	$pattern='/^#([a-f]|[0-9]){6}$/';
 		if(preg_match($pattern, $_colore)){
 			$this->colore=$_colore;
-		} elseif (!trim($_colore)) {
-			$this->colore = '#ff0000';						//SCEGLIERE IL COLORE DI DEFAULT
 		} else {
 			throw new Exception("Colore Cartella Non Valido!");
 		}
-	}
-	
-	public function setUltimoAModificare($_ultimo_a_modificare) {
-		$this->ultimo_a_modificare = $_ultimo_a_modificare;
 	}
 	
 	public function getId() {
@@ -91,10 +81,6 @@ class ENota {
 	
 	public function getPosizione() {
 		return $this->posizione;
-	}
-	
-	public function getUltimoAModificare() {
-		return $this->ultimo_a_modificare;
 	}
 }
 ?>

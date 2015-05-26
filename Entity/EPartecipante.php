@@ -70,8 +70,8 @@ class EPartecipante{
 		return $this->immagine;
 	}
 	
-	public function getAmministratore() {
-		return $this->amministratore;
+	public function getTipologia() {
+		return $this->tipologia;
 	}
 }
 ?>

@@ -11,8 +11,8 @@ class EGruppo extends ECartella {
 		$this->partecipanti = $_partecipanti;
 	}
 	
-	public function Push(EPartecipante $_partecipanti) {
-		$this->partecipanti[] = $_partecipanti;
+	public function Push(EPartecipante $_partecipante) {
+		$this->partecipanti[] = $_partecipante;
 	}
 	
 	

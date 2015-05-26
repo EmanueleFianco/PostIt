@@ -10,9 +10,10 @@ class EUtente
     private $codice_attivazione;
     private $stato_attivazione;
     private $tipo_utente;
+    private $cartelle = array();
 
 
-    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email,$_tipo_utente)
+    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email,$_stato_attivazione,$_tipo_utente,$_cartelle)
     {
     	$this->setUsername($_username);
     	$this->setPassword($_password);
@@ -20,9 +21,9 @@ class EUtente
     	$this->setNome($_nome);
     	$this->setCognome($_cognome);
     	$this->setEmail($_email);
-    	$this->codice_attivazione=EUtente::generaCodice();
-        $this->stato_attivazione=false;
+        $this->setStatoAttivazione($_stato_attivazione);
         $this->setTipoUtente($_tipo_utente);
+        $this->setCartelle($_cartelle);
 
     }
 
@@ -83,18 +84,26 @@ class EUtente
     		throw new Exception("Cognome non valido!");
     	}
     }
+    
+    public function setCartelle($_cartelle) {
+    	$this->cartelle = $_cartelle;
+    }
+    
+    public function Push(ECartella $_cartella) {
+    	$this->cartelle[] = $_cartella;
+    }
     /**
     * la funzione uniqid genera un codice casuale calcolato con i millisec attuali di 13 caratteri
     **/
     
-    public static function generaCodice()
+    public function setCodiceAttivazione()
     {
-        return uniqid();
+        $this->codice_attivazione = uniqid();
     }
     
-    public function setStato($_stato)
+    public function setStatoAttivazione($_stato_attivazione)
     {
-        $this->stato_attivazione=$_stato;
+        $this->stato_attivazione=$_stato_attivazione;
     }
     
     public function setTipoUtente($_tipo_utente) {
@@ -127,7 +136,7 @@ class EUtente
         return $this->immagine;
     }
     
-    public function getPass()
+    public function getPassword()
     {
         return $this->password;
     }
@@ -137,7 +146,7 @@ class EUtente
         return $this->username;
     }
     
-    public function getCodice()
+    public function getCodiceAttivazione()
     {
         return $this->codice_attivazione;
     }
@@ -151,12 +160,8 @@ class EUtente
     	return $this->tipo_utente;
     }
     
-    
-    
-    
-
+    public function getCartelle() {
+    	return $this->cartelle;
+    }
 }
-
-
-
 ?>

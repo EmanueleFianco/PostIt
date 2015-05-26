@@ -46,8 +46,6 @@ class ECartella{
 		$pattern='/^#([a-f]|[0-9]){6}$/';
 		if(preg_match($pattern, $_colore)){
 			$this->colore=$_colore;
-		} elseif (!trim($_colore)) {
-			$this->colore = '#ff0000';						//SCEGLIERE IL COLORE DI DEFAULT
 		} else {
 			throw new Exception("Colore cartella non valido!");
 		}
