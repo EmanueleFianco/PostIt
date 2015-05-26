@@ -74,5 +74,4 @@ class EPartecipante{
 		return $this->amministratore;
 	}
 }
-
 ?>

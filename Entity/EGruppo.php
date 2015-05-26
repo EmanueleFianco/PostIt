@@ -2,8 +2,8 @@
 class EGruppo extends ECartella {
 	private $partecipanti = array();
 	
-	public function __construct($_id,$_nome,$_posizione,$_colore,$_contenuto,$_partecipanti) {
-		parent::__construct($_id,$_nome,$_posizione,$_colore,$_contenuto);
+	public function __construct($_nome,$_posizione,$_colore,$_contenuto,$_partecipanti) {
+		parent::__construct($_nome,$_posizione,$_colore,$_contenuto);
 		$this->setPartecipanti($_partecipanti);
 	}
 	

@@ -2,15 +2,14 @@
 
 class ECartella{
 	 
-	 private $id; //Da accertarsi che serve realmente nel dominio e non solo nel db
+	 private $id;
 	 private $nome;
 	 private $posizione;
 	 private $colore;
 	 private $contenuto = array();
 	
 	
-	public function __construct($_id,$_nome,$_posizione,$_colore,$_contenuto){
-	   $this->setId($_id);
+	public function __construct($_nome,$_posizione,$_colore,$_contenuto){
 	   $this->setNome($_nome);
 	   $this->setPosizione($_posizione);
 	   $this->setColore($_colore);

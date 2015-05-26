@@ -1,18 +1,20 @@
 <?php
 class ENota {
-	private $id; //Da accertarsi che serve realmente nel dominio e non solo nel db
+	private $id;
 	private $titolo;
 	private $testo;
 	private $immagine;
 	private $posizione;
 	private $colore;
+	private $ultimo_a_modificare;
 	
-	public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore) {
+	public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore,EPartecipante $_ultimo_a_modificare) {
 		$this->setTitolo($_titolo);
 		$this->setTesto($_testo);
 		$this->setImmagine($_immagine);
 		$this->setPosizione($_posizione);
 		$this->setColore($_colore);
+		$this->setUltimoAModificare($_ultimo_a_modificare);
 	}
 	
 	public function setId($_id) {
@@ -20,7 +22,7 @@ class ENota {
 	}
 	
 	public function setTitolo($_titolo) {
-		$pattern = '/[[:alnum:]\']{0,40}/'; //Vedere se è meglio mettere $pattern = '/[.]{0,40}/';
+		$pattern = '/[.]{0,40}/';   //Vedere se è meglio mettere $pattern = '/[[:alnum:]\']{0,40}/';
 		if (trim($_titolo) == '') {
 			$this->titolo = 'Titolo';
 		} elseif (preg_match($pattern, $_titolo)) {
@@ -63,6 +65,10 @@ class ENota {
 		}
 	}
 	
+	public function setUltimoAModificare($_ultimo_a_modificare) {
+		$this->ultimo_a_modificare = $_ultimo_a_modificare;
+	}
+	
 	public function getId() {
 		return $this->id;
 	}
@@ -87,12 +93,8 @@ class ENota {
 		return $this->posizione;
 	}
 	
-	
+	public function getUltimoAModificare() {
+		return $this->ultimo_a_modificare;
+	}
 }
 ?>
-
-
-
-
-
-
