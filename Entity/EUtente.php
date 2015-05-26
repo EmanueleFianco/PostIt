@@ -98,7 +98,9 @@ class EUtente
     
     public function setCodiceAttivazione()
     {
-        $this->codice_attivazione = uniqid();
+    	if (!isset($this->codice_attivazione)) {
+        	$this->codice_attivazione = uniqid();
+    	}
     }
     
     public function setStatoAttivazione($_stato_attivazione)
