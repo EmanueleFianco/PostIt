@@ -50,7 +50,7 @@ class ENota {
 
 
 
-	/**
+	 /**
     * Costruttore di Nota
     *
     * @throws Exception Se i parametri non sono tutti stringhe formattate secondo le regole descritte in SetTitolo(),SetTesto(),SetPosizione(),SetColore(). 
@@ -72,7 +72,7 @@ class ENota {
 	
 	 /**
      * Setta $_id come id della nota.
-     * @param string $_id 
+     * @param int $_id 
      *
      */
 	public function setId($_id) {
