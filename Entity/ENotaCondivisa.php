@@ -63,7 +63,7 @@ class ENotaCondivisa extends ENota {
 
 	 /**
 	*
-	*Preleva il primo partecipante dell'array partecipanti[].
+	* Inserisci un partecipante nell'array dei partecipanti alla nota condivisa.
 	* @param EPartecipante $_partecipante
 	*
 	**/

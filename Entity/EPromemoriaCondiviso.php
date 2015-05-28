@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * Classe EPromemoriaCondivisa che estende la classe EPromemoria
+ * Classe EPromemoriaCondiviso che estende la classe EPromemoria
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini
  * @author Federica Caruso
  * 
  */
-class EPromemoriaCondivisa extends EPromemoria {
+class EPromemoriaCondiviso extends EPromemoria {
 	/**
 	*
 	* @var EPartecipante $ultimo_a_modificare Ultimo partecipante che ha modificato il promemoria condiviso.
@@ -23,7 +23,7 @@ class EPromemoriaCondivisa extends EPromemoria {
 	private $partecipanti = array();
 	
 	/**
-    * Costruttore di EPromemoriaCondivisa, eredita il costruttore di EPromemoria
+    * Costruttore di EPromemoriaCondiviso, eredita il costruttore di EPromemoria
     *
     * @param string $_titolo
     * @param string $_testo
@@ -62,7 +62,7 @@ class EPromemoriaCondivisa extends EPromemoria {
 	}
 	 /**
 	 *
-	 *Preleva il primo partecipante dell'array partecipanti[].
+	 *Inserisci un partecipante nell'array dei partecipanti al promemoria condiviso.
 	 * @param EPartecipante $_partecipante
 	 *
 	 */

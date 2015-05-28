@@ -39,7 +39,7 @@ class EGruppo extends ECartella {
 		$this->partecipanti = $_partecipanti;
 	}
 	 /**
-     * Preleva il primo elemento dell'array partecipanti[]
+     * Inserisci un partecipante nell'array dei partecipanti al gruppo.
      * @param EPartecipante $_partecipante
      *
      */
