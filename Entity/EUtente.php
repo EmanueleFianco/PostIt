@@ -2,6 +2,7 @@
 /**
  *
  * Classe Utente che descrive l'entità Utente
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini

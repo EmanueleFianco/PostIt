@@ -2,6 +2,7 @@
 /**
  *
  * Classe ENotaCondivisa che estende la classe Enota
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini

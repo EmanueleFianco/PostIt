@@ -2,6 +2,7 @@
 /**
  *
  * Classe EPromemoriaCondiviso che estende la classe EPromemoria
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini
