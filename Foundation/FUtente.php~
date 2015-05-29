@@ -9,7 +9,8 @@ Class FUtente {
 
 public function __construct()
 {   
-    $this->table="utente";
+	
+	$this->table="utente";
     $this->keydb="(username,password,immagine,nome,cognome,email,codice_attivazione,stato_attivazione,tipo_utente)";
     $this->bind="(:username,:password,:immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";
     $this->db=USingleton::getInstance('Fdb');

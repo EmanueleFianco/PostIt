@@ -15,7 +15,7 @@ class Fdb
      try
      {
         $col = "$dbms:host=".$config[$dbms]['host'].";dbname=".$config[$dbms]['database'];
-        $this->db = new PDO($col, $config[$dbms]['user'], ''/*$config[$dbms]['password']*/);
+        $this->db = new PDO($col, $config[$dbms]['user'], $config[$dbms]['password']);
 
       }
     catch(PDOException $e) {

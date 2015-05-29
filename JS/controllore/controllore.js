@@ -1,4 +1,4 @@
-
+	
 var Controllore = function(){
 	this.view = new View();
 	this.view.disegna();
