@@ -6,6 +6,7 @@ class Fdb
 	 protected $table;
 	 protected $keydb;
 	 protected $bind;
+	 protected $auto_increment = FALSE;
 	 
 	 
 	  
@@ -35,6 +36,9 @@ class Fdb
 	 
 	 public function inserisci($data)
 	 {  
+	 	if ($this->auto_increment) {
+	 		unset($data['id']);
+	 	}
 	    $query=$this->db->prepare("INSERT INTO ".$this->table."\n".$this->keydb." VALUES ".$this->bind);
 	    $query->execute($data);
 	

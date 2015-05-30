@@ -7,6 +7,8 @@ require_once('../Entity/EPromemoria.php');
 require_once('../Entity/EUtente.php');
 require_once("../Foundation/Fdb.php");
 require_once("../Foundation/FUtente.php");
+require_once("../Foundation/FCartella.php");
+require_once("../Foundation/FNota.php");
 require_once("../Foundation/Utility/USingleton.php");
 $d=USingleton::getInstance('FUtente');
 $dati= array('username' =>"fabss" ,'password'=>"cicerone",'immagine'=> "balla.png",'nome'=>"fabio",'cognome'=>"di sabatino",'email'=>'fabio.disaba@gmail.com','codice_attivazione'=> 58547,'stato_attivazione'=>'attivato','tipo_utente'=>"admin");
@@ -26,14 +28,30 @@ $a[]=$n1;
 $a[]=$n2;
 $a[]=$n3;
 $a[]=$pro1;
-$cart=new ECartella("Note", 4, '#ffffff', $a);
-$utente=new EUtente("fabss","password","fabio","di sabatino","http://127.0.0.1/postIt","prova@example.com",FALSE, 'normale',$cart);
+$cart[]=new ECartella("Note", 4, '#ffffff', $a);
+$utente=new EUtente("fabss","password","fabio","di sabatino","http://127.0.0.1/postIt","prova1@example.com",FALSE, 'normale',$cart);
 $utente->setCodiceAttivazione();
 $utente->setStatoAttivazione(TRUE);
+$d->inserisciUtente($utente->getAsArray());
+$d1=USingleton::getInstance('FCartella');
+$cartella=$cart[0]->getAsArray();
+$cartella['tipo']='privata';
+$cartella['email_utente']=$utente->getEmail();
+$d1->inserisciCartella($cartella);
+$getCart = $d1->getCartelleByUtente($utente->getEmail());
+$d2=USingleton::getInstance('FNota');
+$nota = $n3->getAsArray();
+$nota['ultimo_a_modificare'] = $n3->getUltimoAModificare()->getEmail();
+$nota['tipo'] = 'nota';
+$nota['condiviso'] = TRUE;
+$nota['ora_data_avviso'] = NULL;
+$nota['id_cartella'] = $getCart[0]['id'];
+$d2->inserisciNota($nota);
+
 
 echo json_encode(array( "titolo"=>$n2->getTitolo(),
 						"testo"=>$n1->getTesto(),
-						"username"=>$utente->getUsername(),
+						"username"=>$utente->getEmail(),
 						"ora"=>$pro1->getOraDataAvviso()->format('Y-m-d H:i:s')
 						)); 
 ?>

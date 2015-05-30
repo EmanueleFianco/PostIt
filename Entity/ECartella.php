@@ -202,5 +202,15 @@ class ECartella{
 	public function getContenuto(){
 		return $this->contenuto;
 	}
+	
+	public function getAsArray(){
+    	$result=array();
+    	foreach($this as $key => $value) {
+    		if (!is_array($value)) {
+    			$result[$key]= $value;
+    		}
+    	}
+    	return $result;
+    }
 }
 ?>

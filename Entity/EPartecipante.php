@@ -152,5 +152,15 @@ class EPartecipante{
 	public function getTipologia() {
 		return $this->tipologia;
 	}
+	
+	public function getAsArray(){
+    	$result=array();
+    	foreach($this as $key => $value) {
+    		if (!is_array($value)) {
+    			$result[$key]= $value;
+    		}
+    	}
+    	return $result;
+    }
 }
 ?>
