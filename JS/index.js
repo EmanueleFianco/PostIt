@@ -1,5 +1,5 @@
 var control;
 $(function(){
-	;control = new Controllore();
+	control = new Controllore();
 });
 

@@ -4,6 +4,7 @@ Class FUtente extends Fdb {
 
 	public function __construct()
 	{   
+		$this->db=USingleton::getInstance('Fdb');
 	    $this->table="utente";
 	    $this->keydb="(username,password,immagine,nome,cognome,email,codice_attivazione,stato_attivazione,tipo_utente)";
 	    $this->bind="(:username,:password,:immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";

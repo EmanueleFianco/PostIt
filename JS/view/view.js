@@ -9,7 +9,8 @@ var View = function(){
 View.prototype.aggiungiNota = function(tmpl){
 
 	$(function (){
-	var $elem = $('#nota_space');
+	var $elem = $('#sortable');
+
 	$.ajax({
 			type: 'POST',
 			url : 'Controller/prova.php',
@@ -17,9 +18,16 @@ View.prototype.aggiungiNota = function(tmpl){
 			success: function(com){
 				var array = jQuery.parseJSON(com);
 				var html = Mustache.to_html(tmpl,array);
+				document.domain = document.domain;
 				$elem.append(html);
 				$(".nota").last().hide();
 				$(".nota").last().fadeIn(1500);
+				$("#sortable").last().kendoSortable({axis: "xy"});
+				$(".editor").last().kendoEditor({
+					tools: [
+					        "backColor"
+					      ]
+					});
 			},
 			error: function(){
 				alert('ERRORE');
@@ -59,10 +67,10 @@ View.prototype.disegna = function(){
 	// risposta arriva dopo di eseguire il codice seguente per cui 
 	// esso delega al body il click
 	
-	$('#body').delegate("#nota_space", "click", function(){
+	$('#body').delegate("#nota_space", "click", function(event){
 					control.InstanziaNota("JS/view/Template/Nota.tmpl");
 			});
-	$('#body').delegate("#menu_button", "click", function(){
+	$('#body').delegate("#menu_button", "click", function(event){
 		$("#menu_window").fadeToggle( "slow", "linear" );
 });
 	
