@@ -2,6 +2,7 @@
 /**
  *
  * Classe EPromemoria che estende la classe ENota
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini

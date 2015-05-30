@@ -2,6 +2,7 @@
 /**
  *
  * Classe Partecipante che descrive l'entità Partecipante
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini

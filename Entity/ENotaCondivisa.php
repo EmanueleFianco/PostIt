@@ -2,6 +2,7 @@
 /**
  *
  * Classe ENotaCondivisa che estende la classe Enota
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini
@@ -45,7 +46,7 @@ class ENotaCondivisa extends ENota {
 	* @param EPartecipanti $_ultimo_a_modificare
 	*
 	*/
-	public function setUltimoAModificare($_ultimo_a_modificare) {
+	public function setUltimoAModificare(EPartecipante $_ultimo_a_modificare) {
 		$this->ultimo_a_modificare = $_ultimo_a_modificare;
 	}
 	
@@ -56,7 +57,7 @@ class ENotaCondivisa extends ENota {
 	* @param array $_partecipanti 
 	*
 	**/
-	public function setPartecipanti($_partecipanti) {
+	public function setPartecipanti(array $_partecipanti) {
 		$this->partecipanti = $_partecipanti;
 	}
 	

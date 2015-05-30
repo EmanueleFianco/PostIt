@@ -1,4 +1,4 @@
-
+	
 var Controllore = function(){
 	this.view = new View();
 	this.view.disegna();
@@ -22,7 +22,7 @@ Controllore.prototype.getTmpl = function(tmpl,Funzione){
 		success: function(com){
 			Funzione(com);
 		},
-		// ----------------------------		
+// ----------------------------		
 		
 		error: function(){
 			alert('ERRORE');

@@ -2,6 +2,7 @@
 /**
  *
  * Classe EGruppo che estende la classe ECartella
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini

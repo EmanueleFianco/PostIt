@@ -2,6 +2,7 @@
 /**
  *
  * Classe EPromemoriaCondiviso che estende la classe EPromemoria
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini
@@ -45,19 +46,19 @@ class EPromemoriaCondiviso extends EPromemoria {
 	 /**
 	*
 	*Setta $_ultimo_a_modificare come il partecipante che ha modificato per ultimo il promemoria condiviso.
-	* @var EPartecipante $_ultimo_a_modificare
+	* @param EPartecipante $_ultimo_a_modificare
 	*
 	*/
-	public function setUltimoAModificare($_ultimo_a_modificare) {
+	public function setUltimoAModificare(EPartecipante $_ultimo_a_modificare) {
 		$this->ultimo_a_modificare = $_ultimo_a_modificare;
 	}
 	 /**
 	 *
 	 *Setta $_partecipanti come il contenuto dell'array che contiene tutti i partecipanti al promemoria condiviso.
-	 * @var array $_partecipanti
+	 * @param array $_partecipanti
 	 *
 	 */
-	public function setPartecipanti($_partecipanti) {
+	public function setPartecipanti(array $_partecipanti) {
 		$this->partecipanti = $_partecipanti;
 	}
 	 /**

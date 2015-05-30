@@ -2,6 +2,7 @@
 /**
  *
  * Classe ECartella che descrive l'entità Cartella
+ * @package Entity
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
  * @author Gioele Cicchini
