@@ -1,1 +1,5 @@
-var control = new Controllore();
+var control;
+$(function(){
+	;control = new Controllore();
+});
+

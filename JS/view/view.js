@@ -51,6 +51,10 @@ View.prototype.disegna = function(){
 		}
 	});
 
+	
+
+
+
 	// risposta ajax asincrona per cui codice non bloccante... la 
 	// risposta arriva dopo di eseguire il codice seguente per cui 
 	// esso delega al body il click

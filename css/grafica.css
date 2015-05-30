@@ -73,6 +73,10 @@ background-color: #E6E1E1;
     height: 100%;
 }
 
+.TestoNota{
+    float: left;
+}
+
 .TitoloNota{
 	
 	font-size: 1.5rem;
