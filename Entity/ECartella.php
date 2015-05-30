@@ -52,11 +52,13 @@ class ECartella{
     * 
     */
 	
-	public function __construct($_nome,$_posizione,$_colore,$_contenuto){
+	public function __construct($_nome,$_posizione,$_colore,$_contenuto = NULL){
 	   $this->setNome($_nome);
 	   $this->setPosizione($_posizione);
 	   $this->setColore($_colore);
-	   $this->setContenuto($_contenuto);
+	   if (isset($_contenuto)) {
+	   	$this->setContenuto($_contenuto);	   	
+	   }
 	}
 
 

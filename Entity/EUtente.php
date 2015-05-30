@@ -91,7 +91,7 @@ class EUtente
     * @param array $_cartelle
     *
     */
-    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email,$_stato_attivazione,$_tipo_utente,$_cartelle)
+    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email,$_stato_attivazione,$_tipo_utente,$_cartelle = NULL)
     {
     	$this->setUsername($_username);
     	$this->setPassword($_password);
@@ -101,8 +101,9 @@ class EUtente
     	$this->setEmail($_email);
         $this->setStatoAttivazione($_stato_attivazione);
         $this->setTipoUtente($_tipo_utente);
-        $this->setCartelle($_cartelle);
-
+        if (isset($_cartelle)) {
+        	$this->setCartelle($_cartelle);
+        }
     }
 
     

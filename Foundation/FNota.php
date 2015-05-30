@@ -23,7 +23,7 @@ class FNota extends Fdb {
 	    return $this->db->loadAsArray("*",$_id);
 	}
 	
-	public function getNotaByCartella($_id_cartella) {
+	public function getNoteByCartella($_id_cartella) {
 		$this->db->setParam($this->table,"id_cartella",":id_cartella");
 		return $this->db->loadAsArray("*",$_id_cartella);
 	}
