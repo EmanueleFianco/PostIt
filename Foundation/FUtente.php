@@ -10,14 +10,14 @@ Class FUtente extends Fdb {
 	    $this->bind="(:username,:password,:immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";
 	}
 	
-	public function inserisciUtente($dati)
+	public function InserisciUtente($dati)
 	{   
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);
 	
 	}
 	
-	public function carcaUtente($_value)
+	public function CercaUtente($_value)
 	{
 	     
 	     $this->db->setParam($this->table,"email",":email");
