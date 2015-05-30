@@ -1,5 +1,6 @@
 var control;
+var dati;
 $(function(){
-	control = new Controllore();
+	control = new CHome();
 });
 

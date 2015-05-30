@@ -49,9 +49,11 @@ $nota['id_cartella'] = $getCart[0]['id'];
 $d2->inserisciNota($nota);
 
 
-echo json_encode(array( "titolo"=>$n2->getTitolo(),
-						"testo"=>$n1->getTesto(),
-						"username"=>$utente->getEmail(),
-						"ora"=>$pro1->getOraDataAvviso()->format('Y-m-d H:i:s')
-						)); 
+$nota1=$n1->getAsArray();
+$nota2=$n2->getAsArray();
+
+$note = array();
+$note[]=$nota1;
+$note[]=$nota2;
+echo json_encode($note);
 ?>
