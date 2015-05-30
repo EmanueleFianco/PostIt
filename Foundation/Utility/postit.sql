@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `postit`
 --
-DROP DATABASE IF NOT EXISTS `postit`;
+DROP DATABASE IF EXISTS `postit`;
 CREATE DATABASE IF NOT EXISTS `postit` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `postit`;
 
