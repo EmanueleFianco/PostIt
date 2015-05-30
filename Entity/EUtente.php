@@ -224,7 +224,7 @@ class EUtente
      * @param array $_cartelle
      *
      */  
-    public function setCartelle($_cartelle) {
+    public function setCartelle(array $_cartelle) {
     	$this->cartelle = $_cartelle;
     }
     
@@ -403,6 +403,16 @@ class EUtente
      */    
     public function getCartelle() {
     	return $this->cartelle;
+    }
+    
+    public function getAsArray(){
+    	$result=array();
+    	foreach($this as $key => $value) {
+    		if (!is_array($value)) {
+    			$result[$key]= $value;
+    		}
+    	}
+    	return $result;
     }
 }
 ?>

@@ -238,5 +238,15 @@ class ENota {
 	public function getPosizione() {
 		return $this->posizione;
 	}
+	
+	public function getAsArray(){
+    	$result=array();
+    	foreach($this as $key => $value) {
+    		if (!is_array($value)) {
+    			$result[$key]= $value;
+    		}
+    	}
+    	return $result;
+    }
 }
 ?>

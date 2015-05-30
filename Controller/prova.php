@@ -26,10 +26,12 @@ $a[]=$n1;
 $a[]=$n2;
 $a[]=$n3;
 $a[]=$pro1;
-$cart=new ECartella("Note", 4, '#ffffff', $a);
-$utente=new EUtente("fabss","password","fabio","di sabatino","http://127.0.0.1/postIt","prova@example.com",FALSE, 'normale',$cart);
+$cart[]=new ECartella("Note", 4, '#ffffff', $a);
+$utente=new EUtente("fabss","password","fabio","di sabatino","http://127.0.0.1/postIt","prova1@example.com",FALSE, 'normale',$cart);
 $utente->setCodiceAttivazione();
 $utente->setStatoAttivazione(TRUE);
+$d->inserisciUtente($utente->getAsArray());
+
 
 echo json_encode(array( "titolo"=>$n2->getTitolo(),
 						"testo"=>$n1->getTesto(),
