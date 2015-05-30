@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mag 28, 2015 alle 12:17
+-- Generation Time: Mag 30, 2015 alle 17:48
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `postit`
 --
-DROP DATABASE IF EXISTS `postit`;
+DROP DATABASE IF NOT EXISTS `postit`;
 CREATE DATABASE IF NOT EXISTS `postit` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `postit`;
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `cartella` (
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `posizione` int(11) NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `cartella`:
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `condiviso` tinyint(1) NOT NULL,
   `ultimo_a_modificare` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ora_data_avviso` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `nota`:
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `utente` (
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `cognome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `codice_attivazione` int(13) NOT NULL,
+  `codice_attivazione` varchar(13) COLLATE utf8_unicode_ci NOT NULL,
   `stato_attivazione` enum('attivato','nonattivato') COLLATE utf8_unicode_ci NOT NULL,
   `tipo_utente` enum('admin','normale') COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -195,12 +195,12 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `cartella`
 --
 ALTER TABLE `cartella`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- Limiti per le tabelle scaricate
 --
