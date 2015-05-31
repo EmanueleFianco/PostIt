@@ -1,0 +1,44 @@
+#nota_space{
+     float: left;
+     width: 80%;
+     height: 100%;
+     background-color: #DDDEE1;
+     margin-left: 2%;
+}
+.TestoNota{
+    float: left;
+    height: 50%;
+    width: 100%;
+}
+
+.TitoloNota{
+	font-size: 1.5rem;
+	font-weight: 900;
+	font-family: "Roboto","Droid Sans",arial,sans-serif;
+	color:	#330000;
+}
+.username{
+	margin-left: 5px;
+	margin-top: 5px;
+	font-size: 0.7rem;
+	text-align: left;
+	width: 30%
+}
+
+.nota{
+display: none;
+float: left;
+width: 30%;
+height: 25%;
+background-color: #E0E2E6;
+margin-top: 2%;
+margin-left: 2%;
+}
+
+
+.editor-titolo{
+resize: none;
+width: 100%;
+height: 20%;
+
+}

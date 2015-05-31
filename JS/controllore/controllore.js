@@ -23,9 +23,9 @@ var CHome = function(){
 						})
 						
 							$(function() {
-							    $( "#sortable" ).sortable();
-							    
+							    $( "#sortable" ).sortable();   
 							  });
+						 $(".editor-testo").autoResize();
 						
 						
 						
