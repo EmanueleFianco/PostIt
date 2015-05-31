@@ -22,7 +22,10 @@ var CHome = function(){
 							
 						})
 						
-						
+							$(function() {
+							    $( "#sortable" ).sortable();   
+							  });
+						 $(".editor-testo").autoResize();
 						
 						
 						
