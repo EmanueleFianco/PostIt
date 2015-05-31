@@ -15,28 +15,22 @@ $db=USingleton::getInstance('Fdb');
 $futente=USingleton::getInstance('FUtente');
 $fcartella=USingleton::getInstance('FCartella');
 $fnota=USingleton::getInstance('FNota');
-
+$fpartecipante=USingleton::getInstance('FPartecipante');
 $cartella=$fcartella->getCartelleByUtente("emanuele.fianco@gmail.com");
 $note = $fnota->getNoteByCartella($cartella[0]['id']);
-foreach ($note as $key => $valore) {
-	foreach ($note[$key] as $keynota => $valorenota) {
-		if (is_int($keynota)) {
-			unset($note[$key][$keynota]);
-		}
-	}
-}
-$fpartecipante=USingleton::getInstance('FPartecipante');
+$idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
+$idcart=$idcart[0]['id'];
 $part=new EPartecipante('emanuefff', 'gggg', 'emanuele.fianco@gmail.com', 'admin');
 $fpartecipante->inserisciPartecipante($part->getAsArray());
 $p['id_cartella']= $idcart;
-$p['email_partecipante']= $utente->getEmail();
+$p['email_partecipante']= 'emanuele.fianco@gmail.com';
 $fpartecipante->aggiungiAlGruppo($p);
 $co=$fnota->getNoteByCartella($idcart);
 $co=$co[0]['id'];
 $con['id_nota']=$co;
-$con['email_partecipante']=$utente->getEmail();
+$con['email_partecipante']='emanuele.fianco@gmail.com';
 $fpartecipante->AggiungiAllaCondivisione($con);
 $ris=$fpartecipante->getPartecipantiByIdCartella($idcart);
-var_dump($ris);
-//echo json_encode($note);
+$ris1=$fpartecipante->getPartecipantiByIdNota($co);
+echo json_encode($note);
 ?>

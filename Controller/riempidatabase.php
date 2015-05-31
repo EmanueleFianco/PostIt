@@ -45,7 +45,7 @@ $cart=$cart->getAsArray();
 $cart['tipo'] = 'privata';
 $cart['email_utente'] = $utente->getEmail();
 $fcartella->inserisciCartella($cart);
-$idcart=$fcartella->getCartelleByUtente($utente->getEmail());
+$idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
 $idcart=$idcart[0]['id'];
 $n1['id_cartella'] = $idcart;
 $n2['id_cartella'] = $idcart;
@@ -56,5 +56,4 @@ $fnota->inserisciNota($n1);
 $fnota->inserisciNota($n2);
 $fnota->inserisciNota($n3);
 $fnota->inserisciNota($n4);
-
 ?>
