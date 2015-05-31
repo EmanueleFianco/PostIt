@@ -46,18 +46,22 @@ Class FPartecipante extends Fdb {
 	}
 	
 	public function getPartecipantiByIdCartella($_id_cartella) {
-		$tables = $this->table." as p, ".$this->table1." as p1";
-		$keydb = array("p1.id_cartella","p.email");
-		$bind = array(":id_cartella",":email_partecipante");
+		$tables = "partecipante,partecipano";
+		$keydb = array("email","email_partecipante","id_cartella");
+		$bind = ":id_cartella";
 		$this->db->setParam($tables,$keydb,$bind);
-		$valori=array($_id_cartella,"emanuele.fianco@gmail.com");
-		
-		return $this->db->queryJoin("p.*",$valori);
+
+		return $this->db->queryJoin("partecipante.*",$_id_cartella);
+
 	}
 	
 	public function getPartecipantiByIdNota($_id_nota) {
-		$this->db->setParam($this->table,"id_nota",":id_nota");
-		return $this->db->loadAsArray("*",$_id_nota);
+		$tables = "partecipante,condividono";
+		$keydb = array("email","email_partecipante","id_nota");
+		$bind = ":id_nota";
+		$this->db->setParam($tables,$keydb,$bind);
+		$valori = $_id_nota;
+		return $this->db->queryJoin("partecipante.*",$_id_nota);
 	}
 }
 ?>

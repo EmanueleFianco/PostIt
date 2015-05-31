@@ -19,8 +19,8 @@ class Fdb
 	        $this->db = new PDO($col, $config[$dbms]['user'], $config[$dbms]['password']);
 	
 	      }
-	    catch(PDOException $e) {
-	    echo ("problem");
+	     catch(PDOException $e) {
+	    	die("Errore durante la connessione al database!: ". $e->getMessage());
 	      }
 	    
 	     
@@ -49,24 +49,18 @@ class Fdb
 	     $query=$this->db->prepare("SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb." = ".$this->bind);
 	     $query->bindValue($this->bind,$_value);
 	     $query->execute();
-	     $result=$query->fetchAll();
+	     $result=$query->fetchAll(PDO::FETCH_ASSOC);
 	     return $result;
 	 }
 	 
-	 public function queryJoin($_column,$_value) {
-	 	$query=$this->db->prepare("SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]. " = ".$this->bind[1]);
-	 	var_dump($_value);
-	 	
-	 
-	 		$query->bindValue(':id_cartella' ,$_value[0]);
-	 		$query->bindValue(':email_partecipante' ,$_value[1]);
-	 	
-	 	
-	 	var_dump($query->execute());
-	 	
-	 	$result=$query->fetchAll();
-	 	return $result;	 	
-	 }
 
+	 public function queryJoin($_column,$_value) { 	
+	 	$query=$this->db->prepare("SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb[0]."=".$this->keydb[1]." AND ".$this->keydb[2]."=".$this->bind);
+	 	$query->bindValue($this->bind,$_value,PDO::PARAM_INT);
+	 	$query->execute();
+	 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
+	 	return $result;
+
+	 }
 }
 ?>
