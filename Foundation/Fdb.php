@@ -52,6 +52,19 @@ class Fdb
 	     $result=$query->fetchAll();
 	     return $result;
 	 }
+	 
+	 public function queryJoin($_column,$_value) {
+	 	$query=$this->db->prepare("SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]. " = ".$this->bind[1]);
+	 	var_dump($this->keydb);
+	 	var_dump($this->bind);
+	 	foreach ($_value as $key => $value) {
+	 		$query->bindValue($key,$value);
+	 	}
+	 	$query->execute();
+	 	var_dump($query);
+	 	$result=$query->fetchAll();
+	 	return $result;	 	
+	 }
 
 }
 ?>

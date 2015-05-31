@@ -13,6 +13,7 @@ class FNota extends Fdb {
 
 	public function inserisciNota($dati)
 	{
+		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);
 	}

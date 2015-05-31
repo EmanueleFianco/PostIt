@@ -18,11 +18,11 @@ Class FUtente extends Fdb {
 	
 	}
 	
-	public function cercaUtente($_value)
+	public function getUtenteByEmail($_email)
 	{
 	     
 	     $this->db->setParam($this->table,"email",":email");
-	     return $this->db->loadAsArray("*",$_value);
+	     return $this->db->loadAsArray("*",$_email);
 	
 	}
 }
