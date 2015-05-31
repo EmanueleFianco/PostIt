@@ -55,13 +55,15 @@ class Fdb
 	 
 	 public function queryJoin($_column,$_value) {
 	 	$query=$this->db->prepare("SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]. " = ".$this->bind[1]);
-	 	var_dump($this->keydb);
-	 	var_dump($this->bind);
-	 	foreach ($_value as $key => $value) {
-	 		$query->bindValue($key,$value);
-	 	}
-	 	$query->execute();
-	 	var_dump($query);
+	 	var_dump($_value);
+	 	
+	 
+	 		$query->bindValue(':id_cartella' ,$_value[0]);
+	 		$query->bindValue(':email_partecipante' ,$_value[1]);
+	 	
+	 	
+	 	var_dump($query->execute());
+	 	
 	 	$result=$query->fetchAll();
 	 	return $result;	 	
 	 }

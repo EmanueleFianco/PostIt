@@ -25,6 +25,10 @@ foreach ($note as $key => $valore) {
 		}
 	}
 }
+$utente=new EUtente('emanuefff', 'password', 'Emanuele', 'Fianco', 'gggg', 'emanuele.fianco@gmail.com', 'attivato', 'admin');
+$idcart=$fcartella->getCartelleByUtente("emanuele.fianco@gmail.com");
+$idcart=$idcart[0]['id'];
+
 $fpartecipante=USingleton::getInstance('FPartecipante');
 $part=new EPartecipante('emanuefff', 'gggg', 'emanuele.fianco@gmail.com', 'admin');
 $fpartecipante->inserisciPartecipante($part->getAsArray());

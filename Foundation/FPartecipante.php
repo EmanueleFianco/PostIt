@@ -50,9 +50,8 @@ Class FPartecipante extends Fdb {
 		$keydb = array("p1.id_cartella","p.email");
 		$bind = array(":id_cartella",":email_partecipante");
 		$this->db->setParam($tables,$keydb,$bind);
-		$valori=array("id_cartella" => $_id_cartella,
-					  "email_partecipante" => "p1.email_partecipante");
-		var_dump($valori);
+		$valori=array($_id_cartella,"emanuele.fianco@gmail.com");
+		
 		return $this->db->queryJoin("p.*",$valori);
 	}
 	
