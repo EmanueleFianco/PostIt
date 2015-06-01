@@ -1,6 +1,6 @@
 #nota_space{
      float: left;
-     width: 90%;
+     width: 100%;
      height: 100%;
      background-color: #DDDEE1;
      
@@ -33,7 +33,7 @@
 
 .nota{
 display: none;
-float: right;
+float: left;
 width: 30%;
 background-color: #E0E2E6;
 margin-top: 2%;
