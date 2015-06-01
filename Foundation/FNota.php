@@ -53,5 +53,14 @@ class FNota extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->update($valori);
 	}
+	
+	public function deleteNota($dati) {
+		$keydb = array_keys($dati);
+		$keydb = $keydb[0];
+		$bind = ":".$keydb;
+		$valori = $dati[$keydb];
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->delete($valori);
+	}
 
 }

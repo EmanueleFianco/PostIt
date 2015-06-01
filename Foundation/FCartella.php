@@ -42,5 +42,14 @@ class FCartella extends Fdb {
 		return $this->db->update($valori);
 	}
 	
+	public function deleteCartella($dati) {
+		$keydb = array_keys($dati);
+		$keydb = $keydb[0];
+		$bind = ":".$keydb;
+		$valori = $dati[$keydb];
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->delete($valori);
+	}
+	
 
 }

@@ -71,5 +71,14 @@ class Fdb
 	 	$result=$query->rowCount();
 	 	return $result;
 	 }
+	 
+	 public function delete($_value) {
+	 	$sql = "DELETE FROM ".$this->table." WHERE ".$this->keydb."=".$this->bind;
+	 	$query=$this->db->prepare($sql);
+	 	$query->bindValue($this->bind,$_value);
+	 	$query->execute();
+	 	$result=$query->rowCount();
+	 	return $result;
+	 }
 }
 ?>
