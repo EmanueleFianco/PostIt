@@ -1,14 +1,16 @@
 #nota_space{
      float: left;
-     width: 80%;
+     width: 90%;
      height: 100%;
      background-color: #DDDEE1;
-     margin-left: 2%;
+     
 }
 .TestoNota{
     float: left;
-    height: 50%;
     width: 100%;
+}
+.reductor{
+	width: 100%;
 }
 
 .TitoloNota{
@@ -29,7 +31,7 @@
 display: none;
 float: left;
 width: 30%;
-height: 25%;
+
 background-color: #E0E2E6;
 margin-top: 2%;
 margin-left: 2%;
