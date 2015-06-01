@@ -25,13 +25,15 @@ body{
 	width:300px;
 }
 .banner{
+    
     float: left;
     border-width: 0px;
     margin-left: 0px;
     margin-top: 0px;
     background-color: #d2691e;
-    height:10%;
+    height:45px;
     width: 100%;
+
 }
 
 .main{
@@ -43,11 +45,17 @@ background-color: #E6E1E1;
 
 .menubottom{
     float:left;
-    height:21%;
+    height:140px;
     border-top-style:groove;
     border-top-color:black;
     background-color:white;
-     background-color: #2E2E1F;
+    background-color: #2E2E1F;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+
+
+
     
 
 }
@@ -107,7 +115,7 @@ background-color: #E6E1E1;
 div {
 font-size: 1rem;
 
-text-align: center;
+
 
 }
 
