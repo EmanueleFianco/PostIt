@@ -11,8 +11,10 @@ Class FUtente extends Fdb {
 	    $this->bind="(:username,:password,:immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";
 	}
 	
-	public function inserisciUtente($dati)
+	public function inserisciUtente(EUtente $_object)
 	{   
+		$dati=$_object->getAsArray();
+		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);
 	
@@ -23,7 +25,16 @@ Class FUtente extends Fdb {
 	     
 	     $this->db->setParam($this->table,"email",":email");
 	     return $this->db->loadAsArray("*",$_email);
+	}
 	
+	public function updateUtente($dati) {
+		foreach ($dati as $key => $value) {
+			$keydb[]=$key;
+			$bind[]=":".$key;
+			$valori[]=$value;
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->update($valori);
 	}
 }
 ?>

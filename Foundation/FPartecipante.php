@@ -1,14 +1,6 @@
 <?php
 
-Class FPartecipante extends Fdb {
-	
-	private $table1 = "partecipano";
-	private $keydb1 = "(id_cartella,email_partecipante)";
-	private $bind1 = "(:id_cartella,:email_partecipante)";
-	private $table2 = "condividono";
-	private $keydb2 = "(id_nota,email_partecipante)";
-	private $bind2 = "(:id_nota,:email_partecipante)";
-	
+Class FPartecipante extends Fdb {	
 
 	public function __construct()
 	{   
@@ -19,8 +11,9 @@ Class FPartecipante extends Fdb {
 	    $this->bind="(:email,:username,:immagine,:tipologia)";
 	}
 	
-	public function inserisciPartecipante($dati)
+	public function inserisciPartecipante(EPartecipante $_object)
 	{   
+		$dati=$_object->getAsArray();
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);
@@ -35,24 +28,13 @@ Class FPartecipante extends Fdb {
 	
 	}
 	
-	public function AggiungiAlGruppo($dati) {
-		$this->db->setParam($this->table1,$this->keydb1,$this->bind1);
-		$this->db->inserisci($dati);
-	}
-	
-	public function AggiungiAllaCondivisione($dati) {
-		$this->db->setParam($this->table2,$this->keydb2,$this->bind2);
-		$this->db->inserisci($dati);
-	}
-	
 	public function getPartecipantiByIdCartella($_id_cartella) {
 		$tables = "partecipante,partecipano";
 		$keydb = array("email","email_partecipante","id_cartella");
 		$bind = ":id_cartella";
 		$this->db->setParam($tables,$keydb,$bind);
-
 		return $this->db->queryJoin("partecipante.*",$_id_cartella);
-
+	
 	}
 	
 	public function getPartecipantiByIdNota($_id_nota) {
@@ -62,6 +44,16 @@ Class FPartecipante extends Fdb {
 		$this->db->setParam($tables,$keydb,$bind);
 		$valori = $_id_nota;
 		return $this->db->queryJoin("partecipante.*",$_id_nota);
+	}
+	
+	public function updatePartecipante($dati) {
+		foreach ($dati as $key => $value) {
+			$keydb[]=$key;
+			$bind[]=":".$key;
+			$valori[]=$value;
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->update($valori);
 	}
 }
 ?>

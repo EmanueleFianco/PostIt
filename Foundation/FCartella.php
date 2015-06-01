@@ -11,8 +11,11 @@ class FCartella extends Fdb {
 		$this->bind="(:email_utente,:tipo,:nome,:posizione,:colore)";
 	}
 
-	public function inserisciCartella($dati)
+	public function inserisciCartella(ECartella $_object,$_tipo,$_email_utente)
 	{
+		$dati=$_object->getAsArray();
+		$dati['tipo']=$_tipo;
+		$dati['email_utente']=$_email_utente;
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);
@@ -28,5 +31,16 @@ class FCartella extends Fdb {
 		$this->db->setParam($this->table,"email_utente",":email_utente");
 		return $this->db->loadAsArray("*",$_email_utente);
 	}
+	
+	public function updateCartella($dati) {
+		foreach ($dati as $key => $value) {
+			$keydb[]=$key;
+			$bind[]=":".$key;
+			$valori[]=$value;
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->update($valori);
+	}
+	
 
 }

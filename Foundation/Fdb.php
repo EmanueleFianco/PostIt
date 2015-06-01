@@ -60,7 +60,16 @@ class Fdb
 	 	$query->execute();
 	 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
 	 	return $result;
-
+	 }
+	 
+	 public function update($_value) {
+	 	$sql = "UPDATE ".$this->table." SET ".$this->keydb[0]."=".$this->bind[0]." WHERE ".$this->keydb[1]."=".$this->bind[1];
+	 	$query=$this->db->prepare($sql);
+	 	$query->bindValue($this->bind[0],$_value[0]);
+	 	$query->bindvalue($this->bind[1],$_value[1]);
+	 	$query->execute();
+	 	$result=$query->rowCount();
+	 	return $result;
 	 }
 }
 ?>
