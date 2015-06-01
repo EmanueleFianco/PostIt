@@ -53,11 +53,7 @@ background-color: #E6E1E1;
     width: 100%;
     position: fixed;
     bottom: 0px;
-
-
-
-    
-
+    display:none;
 }
 #button{
 	height:30px;

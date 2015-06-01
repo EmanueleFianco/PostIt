@@ -25,7 +25,7 @@ var CHome = function(){
 						$(".redactor_redactor").focusout(function() {
 				
 							var datinota = {
-								Testo: $(this).text(),
+								Testo: $(this).html(),
 								Id: $(this).parent().prev().text()
 							};
 				
