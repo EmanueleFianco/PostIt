@@ -18,47 +18,17 @@ var CHome = function(){
 						$.each(array,function(i,nota){
 	
 								view.setNota(nota,Template["Nota"]);
-						
-							
+	
 						})
 						
 							$(function() {
-							    $( "#sortable" ).sortable();   
+							    $( ".TitoloNota" ).sortable();   
 							  });
-						 $(".editor-testo").autoResize();
 						
-						
-						
-						
+						$('.redactor').redactor();
 					})	
 			})
 			
-			
-
 }
 
-CHome.prototype.InstanziaNota = function(tmpl){
 
-if(Number(this.numeroDiv)<9){
-		this.getTmpl(tmpl,this.view.aggiungiNota);
-		this.numeroDiv++;
-	}
-
-}
-
-CHome.prototype.getTmpl = function(tmpl,Funzione){
-
-	$.ajax({
-		type: 'GET',
-		url : tmpl,
-		success: function(com){
-			Funzione(com);
-		},
-// ----------------------------		
-		
-		error: function(){
-			alert('ERRORE');
-		}
-	});
-	
-}

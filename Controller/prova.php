@@ -34,5 +34,7 @@ $con['email_partecipante']='emanuele.fianco@gmail.com';
 $fpartecipante->AggiungiAllaCondivisione($con);
 $ris=$fpartecipante->getPartecipantiByIdCartella($idcart);
 $ris1=$fpartecipante->getPartecipantiByIdNota($co);
+
+
 echo json_encode($note);
 ?>
