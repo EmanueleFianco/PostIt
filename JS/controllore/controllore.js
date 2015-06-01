@@ -20,12 +20,25 @@ var CHome = function(){
 								view.setNota(nota,Template["Nota"]);
 	
 						})
+						var data= 0;
+						$(".redactor").redactor();
+						$(".redactor_redactor").focusout(function() {
+				
+							var datinota = {
+								Testo: $(this).text(),
+								Id: $(this).parent().prev().text()
+							};
+				
+						    dati.setNote(datinota);
+						  })
 						
-							$(function() {
-							    $( ".TitoloNota" ).sortable();   
-							  });
 						
-						$('.redactor').redactor();
+						//$('#sortable').sortable();   
+						
+						
+							  
+						
+						
 					})	
 			})
 			

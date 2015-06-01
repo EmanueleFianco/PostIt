@@ -23,3 +23,13 @@ CDati.prototype.getNote = function(){
 	});
 	
 }
+
+CDati.prototype.setNote = function(data){
+	
+	return $.ajax({
+		type: 'POST',
+		url : 'Controller/provaUpdate.php',
+		data: data,
+	});
+	
+}
