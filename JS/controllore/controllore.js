@@ -18,10 +18,19 @@ var CHome = function(){
 						$.each(array,function(i,nota){
 	
 								view.setNota(nota,Template["Nota"]);
-	
+								$(".nota").last().css('background-color',nota.colore);
 						})
+							
 						var data= 0;
 						$(".redactor").redactor();
+						$(".nota").mouseenter(function() {
+							$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
+							//$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeIn('slow');
+							
+							}).mouseleave(function() {
+								$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+							  });
+						
 						$(".redactor_redactor").focusout(function() {
 				
 							var datinota = {
@@ -32,7 +41,6 @@ var CHome = function(){
 						    dati.setNote(datinota);
 						  })
 						
-						
 						//$('#sortable').sortable();   
 						
 						
@@ -41,7 +49,7 @@ var CHome = function(){
 						
 					})	
 			})
-			
+	
 }
 
 

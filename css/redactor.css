@@ -268,6 +268,7 @@ body .redactor_box_fullscreen {
 	overflow: hidden !important;
 	height: 32px !important;
 	border-bottom: 1px solid #bbb;
+	visibility: hidden;
 }
 body .redactor_air .redactor_toolbar {
 	padding-right: 2px !important;
