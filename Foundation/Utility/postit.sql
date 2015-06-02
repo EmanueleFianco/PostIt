@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mag 30, 2015 alle 17:48
+-- Generation Time: Giu 02, 2015 alle 17:54
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -23,6 +23,22 @@ DROP DATABASE IF EXISTS `postit`;
 CREATE DATABASE IF NOT EXISTS `postit` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `postit`;
 
+DELIMITER $$
+--
+-- Procedure
+--
+DROP PROCEDURE IF EXISTS `AggiornaPosizioneCartelle`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneCartelle`(pos INT)
+UPDATE cartella SET posizione=posizione-1
+WHERE posizione>pos$$
+
+DROP PROCEDURE IF EXISTS `AggiornaPosizioneNote`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneNote`(IN `pos` INT)
+UPDATE nota SET posizione=posizione-1
+WHERE posizione>pos$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -37,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `cartella` (
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `posizione` int(11) NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `cartella`:
@@ -54,14 +70,14 @@ CREATE TABLE IF NOT EXISTS `cartella` (
 DROP TABLE IF EXISTS `condividono`;
 CREATE TABLE IF NOT EXISTS `condividono` (
   `id_nota` int(11) NOT NULL,
-  `email_utente` varchar(40) COLLATE utf8_unicode_ci NOT NULL
+  `email_partecipante` varchar(40) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `condividono`:
 --   `id_nota`
 --       `nota` -> `id`
---   `email_utente`
+--   `email_partecipante`
 --       `partecipante` -> `email`
 --
 
@@ -76,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
 `id` int(11) NOT NULL,
   `id_cartella` int(11) NOT NULL,
   `titolo` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `testo` varchar(600) COLLATE utf8_unicode_ci NOT NULL,
+  `testo` varchar(3000) COLLATE utf8_unicode_ci NOT NULL,
   `immagine` text COLLATE utf8_unicode_ci NOT NULL,
   `posizione` int(11) NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL,
@@ -84,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `condiviso` tinyint(1) NOT NULL,
   `ultimo_a_modificare` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ora_data_avviso` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3823 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `nota`:
@@ -120,12 +136,10 @@ CREATE TABLE IF NOT EXISTS `partecipano` (
 
 DROP TABLE IF EXISTS `partecipante`;
 CREATE TABLE IF NOT EXISTS `partecipante` (
-  `id_nota` int(11) NOT NULL,
-  `id_cartella` int(11) NOT NULL,
   `email` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `username` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `immagine` text COLLATE utf8_unicode_ci NOT NULL,
-  `tipologia` enum('admin','partecipante','','') COLLATE utf8_unicode_ci NOT NULL
+  `tipologia` enum('admin','partecipante') COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -161,7 +175,7 @@ ALTER TABLE `cartella`
 -- Indexes for table `condividono`
 --
 ALTER TABLE `condividono`
- ADD PRIMARY KEY (`id_nota`,`email_utente`), ADD KEY `email_utente` (`email_utente`);
+ ADD PRIMARY KEY (`id_nota`,`email_partecipante`), ADD KEY `email_partecipante` (`email_partecipante`);
 
 --
 -- Indexes for table `nota`
@@ -179,7 +193,7 @@ ALTER TABLE `partecipano`
 -- Indexes for table `partecipante`
 --
 ALTER TABLE `partecipante`
- ADD PRIMARY KEY (`email`), ADD KEY `id_nota` (`id_nota`,`id_cartella`), ADD KEY `id_nota_2` (`id_nota`), ADD KEY `id_cartella` (`id_cartella`);
+ ADD PRIMARY KEY (`email`);
 
 --
 -- Indexes for table `utente`
@@ -195,12 +209,12 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `cartella`
 --
 ALTER TABLE `cartella`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=86;
 --
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3823;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -216,7 +230,7 @@ ADD CONSTRAINT `cartella_ibfk_1` FOREIGN KEY (`email_utente`) REFERENCES `utente
 --
 ALTER TABLE `condividono`
 ADD CONSTRAINT `condividono_ibfk_1` FOREIGN KEY (`id_nota`) REFERENCES `nota` (`id`) ON DELETE CASCADE,
-ADD CONSTRAINT `condividono_ibfk_2` FOREIGN KEY (`email_utente`) REFERENCES `partecipante` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `condividono_ibfk_2` FOREIGN KEY (`email_partecipante`) REFERENCES `partecipante` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `nota`

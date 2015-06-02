@@ -109,7 +109,7 @@ class ENota {
      *
      */
 	public function setTesto($_testo) {
-		$pattern = '/[.]{0,600}/';
+		$pattern = '/[.]{0,3000}/';
 		if (preg_match($pattern, $_testo)) {
 			$this->testo = $_testo;
 		} else {

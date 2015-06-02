@@ -22,7 +22,7 @@ $fcartella->inserisciCartella($cart,'privata',$utente->getEmail());
 $idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
 $idcart=$idcart[0]['id'];
 $fnota=USingleton::getInstance('FNota');
-for ($i=0;$i<300;$i++) {
+for ($i=0;$i<150;$i++) {
 	$n1->setPosizione($i);
 	$fnota->inserisciNota($n1,$idcart,'privata',FALSE);	
 }

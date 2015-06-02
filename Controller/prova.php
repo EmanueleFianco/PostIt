@@ -22,7 +22,7 @@ $fpartecipano=USingleton::getInstance('FPartecipano');
 $fcondividono=USingleton::getInstance('FCondividono');
 $idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
 $idcart=$idcart[0]['id'];
-$note = $fnota->getNoteByCartella($idcart,0,25);
+$note = $fnota->getNoteByCartella($idcart,0,10);
 $part=new EPartecipante('emanuefff', 'gggg', 'emanuele.fianco@gmail.com', 'admin');
 $fpartecipante->inserisciPartecipante($part);
 $p['id_cartella']= $idcart;
@@ -38,5 +38,17 @@ $ris1=$fpartecipante->getPartecipantiByIdNota($co);
 $cose_da_cambiare= array('posizione' => 10,
 						 'id' => $idcart);
 $righeToccate=$fcartella->updateCartella($cose_da_cambiare);
+/*$pos = 105;
+$query = $db->db;
+$query->beginTransaction();   //Si è provato anche il funzionamento delle query atomiche e funziona ;)
+try{					//N.B. Si deve mettere public all'attributo db di Fdb per far funzionare questo pezzo di codice
+	$fnota->deleteNota(array("posizione" => $pos));
+	$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos)");
+	$query1->bindParam(":pos",$pos);
+	$query1->execute();
+	$query->commit();
+} catch (Exception $e) {
+	$query->rollBack();
+}*/
 echo json_encode($note);
 ?>

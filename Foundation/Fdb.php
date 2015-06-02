@@ -55,7 +55,7 @@ class Fdb
 	 	 	if (!isset($_posizione_finale)) {
 	 	 		$_posizione_finale = $_posizione_iniziale + 100;
 	 	 	}
-	 	 	$sql = $sql.$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]." >= ".$this->bind[1]. " AND ".$this->keydb[1]." < ".$this->bind[2]." GROUP BY ".$this->keydb[1]." ORDER BY ".$this->keydb[1];
+	 	 	$sql = $sql.$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]." >= ".$this->bind[1]. " AND ".$this->keydb[1]." < ".$this->bind[2]." ORDER BY ".$this->keydb[1];
 	 	 	if (isset($_tipo_ordinamento)) {
 	 	 		$sql = $sql." ".$this->keydb[2];
 	 	 	}
