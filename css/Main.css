@@ -104,7 +104,11 @@ background-color: #E6E1E1;
 }
 
 
+    .focusable
+{
+    margin-top: -20px;
 
+}
 
 
 
@@ -142,6 +146,7 @@ font-size: 1rem;
     html{
     	font-size: 14px;
     	}
+    }
 .cointainerbottom{
 
         width: 10%;
@@ -151,6 +156,11 @@ font-size: 1rem;
         margin-right: 7%;    
         
     }
+    .focusable
+{
+    margin-top: -20px;
+
+}
 }
 
 @media screen and (min-width: 1200px) {
