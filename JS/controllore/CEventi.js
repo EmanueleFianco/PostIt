@@ -12,17 +12,36 @@ CEventi.prototype.setEventiGlobali = function(){
 
 	 $(".cointainerbottom").mouseover(function()
    {
-        $(this).addClass("focusable");
+        $(this).animate({marginTop:'-=25'},0,'linear');
             
 
    });
 
      $(".cointainerbottom").mouseout(function()
    {
-        $(this).removeClass("focusable");
+        $(this).animate({marginTop:'+=25'},0,'linear');
             
 
    });
+
+   $(".cointainerbottom").click(function(){ 
+             
+      $(this).animate({marginTop:'-=100'},100,'linear',function(){
+        	$(this).animate({marginTop:'+=100'},100,'linear',function(){
+        		$(this).animate({marginTop:'-=50'},50,'linear',function(){
+        			$(this).animate({marginTop:'+=50'},50,'linear',function(){
+        				$(this).animate({marginTop:'-=20'},25,'linear',function(){
+        					$(this).animate({marginTop:'+=20'},25,'linear')
+        				})
+        			})
+        		  })
+        	    })
+        	 });
+        
+
+    
+    });
+
 
 	
 }
