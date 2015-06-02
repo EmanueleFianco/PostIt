@@ -16,7 +16,6 @@ var CHome = function(){
 					$.when(dati.getNote()).done(function(note){
 						var array = $.parseJSON(note);
 						$.each(array,function(i,nota){
-	
 								view.setNota(nota,Template["Nota"]);
 								$(".nota").last().css('background-color',nota.colore);
 						})
@@ -25,7 +24,7 @@ var CHome = function(){
 						$(".redactor").redactor();
 						$(".nota").mouseenter(function() {
 							$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-							//$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeIn('slow');
+					
 							
 							}).mouseleave(function() {
 								$(this).find(".redactor_toolbar").fadeTo("slow", 0);

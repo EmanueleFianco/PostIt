@@ -22,7 +22,7 @@ $fpartecipano=USingleton::getInstance('FPartecipano');
 $fcondividono=USingleton::getInstance('FCondividono');
 $idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
 $idcart=$idcart[0]['id'];
-$note = $fnota->getNoteByCartella($idcart,0,25);
+$note = $fnota->getNoteByCartella($idcart);
 $part=new EPartecipante('emanuefff', 'gggg', 'emanuele.fianco@gmail.com', 'admin');
 $fpartecipante->inserisciPartecipante($part);
 $p['id_cartella']= $idcart;
