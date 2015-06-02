@@ -16,17 +16,14 @@ $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();
 $futente->inserisciUtente($utente);
 $cart=new ECartella('Note', 1, '#ffffff');
-$n1=new ENota("Prima nota", "questa è una prima nota", "/Entity/ciao.png", 3, "#ff06f1");
-$n2=new ENota("seconda nota", "questa e una seconda nota", "/Entity/cia.png", 3, "#f506f1");
-$n3=new ENota("Terza nota", "questa è una prima nota", "/Entity/ciao.png", 3, "#ff06f1");
-$n4=new ENota("Quarta nota", "questa e una seconda nota", "/Entity/cia.png", 3, "#f506f1");
+$n1=new ENota("Prima nota", "questa è una prima nota", "/Entity/ciao.png", 0, "#ff06f1");
 $fcartella=USingleton::getInstance('FCartella');
 $fcartella->inserisciCartella($cart,'privata',$utente->getEmail());
 $idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
 $idcart=$idcart[0]['id'];
 $fnota=USingleton::getInstance('FNota');
-$fnota->inserisciNota($n1,$idcart,'privata',FALSE);
-$fnota->inserisciNota($n2,$idcart,'privata',FALSE);
-$fnota->inserisciNota($n3,$idcart,'privata',FALSE);
-$fnota->inserisciNota($n4,$idcart,'privata',FALSE);
+for ($i=0;$i<300;$i++) {
+	$n1->setPosizione($i);
+	$fnota->inserisciNota($n1,$idcart,'privata',FALSE);	
+}
 ?>
