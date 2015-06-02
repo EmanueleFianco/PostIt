@@ -38,7 +38,17 @@ var CHome = function(){
 							};
 				
 						    dati.setNote(datinota);
-						  })
+						  });
+						
+						$('.colorPicker').tinycolorpicker();
+						var box = $('#colorPicker').data("plugin_tinycolorpicker");
+			
+						$('.colorPicker').bind("change", function(){
+							
+							var colore = $(this).find(".colorinput").val();
+							$(this).parents(".nota").css('background-color',colore);
+							
+							    });
 						
 						//$('#sortable').sortable();   
 						

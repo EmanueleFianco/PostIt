@@ -15,9 +15,13 @@
 .id{
 	display:none;
 	}
-
+.colorPicker{
+	float: left;
+	
+}
 
 .TitoloNota{
+	float: left;
 	font-size: 1.5rem;
 	font-weight: 900;
 	font-family: "Roboto","Droid Sans",arial,sans-serif;
