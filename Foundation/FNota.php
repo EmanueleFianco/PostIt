@@ -39,9 +39,19 @@ class FNota extends Fdb {
 	    return $this->db->loadAsArray("*",$_id);
 	}
 	
-	public function getNoteByCartella($_id_cartella) {
-		$this->db->setParam($this->table,"id_cartella",":id_cartella");
-		return $this->db->loadAsArray("*",$_id_cartella);
+	public function getNoteByCartella($_id_cartella,$_posizione_iniziale = NULL,$_posizione_finale = NULL,$_tipo_ordinamento = NULL) {
+	if (!isset($_posizione_iniziale)) {
+			$keydb = "id_cartella";
+			$bind = ":".$keydb;
+		} else {
+			$keydb = array("id_cartella","posizione");
+			$bind = array(":".$keydb[0],":posizione_iniziale",":posizione_finale");
+			if (isset($_tipo_ordinamento)) {
+				$keydb[2] = strtoupper($_tipo_ordinamento);
+			}
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->loadAsArray("*",$_id_cartella,$_posizione_iniziale,$_posizione_finale,$_tipo_ordinamento);
 	}
 	
 	public function updateNota($dati) {

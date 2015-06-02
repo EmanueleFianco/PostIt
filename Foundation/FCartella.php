@@ -27,9 +27,19 @@ class FCartella extends Fdb {
 	     return $this->db->loadAsArray("*",$_id);
 	}
 	
-	public function getCartelleByUtente($_email_utente) {
-		$this->db->setParam($this->table,"email_utente",":email_utente");
-		return $this->db->loadAsArray("*",$_email_utente);
+	public function getCartelleByUtente($_email_utente,$_posizione_iniziale = NULL,$_posizione_finale = NULL,$_tipo_ordinamento = NULL) {
+		if (!isset($_posizione_iniziale)) {
+			$keydb = "email_utente";
+			$bind = ":".$keydb;
+		} else {
+			$keydb = array("email_utente","posizione");
+			$bind = array(":".$keydb[0],":posizione_iniziale",":posizione_finale");
+			if (isset($_tipo_ordinamento)) {
+				$keydb[2] = strtoupper($_tipo_ordinamento);
+			}
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->loadAsArray("*",$_email_utente,$_posizione_iniziale,$_posizione_finale,$_tipo_ordinamento);
 	}
 	
 	public function updateCartella($dati) {

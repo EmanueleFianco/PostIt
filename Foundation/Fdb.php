@@ -44,10 +44,26 @@ class Fdb
 	
 	 }
 	 
-	 public function loadAsArray($_column,$_value)
-	 {   
-	     $query=$this->db->prepare("SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb." = ".$this->bind);
-	     $query->bindValue($this->bind,$_value);
+	 public function loadAsArray($_column,$_value,$_posizione_iniziale = NULL,$_posizione_finale = NULL,$_tipo_ordinamento = NULL)
+	 {
+	 	 $sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
+	 	 if (!is_array($this->keydb)) {
+	 	 	$sql = $sql.$this->keydb." = ".$this->bind;
+	 	 	$query=$this->db->prepare($sql);
+	 	 	$query->bindValue($this->bind,$_value);
+	 	 } else {
+	 	 	if (!isset($_posizione_finale)) {
+	 	 		$_posizione_finale = $_posizione_iniziale + 100;
+	 	 	}
+	 	 	$sql = $sql.$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]." >= ".$this->bind[1]. " AND ".$this->keydb[1]." < ".$this->bind[2]." GROUP BY ".$this->keydb[1]." ORDER BY ".$this->keydb[1];
+	 	 	if (isset($_tipo_ordinamento)) {
+	 	 		$sql = $sql." ".$this->keydb[2];
+	 	 	}
+	 	 	$query=$this->db->prepare($sql);
+	 	 	$query->bindValue($this->bind[0],$_value);
+	 	 	$query->bindValue($this->bind[1],$_posizione_iniziale);
+	 	 	$query->bindValue($this->bind[2],$_posizione_finale);
+	 	 }
 	     $query->execute();
 	     $result=$query->fetchAll(PDO::FETCH_ASSOC);
 	     return $result;
