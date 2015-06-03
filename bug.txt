@@ -1,0 +1,5 @@
+
+***************************************************************
+1) i selettori di colore delle note sono visibili nel menubottom
+2) trovare algoritmo per riposizionamento delle note
+3) girasoli

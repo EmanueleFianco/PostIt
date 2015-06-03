@@ -17,6 +17,11 @@ CEventi.prototype.setEventiGlobali = function(){
 
    });
 
+	$("#main").click(function()
+	{
+		$("#menubottom").fadeOut("slow","linear");
+	});
+
      $(".cointainerbottom").mouseout(function()
    {
         $(this).animate({marginTop:'+=25'},0,'linear');
