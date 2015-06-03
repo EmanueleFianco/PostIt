@@ -20,18 +20,20 @@ var CHome = function(){
 								$(".nota").last().css('background-color',nota.colore);
 						})
 							
+						$('#sortable').sortable();  
 						var data= 0;
 						$(".redactor").redactor();
-						$(".nota").mouseenter(function() {
+						$(".TestoNota").mouseenter(function() {
 							$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-					
+							$('#sortable').sortable( "option", "disabled", true );  
 							
 							}).mouseleave(function() {
 								$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+								$('#sortable').sortable("enable");
 							  });
 						
 						$(".redactor_redactor").focusout(function() {
-				
+						 
 							var datinota = {
 								Testo: $(this).html(),
 								Id: $(this).parent().prev().text()
@@ -50,7 +52,7 @@ var CHome = function(){
 							
 							    });
 						
-						//$('#sortable').sortable();   
+					 
 						
 						
 							  
