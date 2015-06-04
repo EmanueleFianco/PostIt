@@ -47,6 +47,56 @@ CEventi.prototype.setEventiGlobali = function(){
     
     });
 
+  CEventi.prototype.setNotaAnimation = function(){
+	  
+		$(".TestoNota").mouseenter(function() {
+			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
+			$('#sortable').sortable( "option", "disabled", true );
+			
+			
+			}).mouseleave(function() {
+				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+				$('#sortable').sortable("enable");
+			  });
+		
+		$(".TitoloNota").mouseenter(function() {
+			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
+			$('#sortable').sortable( "option", "disabled", true );
+			
+			
+			}).mouseleave(function() {
+				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+				$('#sortable').sortable("enable");
+			  });
+		
+	  
+	  
+	  
+  }
+  
+  CEventi.prototype.AggiornaNota = function(){
+	  
+	  
+		$(".redactor_redactor").keypress(function() {
+			
+			var datinota = {
+				Testo: $(this).html(),
+				Id: $(this).parent().prev().text()
+			};
 
+		    dati.setNote(datinota);
+		  });
+		
+$	(".redactor_redactor").focusout(function() {
+			
+			var datinota = {
+				Testo: $(this).html(),
+				Id: $(this).parent().prev().text()
+			};
+
+		    dati.setNote(datinota);
+		  });
+		
+  }
 	
 }

@@ -19,31 +19,32 @@ var CHome = function(){
 								view.setNota(nota,Template["Nota"]);
 								$(".nota").last().css('background-color',nota.colore);
 						})
-							
-						$('#sortable').sortable();  
-						var data= 0;
-						$(".redactor").redactor();
-						$(".TestoNota").mouseenter(function() {
-							$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-							$('#sortable').sortable( "option", "disabled", true );  
-							
-							}).mouseleave(function() {
-								$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-								$('#sortable').sortable("enable");
-							  });
+						  $("#sortable").sortable({
+				                placeholder: "highlight",
+				                start: function (event, ui) {
+				                        ui.item.toggleClass("highlight");
+				                       var $elem = $(ui.item)
+				                      $(".highlight").css('height',$elem.css('height')).css('width',$elem.css('width'))
+				                      .css('background-color',$elem.css('background-color'));
+				                },
+				                stop: function (event, ui) {
+				                        ui.item.toggleClass("highlight");
+				                }
+				        });
 						
-						$(".redactor_redactor").focusout(function() {
-						 
-							var datinota = {
-								Testo: $(this).html(),
-								Id: $(this).parent().prev().text()
-							};
-				
-						    dati.setNote(datinota);
-						  });
+						var data= 0;
+						$(".redactor").redactor({
+					        imageUpload: '/your_image_upload_script/',
+					    });
+						
+						
+						eventi.setNotaAnimation();
+						eventi.AggiornaNota();
+						
+					
 						
 						$('.colorPicker').tinycolorpicker();
-						var box = $('#colorPicker').data("plugin_tinycolorpicker");
+						
 			
 						$('.colorPicker').bind("change", function(){
 							
