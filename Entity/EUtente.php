@@ -91,7 +91,7 @@ class EUtente
     * @param array $_cartelle
     *
     */
-    public function __construct($_username,$_password,$_nome,$_cognome,$_immagine,$_email,$_stato_attivazione,$_tipo_utente,$_cartelle = NULL)
+    public function __construct($_username,$_password,$_nome,$_cognome,EImmagine $_immagine,$_email,$_stato_attivazione,$_tipo_utente,$_cartelle = NULL)
     {
     	$this->setUsername($_username);
     	$this->setPassword($_password);
@@ -102,7 +102,11 @@ class EUtente
         $this->setStatoAttivazione($_stato_attivazione);
         $this->setTipoUtente($_tipo_utente);
         if (isset($_cartelle)) {
-        	$this->setCartelle($_cartelle);
+        	if (is_array($_cartelle)) {
+        		$this->setCartelle($_cartelle);
+        	} else {
+        		$this->Push($_cartelle);
+        	}
         }
     }
 
@@ -117,7 +121,7 @@ class EUtente
      */  
     public function setUsername($_username)
     {
-    	$pattern='/^[[:alnum:]]{5,15}$/'; //Si deve aggiungere anche la possibilità di inserire caratteri come -_
+    	$pattern='/^[[:alnum:]_\.-]{5,15}$/';
         if(preg_match($pattern,$_username))
         {
             $this->username=$_username;
@@ -154,9 +158,9 @@ class EUtente
      * @param string $_immag
      *
      */  
-    public function setImmagine($_immag)
+    public function setImmagine($_immagine)
     {
-    	$this->immagine=$_immag;
+    	$this->immagine=$_immagine;
 
     }
     
@@ -409,7 +413,7 @@ class EUtente
     public function getAsArray(){
     	$result=array();
     	foreach($this as $key => $value) {
-    		if (!is_array($value)) {
+    		if (!is_array($value) && !is_object($value)) {
     			$result[$key]= $value;
     		}
     	}

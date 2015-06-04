@@ -5,18 +5,25 @@ require_once('../Entity/ENotaCondivisa.php');
 require_once('../Entity/EPartecipante.php');
 require_once('../Entity/EPromemoria.php');
 require_once('../Entity/EUtente.php');
+require_once('../Entity/EImmagine.php');
 require_once("../Foundation/Fdb.php");
 require_once("../Foundation/FUtente.php");
 require_once("../Foundation/FCartella.php");
 require_once("../Foundation/FNota.php");
+require_once("../Foundation/FImmagine.php");
 require_once("../Foundation/Utility/USingleton.php");
 $db=USingleton::getInstance('Fdb');
-$utente=new EUtente('emanuefff', 'password', 'Emanuele', 'Fianco', 'gggg', 'emanuele.fianco@gmail.com', 'attivato', 'admin');
+$path="../Foundation/Utility/utenteDefault.png";
+$image = new EImmagine(basename($path), filesize($path), "image/png", file_get_contents($path));
+/*$fimmagine=USingleton::getInstance('FImmagine');
+$fimmagine->inserisciImmagine($image);*/
+$idimage=8; //Da modificare con il vostro id dell'immagine
+$utente=new EUtente('emanuefff', 'password', 'Emanuele', 'Fianco', $image, 'emanuele.fianco@gmail.com', 'attivato', 'admin');
 $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();
-$futente->inserisciUtente($utente);
+$futente->inserisciUtente($utente,$idimage);
 $cart=new ECartella('Note', 1, '#ffffff');
-$n1=new ENota("Prima nota", "questa è una prima nota", "/Entity/ciao.png", 0, "#ff06f1");
+$n1=new ENota("Prima nota", "questa è una prima nota", 0, "#fffff1");
 $fcartella=USingleton::getInstance('FCartella');
 $fcartella->inserisciCartella($cart,'privata',$utente->getEmail());
 $idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
