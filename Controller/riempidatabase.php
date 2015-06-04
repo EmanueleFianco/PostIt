@@ -17,7 +17,7 @@ $path="../Foundation/Utility/utenteDefault.png";
 $image = new EImmagine(basename($path), filesize($path), "image/png", file_get_contents($path));
 /*$fimmagine=USingleton::getInstance('FImmagine');
 $fimmagine->inserisciImmagine($image);*/
-$idimage=8; //Da modificare con il vostro id dell'immagine
+$idimage=9; //Da modificare con il vostro id dell'immagine
 $utente=new EUtente('emanuefff', 'password', 'Emanuele', 'Fianco', $image, 'emanuele.fianco@gmail.com', 'attivato', 'admin');
 $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();

@@ -14,7 +14,6 @@ class FImmagine extends Fdb {
 	public function inserisciImmagine(EImmagine $_object,$_id_nota = NULL)
 	{
 		$dati=$_object->getAsArray();
-		$dati['immagine'] = addslashes($dati['immagine']);
 		$dati['id_nota'] = $_id_nota;
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
