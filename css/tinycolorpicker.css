@@ -5,7 +5,8 @@
     width:          30px;
     height:         30px;
     position: relative;
-    margin-top:5px;
+    margin-top:10px;
+    margin-right:2%;
 }
 
 .colorPicker .track {

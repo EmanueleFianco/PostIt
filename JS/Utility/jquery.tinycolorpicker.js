@@ -147,7 +147,7 @@
                     });
                 });
                     $track.mouseout(function() {
-                        $track.fadeOut(500);
+                        $track.fadeOut(1000);
                     })
                 
 

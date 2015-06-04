@@ -39,6 +39,7 @@ body{
 .main{
 float: left;
 height:100%;
+  width: 100%;
 background-color: #E6E1E1;
 
 }

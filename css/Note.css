@@ -21,10 +21,11 @@
 }
 
 .TitoloNota{
+	margin-left:2%;
 	float: left;
 	font-size: 1.5rem;
 	font-weight: 900;
-	font-family: "Roboto","Droid Sans",arial,sans-serif;
+	font-family: "Times New Roman";
 	color:	#330000;
 }
 .username{
@@ -38,10 +39,11 @@
 .nota{
 display: none;
 float: left;
-width: 30%;
+width: 32%;
 background-color: #E0E2E6;
-margin-top: 2%;
-margin-left: 2%;
+margin-top: 10px;
+margin-left: 10px;
+
 }
 
 
@@ -50,4 +52,25 @@ resize: none;
 width: 100%;
 height: 20%;
 
+}
+
+
+ 
+#sortable {
+    list-style-type: none;
+}
+ 
+#sortable li {
+    float: left;
+    line-height: 48px;
+}
+ 
+.highlight {
+
+    border: 5px solid black;
+    font-weight: bold;
+    font-size: 45px;
+    background-color: lightblue;
+ 	margin-top: 10px;
+	margin-left: 10px;
 }
