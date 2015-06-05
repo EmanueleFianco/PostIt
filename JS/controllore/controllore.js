@@ -24,15 +24,18 @@ var CHome = function(){
 						})
 						  $("#sortable1, #sortable2,#sortable3").sortable({
 							  connectWith: ".connectedSortable",
-				                placeholder: "highlight",
+				                placeholder: "highlight ui-sortable-handle",
 				                start: function (event, ui) {
 				                        ui.item.toggleClass("highlight");
+				                        ui.item.addClass("ui-sortable-handle");
+				                        
 				                       var $elem = $(ui.item)
 				                      $(".highlight").css('height',$elem.css('height')).css('width',$elem.css('width'))
 				                      .css('background-color',$elem.css('background-color'));
 				                },
 				                stop: function (event, ui) {
 				                        ui.item.toggleClass("highlight");
+				                        ui.item.removeClass("ui-sortable-handle");
 				                }
 				        });
 						
