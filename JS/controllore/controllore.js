@@ -52,6 +52,53 @@ var CHome = function(){
 							$(this).parents(".nota").css('background-color',colore);
 							
 							    });
+										
+						var menu=[{  
+   		name:'sposta',
+   		img:'JS/view/Image/editnotamove.png',
+   		title:'sposta in',
+   		subMenu: 
+   		[{
+
+   			name:'note',
+   			title:'le mie note',
+   			img:'JS/view/Image/editmienote.png',
+   			fun:function(){
+   				alert('spostato nelle tue note')
+   			}
+   		},{
+   			name:'promemoria',
+   			title:'i miei promemoria',
+   			img:'JS/view/Image/editpromemoria.jpg',
+   			fun:function(){
+   				alert('spostato in promemoria')
+   			}
+   		}, {
+   			name:'gruppi',
+   			title:'i miei gruppi',
+   			img:'JS/view/Image/editgruppi.png',
+   			fun:function(){
+   				alert('spostato nei gruppi')
+   			}
+   		}]
+
+	 },{
+	 	    name:'cancella',
+	 	    title:'cancella nota',
+	 	    img:'JS/view/Image/editcancella.png',
+	 	    fun:function(){
+	 	    	alert('nota cancellata')
+	 	}
+
+	 }];
+   
+  $('.editnota').contextMenu(menu).update('sizeStyle','content').end().mouseenter(function()
+  {
+  	$('#sortable').sortable('option','disabled',true);
+  }).mouseleave(function()
+  {
+  	$('#sortable').sortable("enable");
+  });
 						
 					 
 						
