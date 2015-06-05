@@ -108,6 +108,9 @@ CEventi.prototype.setEventiGlobali = function(){
 	 	}
 
 	 }];
+		
+
+		
    
   $('.editnota').contextMenu(menu).update('sizeStyle','content').end().mouseenter(function()
   {
