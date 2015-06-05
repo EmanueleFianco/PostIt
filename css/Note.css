@@ -21,6 +21,7 @@
 }
 
 .TitoloNota{
+	margin-top:1%;
 	margin-left:2%;
 	float: left;
 	font-size: 1.5rem;
@@ -37,7 +38,7 @@
 }
 
 .nota{
-display: none;
+
 float: left;
 width: 100%;
 background-color: #E0E2E6;

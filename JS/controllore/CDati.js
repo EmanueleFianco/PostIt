@@ -28,7 +28,7 @@ CDati.prototype.setNote = function(data){
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/provaUpdate.php',
+		url : 'Controller/index.php',
 		data: data,
 	});
 	

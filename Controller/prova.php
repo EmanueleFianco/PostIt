@@ -5,6 +5,13 @@ require_once('../Entity/ENotaCondivisa.php');
 require_once('../Entity/EPartecipante.php');
 require_once('../Entity/EPromemoria.php');
 require_once('../Entity/EUtente.php');
+
+require_once('../Controller/CHome.php');
+require_once('../Controller/CNota.php');
+require_once('../View/VHome.php');
+require_once('../View/VNota.php');
+
+
 require_once("../Foundation/Fdb.php");
 require_once("../Foundation/FUtente.php");
 require_once("../Foundation/FCartella.php");
@@ -13,6 +20,10 @@ require_once("../Foundation/FPartecipante.php");
 require_once("../Foundation/FPartecipano.php");
 require_once("../Foundation/FCondividono.php");
 require_once("../Foundation/Utility/USingleton.php");
+
+ 
+
+
 $db=USingleton::getInstance('Fdb');
 $futente=USingleton::getInstance('FUtente');
 $fcartella=USingleton::getInstance('FCartella');
@@ -38,6 +49,7 @@ $ris1=$fpartecipante->getPartecipantiByIdNota($co);
 $cose_da_cambiare= array('posizione' => 10,
 						 'id' => $idcart);
 $righeToccate=$fcartella->updateCartella($cose_da_cambiare);
+
 /*$pos = 105;
 $query = $db->db;
 $query->beginTransaction();   //Si è provato anche il funzionamento delle query atomiche e funziona ;)
@@ -50,5 +62,6 @@ try{					//N.B. Si deve mettere public all'attributo db di Fdb per far funzionar
 } catch (Exception $e) {
 	$query->rollBack();
 }*/
+
 echo json_encode($note);
 ?>

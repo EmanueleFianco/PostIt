@@ -131,27 +131,26 @@ CEventi.prototype.setEventiGlobali = function(){
   }
   
   CEventi.prototype.AggiornaNota = function(){
+	
 	  
 	  
+	  $(".TitoloNota").keypress(function() {
+		  
+		  	var Dati = view.getNota(this);
+		    dati.setNote(Dati['titolo'])
+		  }).focusout(function(){
+			  var Dati = view.getNota(this);
+			  dati.setNote(Dati['titolo'])
+		  })
+	   
 		$(".redactor_redactor").keypress(function() {
-			
-			var datinota = {
-				Testo: $(this).html(),
-				Id: $(this).parent().prev().text()
-			};
-
-		    dati.setNote(datinota);
+			var Dati = view.getNota(this);
+		    dati.setNote(Dati['testo'])
+		  }).focusout(function(){
+			  var Dati = view.getNota(this);
+			  dati.setNote(Dati['testo'])
 		  });
 		
-$	(".redactor_redactor").focusout(function() {
-			
-			var datinota = {
-				Testo: $(this).html(),
-				Id: $(this).parent().prev().text()
-			};
-
-		    dati.setNote(datinota);
-		  });
 		
   }
 	

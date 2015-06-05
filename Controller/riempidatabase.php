@@ -23,7 +23,7 @@ $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();
 $futente->inserisciUtente($utente,$idimage);
 $cart=new ECartella('Note', 1, '#ffffff');
-$n1=new ENota("Prima nota", "questa è una prima nota", 0, "#fffff1");
+$n1=new ENota("Prima nota", "questa è una prima nota", 0, "#66ff00");
 $fcartella=USingleton::getInstance('FCartella');
 $fcartella->inserisciCartella($cart,'privata',$utente->getEmail());
 $idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
