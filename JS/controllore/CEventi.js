@@ -51,22 +51,22 @@ CEventi.prototype.setEventiGlobali = function(){
 	  
 		$(".TestoNota").mouseenter(function() {
 			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-			$('#sortable').sortable( "option", "disabled", true );
+			$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
 			
 			
 			}).mouseleave(function() {
 				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-				$('#sortable').sortable("enable");
+				$("#sortable1, #sortable2,#sortable3").sortable("enable");
 			  });
 		
 		$(".TitoloNota").mouseenter(function() {
 			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-			$('#sortable').sortable( "option", "disabled", true );
+			$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
 			
 			
 			}).mouseleave(function() {
 				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-				$('#sortable').sortable("enable");
+				$("#sortable1, #sortable2,#sortable3").sortable("enable");
 			  });
 		
 	  

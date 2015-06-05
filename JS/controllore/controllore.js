@@ -16,10 +16,15 @@ var CHome = function(){
 					$.when(dati.getNote()).done(function(note){
 						var array = $.parseJSON(note);
 						$.each(array,function(i,nota){
-								view.setNota(nota,Template["Nota"]);
+							var pos=i+1;
+								view.setNota(nota,Template["Nota"],pos);
 								$(".nota").last().css('background-color',nota.colore);
+							if(pos==2){
+								pos=0;
+							}
 						})
-						  $("#sortable").sortable({
+						  $("#sortable1, #sortable2,#sortable3").sortable({
+							  connectWith: ".connectedSortable",
 				                placeholder: "highlight",
 				                start: function (event, ui) {
 				                        ui.item.toggleClass("highlight");
