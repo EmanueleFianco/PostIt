@@ -12,7 +12,7 @@ CEventi.prototype.setEventiGlobali = function(){
 
 	 $(".cointainerbottom").mouseover(function()
    {
-        $(this).animate({marginTop:'-=25'},0,'linear');
+        $(this).animate({marginTop:'-=15'},0,'linear');
             
 
    });
@@ -24,19 +24,19 @@ CEventi.prototype.setEventiGlobali = function(){
 
      $(".cointainerbottom").mouseout(function()
    {
-        $(this).animate({marginTop:'+=25'},0,'linear');
+        $(this).animate({marginTop:'+=15'},0,'linear');
             
 
    });
 
    $(".cointainerbottom").click(function(){ 
              
-      $(this).animate({marginTop:'-=100'},100,'linear',function(){
-        	$(this).animate({marginTop:'+=100'},100,'linear',function(){
-        		$(this).animate({marginTop:'-=50'},50,'linear',function(){
-        			$(this).animate({marginTop:'+=50'},50,'linear',function(){
-        				$(this).animate({marginTop:'-=20'},25,'linear',function(){
-        					$(this).animate({marginTop:'+=20'},25,'linear')
+      $(this).animate({marginTop:'-=80'},100,'linear',function(){
+        	$(this).animate({marginTop:'+=80'},100,'linear',function(){
+        		$(this).animate({marginTop:'-=40'},50,'linear',function(){
+        			$(this).animate({marginTop:'+=40'},50,'linear',function(){
+        				$(this).animate({marginTop:'-=15'},25,'linear',function(){
+        					$(this).animate({marginTop:'+=15'},25,'linear')
         				})
         			})
         		  })
