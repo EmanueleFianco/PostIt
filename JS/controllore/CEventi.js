@@ -48,27 +48,15 @@ CEventi.prototype.setEventiGlobali = function(){
     });
 
   CEventi.prototype.setNotaAnimation = function(){
-	  
-		$(".TestoNota").mouseenter(function() {
-			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-			$('#sortable').sortable( "option", "disabled", true );
-			
-			
-			}).mouseleave(function() {
-				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-				$('#sortable').sortable("enable");
-			  });
-		
-		$(".TitoloNota").mouseenter(function() {
-			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-			$('#sortable').sortable( "option", "disabled", true );
-			
-			
-			}).mouseleave(function() {
-				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-				$('#sortable').sortable("enable");
-			  });
+	 	
+	 	$('.colorPicker').tinycolorpicker();
 
+		$('.colorPicker').bind("change", function(){
+							
+		        var colore = $(this).find(".colorinput").val();
+				$(this).parents(".nota").css('background-color',colore);
+							
+			 });
 
 		var menu=[{  
    		name:'sposta',
@@ -109,13 +97,39 @@ CEventi.prototype.setEventiGlobali = function(){
 
 	 }];
    
-  $('.editnota').contextMenu(menu).update('sizeStyle','content').end().mouseenter(function()
-  {
-  	$('#sortable').sortable('option','disabled',true);
-  }).mouseleave(function()
-  {
-  	$('#sortable').sortable("enable");
-  });
+  $('.editnota').contextMenu(menu).update('sizeStyle','content');
+										 
+		$(".TestoNota").mouseenter(function() {
+			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
+			$('#sortable').sortable( "option", "disabled", true );
+			
+			
+			}).mouseleave(function() {
+				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+				$('#sortable').sortable("enable");
+			  });
+		
+		$(".TitoloNota").mouseenter(function() {
+			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
+			$('#sortable').sortable( "option", "disabled", true );
+			
+			
+			}).mouseleave(function() {
+				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+				$('#sortable').sortable("enable");
+			  });
+	    
+	    $(".colorPicker").mouseenter(function(){
+				$('#sortable').sortable( "option", "disabled", true );
+	    }).mouseleave(function(){
+	    	$('#sortable').sortable("enable");
+	    });
+ 
+        $(".editnota").mouseenter(function(){
+				$('#sortable').sortable( "option", "disabled", true );
+	    }).mouseleave(function(){
+	    	$('#sortable').sortable("enable");
+	    });
 		
 	  
 	  
