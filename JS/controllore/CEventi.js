@@ -12,7 +12,7 @@ CEventi.prototype.setEventiGlobali = function(){
 
 	 $(".cointainerbottom").mouseover(function()
    {
-        $(this).animate({marginTop:'-=25'},0,'linear');
+        $(this).animate({marginTop:'-=15'},0,'linear');
             
 
    });
@@ -24,19 +24,19 @@ CEventi.prototype.setEventiGlobali = function(){
 
      $(".cointainerbottom").mouseout(function()
    {
-        $(this).animate({marginTop:'+=25'},0,'linear');
+        $(this).animate({marginTop:'+=15'},0,'linear');
             
 
    });
 
    $(".cointainerbottom").click(function(){ 
              
-      $(this).animate({marginTop:'-=100'},100,'linear',function(){
-        	$(this).animate({marginTop:'+=100'},100,'linear',function(){
-        		$(this).animate({marginTop:'-=50'},50,'linear',function(){
-        			$(this).animate({marginTop:'+=50'},50,'linear',function(){
-        				$(this).animate({marginTop:'-=20'},25,'linear',function(){
-        					$(this).animate({marginTop:'+=20'},25,'linear')
+      $(this).animate({marginTop:'-=80'},100,'linear',function(){
+        	$(this).animate({marginTop:'+=80'},100,'linear',function(){
+        		$(this).animate({marginTop:'-=40'},50,'linear',function(){
+        			$(this).animate({marginTop:'+=40'},50,'linear',function(){
+        				$(this).animate({marginTop:'-=15'},25,'linear',function(){
+        					$(this).animate({marginTop:'+=15'},25,'linear')
         				})
         			})
         		  })
@@ -48,77 +48,85 @@ CEventi.prototype.setEventiGlobali = function(){
     });
 
   CEventi.prototype.setNotaAnimation = function(){
-	  
-		$(".TestoNota").mouseenter(function() {
-			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-			$('#sortable').sortable( "option", "disabled", true );
-			
-			
-			}).mouseleave(function() {
-				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-				$('#sortable').sortable("enable");
-			  });
 		
-		$(".TitoloNota").mouseenter(function() {
-			$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-			$('#sortable').sortable( "option", "disabled", true );
-			
-			
-			}).mouseleave(function() {
-				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-				$('#sortable').sortable("enable");
-			  });
-
-
-		var menu=[{  
-   		name:'sposta',
-   		img:'JS/view/Image/editnotamove.png',
-   		title:'sposta in',
-   		subMenu: 
-   		[{
-
-   			name:'note',
-   			title:'le mie note',
-   			img:'JS/view/Image/editmienote.png',
-   			fun:function(){
-   				alert('spostato nelle tue note')
-   			}
-   		},{
-   			name:'promemoria',
-   			title:'i miei promemoria',
-   			img:'JS/view/Image/editpromemoria.jpg',
-   			fun:function(){
-   				alert('spostato in promemoria')
-   			}
-   		}, {
-   			name:'gruppi',
-   			title:'i miei gruppi',
-   			img:'JS/view/Image/editgruppi.png',
-   			fun:function(){
-   				alert('spostato nei gruppi')
-   			}
-   		}]
-
-	 },{
-	 	    name:'cancella',
-	 	    title:'cancella nota',
-	 	    img:'JS/view/Image/editcancella.png',
-	 	    fun:function(){
-	 	    	alert('nota cancellata')
-	 	}
-
-	 }];
-   
-  $('.editnota').contextMenu(menu).update('sizeStyle','content').end().mouseenter(function()
-  {
-  	$('#sortable').sortable('option','disabled',true);
-  }).mouseleave(function()
-  {
-  	$('#sortable').sortable("enable");
-  });
+	
+	
+	  
 		
-	  
-	  
+		
+  //-----------------------TESTO NOTA -----------------------------//
+	$(".TestoNota").mouseenter(function() {
+		$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
+		$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
+		
+		
+		}).mouseleave(function() {
+			$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+			$("#sortable1, #sortable2,#sortable3").sortable("enable");
+		  });
+	
+	//-----------------------TITOLO NOTA -----------------------------//
+	$(".TitoloNota").mouseenter(function() {
+		$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
+		$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
+		
+		
+		}).mouseleave(function() {
+			$(this).find(".redactor_toolbar").fadeTo("slow", 0);
+			$("#sortable1, #sortable2,#sortable3").sortable("enable");
+		  });
+	    
+	//-----------------------COLOR PICKER -----------------------------//
+	$('.colorPicker').tinycolorpicker();
+	$('.colorPicker').bind("change", function(){		
+	        var colore = $(this).find(".colorinput").val();
+			$(this).parents(".nota").css('background-color',colore);
+						
+		 });
+	
+	
+		$(".colorPicker").mouseenter(function(){
+				$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
+	    }).mouseleave(function(){
+	    	$("#sortable1, #sortable2,#sortable3").sortable("enable");
+	    });
+ 
+	 //-----------------------EDIT NOTA -----------------------------//   
+       
+		  $.contextMenu({
+		        selector: '.editnota', 
+		        trigger: 'left',
+		        
+		        items: {
+		            "note": {name: "Note", icon: "edit"},
+		            "promemoria": {name: "Promemoria", icon: "cut"},
+		            "gruppi": {name: "Gruppi", icon: "copy",
+		                "items": {
+		                	// ajax per richiedere tutti i gruppi dell utente
+		                    "item1": {"name": "Nome_Gruppo"},
+		                    "item2": {"name": "Nome_Gruppo"},
+		                    "item3": {"name": "Nome_Gruppo"}
+		            
+		                }},
+		                    
+		            "cancella": {name: "Cancella", icon: "delete"},
+		        }
+		    });
+		  
+		  $('.editnota').on('click', function(e){
+		        console.log('clicked', this);
+		    })
+		
+	
+		$(".editnota").mouseenter(function(){
+				$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
+	    }).mouseleave(function(){
+	    	$("#sortable1, #sortable2,#sortable3").sortable("enable");
+	    });
+        
+   // -------------------------------------------//     
+        
+
 	  
   }
   

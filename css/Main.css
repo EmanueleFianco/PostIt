@@ -46,7 +46,7 @@ background-color: #E6E1E1;
 
 .menubottom{
     float:left;
-    height:140px;
+    height:100px;
     border-top-style:groove;
     border-top-color:black;
     background-color:white;
@@ -55,7 +55,6 @@ background-color: #E6E1E1;
     position: fixed;
     bottom: 0px;
     display:none;
-
     z-index: 40;
 }
 #button{
@@ -89,8 +88,8 @@ background-color: #E6E1E1;
     width: 20%;
     height: 90%;
     margin-top: 0.5%;
-    margin-left:2.5%;
-    margin-right: 2.5%;    
+    margin-left:5%;
+        
     float:left;
 
 
