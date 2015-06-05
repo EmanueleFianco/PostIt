@@ -14,10 +14,10 @@ require_once("../Foundation/FImmagine.php");
 require_once("../Foundation/Utility/USingleton.php");
 $db=USingleton::getInstance('Fdb');
 $path="../Foundation/Utility/utenteDefault.png";
-$image = new EImmagine(basename($path), filesize($path), "image/png", file_get_contents($path));
-/*$fimmagine=USingleton::getInstance('FImmagine');
-$fimmagine->inserisciImmagine($image);*/
-$idimage=9; //Da modificare con il vostro id dell'immagine
+$image = new EImmagine(basename($path), filesize($path), "image/png", $path);
+$fimmagine=USingleton::getInstance('FImmagine');
+$fimmagine->inserisciImmagine($image);
+$idimage=$image->getId();
 $utente=new EUtente('emanuefff', 'password', 'Emanuele', 'Fianco', $image, 'emanuele.fianco@gmail.com', 'attivato', 'admin');
 $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();

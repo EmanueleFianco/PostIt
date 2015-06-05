@@ -4,11 +4,11 @@ class FImmagine extends Fdb {
 	
 	public function __construct()
 	{
-		$this->auto_increment = TRUE;
+		$this->auto_increment = FALSE;
 		$this->db = USingleton::getInstance('Fdb');
 		$this->table="immagine";
-		$this->keydb="(id_nota,nome,size,type,immagine)";
-		$this->bind="(:id_nota,:nome,:size,:type,:immagine)";
+		$this->keydb="(id,id_nota,nome,size,type,immagine_piccola,immagine_media,immagine_grande,immagine_originale)";
+		$this->bind="(:id,:id_nota,:nome,:size,:type,:immagine_piccola,:immagine_media,:immagine_grande,:immagine_originale)";
 	}
 	
 	public function inserisciImmagine(EImmagine $_object,$_id_nota = NULL)

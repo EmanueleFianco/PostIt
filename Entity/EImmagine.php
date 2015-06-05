@@ -2,19 +2,28 @@
 
 class EImmagine {
 	
+	private $id;
+	
 	private $nome;
 	
 	private $size;
 	
 	private $type;
 	
-	private $immagine;
+	private $immagine_piccola;
 	
-	public function __construct($_nome,$_size,$_type,$_immagine) {
+	private $immagine_media;
+	
+	private $immagine_grande;
+	
+	private $immagine_originale;
+	
+	public function __construct($_nome,$_size,$_type,$_file_temp) {
 		$this->setNome($_nome);
 		$this->setSize($_size);
 		$this->setType($_type);
-		$this->setImmagine($_immagine);
+		$this->setImmagine($_file_temp);
+		$this->setId();
 	}
 	
 	public function setNome($_nome) {
@@ -35,7 +44,7 @@ class EImmagine {
 	}
 	
 	public function setType($_type) {
-		$pattern='/^image\/(gif)|(jpeg)|(pjpeg)|(png)|(bmp)$/';
+		$pattern='/^image\/(gif)|(jpeg)|(jpg)|(pjpeg)|(png)$/';
 		if (preg_match($pattern,$_type)) {
 			$this->type = $_type;
 		} else {
@@ -43,8 +52,46 @@ class EImmagine {
 		}
 	}
 	
-	public function setImmagine($_immagine) {
-		$this->immagine = $_immagine;
+	public function setImmagine($_file_temp) {
+		$this->immagine_originale = file_get_contents($_file_temp);
+		if ($this->type == "image/jpeg" || $this->type == "image/jpg" || $this->type == "image/pjpeg") {
+			$src = imagecreatefromjpeg($_file_temp);
+		} elseif ($this->type == "image/gif") {
+			$src = imagecreatefromgif($_file_temp);
+		} else {
+			$src = imagecreatefrompng($_file_temp);			
+		}
+		list($width,$height)=getimagesize($_file_temp);
+		$immagine_piccola=imagecreatetruecolor(70,70);
+		$immagine_grande=imagecreatetruecolor(250,275);
+		$immagine_media=imagecreatetruecolor(182,114);
+		imagecopyresampled($immagine_piccola,$src,0,0,0,0,70,70,$width,$height);
+		imagecopyresampled($immagine_grande,$src,0,0,0,0,250,275,$width,$height);
+		imagecopyresampled($immagine_media,$src,0,0,0,0,182,114,$width,$height);
+		$path="../tmp/";
+		if ($this->type == "image/jpeg" || $this->type == "image/jpg" || $this->type == "image/pjpeg") {
+			imagejpeg($immagine_piccola,$path."piccola_".$this->nome);
+			imagejpeg($immagine_media,$path."media_".$this->nome);
+			imagejpeg($immagine_grande,$path."grande_".$this->nome);
+		} elseif ($this->type == "image/gif") {
+			imagegif($immagine_piccola,$path."piccola_".$this->nome);
+			imagegif($immagine_media,$path."media_".$this->nome);
+			imagegif($immagine_grande,$path."grande_".$this->nome);
+		} else {
+			imagepng($immagine_piccola,$path."piccola_".$this->nome);
+			imagepng($immagine_media,$path."media_".$this->nome);
+			imagepng($immagine_grande,$path."grande_".$this->nome);
+		}
+		$this->immagine_piccola = file_get_contents($path."piccola_".$this->nome);
+		$this->immagine_media = file_get_contents($path."media_".$this->nome);
+		$this->immagine_grande = file_get_contents($path."grande_".$this->nome);
+		unlink($path."piccola_".$this->nome);
+		unlink($path."media_".$this->nome);
+		unlink($path."grande_".$this->nome);
+	}
+	
+	public function setId() {
+		$this->id = md5($this->immagine_piccola);
 	}
 	
 	public function getNome() {
@@ -59,8 +106,18 @@ class EImmagine {
 		return $this->type;
 	}
 	
-	public function getImmagine() {
-		return $this->immagine;
+	public function getImmagine($_grandezza) {
+		if ($_grandezza == "piccola") {
+			return $this->immagine_piccola;
+		} elseif ($_grandezza == "media") {
+			return $this->immagine_media;
+		} else {
+			return $this->immagine_grande;
+		}	
+	}
+	
+	public function getId() {
+		return $this->id;
 	}
 	
 	public function getAsArray(){
