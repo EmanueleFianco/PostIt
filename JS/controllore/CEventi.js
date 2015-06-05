@@ -48,81 +48,8 @@ CEventi.prototype.setEventiGlobali = function(){
     });
 
   CEventi.prototype.setNotaAnimation = function(){
-
-	 	
-	/* 	
-
-		var menu=[{  
-   		name:'sposta',
-   		img:'JS/view/Image/editnotamove.png',
-   		title:'sposta in',
-   		subMenu: 
-   		[{
-
-   			name:'note',
-   			title:'le mie note',
-   			img:'JS/view/Image/editmienote.png',
-   			fun:function(){
-   				alert('spostato nelle tue note')
-   			}
-   		},{
-   			name:'promemoria',
-   			title:'i miei promemoria',
-   			img:'JS/view/Image/editpromemoria.jpg',
-   			fun:function(){
-   				alert('spostato in promemoria')
-   			}
-   		}, {
-   			name:'gruppi',
-   			title:'i miei gruppi',
-   			img:'JS/view/Image/editgruppi.png',
-   			fun:function(){
-   				alert('spostato nei gruppi')
-   			}
-   		}]
-
-	 },{
-	 	    name:'cancella',
-	 	    title:'cancella nota',
-	 	    img:'JS/view/Image/editcancella.png',
-	 	    fun:function(){
-	 	    	alert('nota cancellata')
-	 	}
-
-	 }];
-   */
-  //$('.editnota').contextMenu(menu).update('sizeStyle','content');
 		
 	
-	  $.contextMenu({
-	        selector: '.editnota', 
-	        trigger: 'left',
-	        callback: function(key, options) {
-	            var m = "clicked: " + key;
-	            window.console && console.log(m) || alert(m); 
-	        },
-	        
-	        items: {
-	            "note": {name: "Note", icon: "edit"},
-	            "promemoria": {name: "Promemoria", icon: "cut"},
-	            "gruppi": {name: "Gruppi", icon: "copy",
-	                "items": {
-	                	// ajax per richiedere tutti i gruppi dell utente
-	                    "item1": {"name": "Nome_Gruppo"},
-	                    "item2": {"name": "Nome_Gruppo"},
-	                    "item3": {"name": "Nome_Gruppo"}
-	            
-	                }},
-	                    
-	            "cancella": {name: "Cancella", icon: "delete"},
-	            "sep1": "---------",
-	            "quit": {name: "Quit", icon: "quit"}
-	        }
-	    });
-	  
-	  $('.editnota').on('click', function(e){
-	        console.log('clicked', this);
-	    })
 	
 	  
 		
@@ -165,13 +92,39 @@ CEventi.prototype.setEventiGlobali = function(){
 	    });
  
 	 //-----------------------EDIT NOTA -----------------------------//   
-        $(".editnota").mouseenter(function(){
+       
+		  $.contextMenu({
+		        selector: '.editnota', 
+		        trigger: 'left',
+		        
+		        items: {
+		            "note": {name: "Note", icon: "edit"},
+		            "promemoria": {name: "Promemoria", icon: "cut"},
+		            "gruppi": {name: "Gruppi", icon: "copy",
+		                "items": {
+		                	// ajax per richiedere tutti i gruppi dell utente
+		                    "item1": {"name": "Nome_Gruppo"},
+		                    "item2": {"name": "Nome_Gruppo"},
+		                    "item3": {"name": "Nome_Gruppo"}
+		            
+		                }},
+		                    
+		            "cancella": {name: "Cancella", icon: "delete"},
+		        }
+		    });
+		  
+		  $('.editnota').on('click', function(e){
+		        console.log('clicked', this);
+		    })
+		
+	
+		$(".editnota").mouseenter(function(){
 				$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
 	    }).mouseleave(function(){
 	    	$("#sortable1, #sortable2,#sortable3").sortable("enable");
 	    });
         
-        
+   // -------------------------------------------//     
         
 
 	  
