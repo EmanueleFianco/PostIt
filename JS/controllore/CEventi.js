@@ -50,14 +50,7 @@ CEventi.prototype.setEventiGlobali = function(){
   CEventi.prototype.setNotaAnimation = function(){
 
 	 	
-	 	$('.colorPicker').tinycolorpicker();
-
-		$('.colorPicker').bind("change", function(){
-							
-		        var colore = $(this).find(".colorinput").val();
-				$(this).parents(".nota").css('background-color',colore);
-							
-			 });
+	/* 	
 
 		var menu=[{  
    		name:'sposta',
@@ -97,9 +90,44 @@ CEventi.prototype.setEventiGlobali = function(){
 	 	}
 
 	 }];
-   
-  $('.editnota').contextMenu(menu).update('sizeStyle','content');
-										 
+   */
+  //$('.editnota').contextMenu(menu).update('sizeStyle','content');
+		
+	
+	  $.contextMenu({
+	        selector: '.editnota', 
+	        trigger: 'left',
+	        callback: function(key, options) {
+	            var m = "clicked: " + key;
+	            window.console && console.log(m) || alert(m); 
+	        },
+	        
+	        items: {
+	            "note": {name: "Note", icon: "edit"},
+	            "promemoria": {name: "Promemoria", icon: "cut"},
+	            "gruppi": {name: "Gruppi", icon: "copy",
+	                "items": {
+	                	// ajax per richiedere tutti i gruppi dell utente
+	                    "item1": {"name": "Nome_Gruppo"},
+	                    "item2": {"name": "Nome_Gruppo"},
+	                    "item3": {"name": "Nome_Gruppo"}
+	            
+	                }},
+	                    
+	            "cancella": {name: "Cancella", icon: "delete"},
+	            "sep1": "---------",
+	            "quit": {name: "Quit", icon: "quit"}
+	        }
+	    });
+	  
+	  $('.editnota').on('click', function(e){
+	        console.log('clicked', this);
+	    })
+	
+	  
+		
+		
+  //-----------------------TESTO NOTA -----------------------------//
 	$(".TestoNota").mouseenter(function() {
 		$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
 		$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
@@ -110,6 +138,7 @@ CEventi.prototype.setEventiGlobali = function(){
 			$("#sortable1, #sortable2,#sortable3").sortable("enable");
 		  });
 	
+	//-----------------------TITOLO NOTA -----------------------------//
 	$(".TitoloNota").mouseenter(function() {
 		$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
 		$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
@@ -120,17 +149,30 @@ CEventi.prototype.setEventiGlobali = function(){
 			$("#sortable1, #sortable2,#sortable3").sortable("enable");
 		  });
 	    
-	    $(".colorPicker").mouseenter(function(){
+	//-----------------------COLOR PICKER -----------------------------//
+	$('.colorPicker').tinycolorpicker();
+	$('.colorPicker').bind("change", function(){		
+	        var colore = $(this).find(".colorinput").val();
+			$(this).parents(".nota").css('background-color',colore);
+						
+		 });
+	
+	
+		$(".colorPicker").mouseenter(function(){
 				$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
 	    }).mouseleave(function(){
 	    	$("#sortable1, #sortable2,#sortable3").sortable("enable");
 	    });
  
+	 //-----------------------EDIT NOTA -----------------------------//   
         $(".editnota").mouseenter(function(){
 				$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
 	    }).mouseleave(function(){
 	    	$("#sortable1, #sortable2,#sortable3").sortable("enable");
 	    });
+        
+        
+        
 
 	  
   }
