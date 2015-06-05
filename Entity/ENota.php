@@ -33,7 +33,7 @@ class ENota {
 	 * @var string $immagine percorso relativo all'immagine associata alla nota.
 	 * 
 	 */
-	private $immagine;
+	private $immagine = array();
 	/**
      *
 	 * @var int $posizione posizione della nota all'interno della cartella.
@@ -63,12 +63,18 @@ class ENota {
     *
     */
 	
-	 public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore) {
+	 public function __construct($_titolo, $_testo, $_posizione, $_colore, $_immagine = NULL) {
 		$this->setTitolo($_titolo);
 		$this->setTesto($_testo);
-		$this->setImmagine($_immagine);
 		$this->setPosizione($_posizione);
 		$this->setColore($_colore);
+		if (isset($_immagine)) {
+			if (is_array($_immagine)) {
+				$this->setImmagine($_immagine);
+			} else {
+				$this->Push($_immagine);
+			}	
+		}
 	}
 	
 	 /**
@@ -165,6 +171,10 @@ class ENota {
 		} else {
 			throw new Exception("Colore Cartella Non Valido!");
 		}
+	}
+	
+	public function Push(EImmagine $_immagine){
+		$this->immagine[]=$_immagine;
 	}
 	
 	

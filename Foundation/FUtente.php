@@ -7,13 +7,14 @@ Class FUtente extends Fdb {
 
 		$this->db = USingleton::getInstance('Fdb');
 	    $this->table="utente";
-	    $this->keydb="(username,password,immagine,nome,cognome,email,codice_attivazione,stato_attivazione,tipo_utente)";
-	    $this->bind="(:username,:password,:immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";
+	    $this->keydb="(username,password,id_immagine,nome,cognome,email,codice_attivazione,stato_attivazione,tipo_utente)";
+	    $this->bind="(:username,:password,:id_immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";
 	}
 	
-	public function inserisciUtente(EUtente $_object)
+	public function inserisciUtente(EUtente $_object,$_id_immagine)
 	{   
 		$dati=$_object->getAsArray();
+		$dati['id_immagine'] = $_id_immagine;
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);

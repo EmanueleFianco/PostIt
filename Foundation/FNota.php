@@ -7,8 +7,8 @@ class FNota extends Fdb {
 		$this->auto_increment = TRUE;
 		$this->db = USingleton::getInstance('Fdb');
 		$this->table="nota";
-		$this->keydb="(id_cartella,titolo,testo,immagine,posizione,colore,tipo,condiviso,ultimo_a_modificare,ora_data_avviso)";
-		$this->bind="(:id_cartella,:titolo,:testo,:immagine,:posizione,:colore,:tipo,:condiviso,:ultimo_a_modificare,:ora_data_avviso)";
+		$this->keydb="(id_cartella,titolo,testo,posizione,colore,tipo,condiviso,ultimo_a_modificare,ora_data_avviso)";
+		$this->bind="(:id_cartella,:titolo,:testo,:posizione,:colore,:tipo,:condiviso,:ultimo_a_modificare,:ora_data_avviso)";
 	}
 
 	public function inserisciNota(ENota $_object,$_id_cartella,$_tipo,$_condiviso)

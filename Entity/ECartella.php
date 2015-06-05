@@ -57,7 +57,11 @@ class ECartella{
 	   $this->setPosizione($_posizione);
 	   $this->setColore($_colore);
 	   if (isset($_contenuto)) {
-	   	$this->setContenuto($_contenuto);	   	
+	   	if (is_array($_contenuto)) {
+	   		$this->setContenuto($_contenuto);
+	   	} else {
+	   		$this->Push($_contenuto);
+	   	}
 	   }
 	}
 
