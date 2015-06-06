@@ -24,7 +24,8 @@ var CHome = function(){
 						})
 						  $("#sortable1, #sortable2,#sortable3").sortable({
 							  connectWith: ".connectedSortable",
-				                placeholder: "highlight ui-sortable-handle",
+							  placeholder: "highlight ui-sortable-handle",
+							  revert:1000,
 				                start: function (event, ui) {
 				                        ui.item.toggleClass("highlight");
 				                        ui.item.addClass("ui-sortable-handle");

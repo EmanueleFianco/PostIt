@@ -42,6 +42,9 @@ CEventi.prototype.setEventiGlobali = function(){
         		  })
         	    })
         	 });
+       
+       var click=$(this).attr('id');
+       $('body *').removeClass("note cestino promemoria gruppi").addClass(click);
         
 
     
