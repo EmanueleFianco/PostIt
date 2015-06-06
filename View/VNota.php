@@ -4,7 +4,7 @@ require_once("View.php");
 
 class VNota extends View {
 	
-	public function controllaInput($_chiave, $_valore) {
+	static function controllaInput($_chiave, $_valore) {
 		$titolo = '/[.]{0,40}/';
 		if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");
@@ -14,6 +14,7 @@ class VNota extends View {
 	public function getDati(){
 		if (isset($_REQUEST["Tipo"])) {
 			$tipo = $_REQUEST["Tipo"];
+			self::controllaInput($tipo, $_REQUEST[ucwords($tipo)]);
 			$dati = array($tipo => $_REQUEST[ucwords($tipo)],
 						  "id" => $_REQUEST["Id"]);
 		}
