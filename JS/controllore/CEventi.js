@@ -142,7 +142,6 @@ CEventi.prototype.setEventiGlobali = function(){
 		  });
 	  
 	  
-	  
 	  $(".TitoloNota").keypress(function() {
 		  
 		  	var Dati = view.getNota(this);
