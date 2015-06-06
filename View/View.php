@@ -4,15 +4,15 @@ class View {
 	
 	
 	public function getController() {
-		if (isset($_REQUEST['Controller']))
-			return $_REQUEST['Controller'];
+		if (isset($_REQUEST['controller']))
+			return $_REQUEST['controller'];
 		else
 			return false;
 	}
 	
 	public function getTask() {
-		if (isset($_REQUEST['Lavoro']))
-			return $_REQUEST['Lavoro'];
+		if (isset($_REQUEST['lavoro']))
+			return $_REQUEST['lavoro'];
 		else
 			return false;
 	}

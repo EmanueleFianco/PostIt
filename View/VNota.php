@@ -5,58 +5,34 @@ require_once("View.php");
 class VNota extends View {
 	
 	static function controllaInput($_chiave, $_valore) {
+		$id = '/^[[:digit:]]{1,11}$/';
+		$id_cartella = '/^[[:digit:]]{1,11}$/';
 		$titolo = '/[.]{0,40}/';
+		$testo = '/[.]{0,3000}/';
+		$posizione = '/^[0-9]{0,11}$/';
+		$colore = '/^#([A-F]|[0-9]){6}$/';
+		$tipo = '^(nota|promemoria)$/';
+		$condiviso = '^(TRUE|FALSE)$/';
+		/*$ultimo_a_modificare =      //Da vedere in futuro
+		$ora_data_avviso = */
 		if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");
 		}
 	}
 	
 	public function getDati(){
-		if (isset($_REQUEST["Tipo"])) {
-			$tipo = $_REQUEST["Tipo"];
-			self::controllaInput($tipo, $_REQUEST[ucwords($tipo)]);
-			$dati = array($tipo => $_REQUEST[ucwords($tipo)],
-						  "id" => $_REQUEST["Id"]);
+		if (isset($_REQUEST["tipo"])) {
+			$tipo = $_REQUEST["tipo"];
+			unset($_REQUEST["tipo"]);
 		}
-		
-		/*switch ($_REQUEST["Tipo"]) {
-			case 'testo':
-				$dati = array("testo" => $_REQUEST["Testo"],
-							  "id" => $_REQUEST["Id"]);
-			break;
-			case 'titolo':
-				$dati = array("titolo" => $_REQUEST["Titolo"],
-							  "id" => $_REQUEST["Id"]);
-			break;
-			case 'colore':
-				$dati = array("colore" => $_REQUEST["Colore"],
-							  "id" => $_REQUEST["Id"]);
-			break;
-			case 'tipo':
-				$dati = array("tipo" => $_REQUEST["Tipo"],
-							  "id" => $_REQUEST["Id"]);
-			break;
-			case 'condiviso':
-				$dati = array("condiviso" => $_REQUEST["Condiviso"],
-							  "id" => $_REQUEST["Id"]);
-			break;
-			case 'ultimo_a_modificare':
-				$dati = array("ultimo_a_modificare" => $_REQUEST["Ultimo_a_modificare"],
-							  "id" => $_REQUEST["Id"]);
-			break;
-			case 'ora_data_avviso':
-				$dati = array("ora_data_avviso" => $_REQUEST["Ora_data_avviso"],
-							  "id" => $_REQUEST["Id"]);
-			break;				
-		}*/
-
+		unset($_REQUEST["lavoro"]);
+		unset($_REQUEST["controller"]);
+		foreach ($_REQUEST as $key => $valore) {
+			self::controllaInput($key, $valore);
+			$dati[$key] = $valore;
+		}
 		return $dati;
 	}
-	
-	
-	
-	
-	
 }
 
 ?>

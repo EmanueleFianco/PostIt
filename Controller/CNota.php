@@ -17,7 +17,8 @@ class Cnota {
 		switch ($VNota->getTask()) {
 			case 'aggiorna':
 				return $this->Aggiorna();
-		
+			case 'aggiornaPosizioni':
+				return $this->AggiornaPosizioni();
 			}
 	}
 	
@@ -30,6 +31,13 @@ class Cnota {
 		$fnota=USingleton::getInstance('FNota');
 		
 		$fnota->updateNota($dati);
+	}
+	
+	public function AggiornaPosizioni() {
+		$VNota=USingleton::getInstance('VNota');
+		$dati = $VNota->getDati();
+		$db=USingleton::getInstance('Fdb');
+		
 	}
 	
 
