@@ -97,7 +97,7 @@ class ENota {
      *
      */
 	public function setTitolo($_titolo) {
-		$pattern = '/[.]{0,40}/';   //Vedere se è meglio mettere $pattern = '/[[:alnum:]\']{0,40}/';
+		$pattern = '/[.]{0,40}/';
 		if (preg_match($pattern, $_titolo)) {
 			$this->titolo = $_titolo;
 		} else {
