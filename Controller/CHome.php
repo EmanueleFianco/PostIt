@@ -1,5 +1,4 @@
 <?php
-
 class CHome {
 	
 	public function __construct(){
@@ -11,13 +10,12 @@ class CHome {
 	public function mux(){
 		
 		$VHome=USingleton::getInstance('VHome');
-		$CNota=USingleton::getInstance('CNota');
-			switch ($VHome->getController()) {
-        		case 'nota':
+		switch ($VHome->getController()) {
+        	case 'nota':
+        		$CNota=USingleton::getInstance('CNota');
         		return $CNota->mux();
-				}
-
-		 }		
+		}
+	}		
 }
 
 

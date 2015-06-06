@@ -1,21 +1,10 @@
 <?php
 require_once("../Foundation/Utility/USingleton.php");
+require_once("View.php");
 
-class VHome {
+class VHome extends View {
 	
-	public function getController() {
-		if (isset($_POST['Nota']))
-			return $_POST['Nota'];
-		else
-			return false;
-	}
-	
-	public function getTask() {
-		if (isset($_POST['Lavoro']))
-			return $_POST['Lavoro'];
-		else
-			return false;
-	}
+
 	
 }
 

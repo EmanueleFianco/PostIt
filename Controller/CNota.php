@@ -3,7 +3,7 @@ require_once("../Foundation/Fdb.php");
 require_once("../Foundation/FNota.php");
 require_once("../Foundation/Utility/USingleton.php");
 
-class Cnota{
+class Cnota {
 	
 
 	public function __construct(){
@@ -11,10 +11,10 @@ class Cnota{
 	}
 	
 	public function mux(){
-		$VHome=USingleton::getInstance('VHome');
+		$VNota=USingleton::getInstance('VNota');
 	
 		
-		switch ($VHome->getTask()) {
+		switch ($VNota->getTask()) {
 			case 'aggiorna':
 				return $this->Aggiorna();
 		
@@ -24,15 +24,12 @@ class Cnota{
 	public function Aggiorna(){
 		$VNota=USingleton::getInstance('VNota');
 		
-		$Dati = $VNota->getDati();
+		$dati = $VNota->getDati();
 		
 		$db=USingleton::getInstance('Fdb');
 		$fnota=USingleton::getInstance('FNota');
 		
-		$fnota->updateNota($Dati);
-		
-		var_dump($Dati);
-		
+		$fnota->updateNota($dati);
 	}
 	
 

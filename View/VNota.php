@@ -1,24 +1,25 @@
 <?php
 require_once("../Foundation/Utility/USingleton.php");
+require_once("View.php");
 
-class VNota{
+class VNota extends View {
 	
 	public function getDati(){
 		
 		
-		switch ($_POST["Tipo"]) {
+		switch ($_REQUEST["Tipo"]) {
 			case 'Testo':
 				$dati= array(
-						"testo" => $_POST["Testo"],
-						"id" => $_POST["Id"],
+						"testo" => $_REQUEST["Testo"],
+						"id" => $_REQUEST["Id"],
 						
 				);
 			break;
 	//----------------------------------------------------
 			case 'Titolo':
 				$dati= array(
-						"titolo" => $_POST["Titolo"],
-						"id" => $_POST["Id"],
+						"titolo" => $_REQUEST["Titolo"],
+						"id" => $_REQUEST["Id"],
 				
 				);
 			break;
