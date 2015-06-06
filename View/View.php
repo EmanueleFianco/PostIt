@@ -4,8 +4,8 @@ class View {
 	
 	
 	public function getController() {
-		if (isset($_REQUEST['Nota']))
-			return $_REQUEST['Nota'];
+		if (isset($_REQUEST['Controller']))
+			return $_REQUEST['Controller'];
 		else
 			return false;
 	}
