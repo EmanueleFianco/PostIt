@@ -24,6 +24,10 @@ body{
 #menu{
 	width:300px;
 }
+
+
+
+/**********banner***************/
 .banner{
     
     float: left;
@@ -35,6 +39,21 @@ body{
     width: 100%;
 
 }
+
+.banner.cestino{
+
+    background-color: #9494B8;
+
+}
+
+.banner.gruppi{
+    background-color: #CCCC52;
+}
+
+.banner.promemoria{
+    background-color:#006600;
+}
+/*******************************/
 
 .main{
 float: left;
@@ -57,6 +76,19 @@ background-color: #E6E1E1;
     display:none;
     z-index: 40;
 }
+.menubottom.cestino{
+    
+     background-color: #9494B8;
+}
+
+.menubottom.gruppi{
+    background-color: #CCCC52;
+}
+.menubottom.promemoria{
+    background-color: #006600;
+}
+
+
 #button{
 	height:30px;
 	width:60px;
@@ -76,6 +108,18 @@ background-color: #E6E1E1;
 
 }
 
+#menu_button.cestino{
+    
+    background-color: #9494B8;
+}
+
+#menu_button.gruppi{
+    background-color: #CCCC52;
+}
+
+#menu_button.promemoria{
+    background-color: #006600;
+}
 #menu_window{
     float: left;
     background-color: #CFD6E7;
