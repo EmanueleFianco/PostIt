@@ -7,20 +7,29 @@ var View = function(){
 View.prototype.getNota = function(nota){
 	
 	var Dati = new Object();
-	   Dati['titolo'] = {
-				Nota : "nota",
+	  Dati['titolo'] = {
+				Controller : "nota",
 				Lavoro: "aggiorna",
-				Tipo: "Titolo",
+				Tipo: "titolo",
 				Titolo: $(nota).text(),
-				Id: $(nota).nextAll().find(".id").text()
+				Id: $(nota).prevAll().text().trim()
 			};
+	   
 	  Dati['testo'] = {
-				Nota : "nota",
+				Controller : "nota",
 				Lavoro: "aggiorna",
-				Tipo: "Testo",
-				Testo: $(nota).html(),
-				Id: $(nota).parent().prev().text()
+				Tipo: "testo",
+				Testo: $(nota).find(".redactor_redactor").html(),
+				Id: $(nota).prevAll().text().trim()
 			};
+	  Dati['colore']={
+				Controller : "nota",
+				Lavoro: "aggiorna",
+				Tipo: "colore",
+				Colore: $(nota).find('.colorInput').val(),
+				Id: $(nota).prevAll().text().trim()
+			};
+	  
 	  
 
 	  return Dati;

@@ -136,6 +136,12 @@ CEventi.prototype.setEventiGlobali = function(){
   CEventi.prototype.AggiornaNota = function(){
 	
 	  
+	  $('.colorPicker').bind("change", function() {
+		  	var Dati = view.getNota(this);
+		    dati.setNote(Dati['colore'])
+		  });
+	  
+	  
 	  
 	  $(".TitoloNota").keypress(function() {
 		  
@@ -146,7 +152,7 @@ CEventi.prototype.setEventiGlobali = function(){
 			  dati.setNote(Dati['titolo'])
 		  })
 	   
-		$(".redactor_redactor").keypress(function() {
+		$(".TestoNota").keypress(function() {
 			var Dati = view.getNota(this);
 		    dati.setNote(Dati['testo'])
 		  }).focusout(function(){
