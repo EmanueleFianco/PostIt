@@ -12,7 +12,7 @@ View.prototype.getNota = function(nota){
 				Lavoro: "aggiorna",
 				Tipo: "titolo",
 				Titolo: $(nota).text(),
-				Id: $(nota).prevAll().text().trim()
+				Id: $(nota).parent().val()
 			};
 	   
 	  Dati['testo'] = {
@@ -20,14 +20,14 @@ View.prototype.getNota = function(nota){
 				Lavoro: "aggiorna",
 				Tipo: "testo",
 				Testo: $(nota).find(".redactor_redactor").html(),
-				Id: $(nota).prevAll().text().trim()
+				Id: $(nota).parent().val()
 			};
 	  Dati['colore']={
 				Controller : "nota",
 				Lavoro: "aggiorna",
 				Tipo: "colore",
 				Colore: $(nota).find('.colorInput').val(),
-				Id: $(nota).prevAll().text().trim()
+				Id: $(nota).parent().val()
 			};
 	  
 	  
