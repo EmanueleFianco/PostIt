@@ -49,6 +49,7 @@ $ris1=$fpartecipante->getPartecipantiByIdNota($co);
 $cose_da_cambiare= array('posizione' => 10,
 						 'id' => $idcart);
 $righeToccate=$fcartella->updateCartella($cose_da_cambiare);
+$max = $fnota->getMaxPosizioneNotaByCartella($idcart);
 
 /*$pos = 105;
 $query = $db->db;

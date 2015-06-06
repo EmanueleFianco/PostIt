@@ -72,5 +72,11 @@ class FNota extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->delete($valori);
 	}
+	
+	public function getMaxPosizioneNotaByCartella($_id_cartella) {
+		$this->db->auto_increment = $this->auto_increment;
+		$this->db->setParam($this->table,"id_cartella",":id_cartella");
+		return $this->db->loadAsArray("max(posizione)",$_id_cartella);
+	}
 
 }
