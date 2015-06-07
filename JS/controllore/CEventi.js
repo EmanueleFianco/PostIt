@@ -53,30 +53,43 @@ CEventi.prototype.setEventiGlobali = function(){
  
   
   
-  CEventi.prototype.setNotaAnimation = function(){
+CEventi.prototype.setNotaAnimation = function(){
 	  
-		
-		
+	  $(".redactor").redactor({
+	        imageUpload: '/your_image_upload_script/',
+	    });
+	 
+	  var $container = $('#sortable').packery({
+		    columnWidth: 300,
+		    rowHeight: 100
+		  });
+	
+		var $itemElems = $container.find('.nota');
+		$itemElems.draggable();
+		$container.packery( 'bindUIDraggableEvents', $itemElems );
+
   //-----------------------TESTO NOTA -----------------------------//
+		
+		
 	$(".TestoNota").mouseenter(function() {
 		$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-		$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
+		$(".nota").draggable("disable");
 		
 		
 		}).mouseleave(function() {
 			$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-			$("#sortable1, #sortable2,#sortable3").sortable("enable");
+			$(".nota").draggable("enable");
 		  });
 	
 	//-----------------------TITOLO NOTA -----------------------------//
 	$(".TitoloNota").mouseenter(function() {
 		$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
-		$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
+		$(".nota").draggable("disable");
 		
 		
 		}).mouseleave(function() {
 			$(this).find(".redactor_toolbar").fadeTo("slow", 0);
-			$("#sortable1, #sortable2,#sortable3").sortable("enable");
+			$(".nota").draggable("enable");
 		  });
 	    
 	//-----------------------COLOR PICKER -----------------------------//
@@ -87,22 +100,21 @@ CEventi.prototype.setEventiGlobali = function(){
 						
 		 });
 	
-	
 		$(".colorPicker").mouseenter(function(){
-				$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
+				$(".nota").draggable("disable");
 	    }).mouseleave(function(){
-	    	$("#sortable1, #sortable2,#sortable3").sortable("enable");
+	    	$(".nota").draggable("enable");
 	    });
  
 	 //-----------------------EDIT NOTA -----------------------------//   
        
-		  $.contextMenu({
+		$.contextMenu({
 		        selector: '.editnota', 
 		        trigger: 'left',
-                        zIndex:900,
-                        autoHide:true,
-                        animation:{duration:800,show:"show",hide:"fadeOut"},
-                        items: {
+                zIndex:900,
+                autoHide:true,
+                animation:{duration:800,show:"show",hide:"fadeOut"},
+                items: {
 		            "note": {name: "Note", icon: "edit"},
 		            "promemoria": {name: "Promemoria", icon: "cut"},
 		            "gruppi": {name: "Gruppi", icon: "copy",
@@ -114,15 +126,12 @@ CEventi.prototype.setEventiGlobali = function(){
 		            
 		                }},
 		                    
-		            "cancella": {name: "Cancella", icon: "delete",callback:function(){
-                                    
-                                    var Dati=
-                                          {   
+		             "cancella": {name: "Cancella", icon: "delete",
+		            	 callback:function(){
+                                    var Dati={   
                                               id: $(this).parent(".nota").attr("data-id"),
                                               controller:"nota",
                                               lavoro:"cancella"
-                                              
-                                           
                                           };
                                     
                                     dati.setNote(Dati);
@@ -131,24 +140,15 @@ CEventi.prototype.setEventiGlobali = function(){
                             }},
 		        }
 		    });
-		  
-		              
-		
-		
-	
-		$(".editnota").mouseenter(function(){
-				$("#sortable1, #sortable2,#sortable3").sortable( "option", "disabled", true );
-	    }).mouseleave(function(){
-	    	$("#sortable1, #sortable2,#sortable3").sortable("enable");
-	    });
-        
-   // -------------------------------------------//     
-        
 
-	  
+	$(".editnota").mouseenter(function(){
+		$("#sortable").sortable( "option", "disabled", true );
+	}).mouseleave(function(){
+	    $("#sortable").sortable("enable");
+	});
   }
   
-  CEventi.prototype.AggiornaNota = function(){
+CEventi.prototype.AggiornaNota = function(){
 	
 	  
 	  $('.colorPicker').bind("change", function() {

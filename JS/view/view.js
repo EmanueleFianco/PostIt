@@ -39,9 +39,8 @@ View.prototype.getNota = function(nota){
 
 View.prototype.setNota = function(nota,tmpl,pos){
 	var html = Mustache.to_html(tmpl,nota);
-	$('#sortable'+pos).append(html);
-	
-	$('#sortable'+pos+" .nota").last().css('background-color',nota.colore);
+	$('#sortable').append(html);
+	$("#sortable .nota").last().css('background-color',nota.colore);
 }
 		
 
