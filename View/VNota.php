@@ -13,10 +13,12 @@ class VNota extends View {
 		$colore = '/^#([A-F]|[0-9]){6}$/';
 		$tipo = '^(nota|promemoria)$/';
 		$condiviso = '^(TRUE|FALSE)$/';
-		/*$ultimo_a_modificare =      //Da vedere in futuro
-		$ora_data_avviso = */
+		//$ora_data_avviso = Da vedere in futuro con il lato client
 		if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");
+		}
+		if($_chiave == "ultimo_a_modificare" && !filter_var($_chiave,FILTER_VALIDATE_EMAIL)) {
+			throw new Exception(ucwords($_chiave)." errato!");
 		}
 	}
 	

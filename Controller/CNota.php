@@ -12,50 +12,51 @@ class Cnota {
 	
 	public function mux(){
 		$VNota=USingleton::getInstance('VNota');
-	
-		
 		switch ($VNota->getTask()) {
 			case 'aggiorna':
 				return $this->Aggiorna();
 			case 'aggiornaPosizioni':
 				return $this->AggiornaPosizioni();
-                        case 'cancella':
-                                return $this->Cancella();
+            case 'cancella':
+                return $this->Cancella();
 			}
 	}
 	
 	public function Aggiorna(){
 		$VNota=USingleton::getInstance('VNota');
-		
 		$dati = $VNota->getDati();
-		
-		$db=USingleton::getInstance('Fdb');
 		$fnota=USingleton::getInstance('FNota');
-		
 		$fnota->updateNota($dati);
 	}
 	
 	public function AggiornaPosizioni() {
 		$VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
-		$db=USingleton::getInstance('Fdb');
 		
 	}
         
-        public function Cancella(){
-                
-               $VNota=USingleton::getInstance('VNota');
-		
+    public function Cancella(){
+        $VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
-		
-		$db=USingleton::getInstance('Fdb');
 		$fnota=USingleton::getInstance('FNota');
-                
-                $fnota->deleteNota($dati);
-            
-        }
-	
-
+		$fcartella=USingleton::getInstance('FCartella');
+		$cartella = $fcartella->getCartellaById($dati['id_cartella']);
+		$nota = $fnota->getNotaById($dati['id_nota']);
+		$nota_condivisa = $nota[0]['condiviso'];
+		$nome_cartella = $cartella[0]['nome'];
+		$tipo_cartella = $cartella[0]['tipo'];
+		if ($nome_cartella == "Cestino" || $tipo_cartella == "Gruppo" || $nota_condivisa == TRUE) {
+			unset($dati['id_cartella']);
+			$fnota->deleteNota($dati);
+		} else {
+			$email_utente = $cartella[0]['email_utente'];
+			$cestino = $fcartella->getCartellaByParametro($email_utente,"nome","Cestino");
+			$id_cestino = $cestino[0]['id'];
+			$dati = array("id_cartella" => $id_cestino,
+						  "id" => $dati['id_nota']);
+			$fnota->updateNota($dati);									
+		}
+    }
 }
 
 ?>

@@ -36,11 +36,11 @@ class FNota extends Fdb {
 	public function getNotaById($_id)
 	{
 		$this->db->setParam($this->table,"id",":id");
-	    return $this->db->loadAsArray("*",$_id);
+	    return $this->db->queryParametro("*",$_id);
 	}
 	
-	public function getNoteByCartella($_id_cartella,$_posizione_iniziale = NULL,$_posizione_finale = NULL,$_tipo_ordinamento = NULL) {
-	if (!isset($_posizione_iniziale)) {
+	public function getNoteByCartella($_id_cartella,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
+	if (!isset($_posizione_finale)) {
 			$keydb = "id_cartella";
 			$bind = ":".$keydb;
 		} else {
@@ -51,7 +51,7 @@ class FNota extends Fdb {
 			}
 		}
 		$this->db->setParam($this->table,$keydb,$bind);
-		return $this->db->loadAsArray("*",$_id_cartella,$_posizione_iniziale,$_posizione_finale,$_tipo_ordinamento);
+		return $this->db->loadAsArray("*",$_id_cartella,$_posizione_finale,$_posizione_iniziale);
 	}
 	
 	public function updateNota($dati) {
@@ -76,7 +76,7 @@ class FNota extends Fdb {
 	public function getMaxPosizioneNotaByCartella($_id_cartella) {
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,"id_cartella",":id_cartella");
-		return $this->db->loadAsArray("max(posizione)",$_id_cartella);
+		return $this->db->queryParametro("max(posizione)", $_id_cartella);
 	}
 
 }

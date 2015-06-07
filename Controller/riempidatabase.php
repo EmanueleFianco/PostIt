@@ -23,11 +23,17 @@ $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();
 $futente->inserisciUtente($utente,$idimage);
 $cart=new ECartella('Note', 1, '#ffffff');
+$cestino=new ECartella('Cestino', 2, '#ffffff');
 $n1=new ENota("Prima nota", "questa è una prima nota", 0, "#66ff00");
 $fcartella=USingleton::getInstance('FCartella');
 $fcartella->inserisciCartella($cart,'privata',$utente->getEmail());
-$idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
-$idcart=$idcart[0]['id'];
+$fcartella->inserisciCartella($cestino,'privata',$utente->getEmail());
+$idcart1=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
+foreach ($idcart1 as $key => $valore) {
+	if ($valore['nome'] == "Note") {
+		$idcart=$valore['id'];
+	}
+}
 $fnota=USingleton::getInstance('FNota');
 for ($i=0;$i<150;$i++) {
 	$n1->setPosizione($i);

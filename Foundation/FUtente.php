@@ -24,7 +24,7 @@ Class FUtente extends Fdb {
 	public function getUtenteByEmail($_email)
 	{ 
 	     $this->db->setParam($this->table,"email",":email");
-	     return $this->db->loadAsArray("*",$_email);
+	     return $this->db->queryParametro("*",$_email);
 	}
 	
 	public function updateUtente($dati) {

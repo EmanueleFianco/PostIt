@@ -23,7 +23,7 @@ Class FPartecipante extends Fdb {
 	public function getPartecipanteByEmail($_email)
 	{
 	     $this->db->setParam($this->table,"email",":email");
-	     return $this->db->loadAsArray("*",$_email);
+	     return $this->db->queryParametro("*",$_email);
 	}
 	
 	public function getPartecipantiByIdCartella($_id_cartella) {

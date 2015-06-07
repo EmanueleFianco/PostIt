@@ -31,9 +31,16 @@ $fnota=USingleton::getInstance('FNota');
 $fpartecipante=USingleton::getInstance('FPartecipante');
 $fpartecipano=USingleton::getInstance('FPartecipano');
 $fcondividono=USingleton::getInstance('FCondividono');
-$idcart=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
-$idcart=$idcart[0]['id'];
-$note = $fnota->getNoteByCartella($idcart,0,9);
+
+$idcart1=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
+foreach ($idcart1 as $key => $valore) {
+	if ($valore['nome'] == "Note") {
+		$idcart=$valore['id'];
+	}
+}
+$max = $fnota->getMaxPosizioneNotaByCartella($idcart);
+$max = $max[0]['max(posizione)'];
+$note = $fnota->getNoteByCartella($idcart,$max);
 $part=new EPartecipante('emanuefff', 'gggg', 'emanuele.fianco@gmail.com', 'admin');
 $fpartecipante->inserisciPartecipante($part);
 $p['id_cartella']= $idcart;
@@ -49,7 +56,6 @@ $ris1=$fpartecipante->getPartecipantiByIdNota($co);
 $cose_da_cambiare= array('posizione' => 10,
 						 'id' => $idcart);
 $righeToccate=$fcartella->updateCartella($cose_da_cambiare);
-$max = $fnota->getMaxPosizioneNotaByCartella($idcart);
 
 /*$pos = 105;
 $query = $db->db;
