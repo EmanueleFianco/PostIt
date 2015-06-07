@@ -44,29 +44,54 @@ class Fdb
 	
 	 }
 	 
-	 public function loadAsArray($_column,$_value,$_posizione_iniziale = NULL,$_posizione_finale = NULL,$_tipo_ordinamento = NULL)
+	 public function loadAsArray($_column,$_value,$_posizione_finale = NULL,$_posizione_iniziale = NULL)
 	 {
 	 	 $sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
-	 	 if (!is_array($this->keydb)) {
-	 	 	$sql = $sql.$this->keydb." = ".$this->bind;
-	 	 	$query=$this->db->prepare($sql);
-	 	 	$query->bindValue($this->bind,$_value);
-	 	 } else {
-	 	 	if (!isset($_posizione_finale)) {
-	 	 		$_posizione_finale = $_posizione_iniziale + 100;
+	 	 if (isset($_posizione_finale)) {
+	 	 	if (!isset($_posizione_iniziale)) {
+	 	 		$_posizione_iniziale = $_posizione_finale - 10;
 	 	 	}
-	 	 	$sql = $sql.$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]." >= ".$this->bind[1]. " AND ".$this->keydb[1]." < ".$this->bind[2]." ORDER BY ".$this->keydb[1];
-	 	 	if (isset($_tipo_ordinamento)) {
+	 	 	$sql = $sql.$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]." > ".$this->bind[1]. " AND ".$this->keydb[1]." <= ".$this->bind[2]." ORDER BY ".$this->keydb[1];
+	 	 	if (isset($this->keydb[2])) {
 	 	 		$sql = $sql." ".$this->keydb[2];
+	 	 	} else {
+	 	 		$sql = $sql." DESC";
 	 	 	}
 	 	 	$query=$this->db->prepare($sql);
 	 	 	$query->bindValue($this->bind[0],$_value);
 	 	 	$query->bindValue($this->bind[1],$_posizione_iniziale);
 	 	 	$query->bindValue($this->bind[2],$_posizione_finale);
+	 	 } else {
+	 	 	$sql = $sql = $sql.$this->keydb." = ".$this->bind;
+	 	 	$query=$this->db->prepare($sql);
+	 	 	$query->bindValue($this->bind,$_value);
 	 	 }
 	     $query->execute();
 	     $result=$query->fetchAll(PDO::FETCH_ASSOC);
 	     return $result;
+	 }
+	 
+	 public function queryParametro($_column, $_parametri) {
+	 	$sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
+	 	if (is_array($this->keydb)) {
+	 		$sql = $sql.$this->keydb[0]." = ".$this->bind[0];
+	 		foreach ($_parametri as $key => $valore) {
+	 			if ($key != 0) {
+	 				$sql = $sql." AND ".$this->keydb[$key]." = ".$this->bind[$key];
+	 			}
+	 		}
+	 		$query=$this->db->prepare($sql);
+	 		foreach ($_parametri as $key => $valore) {
+	 			$query->bindValue($this->bind[$key],$_parametri[$key]);
+	 		}
+	 	} else {
+	 		$sql = $sql = $sql.$this->keydb." = ".$this->bind;
+	 		$query=$this->db->prepare($sql);
+	 		$query->bindValue($this->bind,$_parametri);
+	 	}
+	 	$query->execute();
+	 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
+	 	return $result;
 	 }
 	 
 
