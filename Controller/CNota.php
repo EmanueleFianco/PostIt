@@ -19,6 +19,8 @@ class Cnota {
 				return $this->Aggiorna();
 			case 'aggiornaPosizioni':
 				return $this->AggiornaPosizioni();
+                        case 'cancella':
+                                return $this->Cancella();
 			}
 	}
 	
@@ -39,6 +41,19 @@ class Cnota {
 		$db=USingleton::getInstance('Fdb');
 		
 	}
+        
+        public function Cancella(){
+                
+               $VNota=USingleton::getInstance('VNota');
+		
+		$dati = $VNota->getDati();
+		
+		$db=USingleton::getInstance('Fdb');
+		$fnota=USingleton::getInstance('FNota');
+                
+                $fnota->deleteNota($dati);
+            
+        }
 	
 
 }

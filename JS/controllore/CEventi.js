@@ -49,11 +49,11 @@ CEventi.prototype.setEventiGlobali = function(){
 
     
     });
-
+  
+ 
+  
+  
   CEventi.prototype.setNotaAnimation = function(){
-		
-	
-	
 	  
 		
 		
@@ -99,8 +99,10 @@ CEventi.prototype.setEventiGlobali = function(){
 		  $.contextMenu({
 		        selector: '.editnota', 
 		        trigger: 'left',
-		        
-		        items: {
+                        zIndex:900,
+                        autoHide:true,
+                        animation:{duration:800,show:"show",hide:"fadeOut"},
+                        items: {
 		            "note": {name: "Note", icon: "edit"},
 		            "promemoria": {name: "Promemoria", icon: "cut"},
 		            "gruppi": {name: "Gruppi", icon: "copy",
@@ -112,13 +114,26 @@ CEventi.prototype.setEventiGlobali = function(){
 		            
 		                }},
 		                    
-		            "cancella": {name: "Cancella", icon: "delete"},
+		            "cancella": {name: "Cancella", icon: "delete",callback:function(){
+                                    
+                                    var Dati=
+                                          {   
+                                              id: $(this).parent(".nota").attr("data-id"),
+                                              controller:"nota",
+                                              lavoro:"cancella"
+                                              
+                                           
+                                          };
+                                    
+                                    dati.setNote(Dati);
+                                    console.log(Dati);
+                                    $(this).parent(".nota").hide();
+                            }},
 		        }
 		    });
 		  
-		  $('.editnota').on('click', function(e){
-		        console.log('clicked', this);
-		    })
+		              
+		
 		
 	
 		$(".editnota").mouseenter(function(){
@@ -161,5 +176,7 @@ CEventi.prototype.setEventiGlobali = function(){
 		
 		
   }
+  
+  
 	
 }
