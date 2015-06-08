@@ -60,13 +60,21 @@ CEventi.prototype.setNotaAnimation = function(){
 	    });
 	 
 	  var $container = $('#sortable').packery({
-		    columnWidth: 300,
-		    rowHeight: 100
+		    rowHeight: 50,
+		    "percentPosition": true,
 		  });
+	  $container.packery('bindResize');
 	
 		var $itemElems = $container.find('.nota');
 		$itemElems.draggable();
 		$container.packery( 'bindUIDraggableEvents', $itemElems );
+		
+		$container.packery( 'on', 'layoutComplete',
+				  function() {
+			var Dati = view.getNota(this);
+		
+				  }
+				);
 
   //-----------------------TESTO NOTA -----------------------------//
 		
@@ -141,11 +149,7 @@ CEventi.prototype.setNotaAnimation = function(){
 		        }
 		    });
 
-	$(".editnota").mouseenter(function(){
-		$("#sortable").sortable( "option", "disabled", true );
-	}).mouseleave(function(){
-	    $("#sortable").sortable("enable");
-	});
+	
   }
   
 CEventi.prototype.AggiornaNota = function(){

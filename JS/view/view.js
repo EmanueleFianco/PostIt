@@ -29,6 +29,18 @@ View.prototype.getNota = function(nota){
 				colore: $(nota).find('.colorInput').val(),
 				id: $(nota).parent().data("id")
 			};
+	  Dati['posizione']={
+			  
+		};
+	  $.each($("#sortable").find(".nota"),function(i,nota){
+		  var posizione= new Object();
+		  
+		  posizione[$(nota).data("id")]={
+				  x : $(nota).css("left"),
+				  y: $(nota).css("top")
+		  }
+	    	//aggiungi = Dati['posizione'].push(posizione);
+	    })
 	  
 	  
 

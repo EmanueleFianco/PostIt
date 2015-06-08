@@ -11,6 +11,7 @@
 }
 .reductor{
 	width: 100%;
+	
 }
 
 .colorPicker{
@@ -37,8 +38,8 @@
 
 .nota{
 margin-top:1%;
-margin-left:2%;
-width: 30%;
+margin-left:4%;
+width: 28%;
 background-color: #E0E2E6;
 float:left;
 
