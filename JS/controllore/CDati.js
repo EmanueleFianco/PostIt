@@ -24,6 +24,16 @@ CDati.prototype.getNote = function(){
 	
 }
 
+CDati.prototype.setPosizioni= function(data){
+	
+	return $.ajax({
+		type: 'POST',
+		url : 'Controller/index.php',
+		data: data,
+	});
+
+}
+
 CDati.prototype.setNote = function(data){
 	
 	return $.ajax({

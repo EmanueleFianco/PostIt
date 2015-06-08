@@ -10,7 +10,6 @@ View.prototype.getNota = function(nota){
 	  Dati['titolo'] = {
 				controller : "nota",
 				lavoro: "aggiorna",
-				tipo: "titolo",
 				titolo: $(nota).text(),
 				id: $(nota).parent().data("id")
 			};
@@ -18,20 +17,16 @@ View.prototype.getNota = function(nota){
 	  Dati['testo'] = {
 				controller : "nota",
 				lavoro: "aggiorna",
-				tipo: "testo",
 				testo: $(nota).find(".redactor_redactor").html(),
 				id: $(nota).parent().data("id")
 			};
 	  Dati['colore']={
 				controller : "nota",
 				lavoro: "aggiorna",
-				tipo: "colore",
 				colore: $(nota).find('.colorInput').val(),
 				id: $(nota).parent().data("id")
 			};
-	  Dati['posizione']={
-			  
-		};
+	  
 	  $.each($("#sortable").find(".nota"),function(i,nota){
 		  var posizione= new Object();
 		  
@@ -39,7 +34,7 @@ View.prototype.getNota = function(nota){
 				  x : $(nota).css("left"),
 				  y: $(nota).css("top")
 		  }
-	    	//aggiungi = Dati['posizione'].push(posizione);
+	    	//aggiungi = Dati.push('posizione')
 	    })
 	  
 	  
