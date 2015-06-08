@@ -35,7 +35,7 @@ class Cnota {
 		$fnota=USingleton::getInstance('FNota');
 		$dati = $VNota->getDati();
 		$dati = $dati['posizioni'];
-		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(144);
+		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(129);
 		$max_posizione = $max_posizione[0]["max(posizione)"];
 		$query=$fdb->getDb();
 		$query->beginTransaction();
