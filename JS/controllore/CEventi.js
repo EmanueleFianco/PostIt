@@ -75,7 +75,6 @@ CEventi.prototype.setNotaAnimation = function(){
 		$container.packery( 'on', 'layoutComplete',
 				  function() {
 			var elems = $container.packery('getItemElements');
-			console.log($(elems));
 			var array = new Array();
 			var principio= new Array();
 			$.each(elems,function(i,elem){
@@ -104,7 +103,6 @@ CEventi.prototype.setNotaAnimation = function(){
 			});
 			
 			principio=array;
-			//console.log(principio);
 			array.sort(function(a, b){return a.y-b.y});
 
 			var inizio=0;
@@ -145,8 +143,9 @@ CEventi.prototype.setNotaAnimation = function(){
 			$.each(fusione,function(i,fusione_element){
 				if(fusione_element.id!=principio[i].id){
 					elementiInvia.push({
-						"id":fusione_element.id,
 						"posizione":i,
+						"id":fusione_element.id
+						
 						
 				})
 				}
@@ -159,16 +158,14 @@ CEventi.prototype.setNotaAnimation = function(){
 					"lavoro":"aggiornaPosizioni",
 					"posizioni":elementiInvia
 			}
-			
-			
-			$.when(dati.setPosizioni(finale)).done(function(a1){
-				if(a1[1]=="succes"){
-					console.log("mandate");
-				}
-				
-			})
-			//console.log(finale);
-			//console.log(array);
+			if (finale.posizioni.length != 0) {
+				$.when(dati.setPosizioni(finale)).done(function(a1){
+					if(a1[1]=="succes"){
+						console.log("mandate");
+					}
+					
+				})
+			}
 			});
 
   //-----------------------TESTO NOTA -----------------------------//

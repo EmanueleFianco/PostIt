@@ -31,8 +31,23 @@ class Cnota {
 	
 	public function AggiornaPosizioni() {
 		$VNota=USingleton::getInstance('VNota');
+		$fdb=USingleton::getInstance('Fdb');
+		$fnota=USingleton::getInstance('FNota');
 		$dati = $VNota->getDati();
-		
+		$dati = $dati['posizioni'];
+		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(144);
+		$max_posizione = $max_posizione[0]["max(posizione)"];
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			foreach ($dati as $key => $value) {
+				$value['posizione'] = $max_posizione - $value['posizione'];
+				$fnota->updateNota($value);
+			}
+			$query->commit();
+		} catch (Exception $e) {
+			$query->rollBack();
+		}
 	}
         
     public function Cancella(){

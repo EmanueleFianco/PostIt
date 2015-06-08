@@ -121,5 +121,9 @@ class Fdb
 	 	$result=$query->rowCount();
 	 	return $result;
 	 }
+	 
+	 public function getDb() {
+	 	return $this->db;
+	 }
 }
 ?>
