@@ -6,7 +6,15 @@ class VNota extends View {
 	
 	static function controllaInput($_chiave, $_valore) {
 		if (is_array($_valore)) {
-			//Inserire controlli
+			foreach ($_valore as $key => $val) {
+				$posizioni[] = $val['posizione'];
+			}
+			sort($posizioni);
+			foreach ($posizioni as $key => $val) {
+				if ($key != $val) {
+					throw new Exception("Valori delle posizioni sbagliati");
+				}
+			}
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
 			$id_cartella = '/^[[:digit:]]{1,11}$/';
