@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Giu 05, 2015 alle 18:05
+-- Generation Time: Giu 09, 2015 alle 18:55
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `cartella` (
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `posizione` int(11) NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `cartella`:
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `condiviso` tinyint(1) NOT NULL,
   `ultimo_a_modificare` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ora_data_avviso` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5773 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7123 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `nota`:
@@ -209,7 +209,7 @@ DELIMITER ;
 -- Indexes for table `cartella`
 --
 ALTER TABLE `cartella`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `posizione` (`posizione`), ADD UNIQUE KEY `email_utente` (`email_utente`);
+ ADD PRIMARY KEY (`id`), ADD KEY `email_utente` (`email_utente`);
 
 --
 -- Indexes for table `condividono`
@@ -255,12 +255,12 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `cartella`
 --
 ALTER TABLE `cartella`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=126;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=162;
 --
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5773;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7123;
 --
 -- Limiti per le tabelle scaricate
 --

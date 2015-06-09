@@ -49,7 +49,7 @@ class Fdb
 	 	 $sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
 	 	 if (isset($_posizione_finale)) {
 	 	 	if (!isset($_posizione_iniziale)) {
-	 	 		$_posizione_iniziale = $_posizione_finale - 10;
+	 	 		$_posizione_iniziale = $_posizione_finale - 12;
 	 	 	}
 	 	 	$sql = $sql.$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]." > ".$this->bind[1]. " AND ".$this->keydb[1]." <= ".$this->bind[2]." ORDER BY ".$this->keydb[1];
 	 	 	if (isset($this->keydb[2])) {

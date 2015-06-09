@@ -5,7 +5,7 @@ require_once("View.php");
 class VNota extends View {
 	
 	static function controllaInput($_chiave, $_valore) {
-		if (is_array($_valore)) {
+		if ($_chiave == 'posizioni') {
 			foreach ($_valore as $key => $val) {
 				$posizioni[] = $val['posizione'];
 			}
@@ -15,6 +15,10 @@ class VNota extends View {
 					throw new Exception("Valori delle posizioni sbagliati");
 				}
 			}
+		} elseif ($_chiave == 'nota') {
+			foreach ($_valore as $key => $val) {
+				self::controllaInput($key, $valore);
+			}						
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
 			$id_cartella = '/^[[:digit:]]{1,11}$/';
