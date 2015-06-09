@@ -2,6 +2,9 @@
 require_once("../Foundation/Utility/USingleton.php");
 class View {
 	
+	public function invia($dati) {
+		echo json_encode($dati);
+	}
 	
 	public function getController() {
 		if (isset($_REQUEST['controller']))

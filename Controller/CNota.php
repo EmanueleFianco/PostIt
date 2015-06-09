@@ -55,6 +55,10 @@ class Cnota {
 		} catch (Exception $e) {
 			$query->rollBack();
 		}
+		$parametri['id_cartella'] = 160;
+		$parametri['posizione'] = $max_posizione; 
+		$nota = $fnota->getNotaByParametri($parametri);
+		$VNota->invia($nota);
 	}
 	
 	public function Aggiorna(){

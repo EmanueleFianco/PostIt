@@ -81,5 +81,15 @@ class FNota extends Fdb {
 		$this->db->setParam($this->table,"id_cartella",":id_cartella");
 		return $this->db->queryParametro("max(posizione)", $_id_cartella);
 	}
+	
+	public function getNotaByParametri($_parametri) {
+		foreach ($_parametri as $key => $valore) {
+			$keydb[] = $key;
+			$bind[] = ":".$key;
+			$valori[]=$valore;
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->queryParametro("*",$valori);
+	}
 
 }
