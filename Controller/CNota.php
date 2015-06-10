@@ -39,13 +39,13 @@ class Cnota {
 			$dati['posizione'] = $max_posizione - $dati['posizione'];
 			if (!isset($dati['ora_data_avviso'])) {
 				if (isset($dati['ultimo_a_modificare'])) {
-					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['ora_data_avviso'], $dati['partecipanti'], $dati['immagine']);
+					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['ora_data_avviso'], $dati['immagine'], $dati['partecipanti']);
 				} else {
 					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ora_data_avviso'], $dati['immagine']);
 				}
 			} else {
 				if (isset($dati['ultimo_a_modificare'])) {
-					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['partecipanti'], $dati['immagine']);
+					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['immagine'], $dati['partecipanti']);
 				} else {
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['immagine']);
 				}
@@ -58,7 +58,8 @@ class Cnota {
 		$parametri['id_cartella'] = 160;
 		$parametri['posizione'] = $max_posizione; 
 		$nota = $fnota->getNotaByParametri($parametri);
-		$VNota->invia($nota);
+		$id_nota = $nota['0']['id'];
+		$VNota->invia($id_nota);
 	}
 	
 	public function Aggiorna(){
