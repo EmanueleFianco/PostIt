@@ -50,74 +50,21 @@ CEventi.prototype.setEventiGlobali = function(){
     
     });
   
- 
+} 
   
   
-CEventi.prototype.setNotaAnimation = function(){
-	  
+CEventi.prototype.setNotaEvent = function(){
+	
 	  $(".redactor").redactor({
-	        imageUpload: '/your_image_upload_script/',
+		  placeholder: 'Scrivi una nuova nota',
+		  imageUpload: './Controller/upload.php'
+		  
 	    });
-	  
-	  
-	  
-	  
-	 
-	  function orderItems()  {
-		  var elems = $container.packery('getItemElements');
-		  for ( var i=0, len = elems.length; i < len; i++ ) {
-		      var elem = elems[i];
-		      $(elem).attr("tabindex",i);
-		    }
-		  
-		 
-			  
-		  
-		  }
-	  
-	  function ordinaInvia(){
-		  orderItems();
-		  var elementiInvia = new Array();
-		  $.each($(".nota"),function(i,fusione_element){
-				
-					elementiInvia.push({
-						"posizione":$(fusione_element).attr("tabindex"),
-						"id":$(fusione_element).data("id")
-				})
-				})
-			var finale= new Object();
-			finale ={
-					"controller":"nota",
-					"lavoro":"aggiornaPosizioni",
-					"posizioni":elementiInvia
-			}
-			$.when(dati.setPosizioni(finale)).done(function(a1){
-				if(a1[1]=="success"){
-					console.log("mandate");
-				}
-				
-			})
-		 
-
-	  }
-	  
 	  var $container = $('#sortable').packery({
 		    rowHeight: 100,
 		    "percentPosition": true,
 		    "isOriginLeft": true,
 		  });
-
-	
-		var $itemElems = $container.find('.nota');
-
-		$itemElems.draggable();
-		$container.packery( 'bindUIDraggableEvents', $itemElems );
-		$container.packery("on", 'layoutComplete', orderItems );
-		$container.packery("on", 'dragItemPositioned', ordinaInvia );
-		
-		
-		//-------------------------------------------
-	
 
   //-----------------------TESTO NOTA -----------------------------//
 		
@@ -157,7 +104,7 @@ CEventi.prototype.setNotaAnimation = function(){
 	    	$(".nota").draggable("enable");
 	    });
  
-	 //-----------------------EDIT NOTA -----------------------------//   
+//-----------------------EDIT NOTA -----------------------------//   
        
 		$.contextMenu({
 		        selector: '.editnota', 
@@ -175,8 +122,7 @@ CEventi.prototype.setNotaAnimation = function(){
 		                    "item2": {"name": "Nome_Gruppo"},
 		                    "item3": {"name": "Nome_Gruppo"}
 		            
-		                }},
-		                    
+		                }},          
 		             "cancella": {name: "Cancella", icon: "delete",
 		            	 callback:function(){
                                     var Dati={   
@@ -191,39 +137,43 @@ CEventi.prototype.setNotaAnimation = function(){
                             }},
 		        }
 		    });
-
+//------------------------------------------------------------------------------
 	
   }
   
-CEventi.prototype.AggiornaNota = function(){
+CEventi.prototype.setNotaChangeEvent = function(){
 	
-	  
 	  $('.colorPicker').bind("change", function() {
-		  	var Dati = view.getNota(this);
-		    dati.setNote(Dati['colore'])
+	//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
+		    var id= $(this).parent().attr("id");
+		    var valore= $(this).find('.colorInput').val();
+		    cnote.Aggiorna(id,"colore",valore);
+	//------------------------------------------------------------------------------
 		  });
-	  
-	  
-	  $(".TitoloNota").keypress(function() {
-		  
-		  	var Dati = view.getNota(this);
-		    dati.setNote(Dati['titolo'])
-		  }).focusout(function(){
-			  var Dati = view.getNota(this);
-			  dati.setNote(Dati['titolo'])
-		  })
-	   
-		$(".TestoNota").keypress(function() {
-			var Dati = view.getNota(this);
-		    dati.setNote(Dati['testo'])
-		  }).focusout(function(){
-			  var Dati = view.getNota(this);
-			  dati.setNote(Dati['testo'])
+	  $(".TitoloNota").keyup(function() {
+	//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
+		  var id = $(this).parent().attr("id");
+		  var valore = $(this).text();
+		  cnote.Aggiorna(id,"titolo",valore);
+	//-------------------------------------------------------------------------------	  	
 		  });
+		$(".TestoNota").keyup(function() {
+	//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
+			var id = $(this).parent().attr("id");
+			 var valore = $(this).find(".redactor_redactor").html();
+			 cnote.Aggiorna(id,"testo",valore);
+	//-------------------------------------------------------------------------------	
+		  });
+	
+	//   aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
+	//   Aggiornamento POSIZIONI
+		var $itemElems = $("#sortable").find('.nota').draggable();
 		
-		
+		$("#sortable").packery( 'bindUIDraggableEvents', $itemElems );
+		$("#sortable").packery("on", 'layoutComplete', view.getPosizioni );
+		$("#sortable").packery("on", 'dragItemPositioned', view.setPosizioni );
+	//------------------------------------------------------------------------------	
   }
   
   
-	
-}
+

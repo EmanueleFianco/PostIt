@@ -1,10 +1,24 @@
 #nota_space{
-     
+   	float:left;
      width: 100%;
      height: 100%;
      background-color: #DDDEE1;
      margin: auto;
 }
+#NuovaNotaSpace{
+	float:left;
+	width:100%;
+	 display: table;
+
+}
+
+.NuovaNota{
+	margin: 20px 35%;
+	width:30%;
+	float:left;
+	
+}
+
 .TestoNota{
     float: left;
     width: 100%;
@@ -58,7 +72,7 @@ height: 20%;
 }
 
 #sortable {
-	
+	float:left;
      width: 100%;
 	height: 100%;
 }
