@@ -11,23 +11,26 @@ class FNota extends Fdb {
 		$this->bind="(:id_cartella,:titolo,:testo,:posizione,:colore,:tipo,:condiviso,:ultimo_a_modificare,:ora_data_avviso)";
 	}
 
-	public function inserisciNota(ENota $_object,$_id_cartella,$_tipo,$_condiviso)
+	public function inserisciNota(ENota $_object,$_id_cartella)
 	{
 		$dati=$_object->getAsArray();
 		$dati['id_cartella']=$_id_cartella;
-		$dati['tipo']=$_tipo;
-		$dati['condiviso']=$_condiviso;
+		$dati['condiviso']=FALSE;
 		$classe=get_class($_object);
-		if ($classe == 'ENotaCondivisa') {
-			//Qui andrà ricavata l'email del partecipante ultimo a modificare
-		} elseif ($classe == 'EPromemoriaCondiviso') {
-			//Qui andrà ricavata l'email del partecipante ultimo a modificare
-			//Qui andrà ricavata l'ora e la data di avviso
-		} elseif ($classe == 'EPromemoria') {
-			//Qui andrà ricavata l'ra e la data di avviso
+		if ($classe == 'ENota' || $classe == 'ENotaCondivisa') {
+			$dati['tipo'] = 'nota';
+			$dati['ora_data_avviso'] = '2015-06-09 18:37:00';   //Da levare in futuro
+			$dati['ultimo_a_modificare'] = 'emanuele.fianco@gmail.com';    //Da levare in futuro
+		} else {
+			$dati['tipo'] = 'promemoria';
+			$dati['ora_data_avviso'] = '2015-06-09 18:37:00';   //Da levare in futuro
+			//Da vedere come prendere l'ora e la data di avviso
 		}
-		$dati['ora_data_avviso']=NULL;   // Da togliere in futuro insieme alla riga 30
-		$dati['ultimo_a_modificare']=NULL;
+		if ($classe == 'ENotaCondivisa' || $classe == 'EPromemoriaCondiviso') {
+			$dati['condiviso'] = TRUE;
+			$dati['ultimo_a_modificare'] = 'emanuele.fianco@gmail.com';   //Da levare in futuro
+			//Da vedere come prendere l'ultimo a modificare
+		}
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);
@@ -77,6 +80,16 @@ class FNota extends Fdb {
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,"id_cartella",":id_cartella");
 		return $this->db->queryParametro("max(posizione)", $_id_cartella);
+	}
+	
+	public function getNotaByParametri($_parametri) {
+		foreach ($_parametri as $key => $valore) {
+			$keydb[] = $key;
+			$bind[] = ":".$key;
+			$valori[]=$valore;
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->queryParametro("*",$valori);
 	}
 
 }

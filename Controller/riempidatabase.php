@@ -22,9 +22,9 @@ $utente=new EUtente('emanuefff', 'password', 'Emanuele', 'Fianco', $image, 'eman
 $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();
 $futente->inserisciUtente($utente,$idimage);
-$cart=new ECartella('Note', 1, '#ffffff');
-$cestino=new ECartella('Cestino', 2, '#ffffff');
-$n1=new ENota("Prima nota", "questa è una prima nota", 0, "#66ff00");
+$cart=new ECartella('Note', 1, '#FFFFFF');
+$cestino=new ECartella('Cestino', 2, '#FFFFFF');
+$n1=new ENota("Prima nota", "questa è una prima nota", 0, "#66FF00");
 $fcartella=USingleton::getInstance('FCartella');
 $fcartella->inserisciCartella($cart,'privata',$utente->getEmail());
 $fcartella->inserisciCartella($cestino,'privata',$utente->getEmail());
@@ -37,6 +37,6 @@ foreach ($idcart1 as $key => $valore) {
 $fnota=USingleton::getInstance('FNota');
 for ($i=0;$i<150;$i++) {
 	$n1->setPosizione($i);
-	$fnota->inserisciNota($n1,$idcart,'privata',FALSE);	
+	$fnota->inserisciNota($n1,$idcart);	
 }
 ?>

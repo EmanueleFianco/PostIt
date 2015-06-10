@@ -31,8 +31,8 @@ class EPromemoria extends ENota {
     * @param DateTime $_ora_data_avviso
     * 
     */
-    public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore, $_ora_data_avviso) {
-		parent::__construct($_titolo, $_testo, $_immagine, $_posizione, $_colore);
+    public function __construct($_titolo, $_testo, $_posizione, $_colore,DateTime $_ora_data_avviso, $immagine = NULL) {
+		parent::__construct($_titolo, $_testo, $_posizione, $_colore, $_immagine);
 		$this->setOraDataAvviso($_ora_data_avviso);
 	}
 	
@@ -56,4 +56,19 @@ class EPromemoria extends ENota {
 	public function getOraDataAvviso() {
 		return $this->ora_data_avviso;
 	}
+	
+	public function getAsArray() {
+	$result=array();
+    	foreach($this as $key => $value) {
+    		if (!is_array($value) && !is_object($value)) {
+    			$result[$key] = $value;
+    		} elseif (is_object($value)) {
+    			if (get_class($value) == 'DateTime') {
+    				$result[$key] = $value->format('Y-m-d H:i:s');
+    			}
+    		}
+    	}
+    	return $result;
+	}
+	
 }

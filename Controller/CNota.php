@@ -13,6 +13,8 @@ class Cnota {
 	public function mux(){
 		$VNota=USingleton::getInstance('VNota');
 		switch ($VNota->getTask()) {
+			case 'nuova':
+				return $this->Nuova();
 			case 'aggiorna':
 				return $this->Aggiorna();
 			case 'aggiornaPosizioni':
@@ -20,6 +22,44 @@ class Cnota {
             case 'cancella':
                 return $this->Cancella();
 			}
+	}
+	
+	public function Nuova() {
+		$VNota=USingleton::getInstance('VNota');
+		$dati = $VNota->getDati();
+		$fnota=USingleton::getInstance('FNota');
+		$fdb=USingleton::getInstance('Fdb');
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$max_posizione = $fnota->getMaxPosizioneNotaByCartella(160);
+			$max_posizione = $max_posizione[0]["max(posizione)"];
+			$max_posizione += 1;
+			$dati = $dati['nota'];
+			$dati['posizione'] = $max_posizione - $dati['posizione'];
+			if (!isset($dati['ora_data_avviso'])) {
+				if (isset($dati['ultimo_a_modificare'])) {
+					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['ora_data_avviso'], $dati['immagine'], $dati['partecipanti']);
+				} else {
+					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ora_data_avviso'], $dati['immagine']);
+				}
+			} else {
+				if (isset($dati['ultimo_a_modificare'])) {
+					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['immagine'], $dati['partecipanti']);
+				} else {
+					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['immagine']);
+				}
+			}
+			$fnota->inserisciNota($nota,160);
+			$query->commit();
+		} catch (Exception $e) {
+			$query->rollBack();
+		}
+		$parametri['id_cartella'] = 160;
+		$parametri['posizione'] = $max_posizione; 
+		$nota = $fnota->getNotaByParametri($parametri);
+		$id_nota = $nota['0']['id'];
+		$VNota->invia($id_nota);
 	}
 	
 	public function Aggiorna(){
@@ -35,7 +75,7 @@ class Cnota {
 		$fnota=USingleton::getInstance('FNota');
 		$dati = $VNota->getDati();
 		$dati = $dati['posizioni'];
-		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(136);
+		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(160);
 		$max_posizione = $max_posizione[0]["max(posizione)"];
 		$query=$fdb->getDb();
 		$query->beginTransaction();

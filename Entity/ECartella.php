@@ -122,7 +122,7 @@ class ECartella{
      *
      */	
 	public function setColore($_colore){
-		$pattern='/^#([a-f]|[0-9]){6}$/';
+		$pattern='/^#([A-F]|[0-9]){6}$/';
 		if(preg_match($pattern, $_colore)){
 			$this->colore=$_colore;
 		} else {

@@ -36,10 +36,16 @@ class EPromemoriaCondiviso extends EPromemoria {
     * @param array $_partecipanti
     * 
     */
-    public function __construct($_titolo, $_testo, $_immagine, $_posizione, $_colore,EPartecipante $_ultimo_a_modificare, $_ora_data_avviso, $_partecipanti) {
-		parent::__construct($_titolo, $_testo, $_immagine, $_posizione, $_colore, $_ora_data_avviso);
+    public function __construct($_titolo, $_testo, $_posizione, $_colore,EPartecipante $_ultimo_a_modificare,DateTime $_ora_data_avviso, $_immagine = NULL, $_partecipanti = NULL) {
+		parent::__construct($_titolo, $_testo, $_posizione, $_colore, $_ora_data_avviso, $_immagine);
 		$this->setUltimoAModificare($_ultimo_a_modificare);
-		$this->setPartecipanti($_partecipanti);
+	    if (isset($_partecipanti)) {
+	    	if (is_array($_partecipanti)) {
+	    		$this->setPartecipanti($_partecipanti);
+	    	} else {
+	    		$this->Push($_partecipanti);
+	    	}
+	    }	
 	}
 	
 

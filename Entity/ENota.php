@@ -165,7 +165,7 @@ class ENota {
      *
      */
 	public function setColore($_colore) {
-	$pattern='/^#([a-f]|[0-9]){6}$/';
+	$pattern='/^#([A-F]|[0-9]){6}$/';
 		if(preg_match($pattern, $_colore)){
 			$this->colore=$_colore;
 		} else {
@@ -253,7 +253,7 @@ class ENota {
     	$result=array();
     	foreach($this as $key => $value) {
     		if (!is_array($value)) {
-    			$result[$key]= $value;
+    			$result[$key] = $value;
     		}
     	}
     	return $result;
