@@ -38,7 +38,7 @@ View.prototype.disegna = function(tmplMain,tmplNuovaNota){
 	$("body").append(html);	
 	$("#menu_window").hide();
 	
-	$("#nota_space").prepend(tmplNuovaNota);
+	$("#NuovaNotaSpace").prepend(tmplNuovaNota);
 }
 
 

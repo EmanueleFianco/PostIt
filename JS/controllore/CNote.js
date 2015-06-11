@@ -22,6 +22,49 @@ CNote.prototype.aggiungiNota = function(nota){
 
 }
 
+CNote.prototype.EliminaNota = function(id_nota){
+	delete Struttura[id_nota];
+	console.log(Struttura);
+}
+
+
+
+CNote.prototype.CreaNota = function(attributo,valore){
+
+	Struttura["Nuova"] = {
+			
+			id_cartella:136,
+			titolo : "Nuovo Titolo",
+			testo: "Nuovo testo",
+			posizione:0,
+			colore: "#FF2222",
+			tipo: "nota",
+			condiviso: "FALSE",
+			//ultimo_a_modificare: "",
+			//ora_data_avviso: ""			
+		}
+	Struttura["Nuova"][attributo]=valore;
+	var Data = new Object();
+	var nota = new Array();
+	var Elemento = new Object();
+	nota.push(Struttura["Nuova"]);
+	Data ={
+			"controller":"nota",
+			"lavoro":"nuova",
+			"nota": nota	
+	};
+	$.when(dati.setNote(Data)).done(function(a1){
+		var id = a1[0].id;
+		Elemento[id] = Struttura["Nuova"];
+		cnote.EliminaNota("Nuova");
+		Struttura[id]=Elemento[id];
+		$(".NuovaNota").attr("id",id);
+	});
+	//console.log(Dati);
+
+}
+
+
 CNote.prototype.getStruttura = function(){
 
 	return Struttura;
@@ -85,6 +128,10 @@ CNote.prototype.AggiornaPosizioni = function(Posizioni){
 
 
 CNote.prototype.Aggiorna = function(id_nota,attributo,valore){
+	if(id_nota === ""){
+		this.CreaNota(attributo,valore);
+	}
+	else{
 	// aggiornamento struttura dati
 	Struttura[id_nota][attributo]=valore;
 	//-------------------------------
@@ -103,9 +150,8 @@ CNote.prototype.Aggiorna = function(id_nota,attributo,valore){
 			break;
 				
 	}
-		
 	dati.setNote(Data);	
-	
+	}
 }
 
 

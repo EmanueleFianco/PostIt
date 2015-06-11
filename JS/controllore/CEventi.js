@@ -64,10 +64,12 @@ CEventi.prototype.setNotaEvent = function(){
 		    rowHeight: 100,
 		    "percentPosition": true,
 		    "isOriginLeft": true,
+		    "bindResize":true
 		  });
 
   //-----------------------TESTO NOTA -----------------------------//
-		
+	
+	
 		
 	$(".TestoNota").mouseenter(function() {
 		$(this).find(".redactor_toolbar").css('visibility','visible').hide().fadeTo("slow", 1).css('visibility','visible');
@@ -93,8 +95,8 @@ CEventi.prototype.setNotaEvent = function(){
 	//-----------------------COLOR PICKER -----------------------------//
 	$('.colorPicker').tinycolorpicker();
 	$('.colorPicker').bind("change", function(){		
-	        var colore = $(this).find(".colorinput").val();
-			$(this).parents(".nota").css('background-color',colore);
+	        var colore = $(this).find(".colorInput").val();
+			$(this).parents(".nota,.NuovaNota").css('background-color',colore);
 						
 		 });
 	
@@ -160,10 +162,13 @@ CEventi.prototype.setNotaChangeEvent = function(){
 		$(".TestoNota").keyup(function() {
 	//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
 			var id = $(this).parent().attr("id");
-			 var valore = $(this).find(".redactor_redactor").html();
-			 cnote.Aggiorna(id,"testo",valore);
+			var valore = $(this).find(".redactor_redactor").html();
+			cnote.Aggiorna(id,"testo",valore);
 	//-------------------------------------------------------------------------------	
-		  });
+			
+		}).keydown(function(){
+			$("#sortable").packery();
+		});
 	
 	//   aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
 	//   Aggiornamento POSIZIONI

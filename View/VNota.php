@@ -17,7 +17,7 @@ class VNota extends View {
 			}
 		} elseif ($_chiave == 'nota') {
 			foreach ($_valore as $key => $val) {
-				self::controllaInput($key, $valore);
+				self::controllaInput($key, $_valore);
 			}						
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
