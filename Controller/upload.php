@@ -19,7 +19,8 @@ if ($_FILES['file']['type'] == 'image/png'
 
 	// displaying file
 	$array = array(
-			'filelink' => './tmp/'.$filename
+			'filelink' => 'index.php?controller=nota&lavoro=prendiImmagine&file='.$filename,
+			'lavoro'=>$_REQUEST['lavoro']
 	);
 
 	echo stripslashes(json_encode($array));

@@ -7,8 +7,8 @@ class FImmagine extends Fdb {
 		$this->auto_increment = FALSE;
 		$this->db = USingleton::getInstance('Fdb');
 		$this->table="immagine";
-		$this->keydb="(id,id_nota,nome,size,type,immagine_piccola,immagine_media,immagine_grande,immagine_originale)";
-		$this->bind="(:id,:id_nota,:nome,:size,:type,:immagine_piccola,:immagine_media,:immagine_grande,:immagine_originale)";
+		$this->keydb="(id_nota,nome,size,type,immagine_piccola,immagine_media,immagine_grande,immagine_originale)";
+		$this->bind="(:id_nota,:nome,:size,:type,:immagine_piccola,:immagine_media,:immagine_grande,:immagine_originale)";
 	}
 	
 	public function inserisciImmagine(EImmagine $_object,$_id_nota = NULL)
@@ -20,10 +20,10 @@ class FImmagine extends Fdb {
 		$this->db->inserisci($dati);
 	}
 	
-	public function getImmagineById($_id)
+	public function getImmagineByNome($_nome)
 	{
-		$this->db->setParam($this->table,"id",":id");
-		return $this->db->queryParametro("*",$_id);
+		$this->db->setParam($this->table,"nome",":nome");
+		return $this->db->queryParametro("*",$_nome);
 	}
 	
 	public function getImmaginiByNota($_id_nota,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {

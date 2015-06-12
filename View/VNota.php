@@ -61,13 +61,14 @@ class VNota extends View {
 	
 	public function getImmagine() {
 		$_FILES['file']['type'] = strtolower($_FILES['file']['type']);
+		$dir = "../tmp/";
 		$immagine['size'] = $_FILES['file']['size'];
 		$immagine['type'] = $_FILES['file']['type'];
-		$type = substr($immagine['type'],5);
+		$type = substr($immagine['type'],6);
 		$filename = md5(date('YmdHis')).'.'.$type;
 		self::controllaImmagine($immagine);
-		$file = $dir.$filename;
-		return $file;
+		$immagine['tmp_name'] = $dir.$filename;
+		return $immagine;
 	}
 }
 

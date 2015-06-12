@@ -1,6 +1,8 @@
 <?php
 require_once("../Foundation/Fdb.php");
 require_once("../Foundation/FNota.php");
+require_once("../Foundation/FImmagine.php");
+require_once("../Entity/EImmagine.php");
 require_once("../Foundation/Utility/USingleton.php");
 
 class Cnota {
@@ -21,8 +23,10 @@ class Cnota {
 				return $this->AggiornaPosizioni();
             case 'cancella':
                 return $this->Cancella();
-            case 'aggiungi_immagine':
-            	return $this->AggiungiImmagine();
+            case 'prendiImmagine':
+            	return $this->getImmagine();
+            case 'upload':
+            	return $this->aggiungiImmagine();
 			}
 	}
 	
@@ -34,7 +38,7 @@ class Cnota {
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$max_posizione = $fnota->getMaxPosizioneNotaByCartella(136);
+			$max_posizione = $fnota->getMaxPosizioneNotaByCartella(162);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
 			$max_posizione += 1;
 			$dati = $dati['nota'][0];
@@ -53,12 +57,12 @@ class Cnota {
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']/*, $dati['immagine']*/);
 				}
 			}
-			$fnota->inserisciNota($nota,136);
+			$fnota->inserisciNota($nota,162);
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollBack();
 		}
-		$parametri['id_cartella'] = 136;
+		$parametri['id_cartella'] = 162;
 		$parametri['posizione'] = $max_posizione; 
 		$nota = $fnota->getNotaByParametri($parametri);
 		$id_nota = $nota['0']['id'];
@@ -81,7 +85,7 @@ class Cnota {
 		$fnota=USingleton::getInstance('FNota');
 		$dati = $VNota->getDati();
 		$dati = $dati['posizioni'];
-		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(136);
+		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(162);
 		$max_posizione = $max_posizione[0]["max(posizione)"];
 		$query=$fdb->getDb();
 		$query->beginTransaction();
@@ -119,15 +123,28 @@ class Cnota {
 		}
     }
     
-    public function AggiungiImmagine() {
+    public function getImmagine(){
+    	$FImmagine=USingleton::getInstance('FImmagine');
+    	$image = $FImmagine->getImmagineByNome($_REQUEST['file']);
+    	$handle = fopen("../tmp/".$_REQUEST['file'],"w+");
+    	fwrite($handle,$image[0]['immagine_originale']);
+    	$file = "../tmp/".$_REQUEST['file'];
+    	header('Content-Type: image/'.basename($image[0]['type']));
+    	header('Content-Length: ' . $image[0]['size']);
+    	echo file_get_contents($file);
+    	unlink($file);
+    }
+    
+    public function aggiungiImmagine(){ //Da vedere con il fatto di id_nota
     	$VNota=USingleton::getInstance('VNota');
-    	if (count($_FILES)) {
-    		$immagine = $VNota->getImmagine();
-    		$dir = 'tmp/';
-    		move_uploaded_file($_FILES['file']['tmp_name'], $immagine);
-    		$array = array('filelink' => $immagine);
-    		return stripslashes(json_encode($array));
-    	} // Aggiungere le cose all'else pattuite con gioele
+    	$FImmagine=USingleton::getInstance('FImmagine');
+    	$immagine = $VNota->getImmagine();
+    	move_uploaded_file($_FILES['file']['tmp_name'], $immagine['tmp_name']);
+    	$img = new EImmagine(basename($immagine['tmp_name']), $immagine['size'], $immagine['type'], $immagine['tmp_name']);
+    	$FImmagine->inserisciImmagine($img);
+    	$array = array('filelink' => 'Controller/index.php?controller=nota&lavoro=prendiImmagine&file='.basename($immagine['tmp_name']));
+    	unlink($immagine['tmp_name']);
+    	return stripslashes(json_encode($array));
     }
 }
 ?>

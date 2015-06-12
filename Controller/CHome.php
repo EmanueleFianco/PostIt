@@ -2,10 +2,6 @@
 class CHome {
 	
 	public function __construct(){
-		if (count($_FILES)) {
-			$_REQUEST['controller'] = 'nota';
-			$_REQUEST['lavoro'] = 'aggiungi_immagine';						
-		}
 		$contenuto=$this->mux();
 		echo $contenuto;
 	}

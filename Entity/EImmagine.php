@@ -1,9 +1,7 @@
 <?php
 
 class EImmagine {
-	
-	private $id;
-	
+		
 	private $nome;
 	
 	private $size;
@@ -23,11 +21,10 @@ class EImmagine {
 		$this->setSize($_size);
 		$this->setType($_type);
 		$this->setImmagine($_file_temp);
-		$this->setId();
 	}
 	
 	public function setNome($_nome) {
-		$pattern='/[.]{0,100}/';
+		$pattern='/[.]{0,40}/';
 		if (preg_match($pattern,$_nome)) {
 			$this->nome = $_nome;
 		} else {
@@ -90,10 +87,6 @@ class EImmagine {
 		unlink($path."grande_".$this->nome);
 	}
 	
-	public function setId() {
-		$this->id = md5($this->immagine_piccola);
-	}
-	
 	public function getNome() {
 		return $this->nome;
 	}
@@ -116,10 +109,6 @@ class EImmagine {
 		} else {
 			return $this->immagine_originale;
 		}
-	}
-	
-	public function getId() {
-		return $this->id;
 	}
 	
 	public function getAsArray(){
