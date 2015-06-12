@@ -21,6 +21,10 @@ class Cnota {
 				return $this->AggiornaPosizioni();
             case 'cancella':
                 return $this->Cancella();
+            case 'prendiImmagine':
+            	return $this->getImmagine();
+            case 'upload':
+            	return $this->aggiungiImmagine();
 			}
 	}
 	
@@ -115,6 +119,49 @@ class Cnota {
 						  "id" => $dati['id_nota']);
 			$fnota->updateNota($dati);									
 		}
+    }
+    
+    public function getImmagine(){
+    	//prelevare immagine dal db
+    	// ovviamente questo e un esempio e fa schifo
+    	$file = '../tmp/'.$_REQUEST['file'];
+    	header('Content-Type: image/jpeg');
+    	header('Content-Length: ' . filesize($file));
+    	echo file_get_contents($file);
+  
+    }
+    
+    public function aggiungiImmagine(){
+    	// ovviamente da rifare in modo che vada sul db 
+    	$VNota=USingleton::getInstance('VNota');
+    	$dir = '../tmp/';
+    	$_FILES['file']['type'] = strtolower($_FILES['file']['type']);
+    	
+    	
+    	if ($_FILES['file']['type'] == 'image/png'
+    			|| $_FILES['file']['type'] == 'image/jpg'
+    			|| $_FILES['file']['type'] == 'image/gif'
+    			|| $_FILES['file']['type'] == 'image/jpeg'
+    			|| $_FILES['file']['type'] == 'image/pjpeg')
+    	{
+    		// setting file's mysterious name
+    		$filename = md5(date('YmdHis')).'.jpg';
+    		$file = $dir.$filename;
+    	
+    		// copying
+    		move_uploaded_file($_FILES['file']['tmp_name'], $file);
+    	
+    		// displaying file
+    		$array = array(
+    				'filelink' => 'Controller/index.php?controller=nota&lavoro=prendiImmagine&file='.$filename,
+    				
+    		);
+    	
+    		//$VNota->invia($array);
+    		echo stripslashes(json_encode($array));
+    	
+    	}
+
     }
 }
 

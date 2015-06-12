@@ -3,6 +3,7 @@ class CHome {
 	
 	public function __construct(){
 		$contenuto=$this->mux();
+	
 		echo $contenuto;
 	}
 	

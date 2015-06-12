@@ -54,11 +54,39 @@ CEventi.prototype.setEventiGlobali = function(){
   
   
 CEventi.prototype.setNotaEvent = function(){
+	$.datepicker.regional['it'] = {
+			closeText: 'Закрыть',
+			prevText: 'Pros',
+			nextText: 'Prec',
+			currentText: 'Сегодня',
+			monthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
+			'Luglio','Agosto','Settembre','ottobre','Novembre','Dicembre'],
+			monthNamesShort: ['Gen','Feb','Mar','Apr','Mag','Giu',
+			'Lug','Ago','Set','Ott','Nov','Dic'],
+			dayNames: ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'],
+			dayNamesShort: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
+			dayNamesMin: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
+			weekHeader: 'Не',
+			dateFormat: 'dd.mm.yy',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: false,
+			yearSuffix: ''
+		};
+	
+	$.datepicker.setDefaults($.datepicker.regional['it']);
+	$(".time").datetimepicker({
+		timeText: 'Orario',
+		hourText: 'Ora',
+		minuteText: 'Minuti',
+		currentText: 'Ora',
+		closeText: 'Chiudi'
+	});
+	
 	
 	  $(".redactor").redactor({
 		  placeholder: 'Scrivi una nuova nota',
-		  imageUpload: './Controller/upload.php'
-		  
+		  imageUpload: 'Controller/index.php?controller=nota&lavoro=upload'
 	    });
 	  var $container = $('#sortable').packery({
 		    rowHeight: 100,

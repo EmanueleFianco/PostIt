@@ -40,8 +40,9 @@ CNote.prototype.CreaNota = function(attributo,valore){
 			colore: "#FF2222",
 			tipo: "nota",
 			condiviso: "FALSE",
-			//ultimo_a_modificare: "",
-			//ora_data_avviso: ""			
+			ultimo_a_modificare: 0,
+			ora_data_avviso: 0
+			
 		}
 	Struttura["Nuova"][attributo]=valore;
 	var Data = new Object();
@@ -54,7 +55,8 @@ CNote.prototype.CreaNota = function(attributo,valore){
 			"nota": nota	
 	};
 	$.when(dati.setNote(Data)).done(function(a1){
-		var id = a1[0].id;
+		var dati = $.parseJSON(a1);
+		var id = dati.id;
 		Elemento[id] = Struttura["Nuova"];
 		cnote.EliminaNota("Nuova");
 		Struttura[id]=Elemento[id];
