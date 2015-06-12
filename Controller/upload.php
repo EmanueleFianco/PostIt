@@ -1,5 +1,5 @@
 <?php
-$dir = '../tmp/';
+$dir = 'tmp/';
 
 $_FILES['file']['type'] = strtolower($_FILES['file']['type']);
 

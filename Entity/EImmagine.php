@@ -111,9 +111,11 @@ class EImmagine {
 			return $this->immagine_piccola;
 		} elseif ($_grandezza == "media") {
 			return $this->immagine_media;
-		} else {
+		} elseif ($_grandezza == "grande") {
 			return $this->immagine_grande;
-		}	
+		} else {
+			return $this->immagine_originale;
+		}
 	}
 	
 	public function getId() {

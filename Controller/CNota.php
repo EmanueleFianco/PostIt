@@ -21,6 +21,8 @@ class Cnota {
 				return $this->AggiornaPosizioni();
             case 'cancella':
                 return $this->Cancella();
+            case 'aggiungi_immagine':
+            	return $this->AggiungiImmagine();
 			}
 	}
 	
@@ -116,6 +118,16 @@ class Cnota {
 			$fnota->updateNota($dati);									
 		}
     }
+    
+    public function AggiungiImmagine() {
+    	$VNota=USingleton::getInstance('VNota');
+    	if (count($_FILES)) {
+    		$immagine = $VNota->getImmagine();
+    		$dir = 'tmp/';
+    		move_uploaded_file($_FILES['file']['tmp_name'], $immagine);
+    		$array = array('filelink' => $immagine);
+    		return stripslashes(json_encode($array));
+    	} // Aggiungere le cose all'else pattuite con gioele
+    }
 }
-
 ?>

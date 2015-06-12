@@ -131,7 +131,7 @@ class ENota {
      * @param string $_immagine
      *
      */
-    public function setImmagine($_immagine) {
+    public function setImmagine(array $_immagine) {
 		$this->immagine = $_immagine;
 	}
 
