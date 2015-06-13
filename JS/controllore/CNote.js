@@ -94,6 +94,7 @@ CNote.prototype.getDataAjaxPosizioni= function(){
 	Data ={
 			"controller":"nota",
 			"lavoro":"aggiornaPosizioni",
+			"id_cartella":$("#nota_space").attr("id_cartella"),
 			"posizioni":Posizioni	
 	};
 	return Data;

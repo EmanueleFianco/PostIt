@@ -209,15 +209,21 @@ CEventi.prototype.setNotaChangeEvent = function(){
 		$("#sortable").packery("on", 'layoutComplete', view.getPosizioni );
 		$("#sortable").packery("on", 'dragItemPositioned', view.setPosizioni );
 	//------------------------------------------------------------------------------	
-	/* da risolvere!!!	  
+	// da risolvere!!!	  
 		$("#imgadd").on( "click",function(){
 				var nota =cnote.getNota($(".NuovaNota").attr("id"));
 				nota["id"]=$(".NuovaNota").attr("id");
-				html=view.setNota(nota,Template["Nota"]);
-				$("#sortable").packery( 'prepended', html );
-				var $itemElems = $("#sortable").find('.nota').draggable();
+				html=view.setNota(nota,Template["Nota"],"TRUE");
+				$("#sortable").packery( 'appended', html );
+				$(".NuovaNota").remove();
+				view.aggiungiNuova(Template["NuovaNota"]);
+				eventi.setNotaEvent();
+				eventi.setNotaChangeEvent();
+				$container.packery('reloadItems');
+				$("#sortable").packery();
+			
 			  });
-*/
+
 
 
 }

@@ -17,8 +17,8 @@ var CHome = function(){
 		Template["NuovaNota"]= N3[0];
 		Template["Cartella"]=N4[0];
 				
-		view.disegna(Template["Main"],Template["NuovaNota"]);	
-		
+		view.disegna(Template["Main"]);	
+		view.aggiungiNuova(Template["NuovaNota"]);
 		
 		eventi.setEventiGlobali();
 		

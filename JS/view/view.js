@@ -25,8 +25,20 @@ View.prototype.setPosizioni= function(){
 	cnote.AggiornaPosizioni(posizioni);
 }
 
-View.prototype.setNota = function(nota,tmpl){
+View.prototype.setNota = function(nota,tmpl,nuova){
+	
 	var html = Mustache.to_html(tmpl,nota);
+	if(nuova == "TRUE"){
+		$('#sortable').prepend(html);
+		$("#sortable .nota").first().css('background-color',nota.colore);
+		$("#sortable .time").first().css({
+			'background-color':nota.colore,
+			'border':'none',
+			
+		});
+		
+	}
+	else{
 	$('#sortable').append(html);
 	$("#sortable .nota").last().css('background-color',nota.colore);
 	$("#sortable .time").last().css({
@@ -34,8 +46,12 @@ View.prototype.setNota = function(nota,tmpl){
 		'border':'none',
 		
 	});
+	}
 	return html;
 }
+
+
+
 
 View.prototype.setCartella = function(cartella,tmpl){
 	var html = Mustache.to_html(tmpl,cartella);
@@ -46,11 +62,15 @@ View.prototype.setCartella = function(cartella,tmpl){
 }
 		
 
-View.prototype.disegna = function(tmplMain,tmplNuovaNota){
+View.prototype.disegna = function(tmplMain){
 
 	var html = Mustache.to_html(tmplMain);
 	$("body").append(html);	
 	$("#menu_window").hide();
+	
+}
+
+View.prototype.aggiungiNuova  = function(tmplNuovaNota){
 	
 	$("#NuovaNotaSpace").prepend(tmplNuovaNota);
 }
