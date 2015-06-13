@@ -24,6 +24,16 @@ CDati.prototype.getNote = function(){
 	
 }
 
+CDati.prototype.getCartelle = function(email){
+	
+	return $.ajax({
+		type: 'POST',
+		url : 'Controller/index.php?controller=cartella&lavoro=getCartelle&email='+email,
+	});
+	
+}
+
+
 CDati.prototype.setPosizioni= function(data){
 	
 	return $.ajax({

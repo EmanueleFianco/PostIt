@@ -14,6 +14,9 @@ class CHome {
         	case 'nota':
         		$CNota=USingleton::getInstance('CNota');
         		return $CNota->mux();
+        	case 'cartella':
+        		$CCartella=USingleton::getInstance('CCartella');
+        		return $CCartella->mux();
 		}
 	}		
 }

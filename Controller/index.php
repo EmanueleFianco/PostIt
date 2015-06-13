@@ -8,8 +8,10 @@ require_once('../Entity/EUtente.php');
 
 require_once('../Controller/CHome.php');
 require_once('../Controller/CNota.php');
+require_once('../Controller/CCartella.php');
 require_once('../View/VHome.php');
 require_once('../View/VNota.php');
+require_once('../View/VCartella.php');
 
 
 require_once("../Foundation/Fdb.php");

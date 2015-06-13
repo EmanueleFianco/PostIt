@@ -31,6 +31,7 @@ $fcartella->inserisciCartella($cestino,'privata',$utente->getEmail());
 $idcart1=$fcartella->getCartelleByUtente('emanuele.fianco@gmail.com');
 foreach ($idcart1 as $key => $valore) {
 	if ($valore['nome'] == "Note") {
+	
 		$idcart=$valore['id'];
 	}
 }

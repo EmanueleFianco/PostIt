@@ -29,6 +29,20 @@ View.prototype.setNota = function(nota,tmpl){
 	var html = Mustache.to_html(tmpl,nota);
 	$('#sortable').append(html);
 	$("#sortable .nota").last().css('background-color',nota.colore);
+	$("#sortable .time").last().css({
+		'background-color':nota.colore,
+		'border':'none',
+		
+	});
+	return html;
+}
+
+View.prototype.setCartella = function(cartella,tmpl){
+	var html = Mustache.to_html(tmpl,cartella);
+	$('#menubottom').append(html);
+	if(cartella.nome=="Note"){
+		$("#nota_space").attr("id_cartella",cartella.id);
+	}
 }
 		
 

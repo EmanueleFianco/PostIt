@@ -42,11 +42,11 @@ CEventi.prototype.setEventiGlobali = function(){
         		  })
         	    })
         	 });
-       
+    //---- da vedere animazioni!!!!   
        var click=$(this).attr('id');
        $('body *').removeClass("note cestino promemoria gruppi").addClass(click);
         
-
+//---------------------------
     
     });
   
@@ -55,10 +55,6 @@ CEventi.prototype.setEventiGlobali = function(){
   
 CEventi.prototype.setNotaEvent = function(){
 	$.datepicker.regional['it'] = {
-			closeText: 'Закрыть',
-			prevText: 'Pros',
-			nextText: 'Prec',
-			currentText: 'Сегодня',
 			monthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
 			'Luglio','Agosto','Settembre','ottobre','Novembre','Dicembre'],
 			monthNamesShort: ['Gen','Feb','Mar','Apr','Mag','Giu',
@@ -88,12 +84,12 @@ CEventi.prototype.setNotaEvent = function(){
 		  placeholder: 'Scrivi una nuova nota',
 		  imageUpload: 'Controller/index.php?controller=nota&lavoro=upload'
 	    });
-	  var $container = $('#sortable').packery({
-		  	"rowHeight": 100,
-		    "percentPosition": true,
-		    "isOriginLeft": true,
-		    "bindResize":true
-		  });
+	 
+	// ------------------------TASTO ADD NOTA ---------------------//
+	  
+	
+	  
+	  
 
   //-----------------------TESTO NOTA -----------------------------//
 	
@@ -173,6 +169,7 @@ CEventi.prototype.setNotaEvent = function(){
   
 CEventi.prototype.setNotaChangeEvent = function(){
 	
+	
 	  $('.colorPicker').bind("change", function() {
 	//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
 		    var id= $(this).parent().attr("id");
@@ -198,6 +195,12 @@ CEventi.prototype.setNotaChangeEvent = function(){
 			$("#sortable").packery();
 		});
 	
+		
+		 var $container = $('#sortable').packery({
+			  	"rowHeight": 100,
+			    "isOriginLeft": true,
+			    "bindResize":true
+			  });
 	//   aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
 	//   Aggiornamento POSIZIONI
 		var $itemElems = $("#sortable").find('.nota').draggable();
@@ -206,7 +209,18 @@ CEventi.prototype.setNotaChangeEvent = function(){
 		$("#sortable").packery("on", 'layoutComplete', view.getPosizioni );
 		$("#sortable").packery("on", 'dragItemPositioned', view.setPosizioni );
 	//------------------------------------------------------------------------------	
-  }
+	/* da risolvere!!!	  
+		$("#imgadd").on( "click",function(){
+				var nota =cnote.getNota($(".NuovaNota").attr("id"));
+				nota["id"]=$(".NuovaNota").attr("id");
+				html=view.setNota(nota,Template["Nota"]);
+				$("#sortable").packery( 'prepended', html );
+				var $itemElems = $("#sortable").find('.nota').draggable();
+			  });
+*/
+
+
+}
   
   
 

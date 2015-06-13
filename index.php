@@ -15,6 +15,7 @@
 <script type="text/javascript" src="JS/controllore/CDati.js"></script>
 <script type="text/javascript" src="JS/controllore/CEventi.js"></script>
 <script type="text/javascript" src="JS/controllore/CNote.js"></script>
+<script type="text/javascript" src="JS/controllore/CCartelle.js"></script>
 <script type="text/javascript" src="JS/view/view.js"></script>
 
 

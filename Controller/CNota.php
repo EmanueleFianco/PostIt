@@ -38,10 +38,10 @@ class Cnota {
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$max_posizione = $fnota->getMaxPosizioneNotaByCartella(162);
+			$dati = $dati['nota'][0];
+			$max_posizione = $fnota->getMaxPosizioneNotaByCartella($dati["id_cartella"]);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
 			$max_posizione += 1;
-			$dati = $dati['nota'][0];
 			
 			$dati['posizione'] = $max_posizione - $dati['posizione'];
 			if ($dati['ora_data_avviso']) {
@@ -57,12 +57,12 @@ class Cnota {
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']/*, $dati['immagine']*/);
 				}
 			}
-			$fnota->inserisciNota($nota,162);
+			$fnota->inserisciNota($nota,$dati["id_cartella"]);
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollBack();
 		}
-		$parametri['id_cartella'] = 162;
+		$parametri['id_cartella'] = $dati["id_cartella"];
 		$parametri['posizione'] = $max_posizione; 
 		$nota = $fnota->getNotaByParametri($parametri);
 		$id_nota = $nota['0']['id'];
@@ -85,7 +85,7 @@ class Cnota {
 		$fnota=USingleton::getInstance('FNota');
 		$dati = $VNota->getDati();
 		$dati = $dati['posizioni'];
-		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(162);
+		$max_posizione = $fnota->getMaxPosizioneNotaByCartella(136);
 		$max_posizione = $max_posizione[0]["max(posizione)"];
 		$query=$fdb->getDb();
 		$query->beginTransaction();
