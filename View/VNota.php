@@ -38,6 +38,17 @@ class VNota extends View {
 		
 	}
 	
+	static function controllaImmagine($_immagine) {
+		if (is_int($_immagine['size']) && $_immagine['size'] < 2097152) {
+			$type = '/^image\/(gif)|(jpeg)|(jpg)|(pjpeg)|(png)$/';
+			if (!preg_match($type,$_immagine['type'])) {
+				throw new Exception("Mime Type non accettato!");
+			}
+		} else {
+			throw new Exception("Immagine troppo grande!");
+		}
+	}
+	
 	public function getDati(){
 		unset($_REQUEST["lavoro"]);
 		unset($_REQUEST["controller"]);
@@ -46,6 +57,18 @@ class VNota extends View {
 			$dati[$key] = $valore;
 		}
 		return $dati;
+	}
+	
+	public function getImmagine() {
+		$_FILES['file']['type'] = strtolower($_FILES['file']['type']);
+		$dir = "../tmp/";
+		$immagine['size'] = $_FILES['file']['size'];
+		$immagine['type'] = $_FILES['file']['type'];
+		$type = substr($immagine['type'],6);
+		$filename = md5(date('YmdHis')).'.'.$type;
+		self::controllaImmagine($immagine);
+		$immagine['tmp_name'] = $dir.$filename;
+		return $immagine;
 	}
 }
 

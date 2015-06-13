@@ -33,7 +33,7 @@ CNote.prototype.CreaNota = function(attributo,valore){
 
 	Struttura["Nuova"] = {
 			
-			id_cartella:136,
+			id_cartella:162,
 			titolo : "Nuovo Titolo",
 			testo: "Nuovo testo",
 			posizione:0,
