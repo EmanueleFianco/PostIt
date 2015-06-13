@@ -1,14 +1,14 @@
 #nota_space{
    	float:left;
      width: 100%;
-     background-color: #DDDEE1;
+     background-color: #C1D1E0;
      margin: auto;
 }
 #NuovaNotaSpace{
 	float:left;
 	width:100%;
 	 display: table;
-
+	background-color: #C1D1E0;
 }
 
 .OpzioniNota{

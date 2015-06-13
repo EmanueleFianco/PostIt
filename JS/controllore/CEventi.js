@@ -89,7 +89,7 @@ CEventi.prototype.setNotaEvent = function(){
 		  imageUpload: 'Controller/index.php?controller=nota&lavoro=upload'
 	    });
 	  var $container = $('#sortable').packery({
-		    rowHeight: 100,
+		  	"rowHeight": 100,
 		    "percentPosition": true,
 		    "isOriginLeft": true,
 		    "bindResize":true
