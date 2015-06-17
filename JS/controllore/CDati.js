@@ -15,7 +15,7 @@ CDati.prototype.getTemplate = function(tmpl){
 	
 }
 
-CDati.prototype.getNote = function(){
+CDati.prototype.getNote = function(id_cartella,notepresenti,numeronote){
 	
 	return $.ajax({
 		type: 'POST',

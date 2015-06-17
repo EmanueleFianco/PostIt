@@ -23,18 +23,19 @@ var CHome = function(){
 		eventi.setEventiGlobali();
 		
 		$.when(dati.getCartelle('emanuele.fianco@gmail.com')).done(function(cartelle){
+			//da incapsulare dentro CCartelle
 			var Cartelle = $.parseJSON(cartelle);
 			$.each(Cartelle,function(i,Cartella){
 					// Creo Struttura Dati
 					ccartelle.aggiungiCartella(Cartella);
 					view.setCartella(Cartella,Template["Cartella"]);
 			})
+
+		eventi.setMenu();
 			
 		
-		
-		
 			$.when(dati.getNote()).done(function(note){
-
+// da incapsulare dentro CNote
 			var array = $.parseJSON(note);
 				$.each(array,function(i,nota){
 						view.setNota(nota,Template["Nota"]);

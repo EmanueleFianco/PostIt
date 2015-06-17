@@ -9,6 +9,11 @@
 <script src="JS/Utility/jquery.contextMenu.js"type="text/javascript"></script>
 <script src="JS/Utility/packery.pkgd.min.js"type="text/javascript"></script>
 <script src="JS/Utility/jquery-ui-timepicker-addon.js"type="text/javascript"></script>
+<script src="JS/Utility/modernizr.custom.25376.js"type="text/javascript"></script>
+<script src="JS/Utility/classie.js"type="text/javascript"></script>
+
+
+
 
 
 <script type="text/javascript" src="JS/controllore/CHome.js"></script>
@@ -25,8 +30,11 @@
 <link href="css/tinycolorpicker.css" rel="stylesheet" type="text/css">
 <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
 <link href="css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">	
-<link href="css/jquery.contextMenu.css" rel="stylesheet"
-  type="text/css">	
+<link href="css/jquery.contextMenu.css" rel="stylesheet"  type="text/css">	
+<link rel="stylesheet" href="css/normalize.css" type="text/css" >
+<link rel="stylesheet"  href="css/demo.css"type="text/css" >
+<link rel="stylesheet"  href="css/component.css"type="text/css" >	
+
 
 <script type="text/javascript" src="JS/index.js"></script>
 </head>

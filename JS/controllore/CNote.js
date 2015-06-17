@@ -62,7 +62,7 @@ CNote.prototype.CreaNota = function(attributo,valore){
 		Struttura[id]=Elemento[id];
 		$(".NuovaNota").attr("id",id);
 	});
-	//console.log(Dati);
+	
 
 }
 
@@ -78,6 +78,27 @@ CNote.prototype.getNota = function(id_nota){
 CNote.prototype.getAttributo = function(id_nota,attributo){
 
 	return Struttura[id_nota][attributo];
+}
+
+CNote.prototype.getNoteByCartella=function(id_cartella,notepresenti,numeronote)
+{
+   
+    var ref=this;
+    $.each(Struttura,function(i,elemento){
+    	ref.EliminaNota(elemento.id);
+    });
+    $(".nota").remove();
+
+    
+}
+
+
+
+
+
+CNote.prototype.countNote=function(){
+	var num=Object.keys(Struttura).length;
+	return num;
 }
 
 CNote.prototype.getDataAjaxPosizioni= function(){
