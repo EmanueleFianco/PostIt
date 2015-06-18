@@ -20,11 +20,11 @@ class FRaccoglitore_cartelle extends Fdb {
 	public function getCartelleByUtente($_email_utente,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
 		$table = 'raccoglitore_cartelle, utente';
 		if (!isset($_posizione_iniziale)) {
-			$keydb = array("email_utente",'email','email_utente',"posizione");
+			$keydb = array("email_utente",'email','email_utente');
 			$bind = array(":".$keydb[2]);
 			$_paragone = array('=','=');
 			$_parametri = array($_email_utente);
-			$_operatori = array('AND',"ORDER BY");
+			$_operatori = array('AND');
 		} else {
 			$keydb = array("email_utente","email","email_utente","posizione","posizione","posizione");
 			$bind = array(":".$keydb[2],":posizione_iniziale",":posizione_finale");

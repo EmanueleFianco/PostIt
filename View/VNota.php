@@ -27,6 +27,8 @@ class VNota extends View {
 			$colore = '/^#([A-F]|[0-9]){6}$/';
 			$tipo = '^(nota|promemoria)$/';
 			$condiviso = '^(TRUE|FALSE)$/';
+			$note_presenti = '/^[[:digit:]]{1,11}$/';
+			$num_note = '/^[[:digit:]]{1,11}$/';
 			//$ora_data_avviso = Da vedere in futuro con il lato client
 			if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");
