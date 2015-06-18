@@ -16,13 +16,18 @@ CDati.prototype.getTemplate = function(tmpl){
 }
 
 CDati.prototype.getNote = function(id_cartella,note_presenti,num_note){
-	
-	var URL = 'Controller/index.php?controller=cartella&lavoro=getNote&id_cartella='+id_cartella+
-	'&note_presenti='+note_presenti+'&num_note='+num_note;
+	var Data = new Array();
+	Data = {
+			controller: 'cartella',
+			lavoro: 'getNote',
+			note_presenti : note_presenti,
+			num_note: num_note
+	}
 	
 	return $.ajax({
 		type: 'POST',
-		url : URL
+		url : 'Controller/index.php',
+		data : Data
 	});
 	
 }
