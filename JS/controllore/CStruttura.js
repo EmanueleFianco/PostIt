@@ -8,8 +8,8 @@ CStruttura.prototype.Inizializza = function(cartella){
 
 CStruttura.prototype.aggiungiCartella = function(cartella){
 
-	Struttura[cartella.id] = {
-			id:cartella.id,
+	Struttura[cartella.id_cartella] = {
+			id:cartella.id_cartella,
 			email_utente:cartella.email_utente,
 			tipo:cartella.tipo,
 			nome:cartella.nome,

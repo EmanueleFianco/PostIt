@@ -98,6 +98,7 @@ class CCartella {
 	
 	public function getNote() {
 		$VNota=USingleton::getInstance('VNota');
+		$VCartella=USingleton::getInstance('VCartella');
 		$dati = $VNota->getDati();
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
 		$max = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati['id_cartella']);
