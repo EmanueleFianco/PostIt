@@ -21,8 +21,10 @@ View.prototype.getPosizioni= function(){
 }
 
 View.prototype.setPosizioni= function(){
+	var view = singleton.getInstance(View,"View");
 	var posizioni=view.getPosizioni();
-	cnote.AggiornaPosizioni(posizioni);
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	StrutturaCartelle.AggiornaPosizioniNote(posizioni);
 }
 
 View.prototype.setNota = function(nota,tmpl,nuova){

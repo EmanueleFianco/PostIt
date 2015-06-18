@@ -14,15 +14,20 @@
 
 
 
-
-
 <script type="text/javascript" src="JS/controllore/CHome.js"></script>
 <script type="text/javascript" src="JS/controllore/CDati.js"></script>
 <script type="text/javascript" src="JS/controllore/CEventi.js"></script>
-<script type="text/javascript" src="JS/controllore/CNote.js"></script>
-<script type="text/javascript" src="JS/controllore/CCartelle.js"></script>
+<script type="text/javascript" src="JS/controllore/Singleton.js"></script>
+<script type="text/javascript" src="JS/controllore/CStruttura.js"></script>
 <script type="text/javascript" src="JS/view/view.js"></script>
 
+<script type="text/javascript" src="JS/controllore/Widget/CColorpicker.js"></script>
+<script type="text/javascript" src="JS/controllore/Widget/CContextmenu.js"></script>
+<script type="text/javascript" src="JS/controllore/Widget/CDatepicker.js"></script>
+<script type="text/javascript" src="JS/controllore/Widget/CMenu.js"></script>
+<script type="text/javascript" src="JS/controllore/Widget/CPackery.js"></script>
+<script type="text/javascript" src="JS/controllore/Widget/CRedactor.js"></script>
+<script type="text/javascript" src="JS/controllore/Widget/CNota.js"></script>
 
 <link href="css/Main.css" rel="stylesheet" type="text/css">
 <link href="css/Note.css" rel="stylesheet" type="text/css">	 

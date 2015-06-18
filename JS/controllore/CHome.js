@@ -1,11 +1,16 @@
 	
 var CHome = function(){
+	singleton = new Singleton();
 	Template = new Array();
-	dati= new CDati();
-	eventi = new CEventi();
-	view = new View();
-	cnote = new CNote();
-	ccartelle=new CCartelle();
+	
+	var dati =singleton.getInstance(CDati,"CDati");
+	var eventi = singleton.getInstance(CEventi,"CEventi");
+	var view = singleton.getInstance(View,"View");
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	
+	StrutturaCartelle.Inizializza();
+	
+	
 	
 	$.when(dati.getTemplate("Main"),
 			dati.getTemplate("Nota"),
@@ -20,36 +25,30 @@ var CHome = function(){
 		view.disegna(Template["Main"]);	
 		view.aggiungiNuova(Template["NuovaNota"]);
 		
-		eventi.setEventiGlobali();
 		
 		$.when(dati.getCartelle('emanuele.fianco@gmail.com')).done(function(cartelle){
 			//da incapsulare dentro CCartelle
 			var Cartelle = $.parseJSON(cartelle);
+			
 			$.each(Cartelle,function(i,Cartella){
-					// Creo Struttura Dati
-					ccartelle.aggiungiCartella(Cartella);
-					view.setCartella(Cartella,Template["Cartella"]);
-			})
-
-		eventi.setMenu();
+				StrutturaCartelle.aggiungiCartella(Cartella);
+				if(Cartella.nome == "Note"){
+					StrutturaCartelle.setCartellaAttiva(Cartella.id);
+				}
+			});
 			
-		
-			$.when(dati.getNote()).done(function(note){
-// da incapsulare dentro CNote
-			var array = $.parseJSON(note);
-				$.each(array,function(i,nota){
-						view.setNota(nota,Template["Nota"]);
-						// Creo Struttura Dati
-						cnote.aggiungiNota(nota);
-						
-				})	
-
-			eventi.setNotaEvent();
-			eventi.setNotaChangeEvent();
+			
+				$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),'0','12')).done(function(note){
+					var Note = $.parseJSON(note);
+					$.each(Note,function(i,nota){
+						StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
+					})
+					
+					eventi.Inizializza();
+				})
+			})
+			
 	
-			})
-			
-			})
 			
 		})
 	
