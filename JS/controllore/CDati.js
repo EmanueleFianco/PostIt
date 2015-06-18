@@ -15,11 +15,14 @@ CDati.prototype.getTemplate = function(tmpl){
 	
 }
 
-CDati.prototype.getNote = function(id_cartella,notepresenti,numeronote){
+CDati.prototype.getNote = function(id_cartella,note_presenti,num_note){
+	
+	var URL = 'Controller/index.php?controller=cartella&lavoro=getNote&id_cartella='+id_cartella+
+	'&note_presenti='+note_presenti+'&num_note='+num_note;
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/index.php?controller=utente&lavoro=getCartelle',
+		url : URL
 	});
 	
 }
