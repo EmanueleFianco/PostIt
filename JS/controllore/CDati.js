@@ -19,16 +19,16 @@ CDati.prototype.getNote = function(id_cartella,notepresenti,numeronote){
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/prova.php',
+		url : 'Controller/index.php?controller=utente&lavoro=getCartelle',
 	});
 	
 }
 
-CDati.prototype.getCartelle = function(email){
+CDati.prototype.getCartelle = function(){
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/index.php?controller=cartella&lavoro=getCartelle&email='+email,
+		url : 'Controller/index.php?controller=utente&lavoro=getCartelle'
 	});
 	
 }

@@ -26,8 +26,7 @@ var CHome = function(){
 		view.aggiungiNuova(Template["NuovaNota"]);
 		
 		
-		$.when(dati.getCartelle('emanuele.fianco@gmail.com')).done(function(cartelle){
-			//da incapsulare dentro CCartelle
+		$.when(dati.getCartelle()).done(function(cartelle){
 			var Cartelle = $.parseJSON(cartelle);
 			
 			$.each(Cartelle,function(i,Cartella){
@@ -45,6 +44,7 @@ var CHome = function(){
 					})
 					
 					eventi.Inizializza();
+					console.log(Struttura);
 				})
 			})
 			

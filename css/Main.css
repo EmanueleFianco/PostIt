@@ -4,7 +4,7 @@ body{
     margin-left: 0px;
     margin-top: 0px;
     margin-right: 0px;
-
+	overflow-x: hidden;
 }
 #menubutton{
 	float:left;

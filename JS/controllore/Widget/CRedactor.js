@@ -19,6 +19,9 @@ CRedactor.prototype.Inizializza = function(){
 			}).mouseleave(function() {
 				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
 				$(".nota").draggable("enable");
+				$(".nota").draggable({
+					containment: '#sortable'
+				})
 			  });
 		
 	//-----------------------TITOLO NOTA -----------------------------//
@@ -30,6 +33,9 @@ CRedactor.prototype.Inizializza = function(){
 			}).mouseleave(function() {
 				$(this).find(".redactor_toolbar").fadeTo("slow", 0);
 				$(".nota").draggable("enable");
+				$(".nota").draggable({
+					containment: '#sortable'
+				})
 			  });
 		
 	//----------------------------------------------------------------------//	

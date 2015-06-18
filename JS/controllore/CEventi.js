@@ -17,9 +17,9 @@ CEventi.prototype.Inizializza = function(){
 	contexmenu.Inizializza();
 	datepicker.Inizializza();
 	menu.Inizializza();
-	packery.Inizializza();
 	redactor.Inizializza();
 	nota.Inizializza();
+	packery.Inizializza();
   }
   
 
