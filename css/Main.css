@@ -40,40 +40,6 @@ body{
 
 }
 
-
-/*******************************/
-
-.main{
-float: left;
-height:100%;
-  width: 100%;
-background-color: #E6E1E1;
-
-}
-
-.menubottom{
-    float:left;
-    height:100px;
-    border-top-style:groove;
-    border-top-color:black;
-    background-color:white;
-    background-color: #2E2E1F;
-    width: 100%;
-    position: fixed;
-    bottom: 0px;
-    display:none;
-    z-index: 40;
-}
-
-
-
-#button{
-	height:30px;
-	width:60px;
-	
-}
-
-
 #menu_button{
     cursor: pointer;
     width: 80px;
@@ -86,6 +52,18 @@ background-color: #E6E1E1;
 
 }
 
+
+
+/*******************************/
+
+.main{
+float: left;
+height:100%;
+width: 100%;
+background-color: #E6E1E1;
+
+}
+
 #menu_window{
     float: left;
     background-color: #CFD6E7;
@@ -93,30 +71,13 @@ background-color: #E6E1E1;
     height: 100%;
 }
 
-.cointainerbottom
-{
-    width: 20%;
-    height: 90%;
-    margin-top: 0.5%;
-    margin-left:5%;
-    float:left;
 
-    
-}
 
-.imgbottom
-{
-    width: 80%;
-    height: 100%;
-   
-}
+
 
 
 div {
 font-size: 1rem;
-
-
-
 }
 
 
@@ -146,15 +107,6 @@ font-size: 1rem;
     html{
     	font-size: 14px;
     	}
-    }
-.cointainerbottom{
-
-        width: 10%;
-        height: 90%;      
-        margin-top: 0.5%;
-        margin-left:7%;
-        margin-right: 7%;    
-        
     }
     .focusable
 {
