@@ -20,6 +20,7 @@ CDati.prototype.getNote = function(id_cartella,note_presenti,num_note){
 	Data = {
 			controller: 'cartella',
 			lavoro: 'getNote',
+			id_cartella: id_cartella,
 			note_presenti : note_presenti,
 			num_note: num_note
 	}
