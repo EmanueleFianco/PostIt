@@ -31,8 +31,10 @@ var CHome = function(){
 			
 			$.each(Cartelle,function(i,Cartella){
 				StrutturaCartelle.aggiungiCartella(Cartella);
+				
 				if(Cartella.nome == "Note"){
-					StrutturaCartelle.setCartellaAttiva(Cartella.id);
+				
+					StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
 				}
 			});
 			

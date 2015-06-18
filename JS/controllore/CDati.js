@@ -17,12 +17,13 @@ CDati.prototype.getTemplate = function(tmpl){
 
 CDati.prototype.getNote = function(id_cartella,note_presenti,num_note){
 	var Data = new Array();
+	
 	Data = {
 			controller: 'cartella',
 			lavoro: 'getNote',
-			id_cartella: id_cartella,
 			note_presenti : note_presenti,
-			num_note: num_note
+			num_note: num_note,
+			id_cartella: id_cartella
 	}
 	
 	return $.ajax({
