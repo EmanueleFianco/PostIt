@@ -34,7 +34,7 @@ class ENotaCondivisa extends ENota {
     * @param array $_partecipanti
     * 
     */
-	public function __construct($_titolo, $_testo, $_posizione, $_colore,EPartecipante $_ultimo_a_modificare, $_immagine = NULL, $_partecipanti = NULL) {
+	public function __construct($_titolo, $_testo, $_posizione, $_colore,$_ultimo_a_modificare, $_immagine = NULL, $_partecipanti = NULL) {
 		parent::__construct($_titolo, $_testo, $_posizione, $_colore, $_immagine);
 		$this->setUltimoAModificare($_ultimo_a_modificare);
 		if (isset($_partecipanti)) {
@@ -52,7 +52,7 @@ class ENotaCondivisa extends ENota {
 	* @param EPartecipanti $_ultimo_a_modificare
 	*
 	*/
-	public function setUltimoAModificare(EPartecipante $_ultimo_a_modificare) {
+	public function setUltimoAModificare($_ultimo_a_modificare) {
 		$this->ultimo_a_modificare = $_ultimo_a_modificare;
 	}
 	

@@ -51,3 +51,4 @@ class FImmagine extends Fdb {
 		return $this->db->delete($valori);
 	}
 }
+?>

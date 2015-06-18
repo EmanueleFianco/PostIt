@@ -7,15 +7,16 @@ class FCartella extends Fdb {
 		$this->auto_increment = TRUE;
 		$this->db = USingleton::getInstance('Fdb');
 		$this->table="cartella";
-		$this->keydb="(email_utente,tipo,nome,posizione,colore)";
-		$this->bind="(:email_utente,:tipo,:nome,:posizione,:colore)";
+		$this->keydb="(amministratore,tipo,nome,colore)";
+		$this->bind="(:amministratore,:tipo,:nome,:colore)";
 	}
 
-	public function inserisciCartella(ECartella $_object,$_tipo,$_email_utente)
+	public function inserisciCartella(ECartella $_object,$_tipo,$_amministratore)
 	{
 		$dati=$_object->getAsArray();
+		unset($dati['posizione']);
 		$dati['tipo']=$_tipo;
-		$dati['email_utente']=$_email_utente;
+		$dati['amministratore']=$_amministratore;
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		$this->db->inserisci($dati);
@@ -24,29 +25,7 @@ class FCartella extends Fdb {
 	public function getCartellaById($_id)
 	{
 		$this->db->setParam($this->table,"id",":id");
-	    return $this->db->queryParametro("*",$_id);
-	}
-	
-	public function getCartelleByUtente($_email_utente,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
-		if (!isset($_posizione_iniziale)) {
-			$keydb = "email_utente";
-			$bind = ":".$keydb;
-		} else {
-			$keydb = array("email_utente","posizione");
-			$bind = array(":".$keydb[0],":posizione_iniziale",":posizione_finale");
-			if (isset($_tipo_ordinamento)) {
-				$keydb[2] = strtoupper($_tipo_ordinamento);
-			}
-		}
-		$this->db->setParam($this->table,$keydb,$bind);
-		return $this->db->loadAsArray("*",$_email_utente,$_posizione_finale,$_posizione_iniziale);
-	}
-	
-	public function getCartellaByParametro($_email_utente,$_nome_campo, $_valore_campo) {
-		$keydb = array("email_utente",$_nome_campo);
-		$bind = array(":".$keydb[0],":".$keydb[1]);
-		$this->db->setParam($this->table,$keydb,$bind);
-		//return $this->
+	    return $this->db->queryGenerica("*","=",$_id);
 	}
 	
 	public function updateCartella($dati) {
@@ -67,6 +46,6 @@ class FCartella extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->delete($valori);
 	}
-	
-
 }
+
+?>

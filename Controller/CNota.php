@@ -5,7 +5,7 @@ require_once("../Foundation/FImmagine.php");
 require_once("../Entity/EImmagine.php");
 require_once("../Foundation/Utility/USingleton.php");
 
-class Cnota {
+class CNota {
 	
 
 	public function __construct(){
@@ -19,14 +19,13 @@ class Cnota {
 				return $this->Nuova();
 			case 'aggiorna':
 				return $this->Aggiorna();
-			case 'aggiornaPosizioni':
-				return $this->AggiornaPosizioni();
             case 'cancella':
                 return $this->Cancella();
             case 'prendiImmagine':
             	return $this->getImmagine();
             case 'upload':
             	return $this->aggiungiImmagine();
+            
 			}
 	}
 	
@@ -79,27 +78,7 @@ class Cnota {
 		$fnota->updateNota($dati);
 	}
 	
-	public function AggiornaPosizioni() {
-		$VNota=USingleton::getInstance('VNota');
-		$fdb=USingleton::getInstance('Fdb');
-		$fnota=USingleton::getInstance('FNota');
-		$dati = $VNota->getDati();
-		$id_cartella=$dati["id_cartella"];
-		$dati = $dati['posizioni'];
-		$max_posizione = $fnota->getMaxPosizioneNotaByCartella($id_cartella);
-		$max_posizione = $max_posizione[0]["max(posizione)"];
-		$query=$fdb->getDb();
-		$query->beginTransaction();
-		try {
-			foreach ($dati as $key => $value) {
-				$value['posizione'] = $max_posizione - $value['posizione'];
-				$fnota->updateNota($value);
-			}
-			$query->commit();
-		} catch (Exception $e) {
-			$query->rollBack();
-		}
-	}
+	
         
     public function Cancella(){
         $VNota=USingleton::getInstance('VNota');
@@ -145,7 +124,8 @@ class Cnota {
     	$FImmagine->inserisciImmagine($img);
     	$array = array('filelink' => 'Controller/index.php?controller=nota&lavoro=prendiImmagine&file='.basename($immagine['tmp_name']));
     	unlink($immagine['tmp_name']);
-    	return stripslashes(json_encode($array));
+    	$VNota->invia(stripslashes(json_encode($array)));
     }
+    
 }
 ?>

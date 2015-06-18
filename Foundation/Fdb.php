@@ -44,60 +44,49 @@ class Fdb
 	
 	 }
 	 
-	 public function loadAsArray($_column,$_value,$_posizione_finale = NULL,$_posizione_iniziale = NULL)
-	 {
-	 	 $sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
-	 	 if (isset($_posizione_finale)) {
-	 	 	if (!isset($_posizione_iniziale)) {
-	 	 		$_posizione_iniziale = $_posizione_finale - 12;
-	 	 	}
-	 	 	$sql = $sql.$this->keydb[0]." = ".$this->bind[0]." AND ".$this->keydb[1]." > ".$this->bind[1]. " AND ".$this->keydb[1]." <= ".$this->bind[2]." ORDER BY ".$this->keydb[1];
-	 	 	if (isset($this->keydb[2])) {
-	 	 		$sql = $sql." ".$this->keydb[2];
-	 	 	} else {
-	 	 		$sql = $sql." DESC";
-	 	 	}
-	 	 	$query=$this->db->prepare($sql);
-	 	 	$query->bindValue($this->bind[0],$_value);
-	 	 	$query->bindValue($this->bind[1],$_posizione_iniziale);
-	 	 	$query->bindValue($this->bind[2],$_posizione_finale);
-	 	 } else {
-	 	 	$sql = $sql = $sql.$this->keydb." = ".$this->bind;
-	 	 	$query=$this->db->prepare($sql);
-	 	 	$query->bindValue($this->bind,$_value);
-	 	 }
-	     $query->execute();
-	     $result=$query->fetchAll(PDO::FETCH_ASSOC);
-	     return $result;
-	 }
-	 
-	 public function queryParametro($_column, $_parametri) {
-	 	$sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
-	 	if (is_array($this->keydb)) {
-	 		$sql = $sql.$this->keydb[0]." = ".$this->bind[0];
-	 		foreach ($_parametri as $key => $valore) {
-	 			if ($key != 0) {
-	 				$sql = $sql." AND ".$this->keydb[$key]." = ".$this->bind[$key];
+	 public function queryGenerica($_column,$_paragone,$_parametri = NULL,array $_operatori = NULL) {
+	 	if (preg_match('/^[^,]+$/',$this->table)) {
+	 		$sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
+	 		if (is_array($_parametri)) {
+	 			$sql = $sql.$this->keydb[0].$_paragone[0].$this->bind[0];
+	 			foreach ($this->bind as $key => $valore) {
+	 				if ($key != 0) {
+	 					$_operatori[$key-1] = strtoupper($_operatori[$key-1]);
+	 					if ($_operatori[$key-1] != 'ORDER BY') {
+	 						$sql = $sql." ".$_operatori[$key-1]." ".$this->keydb[$key].$_paragone[$key].$valore;
+	 					} else {
+	 						$sql = $sql." ".$_operatori[$key-1]." ".$this->keydb[$key]." ".$this->keydb[$key+1];
+	 					}	 						
+	 				} 				
 	 			}
-	 		}
-	 		$query=$this->db->prepare($sql);
-	 		foreach ($_parametri as $key => $valore) {
-	 			$query->bindValue($this->bind[$key],$_parametri[$key]);
+	 			$query=$this->db->prepare($sql);
+	 			foreach ($_parametri as $key => $valore) {
+	 				$query->bindValue($this->bind[$key],$valore);
+	 			}
+	 		} else {
+	 			$sql = $sql = $sql.$this->keydb.$_paragone.$this->bind;
+	 			$query=$this->db->prepare($sql);
+	 			$query->bindValue($this->bind,$_parametri);
 	 		}
 	 	} else {
-	 		$sql = $sql = $sql.$this->keydb." = ".$this->bind;
-	 		$query=$this->db->prepare($sql);
-	 		$query->bindValue($this->bind,$_parametri);
+	 		$sql = "SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb[0].$_paragone[0].$this->keydb[1];
+	 		if (isset($_parametri)) {
+	 			foreach ($this->bind as $key => $valore) {
+	 				$_operatori[$key] = strtoupper($_operatori[$key]);
+	 				$sql = $sql." ".$_operatori[$key]." ".$this->keydb[$key+2].$_paragone[$key+1].$valore;
+	 			}
+	 			$dim_bind = count($this->bind);
+	 			if (isset($_operatori[$dim_bind]) && $_operatori[$dim_bind] == 'ORDER BY') {
+	 				$sql = $sql." ORDER BY ".$this->keydb[$dim_bind+2]." ".$this->keydb[$dim_bind+3];
+	 			}
+	 			$query=$this->db->prepare($sql);
+	 			foreach ($_parametri as $key => $valore) {
+	 				$query->bindValue($this->bind[$key],$valore);
+	 			}	
+	 		} else {
+	 			$query=$this->db->prepare($sql);
+	 		}
 	 	}
-	 	$query->execute();
-	 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
-	 	return $result;
-	 }
-	 
-
-	 public function queryJoin($_column,$_value) { 	
-	 	$query=$this->db->prepare("SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb[0]."=".$this->keydb[1]." AND ".$this->keydb[2]."=".$this->bind);
-	 	$query->bindValue($this->bind,$_value,PDO::PARAM_INT);
 	 	$query->execute();
 	 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
 	 	return $result;

@@ -49,15 +49,6 @@ class VNota extends View {
 		}
 	}
 	
-	public function getDati(){
-		unset($_REQUEST["lavoro"]);
-		unset($_REQUEST["controller"]);
-		foreach ($_REQUEST as $key => $valore) {
-			self::controllaInput($key, $valore);
-			$dati[$key] = $valore;
-		}
-		return $dati;
-	}
 	
 	public function getImmagine() {
 		$_FILES['file']['type'] = strtolower($_FILES['file']['type']);

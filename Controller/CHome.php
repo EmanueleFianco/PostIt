@@ -17,6 +17,9 @@ class CHome {
         	case 'cartella':
         		$CCartella=USingleton::getInstance('CCartella');
         		return $CCartella->mux();
+        	case 'utente':
+        		$CUtente=USingleton::getInstance('CUtente');
+        		return $CUtente->mux();
 		}
 	}		
 }

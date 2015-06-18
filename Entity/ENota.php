@@ -249,14 +249,14 @@ class ENota {
 		return $this->posizione;
 	}
 	
-	public function getAsArray(){
-    	$result=array();
+	public function getAsArray() {
+	$result=array();
     	foreach($this as $key => $value) {
-    		if (!is_array($value)) {
+    		if (!is_array($value) && !is_object($value)) {
     			$result[$key] = $value;
     		}
     	}
-    	return $result;
-    }
+    return $result;
+	}
 }
 ?>

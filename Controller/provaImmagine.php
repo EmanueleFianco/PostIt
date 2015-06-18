@@ -7,7 +7,7 @@ $db=USingleton::getInstance('Fdb');
 $fimmagine=USingleton::getInstance('FImmagine');
 $futente=USingleton::getInstance('FUtente');
 $utente = $futente->getUtenteByEmail('emanuele.fianco@gmail.com');
-$image = $fimmagine->getImmagineById($utente[0]['id_immagine']); //Da modificare in base all'id
+$image = $fimmagine->getImmagineByNome($utente[0]['id_immagine']);
 $handle = fopen("/home/emanuele/public_html/Web/PostIt/Foundation/Utility/ciao.png","w+");
 fwrite($handle,$image[0]['immagine_originale']);
 ?>

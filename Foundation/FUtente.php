@@ -11,7 +11,7 @@ Class FUtente extends Fdb {
 	    $this->bind="(:username,:password,:id_immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";
 	}
 	
-	public function inserisciUtente(EUtente $_object,$_id_immagine)
+	public function inserisciUtente(EUtente $_object,$_id_immagine = NULL)
 	{   
 		$dati=$_object->getAsArray();
 		$dati['id_immagine'] = $_id_immagine;
@@ -24,7 +24,7 @@ Class FUtente extends Fdb {
 	public function getUtenteByEmail($_email)
 	{ 
 	     $this->db->setParam($this->table,"email",":email");
-	     return $this->db->queryParametro("*",$_email);
+	     return $this->db->queryGenerica("*","=",$_email);
 	}
 	
 	public function updateUtente($dati) {

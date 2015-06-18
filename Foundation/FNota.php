@@ -7,20 +7,21 @@ class FNota extends Fdb {
 		$this->auto_increment = TRUE;
 		$this->db = USingleton::getInstance('Fdb');
 		$this->table="nota";
-		$this->keydb="(id_cartella,titolo,testo,posizione,colore,tipo,condiviso,ultimo_a_modificare,ora_data_avviso)";
-		$this->bind="(:id_cartella,:titolo,:testo,:posizione,:colore,:tipo,:condiviso,:ultimo_a_modificare,:ora_data_avviso)";
+		$this->keydb="(titolo,testo,colore,tipo,condiviso,creata_da,ultimo_a_modificare,ora_data_avviso)";
+		$this->bind="(:titolo,:testo,:colore,:tipo,:condiviso,:creata_da,:ultimo_a_modificare,:ora_data_avviso)";
 	}
 
-	public function inserisciNota(ENota $_object,$_id_cartella)
+	public function inserisciNota(ENota $_object, $_creata_da)
 	{
 		$dati=$_object->getAsArray();
-		$dati['id_cartella']=$_id_cartella;
+		unset($dati['posizione']);
 		$dati['condiviso']=FALSE;
+		$dati['ora_data_avviso'] = NULL;   //Da levare in futuro
+		$dati['ultimo_a_modificare'] = NULL;    //Da levare in futuro
+		$dati['creata_da'] = $_creata_da;
 		$classe=get_class($_object);
 		if ($classe == 'ENota' || $classe == 'ENotaCondivisa') {
 			$dati['tipo'] = 'nota';
-			$dati['ora_data_avviso'] = '2015-06-09 18:37:00';   //Da levare in futuro
-			$dati['ultimo_a_modificare'] = 'emanuele.fianco@gmail.com';    //Da levare in futuro
 		} else {
 			$dati['tipo'] = 'promemoria';
 			$dati['ora_data_avviso'] = '2015-06-09 18:37:00';   //Da levare in futuro
@@ -39,22 +40,7 @@ class FNota extends Fdb {
 	public function getNotaById($_id)
 	{
 		$this->db->setParam($this->table,"id",":id");
-	    return $this->db->queryParametro("*",$_id);
-	}
-	
-	public function getNoteByCartella($_id_cartella,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
-	if (!isset($_posizione_finale)) {
-			$keydb = "id_cartella";
-			$bind = ":".$keydb;
-		} else {
-			$keydb = array("id_cartella","posizione");
-			$bind = array(":".$keydb[0],":posizione_iniziale",":posizione_finale");
-			if (isset($_tipo_ordinamento)) {
-				$keydb[2] = strtoupper($_tipo_ordinamento);
-			}
-		}
-		$this->db->setParam($this->table,$keydb,$bind);
-		return $this->db->loadAsArray("*",$_id_cartella,$_posizione_finale,$_posizione_iniziale);
+	    return $this->db->queryGenerica("*","=",$_id);
 	}
 	
 	public function updateNota($dati) {
@@ -75,21 +61,6 @@ class FNota extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->delete($valori);
 	}
-	
-	public function getMaxPosizioneNotaByCartella($_id_cartella) {
-		$this->db->auto_increment = $this->auto_increment;
-		$this->db->setParam($this->table,"id_cartella",":id_cartella");
-		return $this->db->queryParametro("max(posizione)", $_id_cartella);
-	}
-	
-	public function getNotaByParametri($_parametri) {
-		foreach ($_parametri as $key => $valore) {
-			$keydb[] = $key;
-			$bind[] = ":".$key;
-			$valori[]=$valore;
-		}
-		$this->db->setParam($this->table,$keydb,$bind);
-		return $this->db->queryParametro("*",$valori);
-	}
 
 }
+?>

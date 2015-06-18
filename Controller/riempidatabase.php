@@ -21,7 +21,7 @@ $idimage=$image->getNome();
 $utente=new EUtente('emanuefff', 'password', 'Emanuele', 'Fianco', $image, 'emanuele.fianco@gmail.com', 'attivato', 'admin');
 $futente=USingleton::getInstance('FUtente');
 $utente->setCodiceAttivazione();
-$futente->inserisciUtente($utente,$idimage);
+$futente->inserisciUtente($utente);
 $cart=new ECartella('Note', 1, '#FFFFFF');
 $cestino=new ECartella('Cestino', 2, '#FFFFFF');
 $n1=new ENota("Prima nota", "questa è una prima nota", 0, "#66FF00");
