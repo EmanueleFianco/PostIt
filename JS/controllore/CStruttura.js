@@ -24,7 +24,7 @@ CStruttura.prototype.aggiungiNota = function(id_cartella,nota){
 	
 	var view = singleton.getInstance(View,"View");
 
-	Struttura[id_cartella]["note"][nota.id] = nota;
+	Struttura[id_cartella]["note"][nota.id_nota] = nota;
 	view.setNota(nota,Template["Nota"]);
 	
 }
