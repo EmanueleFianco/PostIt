@@ -72,8 +72,12 @@ class Fdb
 	 		$sql = "SELECT ".$_column." FROM ".$this->table." WHERE ".$this->keydb[0].$_paragone[0].$this->keydb[1];
 	 		if (isset($_parametri)) {
 	 			foreach ($this->bind as $key => $valore) {
-	 				$_operatori[$key] = strtoupper($_operatori[$key]);
-	 				$sql = $sql." ".$_operatori[$key]." ".$this->keydb[$key+2].$_paragone[$key+1].$valore;
+	 				if ($valore == -1) {
+	 					$sql = $sql." ".$_operatori[$key]." ".$this->keydb[$key+2].$_paragone[0].$this->keydb[$key+3];
+	 				} else {
+	 					$_operatori[$key] = strtoupper($_operatori[$key]);
+	 					$sql = $sql." ".$_operatori[$key]." ".$this->keydb[$key+2].$_paragone[$key+1].$valore;	 					
+	 				}
 	 			}
 	 			$dim_bind = count($this->bind);
 	 			if (isset($_operatori[$dim_bind]) && $_operatori[$dim_bind] == 'ORDER BY') {

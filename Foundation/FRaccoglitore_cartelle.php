@@ -18,19 +18,20 @@ class FRaccoglitore_cartelle extends Fdb {
 	}
 	
 	public function getCartelleByUtente($_email_utente,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
-		$table = 'raccoglitore_cartelle, utente';
+		$column = "r.id_cartella,r.email_utente,c.tipo,c.nome,r.posizione,c.colore";
+		$table = 'raccoglitore_cartelle as r, utente, cartella as c';
 		if (!isset($_posizione_iniziale)) {
-			$keydb = array("email_utente",'email','email_utente');
-			$bind = array(":".$keydb[2]);
-			$_paragone = array('=','=');
+			$keydb = array("email_utente",'email','email_utente','id','id_cartella');
+			$bind = array(":".$keydb[2],-1);
+			$_paragone = array('=','=','=');
 			$_parametri = array($_email_utente);
-			$_operatori = array('AND');
+			$_operatori = array('AND','AND');
 		} else {
-			$keydb = array("email_utente","email","email_utente","posizione","posizione","posizione");
-			$bind = array(":".$keydb[2],":posizione_iniziale",":posizione_finale");
-			$_paragone = array('=','=','>','<=');
+			$keydb = array("email_utente","email","email_utente","posizione","posizione","id","id_cartella","posizione");
+			$bind = array(":".$keydb[2],":posizione_iniziale",":posizione_finale",-1);
+			$_paragone = array('=','=','=','>','<=');
 			$_parametri = array($_email_utente,$_posizione_iniziale,$_posizione_finale);
-			$_operatori = array("AND","AND","AND","ORDER BY");
+			$_operatori = array("AND","AND","AND","AND","ORDER BY");
 			if (isset($_tipo_ordinamento)) {
 				$keydb[6] = strtoupper($_tipo_ordinamento);
 			} else {
@@ -38,7 +39,7 @@ class FRaccoglitore_cartelle extends Fdb {
 			}
 		}
 		$this->db->setParam($table,$keydb,$bind);
-		return $this->db->queryGenerica("*",$_paragone,$_parametri,$_operatori);
+		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);
 	}
 	
 	public function getMaxPosizioneCartellaByUtente($_email_utente) {
