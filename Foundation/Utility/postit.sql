@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Giu 18, 2015 alle 22:54
+-- Generation Time: Giu 19, 2015 alle 23:45
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -28,33 +28,32 @@ DELIMITER $$
 -- Procedure
 --
 DROP PROCEDURE IF EXISTS `AggiornaPosizioneCartelle`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneCartelle`(pos INT)
-UPDATE cartella SET posizione=posizione-1
-WHERE posizione>pos$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneCartelle`(IN `pos` INT, IN `email_delete` VARCHAR(40))
+UPDATE raccoglitore_cartelle SET posizione=posizione-1
+WHERE posizione>pos AND email_utente = email_delete$$
 
 DROP PROCEDURE IF EXISTS `AggiornaPosizioneNote`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneNote`(IN `pos` INT, IN `cartella` INT)
 UPDATE nota SET posizione=posizione-1
 WHERE posizione>pos AND id_cartella = cartella$$
 
-DROP PROCEDURE IF EXISTS `inserimentoCartella`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `inserimentoCartella`(IN `email` VARCHAR(40))
+DROP PROCEDURE IF EXISTS `inserimentoRaccoglitoreCartella`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `inserimentoRaccoglitoreCartella`(IN `nuovoid` INT(11), IN `email_inserita` VARCHAR(40))
     NO SQL
-BEGIN
-DECLARE massimo INT DEFAULT NULL;
-DECLARE id INT DEFAULT NULL;
-SET massimo := (SELECT max(posizione)
-                FROM raccoglitore_cartelle WHERE email_utente = email);
-SET id := (SELECT max(id) FROM cartella WHERE amministratore = email);
-IF (massimo IS NULL) THEN
-	SET massimo = 0;
-ELSE
-	SELECT massimo;
-    SET massimo = massimo+1;
-END IF;
-INSERT INTO raccoglitore_cartelle(id_cartella,email_utente,posizione)
-VALUES (id,email,massimo);
-END$$
+begin
+declare finito int default 0;
+declare maxpos int;
+declare cur1 cursor for select max(`raccoglitore_cartelle`.`posizione`) from `postit`.`raccoglitore_cartelle` where `raccoglitore_cartelle`.`email_utente` = email_inserita;
+DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' SET finito = 1;
+open cur1;
+fetch cur1 into maxpos;
+if maxpos is null then
+set maxpos = 0;
+else
+set maxpos=maxpos+1;
+end if;
+insert into `postit`.`raccoglitore_cartelle` (`raccoglitore_cartelle`.`id_cartella`,`raccoglitore_cartelle`.`email_utente`,`raccoglitore_cartelle`.`posizione`) values (nuovoid,email_inserita,maxpos);
+end$$
 
 DELIMITER ;
 
@@ -71,13 +70,23 @@ CREATE TABLE IF NOT EXISTS `cartella` (
   `tipo` enum('gruppo','privata') COLLATE utf8_unicode_ci NOT NULL,
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `cartella`:
 --   `amministratore`
 --       `utente` -> `email`
 --
+
+--
+-- Trigger `cartella`
+--
+DROP TRIGGER IF EXISTS `inserimentoCartella`;
+DELIMITER //
+CREATE TRIGGER `inserimentoCartella` AFTER INSERT ON `cartella`
+ FOR EACH ROW call inserimentoRaccoglitoreCartella(NEW.id,NEW.amministratore)
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -120,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `creata_da` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `ultimo_a_modificare` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ora_data_avviso` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `nota`:
@@ -167,10 +176,10 @@ CREATE TABLE IF NOT EXISTS `raccoglitore_note` (
 -- RELATIONS FOR TABLE `raccoglitore_note`:
 --   `id_nota`
 --       `nota` -> `id`
---   `id_cartella`
---       `cartella` -> `id`
 --   `email_utente`
 --       `utente` -> `email`
+--   `id_cartella`
+--       `cartella` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -246,12 +255,12 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `cartella`
 --
 ALTER TABLE `cartella`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=194;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=209;
 --
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -286,8 +295,8 @@ ADD CONSTRAINT `raccoglitore_cartelle_ibfk_2` FOREIGN KEY (`email_utente`) REFER
 --
 ALTER TABLE `raccoglitore_note`
 ADD CONSTRAINT `raccoglitore_note_ibfk_1` FOREIGN KEY (`id_nota`) REFERENCES `nota` (`id`) ON DELETE CASCADE,
-ADD CONSTRAINT `raccoglitore_note_ibfk_3` FOREIGN KEY (`id_cartella`) REFERENCES `cartella` (`id`) ON DELETE CASCADE,
-ADD CONSTRAINT `raccoglitore_note_ibfk_4` FOREIGN KEY (`email_utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `raccoglitore_note_ibfk_4` FOREIGN KEY (`email_utente`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `raccoglitore_note_ibfk_5` FOREIGN KEY (`id_cartella`) REFERENCES `cartella` (`id`) ON DELETE CASCADE;
 
 --
 -- Limiti per la tabella `utente`
