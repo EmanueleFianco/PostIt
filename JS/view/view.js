@@ -64,11 +64,12 @@ View.prototype.setCartella = function(cartella,tmpl){
 		$("#nota_space").attr("id_cartella",cartella.id);
 	}
 }
+
+
 		
 
 View.prototype.disegna = function(tmplMain,Cartelle){
 
-	console.log(Cartelle);
 	var html = Mustache.to_html(tmplMain,Cartelle);
 	$("body").append(html);	
 	$("#menu_window").hide();

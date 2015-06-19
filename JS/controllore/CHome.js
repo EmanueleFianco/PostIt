@@ -30,14 +30,14 @@ var CHome = function(){
 	
 
 CHome.prototype.getDati=function(){
+	console.log("qui");
+	
 	var dati =singleton.getInstance(CDati,"CDati");
 	var eventi = singleton.getInstance(CEventi,"CEventi");
 	var view = singleton.getInstance(View,"View");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	StrutturaCartelle.Inizializza();
 
-	view.disegna(Template["Main"]);	
-	view.aggiungiNuova(Template["NuovaNota"]);
 
 		
 		
@@ -69,6 +69,7 @@ CHome.prototype.getDati=function(){
 					})
 					
 					eventi.Inizializza();
+					console.log(Struttura);
 				})
 			})
 			

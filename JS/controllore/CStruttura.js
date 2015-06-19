@@ -121,13 +121,13 @@ CStruttura.prototype.getDataAjaxPosizioni= function(){
 	  $.each(Struttura[cartella_attiva]["note"],function(i,nota){
 				Posizioni.push({
 					"posizione":nota.posizione,
-					"id":nota.id
+					"id_nota":nota.id_nota
 			})
 	  });
 	Data ={
-			"controller":"nota",
+			"controller":"cartella",
 			"lavoro":"aggiornaPosizioni",
-			"id_cartella":$("#nota_space").attr("id_cartella"),
+			"id_cartella":this.getCartellaAttiva(),
 			"posizioni":Posizioni	
 	};
 	return Data;

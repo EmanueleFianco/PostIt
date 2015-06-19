@@ -23,7 +23,9 @@ CLogin.prototype.controllaDati=function(){
 	 var okpas=pas.test(mypass);
 	 //controllo coerenza dati
 	if (okemail) 
-	{ if(val=="emanuele.fianco@gmail.com")
+	// val= email utente da fare
+		
+	{ if(1)
            return true;
 
        /*
