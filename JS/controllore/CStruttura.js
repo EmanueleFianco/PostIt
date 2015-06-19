@@ -4,6 +4,7 @@ var CStruttura = function(note){
 CStruttura.prototype.Inizializza = function(cartella){
 	Struttura = new Object();
 	cartellaAttiva= new Object();
+	cartellaAttiva= 0;
 }
 
 CStruttura.prototype.aggiungiCartella = function(cartella){
@@ -25,22 +26,31 @@ CStruttura.prototype.aggiungiNota = function(id_cartella,nota){
 	var view = singleton.getInstance(View,"View");
 
 	Struttura[id_cartella]["note"][nota.id_nota] = nota;
-	view.setNota(nota,Template["Nota"]);
+	view.setNota(id_cartella,nota,Template["Nota"]);
 	
 }
 
 CStruttura.prototype.setCartellaAttiva = function(id_cartella){
+	$("#"+this.getCartellaAttiva()).css("display","none");
 	cartellaAttiva=id_cartella;
-	$("#nota_space").attr("id_cartella",id_cartella);
+	$("#"+id_cartella).css("display","inherit");
+	
 }
 
 CStruttura.prototype.getCartellaAttiva = function(){
 	return cartellaAttiva;
 }
+CStruttura.prototype.getNumeroNoteByIdCartella = function(id_cartella){
+	return Object.keys(Struttura[id_cartella]["note"]).length
+	
+}
+
 CStruttura.prototype.getNota = function(id_nota){
 	var cartella_attiva=this.getCartellaAttiva();
 	return Struttura[cartella_attiva]["note"][id_nota];
 }
+
+
 
 CStruttura.prototype.EliminaNota = function(id_nota){
 	var cartella_attiva=this.getCartellaAttiva();
@@ -111,13 +121,13 @@ CStruttura.prototype.getDataAjaxPosizioni= function(){
 	  $.each(Struttura[cartella_attiva]["note"],function(i,nota){
 				Posizioni.push({
 					"posizione":nota.posizione,
-					"id":nota.id
+					"id_nota":nota.id_nota
 			})
 	  });
 	Data ={
 			"controller":"cartella",
 			"lavoro":"aggiornaPosizioni",
-			"id_cartella":$("#nota_space").attr("id_cartella"),
+			"id_cartella":this.getCartellaAttiva(),
 			"posizioni":Posizioni	
 	};
 	return Data;
