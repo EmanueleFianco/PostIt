@@ -5,8 +5,10 @@ var View = function(){
 }
 
 View.prototype.getPosizioni= function(){
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
 	
-	  var note_packery = $("#sortable").packery('getItemElements');
+	  var note_packery = $('#'+cartellaAttiva).packery('getItemElements');
 	  var Posizioni = new Object();
 	  $.each(note_packery,function(i,nota_packery){
 		  var id=$(nota_packery).attr("id");
@@ -27,7 +29,7 @@ View.prototype.setPosizioni= function(){
 	StrutturaCartelle.AggiornaPosizioniNote(posizioni);
 }
 
-View.prototype.setNota = function(nota,tmpl,nuova){
+View.prototype.setNota = function(id_cartella,nota,tmpl,nuova){
 	
 	var html = Mustache.to_html(tmpl,nota);
 	if(nuova == "TRUE"){
@@ -41,9 +43,9 @@ View.prototype.setNota = function(nota,tmpl,nuova){
 		
 	}
 	else{
-	$('#sortable').append(html);
-	$("#sortable .nota").last().css('background-color',nota.colore);
-	$("#sortable .time").last().css({
+	$('#'+id_cartella).append(html);
+	$("#"+id_cartella+" .nota").last().css('background-color',nota.colore);
+	$("#"+id_cartella+" .time").last().css({
 		'background-color':nota.colore,
 		'border':'none',
 		
@@ -64,9 +66,10 @@ View.prototype.setCartella = function(cartella,tmpl){
 }
 		
 
-View.prototype.disegna = function(tmplMain){
+View.prototype.disegna = function(tmplMain,Cartelle){
 
-	var html = Mustache.to_html(tmplMain);
+	console.log(Cartelle);
+	var html = Mustache.to_html(tmplMain,Cartelle);
 	$("body").append(html);	
 	$("#menu_window").hide();
 	

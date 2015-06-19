@@ -6,6 +6,10 @@ body{
     margin-right: 0px;
 	overflow-x: hidden;
 }
+
+.cartella{
+	display:none;
+}
 #menubutton{
 	float:left;
 	width:60px;

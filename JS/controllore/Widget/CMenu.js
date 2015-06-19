@@ -3,7 +3,11 @@ var CMenu = function(){
 }
 
 CMenu.prototype.Inizializza = function(){
-
+	
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	var dati =singleton.getInstance(CDati,"CDati");
+	var eventi = singleton.getInstance(CEventi,"CEventi");
+	
 	function scrollY() {
 		return window.pageYOffset || docElem.scrollTop;
 	}
@@ -77,16 +81,25 @@ CMenu.prototype.Inizializza = function(){
 	init();
 	
 
-	/*
+	
 	$(".iconmenu").click(function(){
-		var label=$(this).attr('id');		
-		var id = ccartelle.getIdCartella(label);
-		var num=cnote.countNote();
-		cnote.getNoteByCartella(id,num,12);
-
+		
+		var id_cartella=$(this).attr('id');	
+		console.log(id_cartella);
+		StrutturaCartelle.setCartellaAttiva(id_cartella);
+		var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
+		
+		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12')).done(function(note){
+			var Note = $.parseJSON(note);
+			$.each(Note,function(i,nota){
+				StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
+			})
+			eventi.Inizializza();
+		})
+		
 	})
     
-    */
+    
 
 	
 }

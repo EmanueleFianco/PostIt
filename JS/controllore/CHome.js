@@ -22,21 +22,22 @@ var CHome = function(){
 		Template["NuovaNota"]= N3[0];
 		Template["Cartella"]=N4[0];
 				
-		view.disegna(Template["Main"]);	
-		view.aggiungiNuova(Template["NuovaNota"]);
 		
 		
 		$.when(dati.getCartelle()).done(function(cartelle){
-			var Cartelle = $.parseJSON(cartelle);
+			var Cartelle = new Object();
+			 Cartelle['Cartelle'] = $.parseJSON(cartelle);
 			
-			$.each(Cartelle,function(i,Cartella){
+		
+			 view.disegna(Template["Main"],Cartelle);
+			$.each(Cartelle['Cartelle'],function(i,Cartella){
 				StrutturaCartelle.aggiungiCartella(Cartella);
-				
 				if(Cartella.nome == "Note"){
-				
 					StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
 				}
 			});
+			
+			view.aggiungiNuova(Template["NuovaNota"]);
 			
 			
 				$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),'0','12')).done(function(note){
@@ -46,7 +47,6 @@ var CHome = function(){
 					})
 					
 					eventi.Inizializza();
-					console.log(Struttura);
 				})
 			})
 			
