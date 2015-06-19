@@ -65,7 +65,7 @@ CStruttura.prototype.CreaNota = function(attributo,valore){
 	
 	Struttura[cartella_attiva]["note"]["Nuova"] = {
 			
-			id_cartella:this.getCartellaAttiva,
+			id_cartella:this.getCartellaAttiva(),
 			titolo : "Nuovo Titolo",
 			testo: "Nuovo testo",
 			posizione:0,
@@ -90,7 +90,7 @@ CStruttura.prototype.CreaNota = function(attributo,valore){
 		var dati = $.parseJSON(a1);
 		var id = dati.id;
 		Elemento[id] = Struttura[cartella_attiva]["note"]["Nuova"];
-		this.EliminaNota("Nuova");
+		StrutturaCartelle.EliminaNota("Nuova");
 		Struttura[cartella_attiva]["note"][id]=Elemento[id];
 		$(".NuovaNota").attr("id",id);
 	});

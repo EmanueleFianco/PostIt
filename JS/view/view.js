@@ -33,9 +33,9 @@ View.prototype.setNota = function(id_cartella,nota,tmpl,nuova){
 	
 	var html = Mustache.to_html(tmpl,nota);
 	if(nuova == "TRUE"){
-		$('#sortable').prepend(html);
-		$("#sortable .nota").first().css('background-color',nota.colore);
-		$("#sortable .time").first().css({
+		$('#'+id_cartella).prepend(html);
+		$("#"+id_cartella+" .nota").first().css('background-color',nota.colore);
+		$("#"+id_cartella+" .time").first().css({
 			'background-color':nota.colore,
 			'border':'none',
 			

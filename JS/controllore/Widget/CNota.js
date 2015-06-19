@@ -22,15 +22,15 @@ CNota.prototype.Inizializza = function(){
 	// da risolvere!!!	  
 		$("#imgadd").on( "click",function(){
 				var nota =StrutturaCartelle.getNota($(".NuovaNota").attr("id"));
-				nota["id"]=$(".NuovaNota").attr("id");
-				html=view.setNota(nota,Template["Nota"],"TRUE");
-				$("#sortable").packery( 'appended', html );
+				var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
+				html=view.setNota(cartellaAttiva,nota,Template["Nota"],"TRUE");
+				$('#'+cartellaAttiva).packery( 'appended', html );
 				$(".NuovaNota").remove();
 				view.aggiungiNuova(Template["NuovaNota"]);
 				eventi.Inizializza();
 				
-				$('#sortable').packery('reloadItems');
-				$("#sortable").packery();
+				$('#'+cartellaAttiva).packery('reloadItems');
+				$('#'+cartellaAttiva).packery();
 			
 			  });
 

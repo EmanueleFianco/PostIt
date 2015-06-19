@@ -30,7 +30,6 @@ var CHome = function(){
 	
 
 CHome.prototype.getDati=function(){
-	console.log("qui");
 	
 	var dati =singleton.getInstance(CDati,"CDati");
 	var eventi = singleton.getInstance(CEventi,"CEventi");
@@ -69,7 +68,7 @@ CHome.prototype.getDati=function(){
 					})
 					
 					eventi.Inizializza();
-					console.log(Struttura);
+					
 				})
 			})
 			
