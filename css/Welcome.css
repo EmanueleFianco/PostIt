@@ -1,0 +1,110 @@
+#menu_welcome{
+
+	width: 100%;
+	height: 300px;
+	border:  2px solid #a1a1a1;
+
+	float: left;
+}
+
+#welcome_button{
+	height: 80px;
+	width: 45px;
+	float: left;
+}
+
+#signup{
+	position: fixed;
+	opacity: 1;
+    z-index:100;
+    top: 0px;
+    left: 50%;
+    margin-left:-202px;
+    top:200px;
+    width:404px;
+    background: white;
+    display: none;
+    border-radius: 5px;
+}
+.textinput{
+	border-bottom: 1px solid #eee;
+    padding: 14px 20px;
+    position: relative;
+    text-align: right;
+    width: 364px;
+}
+.label{
+	color: #222;
+    display: block;
+    float: left;
+    font-size: 12px;
+    padding-top: 8px;
+    text-align: left;
+    width: 90px;
+    font-family: "Roboto","Droid Sans",arial,sans-serif;
+
+}
+#signup-header{
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-image: url("../JS/view/Image/header-signup.png");
+    padding:18px 18px 14px;
+}
+#welcome_menu{
+	width: 30px;
+	height: 100%;
+}
+#log_button{
+	background-color: white;
+	height: 50px;
+	width: 50px;
+}
+
+#password_input{
+	background: none repeat scroll 0 0 #f7f7f7;
+    border-color: #ccc #e7e6e6 #e7e6e6 #ccc;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: #222;
+    font-family: "Helvetica Neue";
+    font-size: 1.2em;
+    outline: medium none;
+    padding: 8px;
+    width: 244px;
+}
+
+#email_input{
+	background: none repeat scroll 0 0 #f7f7f7;
+    border-color: #ccc #e7e6e6 #e7e6e6 #ccc;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: #222;
+    font-family: "Helvetica Neue";
+    font-size: 1.2em;
+    outline: medium none;
+    padding: 8px;
+    width: 244px;
+
+}
+
+#button_login{
+	 background: none repeat scroll 0 0 #3f9d4a;
+    border: medium none;
+    border-radius: 4px;
+    color: #fff;
+    float: right;
+    font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+    font-size: 1.4em;
+    font-weight: bold;
+    overflow: visible;
+    padding: 7px 10px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    width: auto;
+}
+#log_button{
+	overflow: hidden;
+    padding: 12px 20px 12px 130px;
+    width: 254px;
+}

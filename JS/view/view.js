@@ -79,5 +79,8 @@ View.prototype.aggiungiNuova  = function(tmplNuovaNota){
 	
 	$("#NuovaNotaSpace").prepend(tmplNuovaNota);
 }
+View.prototype.smonta= function(wrap){
+	$(wrap).remove();
+}
 
 
