@@ -21,6 +21,13 @@ CEventi.prototype.Inizializza = function(){
 	nota.Inizializza();
 	packery.Inizializza();
   }
+  CEventi.prototype.WelcomePage=function(){
+    
+     var welcome = singleton.getInstance(CWelcome,"CWelcome");
+     welcome.Inizializza();
+
+
+ }
   
 
   
