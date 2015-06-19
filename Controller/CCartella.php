@@ -71,7 +71,7 @@ class CCartella {
 			foreach ($dati as $key => $value) {
 				$value['posizione'] = $max_posizione - $value['posizione'];
 				$value['email_utente'] = 'emanuele.fianco@gmail.com';
-				$fraccoglitoreNote->updateRaccoglitore($app);
+				$fraccoglitoreNote->updateRaccoglitore($value);
 			}
 			$query->commit();
 		} catch (Exception $e) {

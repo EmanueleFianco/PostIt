@@ -2,6 +2,7 @@
 require_once("../Foundation/Fdb.php");
 require_once("../Foundation/FNota.php");
 require_once("../Foundation/FImmagine.php");
+require_once("../Foundation/FRaccoglitore_note.php");
 require_once("../Entity/EImmagine.php");
 require_once("../Foundation/Utility/USingleton.php");
 
@@ -32,17 +33,18 @@ class CNota {
 	public function Nuova() {
 		$VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
+		$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
 		$fnota=USingleton::getInstance('FNota');
 		$fdb=USingleton::getInstance('Fdb');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
 			$dati = $dati['nota'][0];
-			$max_posizione = $fnota->getMaxPosizioneNotaByCartella($dati["id_cartella"]);
+			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati["id_cartella"]);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
 			$max_posizione += 1;
 			
-			$dati['posizione'] = $max_posizione - $dati['posizione'];
+			$dati['posizione'] = $max_posizione;
 			if ($dati['ora_data_avviso']) {
 				if ($dati['ultimo_a_modificare']) {
 					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['ora_data_avviso'], $dati['immagine'], $dati['partecipanti']);
@@ -56,18 +58,18 @@ class CNota {
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']/*, $dati['immagine']*/);
 				}
 			}
-			$fnota->inserisciNota($nota,$dati["id_cartella"]);
+			$fnota->inserisciNota($nota,'emanuele.fianco@gmail.com');
+			$id = $query->lastInsertId();
+			$parametri = array("id_nota" => $id,
+							   "email_utente" => 'emanuele.fianco@gmail.com',
+							   "id_cartella" => $dati['id_cartella'],
+							   "posizione" => $dati['posizione']);
+			$fraccoglitoreNote->aggiungiAlRaccoglitoreNote($parametri);
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollBack();
 		}
-		$parametri['id_cartella'] = $dati["id_cartella"];
-		$parametri['posizione'] = $max_posizione; 
-		$nota = $fnota->getNotaByParametri($parametri);
-		$id_nota = $nota['0']['id'];
-		$dati_da_inviare= array(
-					'id' => $id_nota,
-						 		);
+		$dati_da_inviare= array('id' => $id);
 		$VNota->invia($dati_da_inviare);
 	}
 	
@@ -124,7 +126,7 @@ class CNota {
     	$FImmagine->inserisciImmagine($img);
     	$array = array('filelink' => 'Controller/index.php?controller=nota&lavoro=prendiImmagine&file='.basename($immagine['tmp_name']));
     	unlink($immagine['tmp_name']);
-    	$VNota->invia(stripslashes(json_encode($array)));
+    	return stripslashes(json_encode($array));
     }
     
 }

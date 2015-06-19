@@ -23,10 +23,10 @@ class FImmagine extends Fdb {
 	public function getImmagineByNome($_nome)
 	{
 		$this->db->setParam($this->table,"nome",":nome");
-		return $this->db->queryParametro("*",$_nome);
+		return $this->db->queryGenerica("*","=",$_nome);
 	}
 	
-	public function getImmaginiByNota($_id_nota,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
+	/*public function getImmaginiByNota($_id_nota,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
 		if (!isset($_posizione_iniziale)) {
 			$keydb = "id_nota";
 			$bind = ":".$keydb;
@@ -40,7 +40,7 @@ class FImmagine extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		$column = "count(*) as posizione, immagine.*";
 		return $this->db->loadAsArray($_column,$_id_nota,$_posizione_finale,$_posizione_iniziale);
-	}
+	}*/
 	
 	public function deleteImmagine($dati) {
 		$keydb = array_keys($dati);
