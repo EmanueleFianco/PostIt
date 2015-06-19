@@ -43,5 +43,6 @@ $promemoria = new EPromemoria("1 nota", "qualcosa", 0, "#FFFFFF", $date);
 //$fnota->inserisciNota($promemoria,$utente->getEmail());
 $promemoriacondiviso = new EPromemoriaCondiviso("1 nota", "qualcosa", 0, "#FFFFFF", $utente->getEmail(), $date);
 //$fnota->inserisciNota($promemoriacondiviso,$utente->getEmail());
-$risnota = $fnota->getNotaById(9);
+//$return = $fdb->getDb()->lastInsertId();
+//var_dump($return);
 ?>

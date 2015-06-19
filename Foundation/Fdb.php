@@ -98,9 +98,17 @@ class Fdb
 	 
 	 public function update($_value) {
 	 	$sql = "UPDATE ".$this->table." SET ".$this->keydb[0]."=".$this->bind[0]." WHERE ".$this->keydb[1]."=".$this->bind[1];
-	 	$query=$this->db->prepare($sql);
-	 	$query->bindValue($this->bind[0],$_value[0]);
-	 	$query->bindvalue($this->bind[1],$_value[1]);
+	 	if (count($_value) == 3) {
+	 		$sql = $sql." AND ".$this->keydb[2]."=".$this->bind[2];
+	 		$query=$this->db->prepare($sql);
+	 		$query->bindValue($this->bind[0],$_value[0]);
+	 		$query->bindvalue($this->bind[1],$_value[1]);
+	 		$query->bindvalue($this->bind[2],$_value[2]);
+	 	} else {
+	 		$query=$this->db->prepare($sql);
+	 		$query->bindValue($this->bind[0],$_value[0]);
+	 		$query->bindvalue($this->bind[1],$_value[1]);	 		
+	 	}
 	 	$query->execute();
 	 	$result=$query->rowCount();
 	 	return $result;

@@ -43,12 +43,23 @@ class FRaccoglitore_cartelle extends Fdb {
 	}
 	
 	public function getMaxPosizioneCartellaByUtente($_email_utente) {
-		$keydb = array("email_utente");
-		$bind = array(":email_utente");
 		$this->db->setParam($this->table,"email_utente",":email_utente");
 		return $this->db->queryGenerica("max(posizione)","=",$_email_utente);
 	}
 	
+	public function getTupleByIdCartella($_id_cartella) {
+		$this->db->setParam($this->table,"id_cartella",":id_cartella");
+		return $this->queryGenerica("email_utente,posizione", "=",$_id_cartella);				
+	}
+	
+	public function deleteRaccoglitore($dati) {
+		$keydb = array_keys($dati);
+		$keydb = $keydb[0];
+		$bind = ":".$keydb;
+		$valori = $dati[$keydb];
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->delete($valori);
+	}
 	
 }
 

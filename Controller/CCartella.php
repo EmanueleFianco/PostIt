@@ -2,6 +2,7 @@
 require_once("../Foundation/Fdb.php");
 require_once("../Foundation/FNota.php");
 require_once("../Foundation/FImmagine.php");
+require_once("../Foundation/FRaccoglitore_cartelle.php");
 require_once("../Entity/EImmagine.php");
 require_once("../Foundation/Utility/USingleton.php");
 
@@ -34,25 +35,43 @@ class CCartella {
 		
 	}
 	public function Cancella(){
-		
-		
+		$fdb=USingleton::getInstance('Fdb');
+		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
+		$VCartella=USingleton::getInstance('VCartella');
+		$dati = $VCartella->getDati();
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id_cartella']);
+			$fraccoglitoreCartelle->deleteRaccoglitore($dati);
+			foreach ($select as $key => $valore) {
+				$query1=$query->prepare("CALL AggiornaPosizioneCartelle(:pos,:email_delete)");
+				$query1->bindParam(":pos",$valore['posizione']);
+				$query1->bindParam(":email_delete",$valore['email_utente']);
+				$query1->execute();
+			}
+			$query->commit();
+		} catch (Exception $e) {
+			$query->rollback();
+		}
 	}
 	
 	public function AggiornaPosizioni() {
 		$VNota=USingleton::getInstance('VNota');
 		$fdb=USingleton::getInstance('Fdb');
-		$fnota=USingleton::getInstance('FNota');
+		$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
 		$dati = $VNota->getDati();
 		$id_cartella=$dati["id_cartella"];
 		$dati = $dati['posizioni'];
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$max_posizione = $fnota->getMaxPosizioneNotaByCartella($id_cartella);
+			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$id_cartella);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
 			foreach ($dati as $key => $value) {
 				$value['posizione'] = $max_posizione - $value['posizione'];
-				$fnota->updateNota($value);
+				$value['email_utente'] = 'emanuele.fianco@gmail.com';
+				$fraccoglitoreNote->updateRaccoglitore($app);
 			}
 			$query->commit();
 		} catch (Exception $e) {

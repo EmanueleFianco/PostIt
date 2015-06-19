@@ -52,6 +52,16 @@ class FRaccoglitore_note extends Fdb {
 		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);				
 	}
 	
+	public function updateRaccoglitore($dati) {
+		foreach ($dati as $key => $value) {
+			$keydb[]=$key;
+			$bind[]=":".$key;
+			$valori[]=$value;
+		}
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->update($valori);
+	}
+	
 }
 
 
