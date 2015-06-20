@@ -18,7 +18,6 @@ View.prototype.getPosizioni= function(){
 				 id: id
 		  }
 	  });
-	  
 	  return Posizioni;
 }
 
@@ -30,6 +29,8 @@ View.prototype.setPosizioni= function(){
 }
 
 View.prototype.setNota = function(id_cartella,nota,tmpl,nuova){
+	var eventi = singleton.getInstance(CEventi,"CEventi");
+	
 	
 	var html = Mustache.to_html(tmpl,nota);
 	if(nuova == "TRUE"){
@@ -51,6 +52,9 @@ View.prototype.setNota = function(id_cartella,nota,tmpl,nuova){
 		
 	});
 	}
+	
+	
+	eventi.InizializzaNota(nota.id_nota);
 	return html;
 }
 
@@ -72,13 +76,12 @@ View.prototype.disegna = function(tmplMain,Cartelle){
 
 	var html = Mustache.to_html(tmplMain,Cartelle);
 	$("body").append(html);	
-	$("#menu_window").hide();
-	
 }
 
 View.prototype.aggiungiNuova  = function(tmplNuovaNota){
-	
+	var eventi = singleton.getInstance(CEventi,"CEventi");
 	$("#NuovaNotaSpace").prepend(tmplNuovaNota);
+	eventi.InizializzaNota("Nuova");
 }
 View.prototype.smonta= function(wrap){
 	$(wrap).remove();

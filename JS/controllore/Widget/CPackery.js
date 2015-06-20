@@ -2,25 +2,34 @@ var CPackery = function(){
 	
 }
 
-CPackery.prototype.Inizializza = function(){
+CPackery.prototype.Inizializza = function(id_nota){
 	var view = singleton.getInstance(View,"View");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
-	
-	var $container = $('#'+cartellaAttiva).packery({
-	  	"rowHeight": 100,
-	    "isOriginLeft": true,
-	    "bindResize":true
-	  });
-//   aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
-//   Aggiornamento POSIZIONI
-var $itemElems = $('#'+cartellaAttiva).find('.nota').draggable();
 
-$('#'+cartellaAttiva).packery( 'bindUIDraggableEvents', $itemElems );
-$('#'+cartellaAttiva).packery("on", 'layoutComplete', view.getPosizioni );
-$('#'+cartellaAttiva).packery("on", 'dragItemPositioned', view.setPosizioni );
+// entra dentro l'if se il packary non è mai stato istanziato	
 	
-$(".TestoNota").keydown(function(){
-	$('#'+cartellaAttiva).packery();
-});
+	if(StrutturaCartelle.getNumeroNoteByIdCartella(cartellaAttiva)==1){
+		
+		var $container = $('#'+cartellaAttiva).packery({
+		  	"rowHeight": 80,
+		
+		    "percentPosition": true,
+		    "isOriginLeft": true,
+		  });
+		
+		$("#TestoNota"+id_nota).keydown(function(){
+			$('#'+cartellaAttiva).packery();
+		});
+		
+	
+	}
+
+var $itemElems = $('#'+cartellaAttiva).find('#'+id_nota).draggable(/*{stop: view.setPosizioni}*/);
+$('#'+cartellaAttiva).packery( 'prepended', $itemElems );;
+$('#'+cartellaAttiva).packery( 'bindUIDraggableEvents', $itemElems );
+
+
+$('#'+StrutturaCartelle.getCartellaAttiva()).packery('reloadItems');
+
 }

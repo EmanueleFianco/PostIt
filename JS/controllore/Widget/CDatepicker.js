@@ -2,7 +2,7 @@ var CDatepicker = function(){
 	
 }
 
-CDatepicker.prototype.Inizializza = function(){
+CDatepicker.prototype.Inizializza = function(id_nota){
 	$.datepicker.regional['it'] = {
 			monthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
 			'Luglio','Agosto','Settembre','ottobre','Novembre','Dicembre'],
@@ -20,7 +20,7 @@ CDatepicker.prototype.Inizializza = function(){
 		};
 	
 	$.datepicker.setDefaults($.datepicker.regional['it']);
-	$(".time").datetimepicker({
+	$("#time"+id_nota).datetimepicker({
 		timeText: 'Orario',
 		hourText: 'Ora',
 		minuteText: 'Minuti',

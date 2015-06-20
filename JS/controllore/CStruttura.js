@@ -33,13 +33,22 @@ CStruttura.prototype.aggiungiNota = function(id_cartella,nota){
 CStruttura.prototype.setCartellaAttiva = function(id_cartella){
 	$("#"+this.getCartellaAttiva()).css("display","none");
 	cartellaAttiva=id_cartella;
-	$("#"+id_cartella).css("display","inherit");
+	$("#"+id_cartella).css("display","block");
 	
 }
 
 CStruttura.prototype.getCartellaAttiva = function(){
 	return cartellaAttiva;
 }
+
+CStruttura.prototype.EliminaNoteByIdCartella = function(id_cartella){
+	delete Struttura[id_cartella].note;
+	Struttura[id_cartella]['note']= "";
+	console.log(Struttura[id_cartella]);
+	
+	
+}
+
 CStruttura.prototype.getNumeroNoteByIdCartella = function(id_cartella){
 	return Object.keys(Struttura[id_cartella]["note"]).length
 	
@@ -54,6 +63,7 @@ CStruttura.prototype.getNota = function(id_nota){
 
 CStruttura.prototype.EliminaNota = function(id_nota){
 	var cartella_attiva=this.getCartellaAttiva();
+	
 	delete Struttura[cartella_attiva]["note"][id_nota];
 }
 
@@ -61,7 +71,7 @@ CStruttura.prototype.CreaNota = function(attributo,valore){
 	var dati =singleton.getInstance(CDati,"CDati");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	
-	console.log("qui");
+
 	var cartella_attiva=this.getCartellaAttiva();
 	
 	Struttura[cartella_attiva]["note"]["Nuova"] = {
@@ -156,7 +166,7 @@ CStruttura.prototype.AggiornaNota = function(id_nota,attributo,valore){
 	
 	var cartella_attiva=this.getCartellaAttiva();
 	
-	if(id_nota === ""){
+	if(id_nota === "Nuova"){
 		this.CreaNota(attributo,valore);
 	}
 	else{

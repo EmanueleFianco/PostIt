@@ -2,10 +2,10 @@ var CContextmenu = function(){
 	
 }
 
-CContextmenu.prototype.Inizializza = function(){
+CContextmenu.prototype.Inizializza = function(id_nota){
 	
 	$.contextMenu({
-        selector: '.editnota', 
+        selector: '#editnota'+id_nota, 
         trigger: 'left',
         zIndex:900,
         autoHide:true,
@@ -24,7 +24,7 @@ CContextmenu.prototype.Inizializza = function(){
              "cancella": {name: "Cancella", icon: "delete",
             	 callback:function(){
                             var Dati={   
-                                      id: $(this).parent(".nota").attr("data-id"),
+                                      id: id_nota,
                                       controller:"nota",
                                       lavoro:"cancella"
                                   };

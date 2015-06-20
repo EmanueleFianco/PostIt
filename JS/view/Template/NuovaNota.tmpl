@@ -1,26 +1,26 @@
 
-<div class="NuovaNota" id="">
+<div class="NuovaNota" id="Nuova">
     <div class="editnota">
      	<img id="edit_button" src="JS/view/Image/editnota.png"></img>
      </div>
      
-	<div class="TitoloNota" contenteditable="true" >Nuovo titolo</div>
+	<div class="TitoloNota" id="TitoloNotaNuova" contenteditable="true" >Nuovo titolo</div>
 		
-	<div class="colorPicker" >
+	<div class="colorPicker" id="colorPickerNuova">
         	<a class="color"><div class="colorInner"></div></a>
         	<div class="track"></div>
         	<ul class="dropdown"><li></li></ul>
         	<input type="hidden" class="colorInput"/>
     </div>
 	
-	<div class="TestoNota">
-		<textarea class="redactor"></textarea>
+	<div class="TestoNota" id="TestoNotaNuova">
+		<textarea class="redactor" id="redactorNuova"></textarea>
 	</div>
 	
 	<div class="OpzioniNota">
 		<div class="DateTime">
 			 <img class="orologio" src="JS/view/Image/orologio-icon.png"></img>
-			 <input type="text" class="time" value="Promemoria" />
+			 <input type="text" class="time" id="timeNuova" value="Promemoria" />
 		</div>
 		
 		<div id="add">

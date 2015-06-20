@@ -37,7 +37,7 @@ CHome.prototype.getDati=function(){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	StrutturaCartelle.Inizializza();
 
-
+	
 		
 		
 		$.when(dati.getCartelle()).done(function(cartelle){
@@ -50,8 +50,6 @@ CHome.prototype.getDati=function(){
 			 view.disegna(Template["Main"],Cartelle);
 			$.each(Cartelle['Cartelle'],function(i,Cartella){
 				StrutturaCartelle.aggiungiCartella(Cartella);
-
-				
 				if(Cartella.nome == "Note"){				
 					StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
 				}
@@ -65,9 +63,10 @@ CHome.prototype.getDati=function(){
 					
 					$.each(Note,function(i,nota){
 						StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
+						
 					})
 					
-					eventi.Inizializza();
+					eventi.InizializzaMenu();
 					
 				})
 			})

@@ -1,26 +1,26 @@
 <div class="nota" id="{{id_nota}}" posizione="{{posizione}}">
 
-    <div class="editnota">
+    <div class="editnota" id="editnota{{id_nota}}">
      	<img id="edit_button" src="JS/view/Image/editnota.png"></img>
      </div>
      
-	<div class="TitoloNota" contenteditable="true">{{titolo}}</div>
+	<div class="TitoloNota" id="TitoloNota{{id_nota}}" contenteditable="true">{{titolo}}</div>
 		
-	<div class="colorPicker" >
+	<div class="colorPicker" id="colorPicker{{id_nota}}" >
         	<a class="color"><div class="colorInner"></div></a>
         	<div class="track"></div>
         	<ul class="dropdown"><li></li></ul>
         	<input type="hidden" class="colorInput"/>
     </div>
 	
-	<div class="TestoNota">
-		<textarea class="redactor">{{testo}}</textarea>
+	<div class="TestoNota" id="TestoNota{{id_nota}}">
+		<textarea id="redactor{{id_nota}}">{{testo}}</textarea>
 	</div>
 	
 	<div class="OpzioniNota">
 		<div class="DateTime">
 			 <img class="orologio" src="JS/view/Image/orologio-icon.png"></img>
-			 <input type="text" class="time" value="{{ora_data_avviso}}" />
+			 <input type="text" class="time" id="time{{id_nota}}" value="{{ora_data_avviso}}" />
 		</div>
 		
 		<div class="condivisioni">

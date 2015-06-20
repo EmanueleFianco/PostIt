@@ -86,6 +86,9 @@ CMenu.prototype.Inizializza = function(){
 		
 		var id_cartella=$(this).attr('id');	
 		StrutturaCartelle.setCartellaAttiva(id_cartella);
+		
+		StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
+	
 		var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
 		var id_nota;
 		if (numeroNote>0){
@@ -96,10 +99,13 @@ CMenu.prototype.Inizializza = function(){
 
 		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',id_nota)).done(function(note){
 			var Note = $.parseJSON(note);
-			$.each(Note,function(i,nota){
-				StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
-			})
-			eventi.InizializzaNota();
+			if(Object.keys(Note).length !=0){
+				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
+				$("#"+StrutturaCartelle.getCartellaAttiva()).children().remove();
+				$.each(Note,function(i,nota){
+					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
+				})
+			}
 		})
 		
 	})
