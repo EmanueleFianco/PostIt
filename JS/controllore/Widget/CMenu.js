@@ -7,6 +7,7 @@ CMenu.prototype.Inizializza = function(){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	var dati =singleton.getInstance(CDati,"CDati");
 	var eventi = singleton.getInstance(CEventi,"CEventi");
+	var view = singleton.getInstance(View,"View");
 	
 	function scrollY() {
 		return window.pageYOffset || docElem.scrollTop;
@@ -87,17 +88,16 @@ CMenu.prototype.Inizializza = function(){
 		var id_cartella=$(this).attr('id');	
 		StrutturaCartelle.setCartellaAttiva(id_cartella);
 		
-		StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
 	
 		var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
-		var id_nota;
+		
 		if (numeroNote>0){
-			var chiave=Object.keys(Struttura[id_cartella]["note"])[numeroNote-1];
-			var Nota=Struttura[id_cartella]["note"][chiave];
-			id_nota = Nota.id_nota
+			var Posizioni = new Array();
+			Posizioni = view.getPosizioni();
+			
 		}
 
-		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',id_nota)).done(function(note){
+		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Posizioni)).done(function(note){
 			var Note = $.parseJSON(note);
 			if(Object.keys(Note).length !=0){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
