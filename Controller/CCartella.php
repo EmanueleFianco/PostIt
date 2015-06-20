@@ -139,15 +139,15 @@ class CCartella {
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$max = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati['id_cartella']);
-			$max = $max[0]['max(posizione)'];
+			$max = $fraccoglitore->getMaxPosizione('emanuele.fianco@gmail.com',$dati['id_cartella']);
+			$max_posizione = $max[0]['posizione'];
 			$max_id_nota = $max[0]['id_nota'];
-			if ($max_id_nota == $dati['id_nota'] && isset($dati['id_nota'])) {
-				$posizione_finale = $max - $dati['note_presenti'];
+			if (isset($dati['id_nota']) && $max_id_nota == $dati['id_nota']) {
+				$posizione_finale = $max_posizione - $dati['note_presenti'];
 				$posizione_iniziale = $posizione_finale - $dati['num_note'];
 				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
 			} else {
-				$posizione_finale = $max;
+				$posizione_finale = $max_posizione;
 				$posizione_iniziale = $posizione_finale - 12;
 				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
 			}

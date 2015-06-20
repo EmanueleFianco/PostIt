@@ -41,7 +41,18 @@ class FRaccoglitore_note extends Fdb {
 		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);
 	}
 	
-	public function getMaxPosizioneNotaByCartellaEUtente($_email_utente,$_id_cartella) {
+	public function getMaxPosizioneNotaByCartellaEUtente($_email_utente,$_id_cartella,$_max) {
+		$column = "posizione, id_nota";
+		$keydb = array("email_utente","id_cartella","posizione");
+		$bind = array(":email_utente",":id_cartella",":posizione");
+		$_paragone = array("=","=","=");
+		$_parametri = array($_email_utente,$_id_cartella,$_max);
+		$_operatori = array("AND","AND");
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);				
+	}
+	
+	public function getMaxPosizione($_email_utente,$_id_cartella) {
 		$column = "max(posizione)";
 		$keydb = array("email_utente","id_cartella");
 		$bind = array(":email_utente",":id_cartella");
@@ -49,7 +60,9 @@ class FRaccoglitore_note extends Fdb {
 		$_parametri = array($_email_utente,$_id_cartella);
 		$_operatori = array("AND");
 		$this->db->setParam($this->table,$keydb,$bind);
-		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);				
+		$_max = $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);
+		$_max = $_max[0]['max(posizione)'];
+		return $this->getMaxPosizioneNotaByCartellaEUtente($_email_utente, $_id_cartella, $_max);
 	}
 	
 	public function updateRaccoglitore($dati) {
