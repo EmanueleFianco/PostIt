@@ -58,3 +58,4 @@ class EGruppo extends ECartella {
 	}
 	
 }
+?>

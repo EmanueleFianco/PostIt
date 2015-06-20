@@ -1,6 +1,4 @@
 <?php
-require_once("../Foundation/Utility/USingleton.php");
-require_once("View.php");
 
 class VNota extends View {
 	
@@ -22,6 +20,7 @@ class VNota extends View {
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
 			$id_cartella = '/^[[:digit:]]{1,11}$/';
+			$id_cartella_arrivo = '/^[[:digit:]]{1,11}$/';
 			$titolo = '/[.]{0,40}/';
 			$testo = '/[.]{0,3000}/';
 			$colore = '/^#([A-F]|[0-9]){6}$/';

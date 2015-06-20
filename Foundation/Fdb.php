@@ -12,7 +12,7 @@ class Fdb
 	  
 	 public function __construct()
 	 {  
-	 	 require_once("Utility/config.inc.php");
+	 	 require_once("../includes/config.inc.php");
 	     try
 	     {
 	        $col = "$dbms:host=".$config[$dbms]['host'].";dbname=".$config[$dbms]['database'];

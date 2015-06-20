@@ -1,10 +1,4 @@
 <?php
-require_once("../Foundation/Fdb.php");
-require_once("../Foundation/FNota.php");
-require_once("../Foundation/FImmagine.php");
-require_once("../Foundation/FRaccoglitore_note.php");
-require_once("../Entity/EImmagine.php");
-require_once("../Foundation/Utility/USingleton.php");
 
 class CNota {
 	
