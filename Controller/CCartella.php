@@ -159,7 +159,7 @@ class CCartella {
 			$max_posizione = $max[0]['posizione'];
 			$max_id_nota = $max[0]['id_nota'];
 			if (isset($dati['id_nota']) && $max_id_nota == $dati['id_nota']) {
-				if ($max_posizione>$dati['note_presenti']) {
+				if ($max_posizione>=$dati['note_presenti']) {
 					$posizione_finale = $max_posizione - $dati['note_presenti'];
 					$posizione_iniziale = $posizione_finale - $dati['num_note'];
 					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
