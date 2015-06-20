@@ -170,7 +170,7 @@ class CCartella {
 				$posizione_finale = $max_posizione;
 				$posizione_iniziale = $posizione_finale - 12;
 				if ($posizione_iniziale<0) {
-					$posizione_iniziale = 0;
+					$posizione_iniziale = -1;
 				}
 				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
 			}
