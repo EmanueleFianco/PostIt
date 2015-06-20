@@ -1,15 +1,40 @@
 <?php
-
+/**
+ *
+ * Classe Fdb che gestisce i rapporti con il database
+ * @package Foundation
+ * @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
+ *
+ */
 class Fdb 
 {
+	/**
+	 * @var PDO $db Mantiene la connessione al database
+	 */
 	 protected $db;
+	 /**
+	  * @var string $table Mantiene il nome della tabella attiva
+	  */
 	 protected $table;
+	 /**
+	  * @var string|array Mantiene le chiavi della tabella attiva o le chiavi della query da eseguire
+	  */
 	 protected $keydb;
+	 /**
+	  * @var string $bind Mantiene i segnaposto per i parametri reali della query da effettuare
+	  */
 	 protected $bind;
+	 /**
+	  * @var bool $auto_incremente Indica se la tabella dove si sta lavorando utilizza id auto_increment
+	  */
 	 protected $auto_increment = FALSE;
 	 
-	 
-	  
+	 /**
+	  * Costruttore di Fdb che attiva la connessione
+	  */
 	 public function __construct()
 	 {  
 	 	 require_once("../includes/config.inc.php");
@@ -21,29 +46,41 @@ class Fdb
 	      }
 	     catch(PDOException $e) {
 	    	die("Errore durante la connessione al database!: ". $e->getMessage());
-	      }
-	    
-	     
-	        
+	      }  
 	 }
-	
+	 /**
+	  * Setta i parametri per la prossima query da effettuare
+	  * @param string $_table Tabella/e che sono coinvolte nella prossima query
+	  * @param string|array $_keydb Campo/i che sono coinvolti nella prossima query
+	  * @param string|array $_bind Segnaposti che verranno rimpiazzati dai parametri reali nella prossima query
+	  */
 	 public function setParam($_table,$_keydb,$_bind)
 	 {
 	    $this->table=$_table;
 	    $this->keydb=$_keydb;
 	    $this->bind=$_bind;
 	 }
-	 
+	 /**
+	 * Inserisce nel database una tupla
+	 * @param array $data Contiene come chiavi le stesse dei segnaposto e come valori i parametri reali
+	 */
 	 public function inserisci($data)
 	 {  
 	 	if ($this->auto_increment) {
 	 		unset($data['id']);
 	 	}
 	    $query=$this->db->prepare("INSERT INTO ".$this->table."\n".$this->keydb." VALUES ".$this->bind);
-	    $query->execute($data);
+	    return $query->execute($data);
 	
 	 }
-	 
+	 /**
+	  * Setta i parametri per la prossima query da effettuare
+	  * @param string $_column Colonne da selezionare
+	  * @param string|array $_paragone Array contenente in ordine i paragoni che si vogliono effettuare nelle condizioni (=,>,<,>=,<=)
+	  * @param string|array $_parametri Parametri effettivi della query
+	  * @param array $_operatori Operatori logici da applicare in caso ci siano più condizioni (AND,OR,ORDER BY)
+	  * @return array $result Risultato della query effettuata
+	  */
 	 public function queryGenerica($_column,$_paragone,$_parametri = NULL,array $_operatori = NULL) {
 	 	if (preg_match('/^[^,]+$/',$this->table)) {
 	 		$sql = "SELECT ".$_column." FROM ".$this->table." WHERE ";
@@ -95,7 +132,11 @@ class Fdb
 	 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
 	 	return $result;
 	 }
-	 
+	 /**
+	  * Aggiorna nel database una tupla
+	  * @param array $_value Contiene come chiavi le stesse dei segnaposto e come valori i parametri reali
+	  * @return int $result 1 se andata a buon fine, 0 altrimenti
+	  */
 	 public function update($_value) {
 	 	$sql = "UPDATE ".$this->table." SET ".$this->keydb[0]."=".$this->bind[0]." WHERE ".$this->keydb[1]."=".$this->bind[1];
 	 	if (count($_value) == 3) {
@@ -113,7 +154,11 @@ class Fdb
 	 	$result=$query->rowCount();
 	 	return $result;
 	 }
-	 
+	 /**
+	  * Elimina nel database una tupla
+	  * @param array $_value Contiene come chiavi le stesse dei segnaposto e come valori i parametri reali
+	  * @return int $result 1 se andata a buon fine, 0 altrimenti
+	  */
 	 public function delete($_value) {
 	 	$sql = "DELETE FROM ".$this->table." WHERE ".$this->keydb."=".$this->bind;
 	 	$query=$this->db->prepare($sql);
@@ -122,7 +167,10 @@ class Fdb
 	 	$result=$query->rowCount();
 	 	return $result;
 	 }
-	 
+	 /**
+	  * Ritorna la maniglia al PDO
+	  * @return Ritorna la maniglia al PDO
+	  */
 	 public function getDb() {
 	 	return $this->db;
 	 }

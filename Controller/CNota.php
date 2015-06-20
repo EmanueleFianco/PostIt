@@ -1,12 +1,18 @@
 <?php
-
+/**
+ *
+ * Classe CNota che gestisce le note
+ * @package Controller
+ * @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
+ *
+ */
 class CNota {
-	
-
-	public function __construct(){
-		
-	}
-	
+	/**
+	 * Smista le varie richieste delegando i metodi corrispondenti.
+	 */
 	public function mux(){
 		$VNota=USingleton::getInstance('VNota');
 		switch ($VNota->getTask()) {
@@ -23,7 +29,9 @@ class CNota {
             
 			}
 	}
-	
+	/**
+	 * Permette di creare una nuova nota
+	 */
 	public function Nuova() {
 		$VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
@@ -66,16 +74,19 @@ class CNota {
 		$dati_da_inviare= array('id' => $id);
 		$VNota->invia($dati_da_inviare);
 	}
-	
+	/**
+	 * Permette di aggiornare lo stato di una nota
+	 */
 	public function Aggiorna(){
 		$VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
 		$fnota=USingleton::getInstance('FNota');
 		$fnota->updateNota($dati);
 	}
-	
-	
-        
+	/**
+	 * Permette di cancellare una nota e di mandarla nel cestino (se già si trova nel cestino si elimina
+	 * totalmente) se non è condivisa altrimenti viene eliminata totalmente
+	 */
     public function Cancella(){
         $VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
@@ -98,7 +109,9 @@ class CNota {
 			$fnota->updateNota($dati);									
 		}
     }
-    
+    /**
+     * Restituisce un'immagine relativa ad una nota richiedente
+     */
     public function getImmagine(){
     	$FImmagine=USingleton::getInstance('FImmagine');
     	$image = $FImmagine->getImmagineByNome($_REQUEST['file']);
@@ -110,7 +123,9 @@ class CNota {
     	echo file_get_contents($file);
     	unlink($file);
     }
-    
+    /**
+     * Permette di aggiungere un'immagine relativa ad una nota
+     */
     public function aggiungiImmagine(){ //Da vedere con il fatto di id_nota
     	$VNota=USingleton::getInstance('VNota');
     	$FImmagine=USingleton::getInstance('FImmagine');

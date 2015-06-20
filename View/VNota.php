@@ -1,7 +1,21 @@
 <?php
-
+/**
+ *
+ * Classe VNota che recupera i dati delle note e controlla se sono conformi alle aspettative
+ * @package View
+ * @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
+ *
+ */
 class VNota extends View {
-	
+	/**
+	 * Controlla i dati arrivati
+	 * @param string $_chiave Chiave da controllare
+	 * @param string $_valore Valore associato alla chiave
+	 * @throws Exception $e Se i parametri non sono conformi alle aspettative
+	 */
 	static function controllaInput($_chiave, $_valore) {
 		if ($_chiave == 'posizioni') {
 			foreach ($_valore as $key => $val) {
@@ -39,7 +53,11 @@ class VNota extends View {
 		}
 		
 	}
-	
+	/**
+	 * Controlla l'immagine arrivata
+	 * @param array $_immagine Array contenente tutti i campi dell'immagine
+	 * @throws Exception $e Se i parametri non sono conformi alle aspettative
+	 */
 	static function controllaImmagine($_immagine) {
 		if (is_int($_immagine['size']) && $_immagine['size'] < 2097152) {
 			$type = '/^image\/(gif)|(jpeg)|(jpg)|(pjpeg)|(png)$/';
@@ -50,8 +68,9 @@ class VNota extends View {
 			throw new Exception("Immagine troppo grande!");
 		}
 	}
-	
-	
+	/**
+	 * Ritorna l'immagine appena ricevuta
+	 */
 	public function getImmagine() {
 		$_FILES['file']['type'] = strtolower($_FILES['file']['type']);
 		$dir = "../tmp/";

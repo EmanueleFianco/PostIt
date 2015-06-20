@@ -1,7 +1,18 @@
 <?php
-
+/**
+ *
+ * Classe FNota che gestisce i rapporti con il database che hanno per oggetto le note
+ * @package Foundation
+ * @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
+ *
+ */
 class FNota extends Fdb {
-
+	/**
+	 * Costruttore di FNota
+	 */
 	public function __construct()
 	{
 		$this->auto_increment = TRUE;
@@ -10,7 +21,12 @@ class FNota extends Fdb {
 		$this->keydb="(titolo,testo,colore,tipo,condiviso,creata_da,ultimo_a_modificare,ora_data_avviso)";
 		$this->bind="(:titolo,:testo,:colore,:tipo,:condiviso,:creata_da,:ultimo_a_modificare,:ora_data_avviso)";
 	}
-
+	/**
+	 * Inserisce una nota nel database
+	 * @param ENota $_object Nota da inserire
+	 * @param string $_creata_da Email del creatore della nota
+	 * @return bool TRUE se l'inserimento va a buon fine
+	 */
 	public function inserisciNota(ENota $_object, $_creata_da)
 	{
 		$dati=$_object->getAsArray();
@@ -34,15 +50,23 @@ class FNota extends Fdb {
 		}
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
-		$this->db->inserisci($dati);
+		return $this->db->inserisci($dati);
 	}
-
+	/**
+	 * Restituisce la nota con l'id passato per parametro
+	 * @param int $_id Id della nota da restituire
+	 * @return array Array contenente la nota
+	 */
 	public function getNotaById($_id)
 	{
 		$this->db->setParam($this->table,"id",":id");
 	    return $this->db->queryGenerica("*","=",$_id);
 	}
-	
+	/**
+	 * Aggiorna lo stato della nota
+	 * @param array $dati Array così fatto "attributo da modificare" => "valore", "id della nota" => "valore dell'id"
+	 * @return int 1 se andata a buon fine, 0 altrimenti
+	 */
 	public function updateNota($dati) {
 		foreach ($dati as $key => $value) {
 			$keydb[]=$key;
@@ -52,7 +76,11 @@ class FNota extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->update($valori);
 	}
-	
+	/**
+	 * Cancella una nota nel database
+	 * @param array $dati Array così fatto "id della nota" => "valore dell'id"
+	 * @return int 1 se andata a buon fine, 0 altrimenti
+	 */
 	public function deleteNota($dati) {
 		$keydb = array_keys($dati);
 		$keydb = $keydb[0];

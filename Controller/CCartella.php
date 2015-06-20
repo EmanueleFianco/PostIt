@@ -1,11 +1,18 @@
 <?php
-
+/**
+ *
+ * Classe CCartella che gestisce la cartella e il suo contenuto
+ * @package Controller
+ * @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
+ *
+ */
 class CCartella {
-	
-	public function __construct(){
-	
-	}
-	
+	/**
+	 * Smista le varie richieste delegando i metodi corrispondenti.
+	 */
 	public function mux(){
 		$VNota=USingleton::getInstance('VCartella');
 		switch ($VNota->getTask()) {
@@ -21,8 +28,9 @@ class CCartella {
 				return $this->getNote();
 		}
 	}
-	
-
+	/**
+	 * Permette di creare una nuova cartella
+	 */
 	public function Nuova() {
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
@@ -47,14 +55,16 @@ class CCartella {
 		}
 		
 	}
-	
+	/**
+	 * Permette di cancellare una cartella esistente
+	 */
 	public function Cancella(){
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
 		$fcartella=USingleton::getInstance('Fcartella');
 		$VCartella=USingleton::getInstance('VCartella');
 		$dati = $VCartella->getDati();
-		$query=$fdb->getDb();
+		$query=$fdb->getDb(); //Da introdurre i permessi per la cancellazione della cartella
 		$query->beginTransaction();
 		try {
 			$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id_cartella']);
@@ -70,7 +80,9 @@ class CCartella {
 			$query->rollback();
 		}
 	}
-	
+	/**
+	 * Permette di aggiornare il posizionamento delle cartelle
+	 */
 	public function AggiornaPosizioni() {
 		$VNota=USingleton::getInstance('VNota');
 		$fdb=USingleton::getInstance('Fdb');
@@ -93,7 +105,9 @@ class CCartella {
 			$query->rollBack();
 		}
 	}
-	
+	/**
+	 * Permette di spostare una nota da una cartella ad un'altra
+	 */
 	public function spostaNote() {
 		$VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
@@ -104,8 +118,8 @@ class CCartella {
 		$cartella = $fcartella->getCartellaById($id_cartella_arrivo);
 		$nota = $fnota->getNotaById($id_nota);
 		$tipo_nota = $nota[0]['tipo'];
-		$tipo_cartella_arrivo = $cartella[0]['tipo'];
-		//if ()
+		$tipo_cartella_arrivo = $cartella[0]['tipo']; 
+		//if () Introdurre qui il controllo se è un promemoria o una nota (conpatibilità con la cartella di destinazione)
 		$posizione_iniziale = $nota[0]['posizione'];
 		$id_cartella_partenza = $nota[0]['id_cartella'];
 		$parametri = array('id_cartella' => $id_cartella_arrivo,
@@ -129,7 +143,9 @@ class CCartella {
 			$query->rollback();
 		}
 	}
-	
+	/**
+	 * Restituisce tutte le note appartenenti ad una determinata cartella
+	 */
 	public function getNote() {
 		$VNota=USingleton::getInstance('VNota');
 		$VCartella=USingleton::getInstance('VCartella');
@@ -143,12 +159,19 @@ class CCartella {
 			$max_posizione = $max[0]['posizione'];
 			$max_id_nota = $max[0]['id_nota'];
 			if (isset($dati['id_nota']) && $max_id_nota == $dati['id_nota']) {
-				$posizione_finale = $max_posizione - $dati['note_presenti'];
-				$posizione_iniziale = $posizione_finale - $dati['num_note'];
-				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
+				if ($max_posizione>$dati['note_presenti']) {
+					$posizione_finale = $max_posizione - $dati['note_presenti'];
+					$posizione_iniziale = $posizione_finale - $dati['num_note'];
+					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
+				} else {
+					$note = array();
+				}				
 			} else {
 				$posizione_finale = $max_posizione;
 				$posizione_iniziale = $posizione_finale - 12;
+				if ($posizione_iniziale<0) {
+					$posizione_iniziale = 0;
+				}
 				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
 			}
 			$query->commit();
@@ -157,7 +180,5 @@ class CCartella {
 			$query->rollback();
 		}
 	}
-	
 }
-
 ?>
