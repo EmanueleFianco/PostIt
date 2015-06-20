@@ -26,8 +26,8 @@ CEventi.prototype.InizializzaNota = function(id_nota){
 		nota.Inizializza();
 	}
 	else{
-	redactor.Inizializza(id_nota);
 	packery.Inizializza(id_nota);
+	redactor.Inizializza(id_nota);
 	colorpicker.Inizializza(id_nota);
 	contexmenu.Inizializza(id_nota);
 	datepicker.Inizializza(id_nota);
