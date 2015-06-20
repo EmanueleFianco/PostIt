@@ -156,23 +156,45 @@ class CCartella {
 		$query->beginTransaction();
 		try {
 			$max = $fraccoglitore->getMaxPosizione('emanuele.fianco@gmail.com',$dati['id_cartella']);
-			$max_posizione = $max[0]['posizione'];
-			$max_id_nota = $max[0]['id_nota'];
-			if (isset($dati['id_nota']) && $max_id_nota == $dati['id_nota']) {
-				if ($max_posizione>=$dati['note_presenti']) {
-					$posizione_finale = $max_posizione - $dati['note_presenti'];
-					$posizione_iniziale = $posizione_finale - $dati['num_note'];
-					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
-				} else {
-					$note = array();
-				}				
-			} else {
-				$posizione_finale = $max_posizione;
-				$posizione_iniziale = $posizione_finale - 12;
-				if ($posizione_iniziale<0) {
-					$posizione_iniziale = -1;
+			if (isset($max[0]['posizione'])) {
+				$max_posizione = $max[0]['posizione'];
+				$posizione_iniziale = $max_posizione - $dati['note_presenti'];
+				$note = $fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$max_posizione,$posizione_iniziale);
+				$sbagliato = FALSE;
+				if (isset($dati['posizioni'])) {
+					$note_arrivate = $dati['posizioni'];
+					$i = 0;
+					while ($sbagliato == FALSE && $i<count($note)) {
+						foreach ($note_arrivate as $key => $valore) {
+							$posizioni[$valore['posizione']] = $valore['id'];
+						}
+						sort($posizioni);
+						$pos = array_keys($posizioni);
+						if ($note[$i]['posizione'] != $pos || $note[$i]['id_nota'] != $posizioni[$i]) {
+							$sbagliato = TRUE;
+						}
+						$i+=1;
+					}
 				}
-				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
+				if (!$sbagliato) {
+					$posizione_finale = $max_posizione;
+					$posizione_iniziale = $posizione_finale - 12;
+					if ($posizione_iniziale<0) {
+						$posizione_iniziale = -1;
+					}
+					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$posizione_finale,$posizione_iniziale);
+				} else {
+					if ($max_posizione>=$dati['note_presenti']) {
+						$posizione_finale = $max_posizione - $dati['note_presenti'];
+						$posizione_iniziale = $posizione_finale - $dati['num_note'];
+						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$posizione_finale,$posizione_iniziale);
+					} else {
+						$note = array();
+					}
+				}
+			} else {
+				$max_posizione = 0;
+				$note = array();
 			}
 			$query->commit();
 			$VCartella->invia($note);

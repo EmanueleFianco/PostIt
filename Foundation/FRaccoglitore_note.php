@@ -34,29 +34,31 @@ class FRaccoglitore_note extends Fdb {
 	/**
 	 * Restituisce le tuple con id_cartella passata per parametro
 	 * @param string $_id_cartella Id della cartella delle tuple da restituire
+	 * @param string $_email_utente Email dell'utente condizione della query
 	 * @param string|NULL $_posizione_finale Posizione tetto delle tuple da estrarre
 	 * @param string|NULL $_posizione_iniziale Posizione minima delle tuple da estrarre
 	 * @param string|NULL $_tipo_ordinamento Tipo di ordinamento richiesto (DESC/ASC) DEFAULT : DESC
 	 * @return array Array contenente le tuple
 	 */
-	public function getNoteByCartella($_id_cartella,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
+	public function getNoteByCartella($_id_cartella,$_email_utente,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
 		$table = "nota as n, raccoglitore_note as r";
 		$column = "id_nota,posizione,titolo,testo,ora_data_avviso,colore,creata_da,ultimo_a_modificare";
 		if (!isset($_posizione_iniziale)) {
-			$keydb = array("id","id_nota","id_cartella");
-			$bind = ":".$keydb[2];
-			$_paragone = array('=','=');
-			$_parametri = array($id_cartella);
+			$keydb = array("id","id_nota","id_cartella","email_utente");
+			$bind = array(":".$keydb[2],":".$keydb[3]);
+			$_paragone = array('=','=','=');
+			$_parametri = array($id_cartella,$_email_utente);
+			$_operatori = array("AND","AND","AND");
 		} else {
-			$keydb = array("id","id_nota","id_cartella","posizione","posizione","posizione");
-			$bind = array(":".$keydb[2],":posizione_iniziale",":posizione_finale");
-			$_paragone = array('=','=','>','<=');
-			$_parametri = array($_id_cartella,$_posizione_iniziale,$_posizione_finale);
-			$_operatori = array("AND","AND","AND","ORDER BY");
+			$keydb = array("id","id_nota","id_cartella","email_utente","posizione","posizione","posizione");
+			$bind = array(":".$keydb[2],":".$keydb[3],":posizione_iniziale",":posizione_finale");
+			$_paragone = array('=','=','=','>','<=');
+			$_parametri = array($_id_cartella,$_email_utente,$_posizione_iniziale,$_posizione_finale);
+			$_operatori = array("AND","AND","AND","AND","ORDER BY");
 			if (isset($_tipo_ordinamento)) {
-				$keydb[6] = strtoupper($_tipo_ordinamento);
+				$keydb[7] = strtoupper($_tipo_ordinamento);
 			} else {
-				$keydb[6] = "DESC";
+				$keydb[7] = "DESC";
 			}
 		}
 		$this->db->setParam($table,$keydb,$bind);
