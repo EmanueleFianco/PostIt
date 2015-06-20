@@ -42,7 +42,7 @@ class FRaccoglitore_note extends Fdb {
 	}
 	
 	public function getMaxPosizioneNotaByCartellaEUtente($_email_utente,$_id_cartella) {
-		$column = "max(posizione),id_nota";
+		$column = "max(posizione)";
 		$keydb = array("email_utente","id_cartella");
 		$bind = array(":email_utente",":id_cartella");
 		$_paragone = array("=","=");

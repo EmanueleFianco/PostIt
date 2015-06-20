@@ -134,6 +134,7 @@ class CCartella {
 		$VNota=USingleton::getInstance('VNota');
 		$VCartella=USingleton::getInstance('VCartella');
 		$dati = $VNota->getDati();
+		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
@@ -141,13 +142,13 @@ class CCartella {
 			$max = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati['id_cartella']);
 			$max = $max[0]['max(posizione)'];
 			$max_id_nota = $max[0]['id_nota'];
-			if ($max_id_nota == $dati['id_nota']) {
+			if ($max_id_nota == $dati['id_nota'] && isset($dati['id_nota'])) {
 				$posizione_finale = $max - $dati['note_presenti'];
 				$posizione_iniziale = $posizione_finale - $dati['num_note'];
 				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
 			} else {
 				$posizione_finale = $max;
-				$posizione_iniziale = $posizione_finale -12;
+				$posizione_iniziale = $posizione_finale - 12;
 				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
 			}
 			$query->commit();

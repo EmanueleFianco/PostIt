@@ -19,15 +19,16 @@ class VNota extends View {
 			}						
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
-			$id_cartella = '/^[[:digit:]]{1,11}$/';
-			$id_cartella_arrivo = '/^[[:digit:]]{1,11}$/';
+			$id_nota = $id;
+			$id_cartella = $id;
+			$id_cartella_arrivo = $id;
 			$titolo = '/[.]{0,40}/';
 			$testo = '/[.]{0,3000}/';
 			$colore = '/^#([A-F]|[0-9]){6}$/';
 			$tipo = '^(nota|promemoria)$/';
 			$condiviso = '^(TRUE|FALSE)$/';
-			$note_presenti = '/^[[:digit:]]{1,11}$/';
-			$num_note = '/^[[:digit:]]{1,11}$/';
+			$note_presenti = $id;
+			$num_note = $id;
 			//$ora_data_avviso = Da vedere in futuro con il lato client
 			if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");
