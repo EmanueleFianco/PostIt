@@ -44,7 +44,9 @@ CRedactor.prototype.Inizializza = function(id_nota){
 		$("#TestoNota"+id_nota).keyup(function() {
 			//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
 					var id = $(this).parent().attr("id");
-					var valore = $(this).find(".redactor_redactor").html();
+					
+					var valore = $(this).find(".redactor_").html();
+					
 					StrutturaCartelle.AggiornaNota(id,"testo",valore);
 	//-------------------------------------------------------------------------------	
 					
