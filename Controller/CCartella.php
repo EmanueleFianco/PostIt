@@ -1,10 +1,4 @@
 <?php
-require_once("../Foundation/Fdb.php");
-require_once("../Foundation/FNota.php");
-require_once("../Foundation/FImmagine.php");
-require_once("../Foundation/FRaccoglitore_cartelle.php");
-require_once("../Entity/EImmagine.php");
-require_once("../Foundation/Utility/USingleton.php");
 
 class CCartella {
 	
@@ -28,22 +22,43 @@ class CCartella {
 		}
 	}
 	
-	
-	
-	public function Nuova(){
-		
+
+	public function Nuova() {
+		$fdb=USingleton::getInstance('Fdb');
+		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
+		$fcartella=USingleton::getInstance('Fcartella');
+		$VCartella=USingleton::getInstance('VCartella');
+		$dati = $VCartella->getDati();
+		$cartella = new ECartella($dati['nome'], $dati['posizione'], $dati['colore']);
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$fcartella->inserisciCartella($cartella,$dati['tipo'],$dati['amministratore']);
+			$id = $query->lastInsertId();
+			$max_posizione = $fraccoglitoreCartelle->getMaxPosizioneCartellaByUtente('emanuele.fianco@gmail.com');
+			$max_posizione = $max_posizione[0]['max(posizione)'];
+			$raccoglitore = array("id_cartella" => $id,
+								  "email_utente" => 'emanuele.fianco@gmail.com',
+								  "posizione" => $max_posizione);
+			$fraccoglitoreCartelle->aggiungiAlRaccoglitoreNote($raccoglitore);
+			$query->commit();
+		} catch (Exception $e) {
+			$query->rollback();
+		}
 		
 	}
+	
 	public function Cancella(){
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
+		$fcartella=USingleton::getInstance('Fcartella');
 		$VCartella=USingleton::getInstance('VCartella');
 		$dati = $VCartella->getDati();
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
 			$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id_cartella']);
-			$fraccoglitoreCartelle->deleteRaccoglitore($dati);
+			$fcartella->deleteCartella($dati);
 			foreach ($select as $key => $valore) {
 				$query1=$query->prepare("CALL AggiornaPosizioneCartelle(:pos,:email_delete)");
 				$query1->bindParam(":pos",$valore['posizione']);
@@ -80,8 +95,8 @@ class CCartella {
 	}
 	
 	public function spostaNote() {
-		$VCartella=USingleton::getInstance('VCartella');
-		$dati = $VCartella->getDati();
+		$VNota=USingleton::getInstance('VNota');
+		$dati = $VNota->getDati();
 		$fnota=USingleton::getInstance('FNota');
 		$fcartella=USingleton::getInstance('FCartella');
 		$id_cartella_arrivo = $dati['id_cartella_arrivo'];
@@ -120,12 +135,26 @@ class CCartella {
 		$VCartella=USingleton::getInstance('VCartella');
 		$dati = $VNota->getDati();
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
-		$max = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati['id_cartella']);
-		$max = $max[0]['max(posizione)'];
-		$posizione_finale = $max - $dati['note_presenti'];
-		$posizione_iniziale = $posizione_finale - $dati['num_note'];
-		$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
-		$VCartella->invia($note);
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$max = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati['id_cartella']);
+			$max = $max[0]['max(posizione)'];
+			$max_id_nota = $max[0]['id_nota'];
+			if ($max_id_nota == $dati['id_nota']) {
+				$posizione_finale = $max - $dati['note_presenti'];
+				$posizione_iniziale = $posizione_finale - $dati['num_note'];
+				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
+			} else {
+				$posizione_finale = $max;
+				$posizione_iniziale = $posizione_finale -12;
+				$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$posizione_finale,$posizione_iniziale);
+			}
+			$query->commit();
+			$VCartella->invia($note);
+		} catch (Exception $e) {
+			$query->rollback();
+		}
 	}
 	
 }

@@ -1,5 +1,4 @@
 <?php
-require_once("../Foundation/Utility/USingleton.php");
 class View {
 	
 	public function invia($dati) {
@@ -30,3 +29,4 @@ class View {
 		return $dati;
 	}
 }
+?>

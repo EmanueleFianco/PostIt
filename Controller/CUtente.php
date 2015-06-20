@@ -1,5 +1,4 @@
 <?php
-require_once("../Foundation/Utility/USingleton.php");
 
 class CUtente {
 	
@@ -17,8 +16,9 @@ class CUtente {
 	
 	public function getCartelle(){
 		$VCartella=USingleton::getInstance('VCartella');
-		$fraccoglitore=USingleton::getInstance('FRaccoglitore_Cartelle');
+		$fraccoglitore=USingleton::getInstance('FRaccoglitore_cartelle');
 		$cartelle=$fraccoglitore->getCartelleByUtente('emanuele.fianco@gmail.com');
 		$VCartella->invia($cartelle);
 	}
 }
+?>

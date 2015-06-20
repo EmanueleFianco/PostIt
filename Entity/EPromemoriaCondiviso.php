@@ -95,3 +95,4 @@ class EPromemoriaCondiviso extends EPromemoria {
 		return $this->partecipanti;
 	}
 }
+?>
