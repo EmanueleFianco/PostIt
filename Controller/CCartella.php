@@ -96,10 +96,10 @@ class CCartella {
 			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$id_cartella);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
 			foreach ($dati as $key => $value) {
-				$value['posizione'] = $max_posizione - $value['posizione'];
-				$value['email_utente'] = 'emanuele.fianco@gmail.com';
-				$value['id_cartella'] = $id_cartella;
-				$fraccoglitoreNote->updateRaccoglitore($value);
+				$parametri['posizione'] = $max_posizione - $value['posizione'];
+				$parametri['email_utente'] = 'emanuele.fianco@gmail.com';
+				$parametri['id_cartella'] = $id_cartella;
+				$fraccoglitoreNote->updateRaccoglitore($parametri);
 			}
 			$query->commit();
 		} catch (Exception $e) {
