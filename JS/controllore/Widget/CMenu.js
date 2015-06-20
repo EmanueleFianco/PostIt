@@ -85,16 +85,21 @@ CMenu.prototype.Inizializza = function(){
 	$(".iconmenu").click(function(){
 		
 		var id_cartella=$(this).attr('id');	
-		console.log(id_cartella);
 		StrutturaCartelle.setCartellaAttiva(id_cartella);
 		var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
-		
-		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12')).done(function(note){
+		var id_nota;
+		if (numeroNote>0){
+			var chiave=Object.keys(Struttura[id_cartella]["note"])[numeroNote-1];
+			var Nota=Struttura[id_cartella]["note"][chiave];
+			id_nota = Nota.id_nota
+		}
+
+		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',id_nota)).done(function(note){
 			var Note = $.parseJSON(note);
 			$.each(Note,function(i,nota){
 				StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 			})
-			eventi.Inizializza();
+			eventi.InizializzaNota();
 		})
 		
 	})

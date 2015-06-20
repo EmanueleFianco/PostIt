@@ -61,11 +61,12 @@ CStruttura.prototype.CreaNota = function(attributo,valore){
 	var dati =singleton.getInstance(CDati,"CDati");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	
+	console.log("qui");
 	var cartella_attiva=this.getCartellaAttiva();
 	
 	Struttura[cartella_attiva]["note"]["Nuova"] = {
 			
-			id_cartella:this.getCartellaAttiva(),
+			id_cartella:cartella_attiva,
 			titolo : "Nuovo Titolo",
 			testo: "Nuovo testo",
 			posizione:0,

@@ -15,7 +15,7 @@ CDati.prototype.getTemplate = function(tmpl){
 	
 }
 
-CDati.prototype.getNote = function(id_cartella,note_presenti,num_note){
+CDati.prototype.getNote = function(id_cartella,note_presenti,num_note,id_nota){
 	var Data = new Array();
 	
 	Data = {
@@ -23,7 +23,8 @@ CDati.prototype.getNote = function(id_cartella,note_presenti,num_note){
 			lavoro: 'getNote',
 			note_presenti : note_presenti,
 			num_note: num_note,
-			id_cartella: id_cartella
+			id_cartella: id_cartella,
+			id_nota:id_nota
 	}
 	
 	return $.ajax({
