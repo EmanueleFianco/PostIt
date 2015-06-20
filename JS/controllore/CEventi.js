@@ -33,6 +33,8 @@ CEventi.prototype.InizializzaNota = function(id_nota){
 	datepicker.Inizializza(id_nota);
 	}
 	
+	
+	
 }
 
 
