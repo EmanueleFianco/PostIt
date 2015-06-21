@@ -98,7 +98,7 @@ class CCartella {
 			foreach ($dati as $key => $value) {
 				$parametri['posizione'] = $max_posizione - $value['posizione'];
 				$parametri['email_utente'] = 'emanuele.fianco@gmail.com';
-				$parametri['id_cartella'] = $id_cartella;
+				$parametri['id_nota'] = $value['id_nota'];
 				$fraccoglitoreNote->updateRaccoglitore($parametri);
 			}
 			$query->commit();
