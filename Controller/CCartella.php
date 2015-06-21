@@ -44,7 +44,11 @@ class CCartella {
 			$fcartella->inserisciCartella($cartella,$dati['tipo'],$dati['amministratore']);
 			$id = $query->lastInsertId();
 			$max_posizione = $fraccoglitoreCartelle->getMaxPosizioneCartellaByUtente('emanuele.fianco@gmail.com');
-			$max_posizione = $max_posizione[0]['max(posizione)'];
+			if (isset($max[0]['max(posizione)'])) {
+				$max_posizione = $max[0]['max(posizione)']+1;
+			} else {
+				$max_posizione = 0;
+			}
 			$raccoglitore = array("id_cartella" => $id,
 								  "email_utente" => 'emanuele.fianco@gmail.com',
 								  "posizione" => $max_posizione);
@@ -67,15 +71,20 @@ class CCartella {
 		$query=$fdb->getDb(); //Da introdurre i permessi per la cancellazione della cartella
 		$query->beginTransaction();
 		try {
-			$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id_cartella']);
-			$fcartella->deleteCartella($dati);
-			foreach ($select as $key => $valore) {
-				$query1=$query->prepare("CALL AggiornaPosizioneCartelle(:pos,:email_delete)");
-				$query1->bindParam(":pos",$valore['posizione']);
-				$query1->bindParam(":email_delete",$valore['email_utente']);
-				$query1->execute();
+			$cartella_da_cancellare = $fcartella->getCartellaById($dati['id_cartella']);
+			if (isset($cartella_da_cancellare) && $cartella_da_cancellare[0]['amministratore'] == 'emanuele.fianco@gmail.com') { //in seguito da sostituire con la sessione
+				$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id_cartella']);
+				$fcartella->deleteCartella($dati);
+				foreach ($select as $key => $valore) {
+					$query1=$query->prepare("CALL AggiornaPosizioneCartelle(:pos,:email_delete)");
+					$query1->bindParam(":pos",$valore['posizione']);
+					$query1->bindParam(":email_delete",$valore['email_utente']);
+					$query1->execute();
+				}
+				$query->commit();
+			} else {
+				throw new Exception("Permessi insufficienti");
 			}
-			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback();
 		}
@@ -94,7 +103,11 @@ class CCartella {
 		$query->beginTransaction();
 		try {
 			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$id_cartella);
-			$max_posizione = $max_posizione[0]["max(posizione)"];
+			if (isset($max_posizione[0]["max(posizione)"])) {
+				$max_posizione = $max_posizione[0]["max(posizione)"];
+			} else {
+				throw new Exception("Cartella vuota");
+			}
 			foreach ($dati as $key => $value) {
 				$parametri['posizione'] = $max_posizione - $value['posizione'];
 				$parametri['email_utente'] = 'emanuele.fianco@gmail.com';
@@ -194,7 +207,6 @@ class CCartella {
 					}
 				}
 			} else {
-				$max_posizione = 0;
 				$note = array();
 			}
 			$query->commit();

@@ -88,7 +88,9 @@ class CRegistrazione {
         $VRegistrazione=USingleton::getInstance('VRegistrazione');
         $dati=$VRegistrazione->getDati();
         $futente=USingleton::getInstance('FUtente');
+        $ccartella=USingleton::getInstance('CCartella');
         $fdb=USingleton::getInstance('Fdb');
+        $session=USingleton::getInstance('USession');
         $query=$fdb->getDb();
         $query->beginTransaction();
         if (!$futente->getUtenteByEmail($dati["email"])) { //utente non esistente
@@ -105,7 +107,17 @@ class CRegistrazione {
             	$utente=new EUtente($dati["username"], $dati["password"], $dati["nome"], $dati["cognome"],$dati["email"],"nonattivato","normale");
                 $utente->setCodiceAttivazione();
             	$futente->inserisciUtente($utente,$immagine);
-                $session=USingleton::getInstance('USession');
+            	$cartelle = array("Note" => '#FFFFFF',
+            					  "Promemoria" => '#FFFFFF',
+            					  "Archivio" => '#FFFFFF', //I colori di default sono da scegliere
+            					  "Cestino" => '#FFFFFF');
+            	$_REQUEST['amministratore'] = $session->getValore("email");
+            	$_REQUEST['tipo'] = "privata";
+            	foreach ($cartelle as $key => $valore) {
+            		$_REQUEST['nome'] = $key;
+            		$_REQUEST['colore'] = $valore;
+            		$ccartella->Nuova();            		
+            	}
                 $session->setValore('username',$dati["username"]);
                 $session->setValore('nome',ucwords($dati["nome"]).' '.ucwords($dati["cognome"]));
                 $session->setValore('cognome',ucwords($dati["cognome"]));
@@ -114,7 +126,7 @@ class CRegistrazione {
             } 
             catch (Exception $e) {
             	$query->rollback();
-            	echo "Registrazione non andata a buon fine";
+            	echo "Registrazione fallita";
             }
         }
         else {
