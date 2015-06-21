@@ -12,6 +12,8 @@
 <script src="JS/Utility/modernizr.custom.25376.js"type="text/javascript"></script>
 <script src="JS/Utility/classie.js"type="text/javascript"></script>
 <script src="JS/Utility/leanModal.min.js"type="text/javascript"></script>
+<script  src="JS/Utility/jquery.slides.min.js" type="text/javascript"></script>
+
 
 
 
@@ -43,6 +45,8 @@
 <link rel="stylesheet" href="css/normalize.css" type="text/css" >
 <link rel="stylesheet"  href="css/demo.css"type="text/css" >
 <link rel="stylesheet"  href="css/component.css"type="text/css" >
+<link rel="stylesheet" href="css/example.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
 <link href="css/Welcome.css" rel="stylesheet" type="text/css">		
 
 
