@@ -4,20 +4,71 @@
 	height: 100%;
 	border:  2px solid #a1a1a1;
 	float: left;
-    background-image:url("../JS/view/Image/welcomebanner.png");
-   
-    
-    
-
-
-    
+  background-image:url("../JS/view/Image/welcomebanner.png"); 
 }
-@font-face {
-    font-family: title;
-    src: url("../css/font/font.otf");
-    font-weight:800;
+.registrazione{
+    position: fixed;
+    opacity: 1;
+    z-index:30000;
+    top: 0px;
+    left: 50%;
+    margin-left:-202px;
+    top:100px;
+    width:420px;
+    height: 590px;
+    display: none;
+    border: groove 2px;
+    border-color: black;
+    border-radius: 5px;
+    background-image: url("../JS/view/Image/header-signup.png");
 
 }
+#submit{
+  float: right;
+  border: medium 2px ;
+  border-radius: 5px;  
+  margin-top: 10px;
+  margin-right: 10px;
+
+}
+.textinputregistrazione{
+  border-bottom: 1px solid #eee;
+    padding: 14px 20px;
+    position: relative;
+    text-align: left;
+    width: 89%;
+}
+#headerregistrazione{
+  border-top-left-radius: 5px;
+    border-top-right-radius: 5px;   
+    padding:8px 8px 5px;
+
+}
+
+
+
+.linked{
+  height: 40px;
+  width: 200px;
+  float: right;
+  padding-top: 50px;
+
+}
+
+#accedi{
+  color:black;
+}
+
+#accedi:focus{
+  font-style: underline;
+}
+#registrati{
+  color:black;
+}
+
+
+
+
 
  #slides {
       display: none
@@ -169,12 +220,7 @@
     }
 
 
-#welcome_button{
-	height: 80px;
-	width: 45px;
-	float: right;
 
-}
 
 #bannerwelcome{
     width: 100%;
@@ -214,12 +260,17 @@
 	border-bottom: 1px solid #eee;
     padding: 14px 20px;
     position: relative;
-    text-align: right;
+    text-align: left;
     width: 364px;
 }
+
+
+
+
+
 .label{
 	color: #222;
-    display: block;
+    display: inline-block;
     float: left;
     font-size: 12px;
     padding-top: 8px;

@@ -9,16 +9,27 @@ var CWelcome= function(){
 
 CWelcome.prototype.Inizializza= function(){
 	var clogin=singleton.getInstance(CLogin,"CLogin")
-	
-	    $("#welcome_button").click(function(event){
+   
+   $("#registrati").click(function(){
+    $("#signup").fadeOut();
+    $(".registrazione").fadeIn();    
+   });
+
+	 $("#accedi").click(function(event){
+    $(".registrazione").fadeOut();  
 		$("#signup").fadeIn();
 		});
+
 	$("#button_login").click(function(){
 		clogin.logIn();
 		$("#signup").fadeOut();			
 	});
 
-	$(".modal_close").click(function(){
+  $("#clos_reg").click(function(){
+    $(".registrazione").fadeOut();
+  });
+
+	$("#clos_log").click(function(){
 		$("#signup").fadeOut();
 	});
 	$('#slider').slidesjs({
