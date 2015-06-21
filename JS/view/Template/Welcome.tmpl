@@ -1,40 +1,87 @@
 <div id="menu_welcome">
-<div id="bannerWelcome">
-<div id="welcome_button"><img id="welcome_menu" src="JS/view/Image/threelines.png"/></div>
-<div id="title">Post-It</div>
-</div>
-<div class="contenitore">
-   <div id="slider">    
-  <img src="JS/view/Image/pic1.jpg" />
-  <img src="JS/view/Image/pic2.jpg" />
-  <img src="JS/view/Image/pic3.jpg" />                
-  </div>
-</div>
-
+    <div id="bannerWelcome">
+         <div class="linked">
+             <a href="#"id="accedi">Accedi &nbsp &nbsp</a>
+             <a href="#" id="registrati" >Registrati</a>
+        </div>
+        <div id="title">Post-It</div>
+        
+    </div>
+    <div class="contenitore">
+       <div id="slider">    
+      <img src="JS/view/Image/pic1.jpg" />
+      <img src="JS/view/Image/pic2.jpg" />
+      <img src="JS/view/Image/pic3.jpg" />                
+      </div>
+    </div>
        
-  
+    <div class="registrazione">
+    <div id="headerregistrazione"><h2>Modulo di Registrazione</h2><p>tutti i campi sono obbligatori...</p>
+    <a id="clos_reg" class="modal_close" href="#"></a>
+    </div>
+        <form method="post" enctype="multipart/form-data" id="contactform"action="index.php"> 
+          <div class="textinputregistrazione">
+          <label class="label"for="nome">Nome</label>
+          <input id="nome" name="nome" type="text"> 
+          </div> 
+           <div class="textinputregistrazione">
+          <label class="label" for="cognome">Cognome</label>
+          <input class="cognome" name="cognome"  type="text"> 
+          </div> 
 
-<div id="signup">
-      <div id="signupwindow">
-         <div id="signup-header">
-          <h2>Accedi per un'esperienza unica</h2>
-          <p>Smarty,Easy,PostIt..</p>
-          <a class="modal_close" href="#"></a>
-         </div>
-          <form action="">
-              <div id="email_utente" class="textinput">
-               <label class="label" for="">Email utente</label>
-               <input  id="email_input" type="text" name="">
-              </div>
-              <div id="password_utente" class="textinput">
-               <label class="label" for="">Password</label>
-               <input  id="password_input" type="password" name="">
-              </div>
-              <div id="log_button">
-                  <button id="button_login" type="button"> LogIn</button>
-              </div>
-          </form>
-         
-       </div>
-</div>
+           <div class="textinputregistrazione">   
+          <label class="label" for="email">Email</label>
+          <input id="email" name="email" type="email"> 
+          </div> 
+
+           <div class="textinputregistrazione">   
+          <label class="label" for="username">Username</label>
+          <input id="username" name="username"  type="text"> 
+          </div> 
+
+          <div class="textinputregistrazione">    
+          <label class="label" for="password">Password</label>
+          <input type="password" id="password" name="password"  >
+          </div> 
+
+           <div class="textinputregistrazione">
+          <label class="label" for="repassword">Conferma la tua password</label></p> 
+          <input type="password" id="repassword" name="repassword"  > <br>
+          </div> 
+
+           <div class="textinputregistrazione"> 
+          <label class="label" for="userfile" >Immagine profilo</label>
+          <input  name="userfile" type="file" id="foto">
+          </div> 
+
+        <input type="hidden" name="controller" value="registrazione" />
+        <input type="hidden" name="task" value="signup" />
+        <input name="submit" id="submit" tabindex="8" value="Registrati Adesso!" type="submit"  >   
+        </form> 
+    </div>
+
+
+    <div id="signup">
+          <div id="signupwindow">
+             <div id="signup-header">
+              <h2>Accedi per un'esperienza unica</h2>
+              <p>Smarty,Easy,PostIt..</p>
+              <a id="clos_log"class="modal_close" href="#"></a>
+             </div>
+              <form action="">
+                  <div id="email_utente" class="textinput">
+                   <label class="label" for="">Email utente</label>
+                   <input  id="email_input" type="text" name="">
+                  </div>
+                  <div id="password_utente" class="textinput">
+                   <label class="label" for="">Password</label>
+                   <input  id="password_input" type="password" name="">
+                  </div>
+                  <div id="log_button">
+                      <button id="button_login" type="button"> LogIn</button>
+                  </div>
+              </form>
+             
+           </div>
+    </div>
 </div>
