@@ -14,8 +14,12 @@ class CHome {
 	 * Imposta la pagina e verifica anche l'autenticazione.
 	 */
 	public function __construct(){
-		$contenuto=$this->mux();
-		echo $contenuto;
+		try {
+			$contenuto=$this->mux();
+			echo $contenuto;
+		} catch (Exception $e) {
+			echo $e->getMessage();
+		}
 	}
 	/**
 	 * Smista le richieste delegando i corrispondenti controller.
@@ -32,6 +36,9 @@ class CHome {
         	case 'utente':
         		$CUtente=USingleton::getInstance('CUtente');
         		return $CUtente->mux();
+        	case 'registrazione':
+        		$CRegistrazione=USingleton::getInstance('CRegistrazione');
+        		return $CRegistrazione->mux();
 		}
 	}		
 }

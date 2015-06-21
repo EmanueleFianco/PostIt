@@ -24,12 +24,6 @@ class EUtente
     private $password;
     /**
      *
-	 * @var string $immagine percorso relativo all'immagine scelta dall'utente associata al suo account.
-	 * 
-	 */
-    private $immagine;
-    /**
-     *
      * @var string $nome nome dell'utente definito in fase di registrazione.
      * 
      */
@@ -91,11 +85,10 @@ class EUtente
     * @param array $_cartelle
     *
     */
-    public function __construct($_username,$_password,$_nome,$_cognome,EImmagine $_immagine,$_email,$_stato_attivazione,$_tipo_utente,$_cartelle = NULL)
+    public function __construct($_username,$_password,$_nome,$_cognome,$_email,$_stato_attivazione,$_tipo_utente,$_cartelle = NULL)
     {
     	$this->setUsername($_username);
     	$this->setPassword($_password);
-    	$this->setImmagine($_immagine);
     	$this->setNome($_nome);
     	$this->setCognome($_cognome);
     	$this->setEmail($_email);
@@ -148,25 +141,6 @@ class EUtente
     		throw new Exception("Password non valida!");
     	}
     }
-    
-    
-
-     
-
-     /**
-     * Setta $_immag come immagine associata all'utente
-     * @param string $_immag
-     *
-     */  
-    public function setImmagine($_immagine)
-    {
-    	$this->immagine=$_immagine;
-
-    }
-    
-
-
-
      /**
      * Setta $_email come email associata all'utente
      * @throws Exception Se $_email non rispetta le condizioni descritte in filter_var()
@@ -329,20 +303,6 @@ class EUtente
     {
         return $this->email;
     }
-    
-    
-     /**
-     * 
-     * @return string Stringa contenente il percorso relativo all'immagine definita dall'utente associata al suo account.
-     *
-     */
-     public function getImmagine()
-    {
-        return $this->immagine;
-    }
-    
-
-
      /**
      * 
      * @return string Stringa contenente la password dell'utente.

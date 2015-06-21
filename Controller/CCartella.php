@@ -14,8 +14,8 @@ class CCartella {
 	 * Smista le varie richieste delegando i metodi corrispondenti.
 	 */
 	public function mux(){
-		$VNota=USingleton::getInstance('VCartella');
-		switch ($VNota->getTask()) {
+		$VCartella=USingleton::getInstance('VCartella');
+		switch ($VCartella->getTask()) {
 			case 'nuova':
 				return $this->Nuova();
 			case 'cancella':

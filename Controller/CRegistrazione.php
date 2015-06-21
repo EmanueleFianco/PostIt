@@ -6,14 +6,31 @@
  * @author Gioele Cicchini
  * @author Federica Caruso
  */
-class CRegistrazione{
+class CRegistrazione {
+	
+	/**
+	 * Smista le varie richieste delegando le funzioni corrispondenti.
+	 */
+	public function mux(){
+		$VRegistrazione=USingleton::getInstance('VRegistrazione');
+		switch ($VRegistrazione->getTask()) {
+			case 'login':
+				return $this->autentica();
+			case 'logout':
+				return $this->logout();
+			case 'signup':
+				return $this->registra();
+			case 'attiva':
+				return $this->attivazione();
+		}
+	}
     /**
      * Controlla se l'utente è loggato
      * @return boolean
      */
     public function isUtenteRegistrato(){
         $session = USingleton::getInstance('USession');
-        if ( $session->getValore('nome_cognome') )
+        if ($session->getValore('email'))
             return true;
         else
             return false;
@@ -24,7 +41,7 @@ class CRegistrazione{
      */
     public function isAdmin(){
         $session = USingleton::getInstance('USession');
-        if ( $session->getValore('tipoutente') == "admin" || $session->getValore('tipoutente') == "normale")
+        if ($session->getValore('tipo_utente') == "admin")
             return true;
         else
             return false;
@@ -34,21 +51,33 @@ class CRegistrazione{
      * Autentica l'utente;in caso di errore viene impostato un messaggio di notifica
      */
     public function autentica(){
-        $PReg=USingleton::getInstance('PRegistrazione');
-        $login=$PReg->getLogin();
+        $VRegistrazione=USingleton::getInstance('VRegistrazione');
+        $login=$VRegistrazione->getDati();
         
-        $fuser=USingleton::getInstance('FUtente');
-        if (!$user=$fuser->load($login['username']))
-            $PReg->setErrore();
-        else {
-            if ( md5($login['password']) == $user->getPassword() ){
-                $session=USingleton::getInstance('USession');
-                $session->setValore('username',$user->getUsername());
-                $session->setValore('nome_cognome',$user->getNome().' '.$user->getCognome());
-                $session->setValore('tipoutente',$user->getTipoUtente());
-            }
-            else
-                $PReg->setErrore();
+        $futente=USingleton::getInstance('FUtente');
+        $utente = $futente->getUtenteByEmail($login['email']);
+        if (isset($utente)) {
+        	$utente = $utente[0];
+        	if ($utente['password'] == md5($login['password'])) {
+        		if ($utente['stato_attivazione'] != "attivato") {
+        			throw new Exception("Utente non attivato");
+        		} else {
+        			$session=USingleton::getInstance('USession');
+        			$session->setValore('username',$utente['username']);
+        			$session->setValore('nome',$utente['nome']);
+        			$session->setValore('cognome',$utente['cognome']);
+        			$session->setValore('email',$utente['email']);
+        			$session->setValore('tipo_utente',$utente['tipo_utente']);
+        			$info = array("username" => $utente['username'],
+        					"nome" => $utente['nome'],
+        					"cognome" => $utente['cognome'],
+        					"email" => $utente['email'],
+        					"tipo_utente" => $utente['tipo_utente']);
+        			$VRegistrazione->invia($info);
+        		}
+        	}
+        } else {
+        	throw new Exception("Login errato");
         }
     }
     
@@ -56,24 +85,41 @@ class CRegistrazione{
      * Effettua la registrazione vericando la correttezza dei dati
      */
     public function registra(){
-        $PReg=USingleton::getInstance('PRegistrazione');
-        $dati=$PReg->getDatiRegistrazione();
-        $fuser=USingleton::getInstance('FUtente');
-        if (!$fuser->load($dati["username"])) { //utente non esistente
+        $VRegistrazione=USingleton::getInstance('VRegistrazione');
+        $dati=$VRegistrazione->getDati();
+        $futente=USingleton::getInstance('FUtente');
+        $fdb=USingleton::getInstance('Fdb');
+        $query=$fdb->getDb();
+        $query->beginTransaction();
+        if (!$futente->getUtenteByEmail($dati["email"])) { //utente non esistente
             try {
-                $user=new EUtente($dati["username"], $dati["password"], $dati["nome"], $dati["cognome"], "registrato", $dati["email"]);
-                $fuser->store($user);
+            	if (isset($_FILES['file'])) {
+            		$image = $VRegistrazione->getImmagine();
+            		move_uploaded_file($_FILES['file']['tmp_name'], $image['tmp_name']);
+            		$immagine = new EImmagine($image['tmp_name'], $image['size'], $image['type'], $image['tmp_name']);
+            		$FImmagine=USingleton::getInstance('FImmagine');
+            		$FImmagine->inserisciImmagine($immagine);
+            	} else {
+            		$immagine = NULL;
+            	}
+            	$utente=new EUtente($dati["username"], $dati["password"], $dati["nome"], $dati["cognome"],$dati["email"],"nonattivato","normale");
+                $utente->setCodiceAttivazione();
+            	$futente->inserisciUtente($utente,$immagine);
                 $session=USingleton::getInstance('USession');
                 $session->setValore('username',$dati["username"]);
-                $session->setValore('nome_cognome',ucwords($dati["nome"]).' '.ucwords($dati["cognome"]));
-                $session->setValore('tipoutente','registrato');
+                $session->setValore('nome',ucwords($dati["nome"]).' '.ucwords($dati["cognome"]));
+                $session->setValore('cognome',ucwords($dati["cognome"]));
+                $session->setValore('tipo_utente','normale');
+                $query->commit();
             } 
             catch (Exception $e) {
-                return $PReg->showErrore("regdatierrati");
+            	$query->rollback();
+            	echo "Registrazione non andata a buon fine";
             }
         }
-        else 
-            return $PReg->showErrore("regusernameinuso");
+        else {
+        	throw new Exception("Email già in uso");
+        }
     }
     /**
      * Disconnette l'utente distruggendo la sessione
@@ -82,21 +128,27 @@ class CRegistrazione{
         $session=USingleton::getInstance('USession');
         $session->end();
     }
-    
     /**
-     * Smista le varie richieste delegando le funzioni corrispondenti.
+     * Attiva l'utente verificandone l'email data alla registrazione
      */
-    public function smista(){
-        $PRegistrazione=USingleton::getInstance('PRegistrazione');
-        switch ($PRegistrazione->getTask()) {
-            case 'login':
-                return $this->autentica();
-            case 'logout':
-                return $this->logout();
-            case 'signup':
-                return $this->registra();
-        }
+    public function attiva() {
+    	$VRegistrazione=USingleton::getInstance('VRegistrazione');
+    	$dati=$VRegistrazione->getDati();
+    	$futente=USingleton::getInstance('FUtente');
+    	$utente = $futente->getUtenteByEmail($dati['email']);
+    	if (isset($utente)) {
+    		$cod_attivazione = $utente[0]['codice_attivazione'];
+    		if ($dati['cod_attivazione'] == $cod_attivazione) {
+    			$aggiornamento = array("stato_attivazione" => "attivato",
+    								   "email" => $dati['email']);
+    			$futente->updateUtente($aggiornamento);
+    			$VRegistrazione->invia(array("attivazione" => TRUE));
+    		} else {
+    			throw new Exception ("Codice di attivazione errato");
+    		}
+    	} else {
+    		throw new Exception("Utente inesistente");
+    	}	
     }
-
 }
 ?>
