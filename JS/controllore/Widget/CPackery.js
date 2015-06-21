@@ -9,13 +9,13 @@ CPackery.prototype.Inizializza = function(id_nota){
 
 // entra dentro l'if se il packary non è mai stato istanziato	
 	
-	if(StrutturaCartelle.getNumeroNoteByIdCartella(cartellaAttiva)==1){
+	
 		
 		var $container = $('#'+cartellaAttiva).packery({
+			
 		  	"rowHeight": 80,
-		
 		    "percentPosition": true,
-		    "isOriginLeft": true,
+		    
 		  });
 		
 		$("#TestoNota"+id_nota).keydown(function(){
@@ -23,13 +23,23 @@ CPackery.prototype.Inizializza = function(id_nota){
 		});
 		
 	
-	}
+	
 
-var $itemElems = $('#'+cartellaAttiva).find('#'+id_nota).draggable(/*{stop: view.setPosizioni}*/);
-$('#'+cartellaAttiva).packery( 'appended', $itemElems );;
+	
+var $itemElems = $('#'+cartellaAttiva).find('#'+id_nota).draggable();
+$('#'+cartellaAttiva).packery( 'appended', $itemElems );
 $('#'+cartellaAttiva).packery( 'bindUIDraggableEvents', $itemElems );
-
 
 $('#'+StrutturaCartelle.getCartellaAttiva()).packery('reloadItems');
 
+}
+CPackery.prototype.Ricarica = function(id_nota){
+	var view = singleton.getInstance(View,"View");
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	
+	$('#'+cartellaAttiva).packery( 'on', 'layoutComplete',view.setPosizioni);
+	
+
+
+	
 }

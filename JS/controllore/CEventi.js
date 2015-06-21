@@ -5,9 +5,9 @@ var CEventi = function(){
 
 CEventi.prototype.InizializzaMenu = function(id_nota){
 	var menu = singleton.getInstance(CMenu,"CMenu");
-	var view = singleton.getInstance(View,"View");
+	var packery = singleton.getInstance(CPackery,"CPackery");
 	menu.Inizializza();
-	$('#'+cartellaAttiva).packery( 'on', 'layoutComplete',view.setPosizioni);
+	packery.Ricarica();
 }
 CEventi.prototype.InizializzaNota = function(id_nota){
 	
