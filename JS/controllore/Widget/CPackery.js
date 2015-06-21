@@ -26,7 +26,7 @@ CPackery.prototype.Inizializza = function(id_nota){
 	}
 
 var $itemElems = $('#'+cartellaAttiva).find('#'+id_nota).draggable(/*{stop: view.setPosizioni}*/);
-$('#'+cartellaAttiva).packery( 'prepended', $itemElems );;
+$('#'+cartellaAttiva).packery( 'appended', $itemElems );;
 $('#'+cartellaAttiva).packery( 'bindUIDraggableEvents', $itemElems );
 
 
