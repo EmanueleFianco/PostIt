@@ -4,8 +4,9 @@ var CRedactor = function(){
 
 CRedactor.prototype.Inizializza = function(id_nota){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	
 	  $("#redactor"+id_nota).redactor({
-		  placeholder: 'Scrivi una nuova nota',
+		  lang: 'it',
 		  imageUpload: 'Controller/index.php?controller=nota&lavoro=upload'
 	    });
 	  
