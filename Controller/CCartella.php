@@ -187,7 +187,8 @@ class CCartella {
 						foreach ($note_arrivate as $key => $valore) {
 							$posizioni[$valore['posizione']] = $valore['id'];
 						}
-						arsort($posizioni);
+						krsort($posizioni);
+						//var_dump($posizioni);
 						foreach ($posizioni as $key => $val) {
 							if ($note[$i]['posizione'] != $key || $note[$i]['id_nota'] != $val) {
 								$sbagliato = TRUE;
