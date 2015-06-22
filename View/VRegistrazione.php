@@ -7,8 +7,10 @@ class VRegistrazione extends View{
 	 * @throws Exception $e Se i parametri non sono conformi alle aspettative
 	 */
 	static function controllaInput($_chiave, $_valore) {
-		if($_chiave == "email" && !filter_var($_valore,FILTER_VALIDATE_EMAIL)) {
-			throw new Exception(ucwords($_chiave)." errato!");
+		if($_chiave == "email") {
+			if (!filter_var($_valore,FILTER_VALIDATE_EMAIL)) {
+				throw new Exception(ucwords($_chiave)." errato!");
+			}
 		} else {
 			$password = '/^[[:alnum:][:punct:]]{6,20}$/';
 			$cod_attivazione = '/^[[:alnum:]]{13}$/'; 
