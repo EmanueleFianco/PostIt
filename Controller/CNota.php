@@ -44,8 +44,11 @@ class CNota {
 			$dati = $dati['nota'][0];
 			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati["id_cartella"]);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
-			$max_posizione += 1;
-			
+			if (isset($max_posizione)) {
+				$max_posizione += 1;
+			} else {
+				$max_posizione = 0;
+			}
 			$dati['posizione'] = $max_posizione;
 			if ($dati['ora_data_avviso']) {
 				if ($dati['ultimo_a_modificare']) {

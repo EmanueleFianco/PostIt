@@ -174,20 +174,25 @@ class CCartella {
 				$max_posizione = $max[0]['posizione'];
 				$posizione_iniziale = $max_posizione - $dati['note_presenti'];
 				$note = $fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$max_posizione,$posizione_iniziale);
-				$sbagliato = FALSE;
 				if (isset($dati['posizioni'])) {
 					$note_arrivate = $dati['posizioni'];
 					$i = 0;
+					if (count($note_arrivate) != count($note)) {
+						$sbagliato = TRUE;
+					} else {
+						$sbagliato = FALSE;
+					}
 					while ($sbagliato == FALSE && $i<count($note)) {
 						foreach ($note_arrivate as $key => $valore) {
 							$posizioni[$valore['posizione']] = $valore['id'];
 						}
-						sort($posizioni);
-						$pos = array_keys($posizioni);
-						if ($note[$i]['posizione'] != $pos || $note[$i]['id_nota'] != $posizioni[$i]) {
-							$sbagliato = TRUE;
+						arsort($posizioni);
+						foreach ($posizioni as $key => $val) {
+							if ($note[$i]['posizione'] != $key || $note[$i]['id_nota'] != $val) {
+								$sbagliato = TRUE;
+							}
+							$i+=1;
 						}
-						$i+=1;
 					}
 				}
 				if (!$sbagliato) {

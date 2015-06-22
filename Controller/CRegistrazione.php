@@ -56,7 +56,7 @@ class CRegistrazione {
         
         $futente=USingleton::getInstance('FUtente');
         $utente = $futente->getUtenteByEmail($login['email']);
-        if (isset($utente)) {
+        if ($utente) {
         	$utente = $utente[0];
         	if ($utente['password'] == md5($login['password'])) {
         		if ($utente['stato_attivazione'] != "attivato") {
@@ -75,9 +75,11 @@ class CRegistrazione {
         					"tipo_utente" => $utente['tipo_utente']);
         			$VRegistrazione->invia($info);
         		}
+        	} else {
+        		throw new Exception("Login errato");
         	}
         } else {
-        	throw new Exception("Login errato");
+        	throw new Exception("Utente errato");
         }
     }
     

@@ -40,8 +40,9 @@ class Fdb
 	 	 require_once("../includes/config.inc.php");
 	     try
 	     {
+	     	$attributi = array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	        $col = "$dbms:host=".$config[$dbms]['host'].";dbname=".$config[$dbms]['database'];
-	        $this->db = new PDO($col, $config[$dbms]['user'], $config[$dbms]['password']);
+	        $this->db = new PDO($col, $config[$dbms]['user'], $config[$dbms]['password'],$attributi);
 	
 	      }
 	     catch(PDOException $e) {
@@ -70,7 +71,12 @@ class Fdb
 	 		unset($data['id']);
 	 	}
 	    $query=$this->db->prepare("INSERT INTO ".$this->table."\n".$this->keydb." VALUES ".$this->bind);
-	    return $query->execute($data);
+	    try {
+	    	$result = $query->execute($data);
+	    } catch (PDOException $e) {
+	    	echo 'Error: '.$e->getMessage();
+	    }
+	    return $result;
 	
 	 }
 	 /**
@@ -128,8 +134,12 @@ class Fdb
 	 			$query=$this->db->prepare($sql);
 	 		}
 	 	}
-	 	$query->execute();
-	 	$result=$query->fetchAll(PDO::FETCH_ASSOC);
+	 	try {
+	 		$query->execute();
+	 		$result=$query->fetchAll(PDO::FETCH_ASSOC);
+	 	} catch (PDOException $e) {
+	    	echo 'Error: '.$e->getMessage();
+	    }
 	 	return $result;
 	 }
 	 /**
@@ -150,8 +160,12 @@ class Fdb
 	 		$query->bindValue($this->bind[0],$_value[0]);
 	 		$query->bindvalue($this->bind[1],$_value[1]);	 		
 	 	}
-	 	$query->execute();
-	 	$result=$query->rowCount();
+	 	try {
+	 		$query->execute();
+	 		$result=$query->rowCount();
+	 	} catch (PDOException $e) {
+	 		echo 'Error: '.$e->getMessage();
+	 	}
 	 	return $result;
 	 }
 	 /**
@@ -163,8 +177,12 @@ class Fdb
 	 	$sql = "DELETE FROM ".$this->table." WHERE ".$this->keydb."=".$this->bind;
 	 	$query=$this->db->prepare($sql);
 	 	$query->bindValue($this->bind,$_value);
-	 	$query->execute();
-	 	$result=$query->rowCount();
+	 	try {
+	 		$query->execute();
+	 		$result=$query->rowCount();
+	 	} catch (PDOException $e) {
+	 		echo 'Error: '.$e->getMessage();
+	 	}
 	 	return $result;
 	 }
 	 /**
