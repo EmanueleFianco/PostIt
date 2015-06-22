@@ -12,7 +12,7 @@
 class EPromemoria extends ENota {
 	/**
      *
-	 * @var string $ora_data_avviso Ora e data definita per il promemoria.
+	 * @var DateTime $ora_data_avviso Ora e data definita per il promemoria.
 	 * 
 	 */
 	private $ora_data_avviso;
@@ -35,9 +35,6 @@ class EPromemoria extends ENota {
 		parent::__construct($_titolo, $_testo, $_posizione, $_colore, $_immagine);
 		$this->setOraDataAvviso($_ora_data_avviso);
 	}
-	
-
-
 	 /**
      * Setta $_ora_data_avviso come Ora e data definiti per il promemoria.
      * @param DateTime $_ora_data_avviso
@@ -47,16 +44,20 @@ class EPromemoria extends ENota {
 		$this->ora_data_avviso = $_ora_data_avviso;
 	}
 	
-
 	/**
 	*
-	* @return string Ora e data definiti per il promemoria.
+	* @return DateTime Ora e data definiti per il promemoria.
 	*
 	*/
 	public function getOraDataAvviso() {
 		return $this->ora_data_avviso;
 	}
 	
+	/**
+	 *
+	 * @return array Trasforma l'oggetto in una array associativo
+	 *
+	 */
 	public function getAsArray() {
 		$result = parent::getAsArray();
 		$result['ora_data_avviso'] = $this->ora_data_avviso->format('Y-m-d H:i:s');

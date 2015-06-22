@@ -24,7 +24,7 @@ class ECartella{
 	 private $nome;
 	 /**
      *
-	 * @var int $posizione numero intero che indica la posizione della cartella.
+	 * @var int $posizione Numero intero che indica la posizione della cartella.
 	 * 
 	 */
 	 private $posizione;
@@ -44,7 +44,6 @@ class ECartella{
 	 /**
     * Costruttore di Cartella
     *
-    * @throws Exception Se i parametri non sono tutti stringhe formattate secondo le regole descritte in SetNome(),SetPosizione(),SetColore() 
     * @param string $_nome
     * @param int $_posizione
     * @param string $_colore
@@ -79,41 +78,22 @@ class ECartella{
 
 	 /**
      * Setta $_nome come nome della cartella.
-     * @throws exception Se il contenuto di $_nome non contiene solo alfanumerici ed ha lunghezza ]2,30[.
      * @param string $_nome
      *
      */	
 	public function setNome($_nome){
-		$_nome = trim($_nome);
-		$pattern = '/[[:alpha:] \']{2,30}/';
-	if(preg_match($pattern, $_nome)){
-			$this->nome=$_nome;
-		}
-		else {
-			throw new Exception("Nome Cartella Non Valido");
-		}
+		$_nome = trim(ucwords(strtolower($_nome)));
+		$this->nome=$_nome;
 	}
-
-
 
 	 /**
      * Setta $_posizione come posizione della cartella.
-     * @throws exception Se $_posizione contiene un valore non valido.
-     * @param string $_posizione
+     * @param int $_posizione
      *
      */	
 	public function setPosizione($_posizione){
-		$pattern='/^[0-9]{0,11}$/';
-		if(preg_match($pattern, $_posizione)){
 			$this->posizione=$_posizione;
-		}
-		else {
-			throw new Exception("Posizione cartella non valida");
-		}
 	}
-	
-
-
 
 	 /**
      * Setta $_colore come colore della cartella.
@@ -122,17 +102,10 @@ class ECartella{
      *
      */	
 	public function setColore($_colore){
-		$pattern='/^#([A-F]|[0-9]){6}$/';
-		if(preg_match($pattern, $_colore)){
-			$this->colore=$_colore;
-		} else {
-			throw new Exception("Colore cartella non valido!");
-		}
+		$_colore = trim(strtoupper($_colore));
+		$this->colore=$_colore;
 	}
 	
-
-
-
 	 /**
      * Setta $_contenuto come array che contiene gli id delle note contenute all'interno della cartella.
      * @param array $_contenuto
@@ -142,10 +115,8 @@ class ECartella{
 		$this->contenuto = $_contenuto;
 	}
 	
-
-
 	 /**
-     * Preleva la prima nota contenuta all'interno dell'array $_contenuto.
+     * Aggiunge una nota all'interno dell'array $_contenuto.
      * @param Enota $_contenuto
      *
      */	
@@ -153,7 +124,6 @@ class ECartella{
 		$this->contenuto[]=$_contenuto;
 	}
 	
-
      /**
      * 
      * @return int Numero intero che indica il numero identificativo della cartella.
@@ -162,8 +132,6 @@ class ECartella{
     public function getId(){
 		return $this->id;
 	}
-
-
 
  	 /**
      * 
@@ -174,8 +142,6 @@ class ECartella{
 		return $this->nome;
 	}
 	
-
-
 	 /**
      * 
      * @return int Numero che indica la posizione della cartella.
@@ -184,9 +150,6 @@ class ECartella{
 	public function getPosizione(){
 		return $this->posizione;
 	}
-	
-
-
 
 	 /**
      * 
@@ -196,9 +159,6 @@ class ECartella{
 	public function getColore(){
 		return $this->colore;
 	}
-	
-
-
 
 	 /**
      * 
@@ -209,6 +169,11 @@ class ECartella{
 		return $this->contenuto;
 	}
 	
+	/**
+	 * 
+	 * @return array Trasforma l'oggetto in una array associativo
+	 * 
+	 */
 	public function getAsArray(){
     	$result=array();
     	foreach($this as $key => $value) {

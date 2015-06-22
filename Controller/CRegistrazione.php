@@ -60,7 +60,7 @@ class CRegistrazione {
         	$utente = $utente[0];
         	if ($utente['password'] == md5($login['password'])) {
         		if ($utente['stato_attivazione'] != "attivato") {
-        			throw new Exception("Utente non attivato");
+        			$VRegistrazione->invia(array("error" => "Utente non attivato"));
         		} else {
         			$session=USingleton::getInstance('USession');
         			$session->setValore('username',$utente['username']);
@@ -76,10 +76,10 @@ class CRegistrazione {
         			$VRegistrazione->invia($info);
         		}
         	} else {
-        		throw new Exception("Login errato");
+        		$VRegistrazione->invia(array("error" => "Login errato"));
         	}
         } else {
-        	throw new Exception("Utente errato");
+        	$VRegistrazione->invia(array("error" => "Utente errato"));
         }
     }
     
@@ -127,16 +127,17 @@ class CRegistrazione {
                 $session->setValore('nome',ucwords($dati["nome"]).' '.ucwords($dati["cognome"]));
                 $session->setValore('cognome',ucwords($dati["cognome"]));
                 $session->setValore('tipo_utente','normale');
-                echo "Registrazione effettuata con successo!";
                 $query->commit();
+                $array = array("success" => TRUE);
+                $VRegistrazione->invia($array);
             } 
             catch (Exception $e) {
             	$query->rollback();
-            	echo "Registrazione fallita";
+            	$array = array("success" => FALSE, "error" => "Registrazione fallita");
+            	$VRegistrazione->invia($array);
             }
-        }
-        else {
-        	throw new Exception("Email già in uso");
+        } else {
+        	$array = array("success" => FALSE, "error" => "Email già in uso");
         }
     }
     /**
@@ -162,10 +163,11 @@ class CRegistrazione {
     			$futente->updateUtente($aggiornamento);
     			$VRegistrazione->invia(array("attivazione" => TRUE));
     		} else {
-    			throw new Exception ("Codice di attivazione errato");
+    			$array = array("error" => "Codice di attivazione errato");
+    			$VRegistrazione->invia($array);
     		}
     	} else {
-    		throw new Exception("Utente inesistente");
+    		$array = array("error" => "Utente inesistente");
     	}	
     }
 }

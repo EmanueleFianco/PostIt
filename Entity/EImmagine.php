@@ -1,21 +1,52 @@
 <?php
-
+/**
+ *
+ * Classe EImmagine che descrive l'entità Immagine
+ * @package Entity
+ * @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
+ *
+ */
 class EImmagine {
-		
+	/**
+	 * @var string $nome Nome dell'immagine
+	 */	
 	private $nome;
-	
+	/**
+	 * @var int $size Dimensione dell'immagine in byte
+	 */
 	private $size;
-	
+	/**
+	 * 
+	 * @var string $type Mime-Type dell'immagine
+	 */
 	private $type;
-	
+	/**
+	 * @var string $immagine_piccola Immagine piccola
+	 */
 	private $immagine_piccola;
-	
+	/**
+	 * @var string $immagine_media Immagine media
+	 */
 	private $immagine_media;
-	
+	/**
+	 * @var string $immagine_grande Immagine grande
+	 */
 	private $immagine_grande;
-	
+	/**
+	 * @var string $immagine_originale Immagine originale
+	 */
 	private $immagine_originale;
 	
+	/**
+	 * Costruisce l'oggetto immagine
+	 * @param string $_nome
+	 * @param int_type $_size
+	 * @param string $_type
+	 * @param string $_file_temp
+	 */
 	public function __construct($_nome,$_size,$_type,$_file_temp) {
 		$this->setNome($_nome);
 		$this->setSize($_size);
@@ -23,32 +54,33 @@ class EImmagine {
 		$this->setImmagine($_file_temp);
 	}
 	
+	/**
+	 * Setta il nome dell'immagine
+	 * @param string $_nome
+	 */
 	public function setNome($_nome) {
-		$pattern='/[.]{0,40}/';
-		if (preg_match($pattern,$_nome)) {
 			$this->nome = $_nome;
-		} else {
-			throw new Exception("Nome immagine non valido!");
-		}
 	}
 	
+	/**
+	 * Setta la dimensione in byte dell'immagine
+	 * @param int $_size
+	 */
 	public function setSize($_size) {
-		if (is_int($_size) && $_size < 2097152) {   //2MB
 			$this->size = $_size;
-		} else {
-			throw new Exception("Immagine troppo grande!");
-		}
 	}
-	
+	/**
+	 * Setta il Mime-Type passato per parametro
+	 * @param string $_type 
+	 */
 	public function setType($_type) {
-		$pattern='/^image\/(gif)|(jpeg)|(jpg)|(pjpeg)|(png)$/';
-		if (preg_match($pattern,$_type)) {
 			$this->type = $_type;
-		} else {
-			throw new Exception("Mime Type non accettato!");
-		}
 	}
 	
+	/**
+	 * Setta gli attributi dell'immagine e fa le dovute trasformazioni di dimensioni
+	 * @param string $_file_temp Path temporaneo dell'immagine
+	 */
 	public function setImmagine($_file_temp) {
 		$this->immagine_originale = file_get_contents($_file_temp);
 		if ($this->type == "image/jpeg" || $this->type == "image/jpg" || $this->type == "image/pjpeg") {
@@ -87,18 +119,31 @@ class EImmagine {
 		unlink($path."grande_".$this->nome);
 	}
 	
+	/**
+	 * @return string Nome dell'immagine
+	 */
 	public function getNome() {
 		return $this->nome;
 	}
 	
+	/**
+	 * @return int La grandezza dell'immagine in byte
+	 */
 	public function getSize() {
 		return $this->size;
 	}
 	
+	/**
+	 * @return string Mime-Type dell'immagine
+	 */
 	public function getType() {
 		return $this->type;
 	}
-	
+	/**
+	 * 
+	 * @param string $_grandezza
+	 * @return Ritorna l'immagine nella dimensione richiesta
+	 */
 	public function getImmagine($_grandezza) {
 		if ($_grandezza == "piccola") {
 			return $this->immagine_piccola;
@@ -111,6 +156,11 @@ class EImmagine {
 		}
 	}
 	
+	/**
+	 *
+	 * @return array Trasforma l'oggetto in una array associativo
+	 *
+	 */
 	public function getAsArray(){
 		$result=array();
 		foreach($this as $key => $value) {

@@ -11,17 +11,11 @@
  */
 class EPromemoriaCondiviso extends EPromemoria {
 	/**
-	*
-	* @var EPartecipante $ultimo_a_modificare Ultimo partecipante che ha modificato il promemoria condiviso.
-	*
-	*/
+     *
+	 * @var DateTime $ora_data_avviso Ora e data definita per il promemoria.
+	 * 
+	 */
 	private $ultimo_a_modificare;
-	/**
-	*
-	* @var Array $partecipanti Array che contiene tutti i partecipanti al promemoria condiviso.
-	*
-	*/
-	private $partecipanti = array();
 	
 	/**
     * Costruttore di EPromemoriaCondiviso, eredita il costruttore di EPromemoria
@@ -31,68 +25,34 @@ class EPromemoriaCondiviso extends EPromemoria {
     * @param string $_immagine
     * @param int $_posizione
     * @param string $_colore
-    * @param EPartecipante $_ultimo_a_modificare
+    * @param string $_ultimo_a_modificare
     * @param DateTime $_ora_data_avviso
-    * @param array $_partecipanti
     * 
     */
-    public function __construct($_titolo, $_testo, $_posizione, $_colore,$_ultimo_a_modificare,DateTime $_ora_data_avviso, $_immagine = NULL, $_partecipanti = NULL) {
+    public function __construct($_titolo, $_testo, $_posizione, $_colore,$_ultimo_a_modificare,DateTime $_ora_data_avviso, $_immagine = NULL) {
 		parent::__construct($_titolo, $_testo, $_posizione, $_colore, $_ora_data_avviso, $_immagine);
-		$this->setUltimoAModificare($_ultimo_a_modificare);
-	    if (isset($_partecipanti)) {
-	    	if (is_array($_partecipanti)) {
-	    		$this->setPartecipanti($_partecipanti);
-	    	} else {
-	    		$this->Push($_partecipanti);
-	    	}
-	    }	
+		$this->setUltimoAModificare($_ultimo_a_modificare);	
 	}
 	
 
-	 /**
+   /**
 	*
-	*Setta $_ultimo_a_modificare come il partecipante che ha modificato per ultimo il promemoria condiviso.
-	* @param EPartecipante $_ultimo_a_modificare
+	*Setta la mail dell'ultimo utente che ha modificato il promemoria condiviso.
+	* @param string $_ultimo_a_modificare
 	*
 	*/
 	public function setUltimoAModificare($_ultimo_a_modificare) {
 		$this->ultimo_a_modificare = $_ultimo_a_modificare;
 	}
-	 /**
-	 *
-	 *Setta $_partecipanti come il contenuto dell'array che contiene tutti i partecipanti al promemoria condiviso.
-	 * @param array $_partecipanti
-	 *
-	 */
-	public function setPartecipanti(array $_partecipanti) {
-		$this->partecipanti = $_partecipanti;
-	}
-	 /**
-	 *
-	 *Inserisci un partecipante nell'array dei partecipanti al promemoria condiviso.
-	 * @param EPartecipante $_partecipante
-	 *
-	 */
-	public function Push(EPartecipante $_partecipante) {
-		$this->partecipanti[] = $_partecipante;
-	}
-	 /**
-	 *
-	 * @return EPartecipante Ultimo partecipante che ha modificato il promemoria condiviso.
-	 *
-	 */
 	
+   /**
+	*
+	* @return string Email dell'utente che ha modificato per ultimo il promemoria condiviso.
+	*
+	*/
 	public function getUltimoAModificare() {
 		return $this->ultimo_a_modificare;
 	}	
-	
-	 /**
-	 *
-	 * @return array Array che contiene tutti i partecipanti al promemoria condiviso.
-	 *
-	 */
-	public function getPartecipanti() {
-		return $this->partecipanti;
-	}
+
 }
 ?>
