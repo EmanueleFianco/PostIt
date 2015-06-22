@@ -142,7 +142,7 @@ CLogin.prototype.inviaDati=function(dati){
 	var vista= singleton.getInstance(View,"View");
 	$.ajax({ 
 	  type:'POST',
-	  url:'Controller/index.php',
+	  url:'Home.php',
 	  data:dati,
 	  success:function(){
 	  		vista.smonta("#menu_welcome");

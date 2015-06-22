@@ -12,7 +12,11 @@ class VRegistrazione extends View{
 				throw new Exception(ucwords($_chiave)." errato!");
 			}
 		} else {
+			$nome = '/^[[:alpha:] \']{2,30}$/';
+			$cognome = '/^[[:alpha:] \']{2,30}$/';
+			$username = '/^[[:alnum:]_\.-]{5,15}$/';
 			$password = '/^[[:alnum:][:punct:]]{6,20}$/';
+			$repassword = $password;
 			$cod_attivazione = '/^[[:alnum:]]{13}$/'; 
 			if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");

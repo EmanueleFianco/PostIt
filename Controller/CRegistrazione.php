@@ -69,10 +69,10 @@ class CRegistrazione {
         			$session->setValore('email',$utente['email']);
         			$session->setValore('tipo_utente',$utente['tipo_utente']);
         			$info = array("username" => $utente['username'],
-        					"nome" => $utente['nome'],
-        					"cognome" => $utente['cognome'],
-        					"email" => $utente['email'],
-        					"tipo_utente" => $utente['tipo_utente']);
+        						  "nome" => $utente['nome'],
+        						  "cognome" => $utente['cognome'],
+        						  "email" => $utente['email'],
+        						  "tipo_utente" => $utente['tipo_utente']);
         			$VRegistrazione->invia($info);
         		}
         	} else {
@@ -87,6 +87,7 @@ class CRegistrazione {
      * Effettua la registrazione vericando la correttezza dei dati
      */
     public function registra(){
+    	unset($_REQUEST['submit']);
         $VRegistrazione=USingleton::getInstance('VRegistrazione');
         $dati=$VRegistrazione->getDati();
         $futente=USingleton::getInstance('FUtente');
