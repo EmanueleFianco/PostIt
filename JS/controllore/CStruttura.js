@@ -121,7 +121,7 @@ CStruttura.prototype.getAttributo = function(id_nota,attributo){
 CStruttura.prototype.getDataAjaxAttributi= function(id_nota,attributo){
 	if(attributo=="ora_data_avviso"){
 		var Data ={	
-				controller : "nota",
+				controller : "id_nota",
 				lavoro: "setPromemoria"
 			}
 		}
