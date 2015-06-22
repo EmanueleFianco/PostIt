@@ -4,23 +4,27 @@ var CRedactor = function(){
 
 CRedactor.prototype.Inizializza = function(id_nota){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
-	
+		
 	  $("#redactor"+id_nota).redactor({
-		  lang: 'it',
+		  imageLink: false,  
 		  imageUpload : "Home.php?controller=nota&lavoro=upload",
+		    uploadStartCallback: function(e, formData)   
+		    {   
+		        console.log('My upload started!');    
+		    },
+		   
 		  imageUploadCallback: function()
 		    {
-			  var delay=1000; //1 seconds
+			  var delay=200; //1 seconds
 
 			  setTimeout(function(){
-	     console.log("1 secondo");
-				  $('#'+StrutturaCartelle.getCartellaAttiva()).packery('reloadItems');
+	     
+				  $('#'+StrutturaCartelle.getCartellaAttiva()).packery();
 			  }, delay);
 
 		    },
-		 
+	
 	  });
-
 	  
 	
 	
@@ -82,7 +86,7 @@ CRedactor.prototype.InizializzaNuova = function(){
 	 $("#redactorNuova").redactor({
 		  placeholder: 'Scrivi una nuova nota',
 		  imageUpload: 'Home.php?controller=nota&lavoro=upload',
-		    
+		  imageLink: false,  
 		  
 	    });
 	 

@@ -3,6 +3,8 @@ var CDatepicker = function(){
 }
 
 CDatepicker.prototype.Inizializza = function(id_nota){
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	
 	$.datepicker.regional['it'] = {
 			monthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
 			'Luglio','Agosto','Settembre','ottobre','Novembre','Dicembre'],
@@ -12,11 +14,12 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 			dayNamesShort: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
 			dayNamesMin: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
 			weekHeader: 'Не',
-			dateFormat: 'dd.mm.yy',
+			dateFormat: 'yy-mm-dd',
 			firstDay: 1,
 			isRTL: false,
 			showMonthAfterYear: false,
-			yearSuffix: ''
+			yearSuffix: '',
+			
 		};
 	
 	$.datepicker.setDefaults($.datepicker.regional['it']);
@@ -25,7 +28,15 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 		hourText: 'Ora',
 		minuteText: 'Minuti',
 		currentText: 'Ora',
-		closeText: 'Chiudi'
+		closeText: 'Chiudi',
+		onClose  : function(dateText) {
+			dateText = dateText + ":00";
+			if(dateText != ""){
+				console.log(dateText);
+				StrutturaCartelle.AggiornaNota(id_nota,"ora_data_avviso",dateText);
+			}
+		
+		}
 	});
 	
 	

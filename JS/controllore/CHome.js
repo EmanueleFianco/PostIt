@@ -63,7 +63,7 @@ CHome.prototype.getDati=function(){
 					})
 					
 					eventi.InizializzaMenu();
-					
+					//console.log(Struttura);
 				})
 /***********************************************************************/
 

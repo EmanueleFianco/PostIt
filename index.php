@@ -4,7 +4,7 @@
 <script src="JS/Utility/mustache.min.js" type="text/javascript"></script>
 <script src="JS/Utility/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="JS/Utility/jquery-ui.min.js" type="text/javascript"></script>
-<script src="JS/Utility/redactor/redactor.min.js" type="text/javascript"></script>
+<script src="JS/Utility/redactor/redactor.js" type="text/javascript"></script>
 <script src="JS/Utility/jquery.tinycolorpicker.js" type="text/javascript"></script>
 <script src="JS/Utility/jquery.contextMenu.js"type="text/javascript"></script>
 <script src="JS/Utility/packery.pkgd.min.js"type="text/javascript"></script>

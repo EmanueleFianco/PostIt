@@ -118,10 +118,18 @@ CStruttura.prototype.getAttributo = function(id_nota,attributo){
 }
 
 CStruttura.prototype.getDataAjaxAttributi= function(id_nota,attributo){
-	var Data ={	
-			controller : "nota",
-			lavoro: "aggiorna"
+	if(attributo=="promemoria"){
+		var Data ={	
+				controller : "nota",
+				lavoro: "setPromemoria"
+			}
 		}
+	else{
+		var Data ={	
+				controller : "nota",
+				lavoro: "aggiorna"
+			}
+	}
 	Data[attributo]=this.getAttributo(id_nota,attributo);
 	Data["id"]=id_nota;
 		
@@ -179,6 +187,7 @@ CStruttura.prototype.setBuffer = function(valore){
 CStruttura.prototype.AggiornaNota = function(id_nota,attributo,valore){
 	var dati =singleton.getInstance(CDati,"CDati");
 	
+	
 	var cartella_attiva=this.getCartellaAttiva();
 	
 	if(id_nota === "Nuova" && this.getBuffer() == 0){
@@ -201,7 +210,8 @@ CStruttura.prototype.AggiornaNota = function(id_nota,attributo,valore){
 		case "colore":
 			var Data = this.getDataAjaxAttributi(id_nota,"colore");
 			break;
-				
+		case "ora_data_avviso":
+			var Data = this.getDataAjaxAttributi(id_nota,"ora_data_avviso");
 	}
 		this.setBuffer(0);
 		dati.setNote(Data);	
