@@ -92,6 +92,8 @@ class CRegistrazione {
         $dati=$VRegistrazione->getDati();
         $futente=USingleton::getInstance('FUtente');
         $ccartella=USingleton::getInstance('CCartella');
+        $fcartella=USingleton::getInstance('FCartella');
+        $fraccoglitore=USingleton::getInstance('FRaccoglitore_cartelle');
         $fdb=USingleton::getInstance('Fdb');
         $session=USingleton::getInstance('USession');
         $query=$fdb->getDb();
@@ -110,21 +112,22 @@ class CRegistrazione {
             	$utente=new EUtente($dati["username"], $dati["password"], $dati["nome"], $dati["cognome"],$dati["email"],"nonattivato","normale");
                 $utente->setCodiceAttivazione();
             	$futente->inserisciUtente($utente,$immagine);
-            	$cartelle = array("Note" => '#FFFFFF',
-            					  "Promemoria" => '#FFFFFF',
-            					  "Archivio" => '#FFFFFF', //I colori di default sono da scegliere
-            					  "Cestino" => '#FFFFFF');
-            	$_REQUEST['amministratore'] = $session->getValore("email");
-            	$_REQUEST['tipo'] = "privata";
+            	$cartelle = array("Note", "Promemoria", "Archivio", "Cestino");
+            	$colori = array("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF");
+            	
             	foreach ($cartelle as $key => $valore) {
-            		$_REQUEST['nome'] = $key;
-            		$_REQUEST['colore'] = $valore;
-            		$ccartella->Nuova();            		
+            		$c = new ECartella($valore, $key, $colori[$key]);
+            		$fcartella->inserisciCartella($c, "privata", $dati['email']);
+            		$cart = array("id_cartella" => $query->lastInsertId(),
+            					  "email_utente" => $dati['email'],
+            					  "posizione" => $key);
+            		$fraccoglitore->aggiungiAlRaccoglitoreCartelle($cart);		
             	}
                 $session->setValore('username',$dati["username"]);
                 $session->setValore('nome',ucwords($dati["nome"]).' '.ucwords($dati["cognome"]));
                 $session->setValore('cognome',ucwords($dati["cognome"]));
                 $session->setValore('tipo_utente','normale');
+                echo "Registrazione effettuata con successo!";
                 $query->commit();
             } 
             catch (Exception $e) {
