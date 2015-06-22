@@ -46,4 +46,5 @@ class VRegistrazione extends View{
 		$immagine['tmp_name'] = $dir.$filename;
 		return $immagine;
 	}
+}
 ?>

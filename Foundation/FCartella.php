@@ -48,6 +48,10 @@ class FCartella extends Fdb {
 		$this->db->setParam($this->table,"id",":id");
 	    return $this->db->queryGenerica("*","=",$_id);
 	}
+	
+	public function getCartellaByParametri($parametri) {
+		
+	}
 	/**
 	 * Aggiorna lo stato della cartella
 	 * @param array $dati Array così fatto "attributo da modificare" => "valore", "id della cartella" => "valore dell'id"

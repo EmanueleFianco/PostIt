@@ -92,21 +92,38 @@ class CNota {
 		$dati = $VNota->getDati();
 		$fnota=USingleton::getInstance('FNota');
 		$fcartella=USingleton::getInstance('FCartella');
-		$cartella = $fcartella->getCartellaById($dati['id_cartella']);
-		$nota = $fnota->getNotaById($dati['id_nota']);
-		$nota_condivisa = $nota[0]['condiviso'];
-		$nome_cartella = $cartella[0]['nome'];
-		$tipo_cartella = $cartella[0]['tipo'];
-		if ($nome_cartella == "Cestino" || $tipo_cartella == "Gruppo" || $nota_condivisa == TRUE) {
-			unset($dati['id_cartella']);
-			$fnota->deleteNota($dati);
-		} else {
-			$email_utente = $cartella[0]['email_utente'];
-			$cestino = $fcartella->getCartellaByParametro($email_utente,"nome","Cestino");
-			$id_cestino = $cestino[0]['id'];
-			$dati = array("id_cartella" => $id_cestino,
-						  "id" => $dati['id_nota']);
-			$fnota->updateNota($dati);									
+		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
+		$fdb=USingleton::getInstance('Fdb');
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$cartella = $fcartella->getCartellaById($dati['id_cartella']);
+			$nota = $fnota->getNotaById($dati['id_nota']);
+			$nota_condivisa = $nota[0]['condiviso'];
+			$creatore_nota = $nota[0]['creata_da'];
+			$nome_cartella = $cartella[0]['nome'];
+			$tipo_cartella = $cartella[0]['tipo'];
+			$amministratore_cartella = $cartella[0]['amministratore'];
+			if ($amministratore_cartella == 'emanuele.fianco@gmail.com' || $creatore_nota == 'emanuele.fianco@gmail.com') {
+				if ($nome_cartella == "Cestino" || $tipo_cartella == "gruppo" || $nota_condivisa == TRUE) {
+					unset($dati['id_cartella']);
+					$fnota->deleteNota($dati);
+				} else {
+					$email_utente = $cartella[0]['amministratore'];
+					$parametri = array("amministratore" => $email_utente,
+									   "nome" => "Cestino");
+					$cestino = $fcartella->getCartellaByParametri($parametri);
+					$id_cestino = $cestino[0]['id'];
+					$dati = array("id_cartella" => $id_cestino,
+							      "id_nota" => $dati['id_nota']);
+					$fraccoglitore->updateRaccoglitore($dati);
+					$query->commit();
+				}
+			} else {
+				throw new Exception("Operazione non consentita");
+			} 
+		} catch (Exception $e) {
+			$query->rollback(); 
 		}
     }
     /**
