@@ -97,7 +97,7 @@ class EImmagine {
 		imagecopyresampled($immagine_piccola,$src,0,0,0,0,70,70,$width,$height);
 		imagecopyresampled($immagine_grande,$src,0,0,0,0,250,275,$width,$height);
 		imagecopyresampled($immagine_media,$src,0,0,0,0,182,114,$width,$height);
-		$path="../tmp/";
+		$path="./tmp/";
 		if ($this->type == "image/jpeg" || $this->type == "image/jpg" || $this->type == "image/pjpeg") {
 			imagejpeg($immagine_piccola,$path."piccola_".$this->nome);
 			imagejpeg($immagine_media,$path."media_".$this->nome);
