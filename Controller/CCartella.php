@@ -34,7 +34,7 @@ class CCartella {
 	public function Nuova() {
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
-		$fcartella=USingleton::getInstance('Fcartella');
+		$fcartella=USingleton::getInstance('FCartella');
 		$VCartella=USingleton::getInstance('VCartella');
 		$dati = $VCartella->getDati();
 		$cartella = new ECartella($dati['nome'], $dati['posizione'], $dati['colore']);
