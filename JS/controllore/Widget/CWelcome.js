@@ -20,6 +20,11 @@ CWelcome.prototype.Inizializza= function(){
 		$("#signup").fadeIn();
 		});
 
+   $("#contactform").submit(function(event){
+    clogin.signup(event);
+    $(".registrazione").fadeOut();
+   })
+
 	$("#button_login").click(function(){
 		clogin.logIn();
 		$("#signup").fadeOut();			

@@ -14,6 +14,96 @@ CLogin.prototype.logIn=function(){
 	
 }
 
+CLogin.prototype.signup=function(event){
+  if(!this.controlladatiSignup())
+  {
+  	event.preventDefault();
+
+  }
+  else
+  { 
+    
+  	alert("controlla la tua casella di posta e attiva l'account!");
+  }
+
+
+
+
+}
+
+CLogin.prototype.controlladatiSignup=function(){
+	var email =/[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+	var pas=/^[A-Za-z0-9]{6,20}$/;
+	var nam=/^[A-Za-z]{2,30}$/;
+	var us=/^[A-Za-z0-9]{5,15}$/;
+	var email_reg=$("#email").val();
+	var nome_reg=$("#nome").val();
+	var cognome_reg=$("#cognome").val();
+	var username_reg=$("#username").val();
+	var password_reg=$("#password").val();
+	var repassword_reg=$("#repassword").val();
+	var check;
+	var okemail=email.test(email_reg);
+	var okpas=(pas.test(password_reg) && pas.test(repassword_reg) && password_reg==repassword_reg);
+	var okname=nam.test(nome_reg);
+	var okcognome=nam.test(cognome_reg);
+	var okusername=us.test(username_reg);
+	//test immagine
+	check=false;
+	if(okemail)
+	{ if (okpas)
+			{if(okname)
+				{if (okcognome)
+					{if (okusername)
+						{var file=$("#foto")[0].files[0];
+							if(file!=null)
+							      {var filesize=file.size;
+							       if(filesize<=2097152)
+							       	  check=true;							       							       	 
+							       }
+							       else{
+							          check=true;//non inserito immagine ma gli altri campi sono ok!!
+							       }
+
+						}
+						else
+						{
+							//username non valida
+
+						}
+
+					}
+					else
+					{
+						//cognome non valido
+					}
+
+				}
+				else
+				{
+					//nome non valido
+				}
+
+		    }
+		    else
+		    {
+		    	//password errata
+		    }		
+				
+	}
+	else
+	{
+		//email non valida
+	}
+	return check;
+	
+
+	
+
+
+
+}
+
 CLogin.prototype.controllaDatiLogin=function(){
 	//valida i dati 
 
@@ -41,11 +131,7 @@ CLogin.prototype.controllaDatiLogin=function(){
         {
         	//email non valida
         	return false;
-        }
-
-    
-
-    
+        }  
 
 }
 

@@ -21,9 +21,7 @@ var CHome = function(){
 				
 
 		view.disegna(Template["Welcome"]);	
-		eventi.WelcomePage();
-		
-		   			
+		eventi.WelcomePage();		   			
 		})//fine getTemplate
 }
 
@@ -35,14 +33,12 @@ CHome.prototype.getDati=function(){
 	var eventi = singleton.getInstance(CEventi,"CEventi");
 	var view = singleton.getInstance(View,"View");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
-	StrutturaCartelle.Inizializza();
+	StrutturaCartelle.Inizializza();		
+    $.when(dati.getCartelle()).done(function(cartelle){
+    var Cartelle = new Object();
+	//controlla dati arrivati 
 
-	
-		
-		
-		$.when(dati.getCartelle()).done(function(cartelle){
-
-			var Cartelle = new Object();
+/*********************login a buon fine******************************/
 			 Cartelle['Cartelle'] = $.parseJSON(cartelle);
 
 			
@@ -69,7 +65,10 @@ CHome.prototype.getDati=function(){
 					eventi.InizializzaMenu();
 					
 				})
-			})
+/***********************************************************************/
+
+
+})//end getDati
 			
 	
 			
