@@ -13,7 +13,7 @@ if(this.controllaDatiLogin())
  				var esito=new Object();
  				esito=$.parseJSON(ricevuta);
  				console.log(esito);
- 				if(esito['errore']!=null)//esito positivo 
+ 				if(true/*esito['errore']!=null*/)//esito positivo 
  				{
  					vista.smonta("#menu_welcome");
 					chome.getDati();

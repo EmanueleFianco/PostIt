@@ -19,6 +19,7 @@ CStruttura.prototype.aggiungiCartella = function(cartella){
 			colore:cartella.colore,
 			note: new Object()
 		}
+	view.setCartella(cartella);
 
 }
 

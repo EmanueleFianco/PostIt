@@ -63,11 +63,7 @@ View.prototype.setNota = function(id_cartella,nota,tmpl,nuova){
 
 
 View.prototype.setCartella = function(cartella,tmpl){
-	var html = Mustache.to_html(tmpl,cartella);
-	$('#menubottom').append(html);
-	if(cartella.nome=="Note"){
-		$("#nota_space").attr("id_cartella",cartella.id);
-	}
+	
 }
 
 
