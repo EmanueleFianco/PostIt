@@ -44,7 +44,12 @@
     padding:8px 8px 5px;
 
 }
+@font-face {
+    font-family: title;
+    src: url("../css/font/font.otf");
+    font-weight:800;
 
+}
 
 
 .linked{
