@@ -174,6 +174,7 @@ class CCartella {
 				$max_posizione = $max[0]['posizione'];
 				$posizione_iniziale = $max_posizione - $dati['note_presenti'];
 				$note = $fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$max_posizione,$posizione_iniziale);
+				$sbagliato = FALSE;
 				if (isset($dati['posizioni'])) {
 					$note_arrivate = $dati['posizioni'];
 					$i = 0;
