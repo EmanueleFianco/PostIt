@@ -129,6 +129,7 @@ class CRegistrazione {
                 $session->setValore('tipo_utente','normale');
                 $query->commit();
                 $array = array("success" => TRUE);
+                $this->inviaMailRegistrazione($dati['email']);
                 $VRegistrazione->invia($array);
             } 
             catch (Exception $e) {
@@ -169,6 +170,29 @@ class CRegistrazione {
     	} else {
     		$array = array("error" => "Utente inesistente");
     	}	
+    }
+    
+    /**
+     * Metodo per inviare la mail di conferma di avvenuta registrazione con il link per attivarsi.
+     *
+     * @param string $mail mail dell'utente
+     */
+    public function inviaMailRegistrazione($email) {
+    	$FUtente=USingleton::getInstance('FUtente');
+    	$email_url = urlencode($email);
+    	$codice_attivazione=$FUtente->getCodiceAttivazione($email);
+    	$codice_attivazione = $codice_attivazione[0]['codice_attivazione'];
+    	$url = "http://postit.altervista.org/Home.php?controller=registrazione&lavoro=attiva&codice_attivazione=".$codice_attivazione."&mail=".$email_url;
+    	$to = $mail;
+    	$subject = 'Benvenuto in COOK WITH US';
+    	$message = "Clicca sul seguente link per attivare il tuo account: " . $url;
+    	$headers = 'From: cookwithus@altervista.org' . "\r\n" .
+    			'Reply-To: cookwithus@altervista.org' . "\r\n" .
+    			'X-Mailer: PHP/' . phpversion();
+    			'MIME-Version: 1.0\n' .
+    			'Content-Type: text/html; charset=\"iso-8859-1\"\n' .
+    			'Content-Transfer-Encoding: 7bit\n\n';
+    	mail($to, $subject, $message, $headers);
     }
 }
 ?>

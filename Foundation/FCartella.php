@@ -49,8 +49,15 @@ class FCartella extends Fdb {
 	    return $this->db->queryGenerica("*","=",$_id);
 	}
 	
-	public function getCartellaByParametri($parametri) {
-		
+	public function getCartellaByNomeEAmministratore($_nome,$_amministratore) {
+		$column = "*";
+		$keydb = array("nome","amministratore");
+		$bind = array(":nome",":amministratore");
+		$_paragone = array("=","=");
+		$_parametri = array($_nome,$_amministratore);
+		$_operatori = array("AND");
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);
 	}
 	/**
 	 * Aggiorna lo stato della cartella

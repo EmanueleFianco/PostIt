@@ -31,6 +31,18 @@ class VNota extends View {
 			foreach ($_valore as $key => $val) {
 				self::controllaInput($key, $_valore);
 			}						
+		} elseif ($_chiave == 'ora_data_avviso') {;
+			$anno = substr($_valore,0,4);
+			$mese = substr($_valore,5,2);
+			$giorno = substr($_valore,8,2);
+			$ora_minuto = substr($_valore,11,5);
+			$regora = '/^([01][[:digit:]]|2[0-3]):([0-5][[:digit:]])$/';
+			if (checkdate($mese,$giorno,$anno) && preg_match($regora,$ora_minuto)) {
+				$format = 'Y-m-d H:i:s';
+				$date = DateTime::createFromFormat($format, $_valore);
+			} else {
+				throw new Exception("Data e ora errati");
+			}
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
 			$id_nota = $id;
@@ -43,7 +55,6 @@ class VNota extends View {
 			$condiviso = '^(TRUE|FALSE)$/';
 			$note_presenti = $id;
 			$num_note = $id;
-			//$ora_data_avviso = Da vedere in futuro con il lato client
 			if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");
 			}

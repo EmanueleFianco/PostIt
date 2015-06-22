@@ -22,6 +22,8 @@ class CNota {
 				return $this->Aggiorna();
             case 'cancella':
                 return $this->Cancella();
+            case 'setPromemoria':
+            	return $this->setPromemoria();
             case 'prendiImmagine':
             	return $this->getImmagine();
             case 'upload':
@@ -128,6 +130,43 @@ class CNota {
 		} catch (Exception $e) {
 			$query->rollback(); 
 		}
+    }
+    
+    public function setPromemoria() {
+    	$VNota=USingleton::getInstance('VNota');
+    	$dati = $VNota->getDati();
+    	$fnota=USingleton::getInstance('FNota');
+    	$fcartella=USingleton::getInstance('FCartella');
+    	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
+    	$fdb=USingleton::getInstance('Fdb');
+    	$aggionamenti = array("tipo" => "promemoria",
+    			  			  "id_nota" => $dati['id_nota']);
+    	$aggionamenti1 = array("ora_data_avviso" => "promemoria",
+    						   "id_nota" => $dati['id_nota']);
+    	$query=$fdb->getDb();
+    	$query->beginTransaction();
+    	try {
+    		$nota = $fraccoglitore->getNotaByIdEUtente($dati['id_nota'],'emanuele.fianco@gmail.com');
+    		$fnota->updateNota($aggiornamenti);
+    		$fnota->updateNota($aggiornamenti1);
+    		$promemoria = $fcartella->getCartellaByNomeEUtente("Promemoria",'emanuele.fianco@gmail.com');
+    		$aggiornamenti2 = array("id_cartella" => $promemoria[0]["id"],
+    								"id_nota" => $dati['id_nota']);
+    		$fraccoglitore->updateNota($aggiornamenti2);
+    		$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$promemoria[0]['id']);
+    		$max_posizione = $max_posizione[0]['max(posizione'];
+    		$max_posizione +=1;
+    		$aggiornamenti3 = array("posizione" => $max_posizione,
+    							    "id_nota" => $dati['id_nota']);
+    		$fraccoglitore->updateNota($aggiornamenti3);
+    		$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
+			$query1->bindParam(":pos",$nota[0]['posizione']);
+			$query1->bindParam(":cartella",$nota[0]['id_cartella']);
+			$query1->execute();
+			$query->commit();
+    	} catch (Exception $e) {
+    		$query->rollback();
+    	}
     }
     /**
      * Restituisce un'immagine relativa ad una nota richiedente

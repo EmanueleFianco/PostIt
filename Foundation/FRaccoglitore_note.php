@@ -108,6 +108,17 @@ class FRaccoglitore_note extends Fdb {
 		$_max = $_max[0]['max(posizione)'];
 		return $this->getMaxPosizioneNotaByCartellaEUtente($_email_utente, $_id_cartella, $_max);
 	}
+	
+	public function getNotaByIdEUtente($_id_nota,$_email_utente) {
+		$column = "*";
+		$keydb = array("id_nota","email_utente");
+		$bind = array(":id_nota",":email_utente");
+		$_paragone = array("=","=");
+		$_parametri = array($_id_nota,$_email_utente);
+		$_operatori = array("AND");
+		$this->db->setParam($this->table,$keydb,$bind);
+		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);
+	}
 	/**
 	 * Aggiorna lo stato del raccoglitore
 	 * @param array $dati Array così fatto "attributo da modificare" => "valore attributo"
