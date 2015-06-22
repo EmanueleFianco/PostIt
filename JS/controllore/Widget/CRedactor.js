@@ -7,9 +7,15 @@ CRedactor.prototype.Inizializza = function(id_nota){
 	
 	  $("#redactor"+id_nota).redactor({
 		  lang: 'it',
-		  imageUpload: 'Controller/index.php?controller=nota&lavoro=upload'
-	    });
+		  imageUpload : "Controller/index.php?controller=nota&lavoro=upload",
+		  imageUploadCallback : function(){
+			
+		  }
+	  });
 	  
+	  
+	
+	
 	//-----------------------TESTO NOTA -----------------------------//
 		
 		$("#TestoNota"+id_nota).mouseenter(function() {

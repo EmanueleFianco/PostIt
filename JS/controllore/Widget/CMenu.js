@@ -93,8 +93,7 @@ CMenu.prototype.Inizializza = function(){
 		
 		if (numeroNote>0){
 			var Posizioni = new Array();
-			Posizioni = view.getPosizioni();
-			
+			Posizioni = view.getPosizioni();	
 		}
 
 		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Posizioni)).done(function(note){
@@ -103,6 +102,8 @@ CMenu.prototype.Inizializza = function(){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
 				$("#"+StrutturaCartelle.getCartellaAttiva()).children().remove();
 				$.each(Note,function(i,nota){
+					console.log(StrutturaCartelle.getCartellaAttiva());
+					$('#'+cartellaAttiva).packery();
 					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 				})
 			}

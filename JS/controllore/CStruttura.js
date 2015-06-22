@@ -5,6 +5,7 @@ CStruttura.prototype.Inizializza = function(cartella){
 	Struttura = new Object();
 	cartellaAttiva= new Object();
 	cartellaAttiva= 0;
+	Buffer=0;
 }
 
 CStruttura.prototype.aggiungiCartella = function(cartella){
@@ -44,7 +45,7 @@ CStruttura.prototype.getCartellaAttiva = function(){
 CStruttura.prototype.EliminaNoteByIdCartella = function(id_cartella){
 	delete Struttura[id_cartella].note;
 	Struttura[id_cartella]['note']= "";
-	console.log(Struttura[id_cartella]);
+	
 	
 	
 }
@@ -67,10 +68,11 @@ CStruttura.prototype.EliminaNota = function(id_nota){
 	delete Struttura[cartella_attiva]["note"][id_nota];
 }
 
-CStruttura.prototype.CreaNota = function(attributo,valore){
+CStruttura.prototype.CreaNota = function(attributo,valore,ricevuto){
 	var dati =singleton.getInstance(CDati,"CDati");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	
+	if(this.getBuffer()==1){
 
 	var cartella_attiva=this.getCartellaAttiva();
 	
@@ -104,9 +106,10 @@ CStruttura.prototype.CreaNota = function(attributo,valore){
 		StrutturaCartelle.EliminaNota("Nuova");
 		Struttura[cartella_attiva]["note"][id]=Elemento[id];
 		$(".NuovaNota").attr("id",id);
+		StrutturaCartelle.setBuffer(0);
 	});
 	
-
+	}
 }
 
 CStruttura.prototype.getAttributo = function(id_nota,attributo){
@@ -160,22 +163,34 @@ CStruttura.prototype.AggiornaPosizioniNote = function(Posizioni){
 	dati.setNote(Data);	
 	
 }
+CStruttura.prototype.getBuffer = function(){
+	return Buffer;
+}
+CStruttura.prototype.setBuffer = function(valore){
+	 if(valore==0){
+		 Buffer=0;
+	 }
+	 if(valore==1){
+		 Buffer=1;
+	 }
+}
+
 
 CStruttura.prototype.AggiornaNota = function(id_nota,attributo,valore){
 	var dati =singleton.getInstance(CDati,"CDati");
 	
 	var cartella_attiva=this.getCartellaAttiva();
 	
-	if(id_nota === "Nuova"){
+	if(id_nota === "Nuova" && this.getBuffer() == 0){
+		this.setBuffer(1);
 		this.CreaNota(attributo,valore);
 	}
-	else{
+	if(id_nota != "Nuova"){
 	// aggiornamento struttura dati
 	Struttura[cartella_attiva]["note"][id_nota][attributo]=valore;
 	//-------------------------------
 	switch(attributo){
-		case "id_cartella":
-			
+		case "id_cartella":	
 			break;
 		case "titolo":	
 			var Data = this.getDataAjaxAttributi(id_nota,"titolo");
@@ -188,7 +203,9 @@ CStruttura.prototype.AggiornaNota = function(id_nota,attributo,valore){
 			break;
 				
 	}
-	dati.setNote(Data);	
+		this.setBuffer(0);
+		dati.setNote(Data);	
+		
 	}
 }
 
