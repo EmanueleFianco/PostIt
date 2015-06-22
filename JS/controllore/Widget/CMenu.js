@@ -87,7 +87,7 @@ CMenu.prototype.Inizializza = function(){
 		
 		var id_cartella=$(this).attr('id');	
 		StrutturaCartelle.setCartellaAttiva(id_cartella);
-		
+		var packery = singleton.getInstance(CPackery,"CPackery");
 	
 		var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
 		
@@ -102,14 +102,21 @@ CMenu.prototype.Inizializza = function(){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
 				$("#"+StrutturaCartelle.getCartellaAttiva()).children().remove();
 				$.each(Note,function(i,nota){
+					console.log(StrutturaCartelle.getCartellaAttiva());
 					if(StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella) !=0){
 						$('#'+cartellaAttiva).packery('destroy');
 						}
+					
 					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
-					$('#'+cartellaAttiva).packery();
-					$('#'+cartellaAttiva).packery('reloadItems');
+					
+					
 				})
+				packery.Ricarica();
+				$('#'+cartellaAttiva).packery();
+				$('#'+cartellaAttiva).packery('reloadItems');
+				
 			}
+			
 		})
 		
 	})

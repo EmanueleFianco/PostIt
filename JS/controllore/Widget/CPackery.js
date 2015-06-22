@@ -6,11 +6,7 @@ CPackery.prototype.Inizializza = function(id_nota){
 	var view = singleton.getInstance(View,"View");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
-
-	
-	
-	
-		
+			
 		var $container = $('#'+cartellaAttiva).packery({
 			
 		  	"rowHeight": 100,

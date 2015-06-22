@@ -73,7 +73,7 @@ CRedactor.prototype.InizializzaNuova = function(){
 	
 	 $("#redactorNuova").redactor({
 		  placeholder: 'Scrivi una nuova nota',
-		  imageUpload: 'Controller/index.php?controller=nota&lavoro=upload'
+		  imageUpload: 'Home.php?controller=nota&lavoro=upload'
 	    });
 	 
 	 $("#TestoNotaNuova").mouseenter(function() {

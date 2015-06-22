@@ -32,7 +32,7 @@ CDati.prototype.getNote = function(id_cartella,note_presenti,num_note,posizioni)
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/index.php',
+		url : 'Home.php',
 		data : Data
 	});
 	
@@ -42,7 +42,7 @@ CDati.prototype.getCartelle = function(){
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/index.php?controller=utente&lavoro=getCartelle'
+		url : 'Home.php?controller=utente&lavoro=getCartelle'
 	});
 	
 }
@@ -52,7 +52,7 @@ CDati.prototype.setPosizioni= function(data){
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/index.php',
+		url : 'Home.php',
 		data: data,
 	});
 
@@ -62,7 +62,7 @@ CDati.prototype.setNote = function(data){
 	
 	return $.ajax({
 		type: 'POST',
-		url : 'Controller/index.php',
+		url : 'Home.php',
 		data: data,
 	});
 	
