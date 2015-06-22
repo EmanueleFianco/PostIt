@@ -4,15 +4,29 @@ var CLogin = function(){
 }
 
 CLogin.prototype.logIn=function(){
-
-	if(this.controllaDatiLogin())
+	var chome=singleton.getInstance(CHome,"CHome");
+	var vista = singleton.getInstance(View,"View");
+if(this.controllaDatiLogin())
 	{   var Data=this.preparaDati('login');
-	    this.inviaDati(Data);
+	    $.when(this.inviaDati(Data)).done(function(ricevuta){   
+	    	    console.log(ricevuta);
+ 				var esito=new Object();
+ 				esito=$.parseJSON(ricevuta);
+ 				console.log(esito);
+ 				if(esito['errore']!=null)//esito positivo 
+ 				{
+ 					vista.smonta("#menu_welcome");
+					chome.getDati();
+ 				}
+ 				else
+ 				{
+ 					alert("Attenzione:"+(esito['error']));
+ 				}
+	    	});
 	 }
-	 else
-	 	alert('Nessun utente con questa e-mail...per favore registrati');
-	
 }
+	
+
 
 CLogin.prototype.signup=function(event){
   if(!this.controlladatiSignup())
@@ -21,8 +35,7 @@ CLogin.prototype.signup=function(event){
 
   }
   else
-  { 
-    
+  {     
   	alert("controlla la tua casella di posta e attiva l'account!");
   }
 
@@ -138,16 +151,12 @@ CLogin.prototype.controllaDatiLogin=function(){
 
 CLogin.prototype.inviaDati=function(dati){
 	//invia dati
-	var chome= singleton.getInstance(CHome,"CHome");
-	var vista= singleton.getInstance(View,"View");
-	$.ajax({ 
+	
+	return $.ajax({ 
 	  type:'POST',
 	  url:'Home.php',
-	  data:dati,
-	  success:function(){
-	  		vista.smonta("#menu_welcome");
-			chome.getDati();
-			}
+	  data:dati
+	  
 	})
 
 }
