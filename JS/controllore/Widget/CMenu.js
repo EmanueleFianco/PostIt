@@ -95,7 +95,7 @@ CMenu.prototype.Inizializza = function(){
 			var Posizioni = new Array();
 			Posizioni = view.getPosizioni();	
 		}
-
+		
 		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Posizioni)).done(function(note){
 			var Note = $.parseJSON(note);
 			if(Object.keys(Note).length !=0){
@@ -106,6 +106,7 @@ CMenu.prototype.Inizializza = function(){
 						$('#'+cartellaAttiva).packery('destroy');
 						}
 					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
+					$('#'+cartellaAttiva).packery();
 					$('#'+cartellaAttiva).packery('reloadItems');
 				})
 			}

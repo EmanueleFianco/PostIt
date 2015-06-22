@@ -44,7 +44,7 @@ CStruttura.prototype.getCartellaAttiva = function(){
 
 CStruttura.prototype.EliminaNoteByIdCartella = function(id_cartella){
 	delete Struttura[id_cartella].note;
-	Struttura[id_cartella]['note']= "";
+	Struttura[id_cartella]['note']= new Object;
 	
 	
 	
