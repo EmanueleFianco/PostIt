@@ -195,7 +195,7 @@ class CCartella {
 						}
 					}
 				}
-				if (!$sbagliato) {
+				if ($sbagliato) {
 					$posizione_finale = $max_posizione;
 					$posizione_iniziale = $posizione_finale - 12;
 					if ($posizione_iniziale<0) {
@@ -203,7 +203,7 @@ class CCartella {
 					}
 					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$posizione_finale,$posizione_iniziale);
 				} else {
-					if ($max_posizione>=$dati['note_presenti']) {
+					if ($max_posizione+1>$dati['note_presenti']) {
 						$posizione_finale = $max_posizione - $dati['note_presenti'];
 						$posizione_iniziale = $posizione_finale - $dati['num_note'];
 						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$posizione_finale,$posizione_iniziale);
