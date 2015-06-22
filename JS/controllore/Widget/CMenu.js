@@ -102,9 +102,11 @@ CMenu.prototype.Inizializza = function(){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
 				$("#"+StrutturaCartelle.getCartellaAttiva()).children().remove();
 				$.each(Note,function(i,nota){
-					console.log(StrutturaCartelle.getCartellaAttiva());
-					$('#'+cartellaAttiva).packery();
+					if(StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella) !=0){
+						$('#'+cartellaAttiva).packery('destroy');
+						}
 					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
+					$('#'+cartellaAttiva).packery('reloadItems');
 				})
 			}
 		})

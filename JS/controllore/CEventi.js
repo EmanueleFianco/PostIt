@@ -31,7 +31,6 @@ CEventi.prototype.InizializzaNota = function(id_nota){
 	colorpicker.Inizializza(id_nota);
 	contexmenu.Inizializza(id_nota);
 	datepicker.Inizializza(id_nota);
-	console.log("qui");
 	}
 	
 	
