@@ -7,12 +7,20 @@ CRedactor.prototype.Inizializza = function(id_nota){
 	
 	  $("#redactor"+id_nota).redactor({
 		  lang: 'it',
-		  imageUpload : "Controller/index.php?controller=nota&lavoro=upload",
-		  imageUploadCallback : function(){
-			
-		  }
+		  imageUpload : "Home.php?controller=nota&lavoro=upload",
+		  imageUploadCallback: function()
+		    {
+			  var delay=1000; //1 seconds
+
+			  setTimeout(function(){
+	     console.log("1 secondo");
+				  $('#'+StrutturaCartelle.getCartellaAttiva()).packery('reloadItems');
+			  }, delay);
+
+		    },
+		 
 	  });
-	  
+
 	  
 	
 	
@@ -73,7 +81,9 @@ CRedactor.prototype.InizializzaNuova = function(){
 	
 	 $("#redactorNuova").redactor({
 		  placeholder: 'Scrivi una nuova nota',
-		  imageUpload: 'Home.php?controller=nota&lavoro=upload'
+		  imageUpload: 'Home.php?controller=nota&lavoro=upload',
+		    
+		  
 	    });
 	 
 	 $("#TestoNotaNuova").mouseenter(function() {

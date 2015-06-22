@@ -153,7 +153,7 @@ class CNota {
     	move_uploaded_file($_FILES['file']['tmp_name'], $immagine['tmp_name']);
     	$img = new EImmagine(basename($immagine['tmp_name']), $immagine['size'], $immagine['type'], $immagine['tmp_name']);
     	$FImmagine->inserisciImmagine($img);
-    	$array = array('filelink' => 'Controller/index.php?controller=nota&lavoro=prendiImmagine&file='.basename($immagine['tmp_name']));
+    	$array = array('filelink' => 'Home.php?controller=nota&lavoro=prendiImmagine&file='.basename($immagine['tmp_name']));
     	unlink($immagine['tmp_name']);
     	return stripslashes(json_encode($array));
     }

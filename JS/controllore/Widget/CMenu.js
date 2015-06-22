@@ -98,21 +98,15 @@ CMenu.prototype.Inizializza = function(){
 		
 		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Posizioni)).done(function(note){
 			var Note = $.parseJSON(note);
-			if(Object.keys(Note).length !=0){
+			if(Object.keys(Note).length >0){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
 				$("#"+StrutturaCartelle.getCartellaAttiva()).children().remove();
+				$('#'+cartellaAttiva).packery();
+				$('#'+cartellaAttiva).packery('destroy');
 				$.each(Note,function(i,nota){
-					console.log(StrutturaCartelle.getCartellaAttiva());
-					if(StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella) !=0){
-						$('#'+cartellaAttiva).packery('destroy');
-						}
-					
 					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
-					
-					
 				})
 				packery.Ricarica();
-				$('#'+cartellaAttiva).packery();
 				$('#'+cartellaAttiva).packery('reloadItems');
 				
 			}
