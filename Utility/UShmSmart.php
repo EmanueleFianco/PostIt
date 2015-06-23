@@ -1,5 +1,5 @@
 <?php
-class shmSmart{
+class UshmSmart {
 	public $shm;            //holds shared memory resource
 	public function __construct(){
 		if(function_exists("shm_attach")===FALSE){

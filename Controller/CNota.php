@@ -192,24 +192,40 @@ class CNota {
     
     public function focus() {
     	$VNota=USingleton::getInstance('VNota');
+    	$fnota=USingleton::getInstance('FNota');
+    	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
     	$shm=USingleton::getInstance('UShmSmart');
+    	$session=USingleton::getInstance('USession');
     	$dati = $VNota->getDati();
     	$id = $dati['id'];
-    	$nota = $fnota->getNotaById($id);
-    	$nota = $nota[0];
-    	if ($dati['evento'] == "perso") {
-    		if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
-    			$shm->del($id);
+    	$raccoglitore = $fraccoglitore->getRaccoglitoreByIdNota($id);
+    	$i=0;
+    	while ($i<count($raccoglitore) && $i != -1) {
+    		if ($raccoglitore[$i]['email_utente'] == $session->getValore("email")) {
+    			$i=-1;
+    		} else {
+    			$i++;
     		}
-    	} else {
-    		if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
-    			if ($shm->get($id)) {
-    				$chiave = $$id;
-    				$VNota->invia(array("error" => $shm->get($chiave['username'])));
-    			} else {
-    				$shm->put($id,$session->getValore("username"));
+    	}
+    	if ($i == -1) {
+    		$nota = $fnota->getNotaById($id);
+    		$nota = $nota[0];
+    		if ($dati['evento'] == "perso") {
+    			if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
+    				$shm->del($id);
+    			}
+    		} else {
+    			if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
+    				if ($shm->get($id)) {
+    					$chiave = $$id;
+    					$VNota->invia(array("error" => $shm->get($chiave['username'])));
+    				} else {
+    					$shm->put($id,$session->getValore("username"));
+    				}
     			}
     		}
+    	} else {
+    		$VNota->invia(array("error" => "Permesso negato!"));
     	}
     }
     
