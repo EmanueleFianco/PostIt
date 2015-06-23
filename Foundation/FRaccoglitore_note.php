@@ -119,6 +119,12 @@ class FRaccoglitore_note extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);
 	}
+	
+	public function getRaccoglitoreByIdNota($_id_nota) {
+		$column = "*";
+		$this->db->setParam($this->table,"id_nota",":id_nota");
+		return $this->db->queryGenerica("*","=","id_nota");
+	}
 	/**
 	 * Aggiorna lo stato del raccoglitore
 	 * @param array $dati Array così fatto "attributo da modificare" => "valore attributo"

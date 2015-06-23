@@ -147,23 +147,39 @@ class CNota {
     	$query->beginTransaction();
     	try {
     		$nota = $fraccoglitore->getNotaByIdEUtente($dati['id'],'emanuele.fianco@gmail.com');
-    		$fnota->updateNota($aggiornamenti);
-    		$fnota->updateNota($aggiornamenti1);
-    		$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",'emanuele.fianco@gmail.com');
-    		$aggiornamenti2 = array("id_cartella" => $promemoria[0]["id"],
-    								"id_nota" => $dati['id']);
-    		$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$promemoria[0]['id']);
-    		$max_posizione = $max_posizione[0]['max(posizione)'];
-    		$max_posizione +=1;
-    		$aggiornamenti3 = array("posizione" => $max_posizione,
-    								"id_nota" => $dati['id']);
-    		$fraccoglitore->updateRaccoglitore($aggiornamenti2);
-    		$fraccoglitore->updateRaccoglitore($aggiornamenti3);
-    		$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
-			$query1->bindParam(":pos",$nota[0]['posizione']);
-			$query1->bindParam(":cartella",$nota[0]['id_cartella']);
-			$query1->execute();
-			$query->commit();
+    		$nota = $nota[0];
+    		$cartella = $fcartella->getCartellaById($nota['id_cartella']);
+    		$cartella = $cartella[0];
+    		if ($cartella['tipo'] == "privata") {
+    			$fnota->updateNota($aggiornamenti);
+    			$fnota->updateNota($aggiornamenti1);
+    			if ($nota['condiviso'] == FALSE) {
+    				$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",'emanuele.fianco@gmail.com');
+    				$promemoria = $promemoria[0];
+    				$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
+    										"id_nota" => $dati['id']);
+    				$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$promemoria['id']);
+    				$max_posizione = $max_posizione[0]['max(posizione)'];
+    				if (isset($max_posizione)) {
+    					$max_posizione += 1;
+    				} else {
+    					$max_posizione = 0;
+    				}
+    				$aggiornamenti3 = array("posizione" => $max_posizione,
+    										"id_nota" => $dati['id']);
+    				$fraccoglitore->updateRaccoglitore($aggiornamenti2);
+    				$fraccoglitore->updateRaccoglitore($aggiornamenti3);
+    				$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
+    				$query1->bindParam(":pos",$nota['posizione']);
+    				$query1->bindParam(":cartella",$nota['id_cartella']);
+    				$query1->execute();
+    			} else {
+    				$aggiornamenti4 = array("ultimo_a_modificare" => 'emanuele.fianco@gmail.com',
+    										"id" => $dati['id_nota']);
+    				$fnota->updateNota($aggiornamenti4);
+    			}
+    		}
+    		$query->commit();
     	} catch (Exception $e) {
     		$query->rollback();
     	}

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Giu 19, 2015 alle 23:45
+-- Generation Time: Giu 23, 2015 alle 11:24
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -34,26 +34,8 @@ WHERE posizione>pos AND email_utente = email_delete$$
 
 DROP PROCEDURE IF EXISTS `AggiornaPosizioneNote`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneNote`(IN `pos` INT, IN `cartella` INT)
-UPDATE nota SET posizione=posizione-1
+UPDATE raccoglitore_note SET posizione=posizione-1
 WHERE posizione>pos AND id_cartella = cartella$$
-
-DROP PROCEDURE IF EXISTS `inserimentoRaccoglitoreCartella`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `inserimentoRaccoglitoreCartella`(IN `nuovoid` INT(11), IN `email_inserita` VARCHAR(40))
-    NO SQL
-begin
-declare finito int default 0;
-declare maxpos int;
-declare cur1 cursor for select max(`raccoglitore_cartelle`.`posizione`) from `postit`.`raccoglitore_cartelle` where `raccoglitore_cartelle`.`email_utente` = email_inserita;
-DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' SET finito = 1;
-open cur1;
-fetch cur1 into maxpos;
-if maxpos is null then
-set maxpos = 0;
-else
-set maxpos=maxpos+1;
-end if;
-insert into `postit`.`raccoglitore_cartelle` (`raccoglitore_cartelle`.`id_cartella`,`raccoglitore_cartelle`.`email_utente`,`raccoglitore_cartelle`.`posizione`) values (nuovoid,email_inserita,maxpos);
-end$$
 
 DELIMITER ;
 
@@ -70,23 +52,13 @@ CREATE TABLE IF NOT EXISTS `cartella` (
   `tipo` enum('gruppo','privata') COLLATE utf8_unicode_ci NOT NULL,
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `cartella`:
 --   `amministratore`
 --       `utente` -> `email`
 --
-
---
--- Trigger `cartella`
---
-DROP TRIGGER IF EXISTS `inserimentoCartella`;
-DELIMITER //
-CREATE TRIGGER `inserimentoCartella` AFTER INSERT ON `cartella`
- FOR EACH ROW call inserimentoRaccoglitoreCartella(NEW.id,NEW.amministratore)
-//
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -96,7 +68,6 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `immagine`;
 CREATE TABLE IF NOT EXISTS `immagine` (
-  `id_nota` int(11) DEFAULT NULL,
   `nome` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `size` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
@@ -105,12 +76,6 @@ CREATE TABLE IF NOT EXISTS `immagine` (
   `immagine_grande` mediumblob NOT NULL,
   `immagine_originale` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONS FOR TABLE `immagine`:
---   `id_nota`
---       `nota` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -129,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `creata_da` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `ultimo_a_modificare` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ora_data_avviso` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `nota`:
@@ -221,7 +186,7 @@ ALTER TABLE `cartella`
 -- Indexes for table `immagine`
 --
 ALTER TABLE `immagine`
- ADD PRIMARY KEY (`nome`), ADD KEY `id_nota` (`id_nota`);
+ ADD PRIMARY KEY (`nome`);
 
 --
 -- Indexes for table `nota`
@@ -255,12 +220,12 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `cartella`
 --
 ALTER TABLE `cartella`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=209;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -270,12 +235,6 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 ALTER TABLE `cartella`
 ADD CONSTRAINT `cartella_ibfk_1` FOREIGN KEY (`amministratore`) REFERENCES `utente` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Limiti per la tabella `immagine`
---
-ALTER TABLE `immagine`
-ADD CONSTRAINT `immagine_ibfk_1` FOREIGN KEY (`id_nota`) REFERENCES `nota` (`id`) ON DELETE CASCADE;
 
 --
 -- Limiti per la tabella `nota`
