@@ -15,6 +15,30 @@ CWelcome.prototype.Inizializza= function(){
     $(".registrazione").fadeIn();    
    });
 
+
+   $("#email").focusout(function(){
+     $.when(clogin.controllaEmail()).done(function(controlloemail){
+          var esito= new Object();
+          esito=$.parseJSON(controlloemail);
+          if(esito['error']!=null)
+          {
+            
+            $("#email").next().addClass('sbagliato').end().addClass('sbagliato');
+                        
+          }
+          else
+          {
+            
+            $("#email").next().addClass('giusto');
+
+          }
+
+          })
+   });
+      $("#email").focusin(function(){
+      $(this).next().removeClass("giusto sbagliato").end().removeClass("sbagliato");
+     })
+
 	 $("#accedi").click(function(event){
     $(".registrazione").fadeOut();  
 		$("#signup").fadeIn();

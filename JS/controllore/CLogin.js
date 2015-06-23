@@ -11,7 +11,6 @@ if(this.controllaDatiLogin())
 	    $.when(this.inviaDati(Data)).done(function(ricevuta){   
 	    	    var esito=new Object();
  				esito=$.parseJSON(ricevuta);
- 				console.log("ricevuto:"+esito);
  				if(esito['error']==null)//esito positivo 
  				{
  					vista.smonta("#menu_welcome");
@@ -172,4 +171,17 @@ CLogin.prototype.preparaDati=function(task){
 
 	};//end switch
 	return dati;
+}
+
+CLogin.prototype.controllaEmail=function(){
+	return $.ajax({
+		type:'POST',
+		url:'Home.php',
+		data:{
+            controller:'registrazione',
+			lavoro:'controlla',
+			email:$("#email").val(),
+		}
+	})
+
 }
