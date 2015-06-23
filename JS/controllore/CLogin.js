@@ -34,11 +34,7 @@ CLogin.prototype.signup=function(event){
   	event.preventDefault();
 
   }
-  else
-  {     
-  	alert("controlla la tua casella di posta e attiva l'account!");
-  }
-
+  
 
 
 
