@@ -148,12 +148,14 @@ class CNota {
     	try {
     		$nota = $fraccoglitore->getNotaByIdEUtente($dati['id'],'emanuele.fianco@gmail.com');
     		$nota = $nota[0];
+    		$nota_vera = $fnota->getNotaById($dati['id']);
+    		$nota_vera = $nota_vera[0];
     		$cartella = $fcartella->getCartellaById($nota['id_cartella']);
     		$cartella = $cartella[0];
     		if ($cartella['tipo'] == "privata") {
     			$fnota->updateNota($aggiornamenti);
     			$fnota->updateNota($aggiornamenti1);
-    			if ($nota['condiviso'] == FALSE) {
+    			if ($nota_vera['condiviso'] == FALSE) {
     				$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",'emanuele.fianco@gmail.com');
     				$promemoria = $promemoria[0];
     				$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
@@ -178,6 +180,8 @@ class CNota {
     										"id" => $dati['id_nota']);
     				$fnota->updateNota($aggiornamenti4);
     			}
+    		} else {
+    			
     		}
     		$query->commit();
     	} catch (Exception $e) {
