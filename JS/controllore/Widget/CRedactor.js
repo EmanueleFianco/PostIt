@@ -74,7 +74,10 @@ CRedactor.prototype.Inizializza = function(id_nota){
 								id: id_nota,
 								evento: "acquisito"
 							} 
-					  dati.setNote(Data);
+					  
+					 $.when(dati.setNote(Data)).done(function(DatiArrivati){
+						 alert("Nota Bloccata da :"+DatiArrivati.error);
+					 });
 					  
 			}
 				  }).focusout(function(){
