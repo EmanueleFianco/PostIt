@@ -128,17 +128,20 @@ class CRegistrazione {
                 $session->setValore('cognome',ucwords($dati["cognome"]));
                 $session->setValore('tipo_utente','normale');
                 $query->commit();
-                $array = array("success" => TRUE);
                 $this->inviaMailRegistrazione($dati['email']);
-                $VRegistrazione->invia($array);
+                header('Location: Templates/success.html');
+                exit;
+
             } 
             catch (Exception $e) {
             	$query->rollback();
-            	$array = array("success" => FALSE, "error" => "Registrazione fallita");
-            	$VRegistrazione->invia($array);
+            	header('Location: Templates/failed.html');
+                exit;
             }
         } else {
-        	$array = array("success" => FALSE, "error" => "Email già in uso");
+        	
+            header('Location: Templates/failed.html');
+            exit;
         }
     }
     /**

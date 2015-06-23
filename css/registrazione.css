@@ -1,0 +1,32 @@
+#banner{
+	border-bottom: 2px groove black;
+	height: 50px;
+	font-family: title;
+	font-size: 50px;
+	margin-bottom: 40px;
+}
+body{
+	background-image:url("../css/images/backgroundregistrazione.jpg"); 
+	background-repeat: no-repeat;
+}
+#main{
+	font-family: main;
+	font-size: 20px;
+}
+a{
+	color: black;
+}
+a:hover{
+	color:white;
+}
+@font-face {
+    font-family: title;
+    src: url("../css/font/font.otf");
+    font-weight:800;
+}
+
+@font-face {
+    font-family: main;
+    src: url("../css/font/Lobster.otf");
+    font-weight:800;
+}
