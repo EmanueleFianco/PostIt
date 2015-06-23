@@ -125,10 +125,6 @@ class CRegistrazione {
             					  "posizione" => $key);
             		$fraccoglitore->aggiungiAlRaccoglitoreCartelle($cart);		
             	}
-                $session->setValore('username',$dati["username"]);
-                $session->setValore('nome',ucwords($dati["nome"]).' '.ucwords($dati["cognome"]));
-                $session->setValore('cognome',ucwords($dati["cognome"]));
-                $session->setValore('tipo_utente','normale');
                 $query->commit();
                 $this->inviaMailRegistrazione($dati['email']);
                 header('Location: Templates/success.html');
@@ -163,7 +159,7 @@ class CRegistrazione {
     		$cod_attivazione = $utente[0]['codice_attivazione'];
     		if ($dati['cod_attivazione'] == $cod_attivazione) {
     			$aggiornamento = array("stato_attivazione" => "attivato",
-    								   "email" => $dati['email']);
+    								   "email" => urldecode($dati['email']));
     			$futente->updateUtente($aggiornamento);
     			$VRegistrazione->invia(array("attivazione" => TRUE));
     		} else {
@@ -187,9 +183,9 @@ class CRegistrazione {
     	$codice_attivazione = $codice_attivazione[0]['codice_attivazione'];
     	$url = "http://postit.altervista.org/Home.php?controller=registrazione&lavoro=attiva&codice_attivazione=".$codice_attivazione."&mail=".$email_url;
     	$to = $mail;
-    	$subject = 'Benvenuto in COOK WITH US';
+    	$subject = 'Benvenuto in PostIt';
     	$message = "Clicca sul seguente link per attivare il tuo account: " . $url;
-    	$headers = 'From: cookwithus@altervista.org' . "\r\n" .
+    	$headers = 'From: postit@altervista.org' . "\r\n" .
     			'Reply-To: cookwithus@altervista.org' . "\r\n" .
     			'X-Mailer: PHP/' . phpversion();
     			'MIME-Version: 1.0\n' .
