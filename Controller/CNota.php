@@ -108,29 +108,32 @@ class CNota {
 		try {
 			$cartella = $fcartella->getCartellaById($dati['id_cartella']);
 			$nota = $fnota->getNotaById($dati['id_nota']);
+			$id_nota = $nota[0]['id'];
 			$nota_condivisa = $nota[0]['condiviso'];
 			$creatore_nota = $nota[0]['creata_da'];
 			$nome_cartella = $cartella[0]['nome'];
 			$tipo_cartella = $cartella[0]['tipo'];
 			$amministratore_cartella = $cartella[0]['amministratore'];
-			if ($amministratore_cartella == $session->getValore("email") || $creatore_nota == $session->getValore("email")) {
-				if ($nome_cartella == "Cestino" || $tipo_cartella == "gruppo" || $nota_condivisa == TRUE) {
+			if ($tipo_cartella == "gruppo") {
+				if ($amministratore_cartella == $session->getValore("email")) {
 					unset($dati['id_cartella']);
 					$fnota->deleteNota($dati);
-				} else {
-					$email_utente = $cartella[0]['amministratore'];
-					$parametri = array("amministratore" => $email_utente,
-									   "nome" => "Cestino");
-					$cestino = $fcartella->getCartellaByParametri($parametri);
-					$id_cestino = $cestino[0]['id'];
-					$dati = array("id_cartella" => $id_cestino,
-							      "id_nota" => $dati['id_nota']);
-					$fraccoglitore->updateRaccoglitore($dati);
-					$query->commit();
 				}
+			} elseif ($tipo_cartella == "privata" && $nota_condivisa == TRUE) {
+				if ($amministratore_cartella == $session->getValore("email") && $creatore_nota != $session->getValore("email")) {
+					$max_posizione_raccoglitore = $fraccoglitore->getRaccoglitoreByIdNota()
+				}
+				
+			} elseif ($nome_cartella != "Cestino" && $amministratore_cartella == $session->getValore("email")) {
+				$cestino = $fcartella->getCartellaByNomeEAmministratore("Cestino",$session->getValore("email"));
+				$id_cestino = $cestino[0]['id'];
+				$dati = array("id_cartella" => $id_cestino,
+							  "id_nota" => $dati['id_nota']);
+				$fraccoglitore->updateRaccoglitore($dati);
 			} else {
 				$VNota->invia(array("error","Operazione non consentita"));
 			} 
+			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback(); 
 		}

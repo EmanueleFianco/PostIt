@@ -154,7 +154,7 @@ class CRegistrazione {
     /**
      * Attiva l'utente verificandone l'email data alla registrazione
      */
-    public function attiva() {
+    public function attivazione() {
     	$VRegistrazione=USingleton::getInstance('VRegistrazione');
     	$dati=$VRegistrazione->getDati();
     	$futente=USingleton::getInstance('FUtente');
