@@ -9,10 +9,9 @@ CLogin.prototype.logIn=function(){
 if(this.controllaDatiLogin())
 	{   var Data=this.preparaDati('login');
 	    $.when(this.inviaDati(Data)).done(function(ricevuta){   
-	    	    console.log(ricevuta);
- 				var esito=new Object();
+	    	    var esito=new Object();
  				esito=$.parseJSON(ricevuta);
- 				console.log(esito);
+ 				console.log("ricevuto:"+esito);
  				if(esito['error']==null)//esito positivo 
  				{
  					vista.smonta("#menu_welcome");
