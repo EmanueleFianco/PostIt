@@ -139,26 +139,26 @@ class CNota {
     	$fcartella=USingleton::getInstance('FCartella');
     	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
     	$fdb=USingleton::getInstance('Fdb');
-    	$aggionamenti = array("tipo" => "promemoria",
-    			  			  "id_nota" => $dati['id_nota']);
-    	$aggionamenti1 = array("ora_data_avviso" => "promemoria",
-    						   "id_nota" => $dati['id_nota']);
+    	$aggiornamenti = array("tipo" => "promemoria",
+    			  			   "id" => $dati['id']);
+    	$aggiornamenti1 = array("ora_data_avviso" => $dati['ora_data_avviso'],
+    						   "id" => $dati['id']);
     	$query=$fdb->getDb();
     	$query->beginTransaction();
     	try {
-    		$nota = $fraccoglitore->getNotaByIdEUtente($dati['id_nota'],'emanuele.fianco@gmail.com');
+    		$nota = $fraccoglitore->getNotaByIdEUtente($dati['id'],'emanuele.fianco@gmail.com');
     		$fnota->updateNota($aggiornamenti);
     		$fnota->updateNota($aggiornamenti1);
-    		$promemoria = $fcartella->getCartellaByNomeEUtente("Promemoria",'emanuele.fianco@gmail.com');
+    		$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",'emanuele.fianco@gmail.com');
     		$aggiornamenti2 = array("id_cartella" => $promemoria[0]["id"],
-    								"id_nota" => $dati['id_nota']);
-    		$fraccoglitore->updateNota($aggiornamenti2);
+    								"id_nota" => $dati['id']);
     		$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$promemoria[0]['id']);
-    		$max_posizione = $max_posizione[0]['max(posizione'];
+    		$max_posizione = $max_posizione[0]['max(posizione)'];
     		$max_posizione +=1;
     		$aggiornamenti3 = array("posizione" => $max_posizione,
-    							    "id_nota" => $dati['id_nota']);
-    		$fraccoglitore->updateNota($aggiornamenti3);
+    								"id_nota" => $dati['id']);
+    		$fraccoglitore->updateRaccoglitore($aggiornamenti2);
+    		$fraccoglitore->updateRaccoglitore($aggiornamenti3);
     		$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
 			$query1->bindParam(":pos",$nota[0]['posizione']);
 			$query1->bindParam(":cartella",$nota[0]['id_cartella']);

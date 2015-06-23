@@ -180,7 +180,7 @@ class CRegistrazione {
     public function inviaMailRegistrazione($email) {
     	$FUtente=USingleton::getInstance('FUtente');
     	$email_url = urlencode($email);
-    	$codice_attivazione=$FUtente->getCodiceAttivazione($email);
+    	$codice_attivazione=$FUtente->getUtenteByEmail($email);
     	$codice_attivazione = $codice_attivazione[0]['codice_attivazione'];
     	$url = "http://postit.altervista.org/Home.php?controller=registrazione&lavoro=attiva&codice_attivazione=".$codice_attivazione."&mail=".$email_url;
     	$to = $mail;
