@@ -57,13 +57,13 @@ class CNota {
 			$dati['posizione'] = $max_posizione;
 			if ($dati['ora_data_avviso']) {
 				if ($dati['ultimo_a_modificare']) {
-					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['ora_data_avviso'], $dati['immagine'], $dati['partecipanti']);
+					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['ora_data_avviso'], $dati['immagine'] = NULL);
 				} else {
-					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ora_data_avviso'], $dati['immagine']);
+					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ora_data_avviso']);
 				}
 			} else {
 				if ($dati['ultimo_a_modificare']) {
-					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['immagine'], $dati['partecipanti']);
+					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['immagine'] = NULL);
 				} else {
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
 				}
@@ -118,6 +118,10 @@ class CNota {
 				if ($amministratore_cartella == $session->getValore("email")) {
 					unset($dati['id_cartella']);
 					$fnota->deleteNota($dati);
+					$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
+					$query1->bindParam(":pos",$nota['posizione']);
+					$query1->bindParam(":cartella",$nota['id_cartella']);
+					$query1->execute();
 				}
 			} elseif ($tipo_cartella == "privata" && $nota_condivisa == TRUE) {
 				if ($amministratore_cartella == $session->getValore("email") && $creatore_nota != $session->getValore("email")) {
