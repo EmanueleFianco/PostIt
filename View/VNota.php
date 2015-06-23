@@ -17,6 +17,7 @@ class VNota extends View {
 	 * @throws Exception $e Se i parametri non sono conformi alle aspettative
 	 */
 	static function controllaInput($_chiave, $_valore) {
+		$View = USingleton::getInstance('View');
 		if ($_chiave == 'posizioni') {
 			foreach ($_valore as $key => $val) {
 				$posizioni[] = $val['posizione'];
@@ -24,7 +25,7 @@ class VNota extends View {
 			sort($posizioni);
 			foreach ($posizioni as $key => $val) {
 				if ($key != $val) {
-					$this->invia(array("error","Valori delle posizioni sbagliati"));
+					$View->invia(array("error","Valori delle posizioni sbagliati"));
 				}
 			}
 		} elseif ($_chiave == 'nota') {

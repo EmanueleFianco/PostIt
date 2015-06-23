@@ -66,10 +66,11 @@ Class FUtente extends Fdb {
 	 * @return int 1 se andata a buon fine, 0 altrimenti
 	 */
 	public function deleteUtente($dati) {
-		$keydb = array_keys($dati);
-		$keydb = $keydb[0];
-		$bind = ":".$keydb;
-		$valori = $dati[$keydb];
+		foreach ($dati as $key => $value) {
+			$keydb[]=$key;
+			$bind[]=":".$key;
+			$valori[]=$value;
+		}
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->delete($valori);
 	}

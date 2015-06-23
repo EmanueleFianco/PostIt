@@ -93,11 +93,7 @@ class CRegistrazione {
         $VRegistrazione=USingleton::getInstance('VRegistrazione');
         $dati=$VRegistrazione->getDati();
         $futente=USingleton::getInstance('FUtente');
-        $ccartella=USingleton::getInstance('CCartella');
-        $fcartella=USingleton::getInstance('FCartella');
-        $fraccoglitore=USingleton::getInstance('FRaccoglitore_cartelle');
         $fdb=USingleton::getInstance('Fdb');
-        $session=USingleton::getInstance('USession');
         $query=$fdb->getDb();
         $query->beginTransaction();
         if (!$futente->getUtenteByEmail($dati["email"])) { //utente non esistente
@@ -114,17 +110,6 @@ class CRegistrazione {
             	$utente=new EUtente($dati["username"], $dati["password"], $dati["nome"], $dati["cognome"],$dati["email"],"nonattivato","normale");
                 $utente->setCodiceAttivazione();
             	$futente->inserisciUtente($utente,$immagine);
-            	$cartelle = array("Note", "Promemoria", "Archivio", "Cestino");
-            	$colori = array("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF");
-            	
-            	foreach ($cartelle as $key => $valore) {
-            		$c = new ECartella($valore, $key, $colori[$key]);
-            		$fcartella->inserisciCartella($c, "privata", $dati['email']);
-            		$cart = array("id_cartella" => $query->lastInsertId(),
-            					  "email_utente" => $dati['email'],
-            					  "posizione" => $key);
-            		$fraccoglitore->aggiungiAlRaccoglitoreCartelle($cart);		
-            	}
                 $query->commit();
                 $this->inviaMailRegistrazione($dati['email']);
                 header('Location: Templates/success.html');
@@ -152,23 +137,57 @@ class CRegistrazione {
      */
     public function attivazione() {
     	$VRegistrazione=USingleton::getInstance('VRegistrazione');
+    	$fcartella=USingleton::getInstance('FCartella');
+    	$fraccoglitore=USingleton::getInstance('FRaccoglitore_cartelle');
     	$dati=$VRegistrazione->getDati();
     	$futente=USingleton::getInstance('FUtente');
     	$utente = $futente->getUtenteByEmail($dati['email']);
-    	if (isset($utente)) {
-    		$cod_attivazione = $utente[0]['codice_attivazione'];
-    		if ($dati['cod_attivazione'] == $cod_attivazione) {
-    			$aggiornamento = array("stato_attivazione" => "attivato",
-    								   "email" => urldecode($dati['email']));
-    			$futente->updateUtente($aggiornamento);
-    			$VRegistrazione->invia(array("attivazione" => TRUE));
+    	$fdb=USingleton::getInstance('Fdb');
+    	$session=USingleton::getInstance('USession');
+    	$query=$fdb->getDb();
+    	$query->beginTransaction();
+    	try {
+    		if (isset($utente)) {
+    			$cod_attivazione = $utente[0]['codice_attivazione'];
+    			if ($dati['cod_attivazione'] == $cod_attivazione) {
+    				$aggiornamento = array("stato_attivazione" => "attivato",
+    						"email" => urldecode($dati['email']));
+    				$futente->updateUtente($aggiornamento);
+    				$cartelle = array("Note", "Promemoria", "Archivio", "Cestino");
+    				$colori = array("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF");
+    				foreach ($cartelle as $key => $valore) {
+    					$c = new ECartella($valore, $key, $colori[$key]);
+    					$fcartella->inserisciCartella($c, "privata", $dati['email']);
+    					$cart = array("id_cartella" => $query->lastInsertId(),
+    							"email_utente" => $dati['email'],
+    							"posizione" => $key);
+    					$fraccoglitore->aggiungiAlRaccoglitoreCartelle($cart);
+    				}
+    				$info = array("username" => $utente['username'],
+    						"nome" => $utente['nome'],
+    						"cognome" => $utente['cognome'],
+    						"email" => $utente['email'],
+    						"tipo_utente" => $utente['tipo_utente']);
+    				$session->setValore('username',$utente['username']);
+    				$session->setValore('nome',$utente['nome']);
+    				$session->setValore('cognome',$utente['cognome']);
+    				$session->setValore('email',$utente['email']);
+    				$session->setValore('tipo_utente',$utente['tipo_utente']);
+    				$query->commit();
+    				header('Location: index.php');
+    				$VRegistrazione->invia($info);
+    				exit;
+    			} else {
+    				$array = array("error" => "Codice di attivazione errato");
+    				$VRegistrazione->invia($array);
+    			}
     		} else {
-    			$array = array("error" => "Codice di attivazione errato");
+    			$array = array("error" => "Utente inesistente");
     			$VRegistrazione->invia($array);
     		}
-    	} else {
-    		$array = array("error" => "Utente inesistente");
-    	}	
+    	} catch (Exception $e) {
+    		$query->rollback();
+    	}
     }
     
     /**

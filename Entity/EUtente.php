@@ -146,7 +146,7 @@ class EUtente
      *
      */  
     public function setCognome($_cognome){
-    	$_nome = trim(ucwords(strtolower($_cognome)));
+    	$_cognome = trim(ucwords(strtolower($_cognome)));
     	$this->cognome = $_cognome;
     }
 
