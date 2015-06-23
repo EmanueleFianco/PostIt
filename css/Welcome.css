@@ -15,7 +15,7 @@
     margin-left:-202px;
     top:100px;
     width:420px;
-    height: 590px;
+    height: 610px;
     display: none;
     border: groove 2px;
     border-color: black;
@@ -364,5 +364,34 @@
     div#signupwindow div {
         font-size: 0.7em;
     }
+
+}
+.corretto{
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  margin-left: 30px;
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+
+#label_email{
+  padding-top: 10px;
+}
+
+.corretto.giusto{
+
+  background: url("../JS/view/Image/corretto.svg");
+}
+
+.corretto.sbagliato{
+  background: url("../JS/view/Image/sbagliato.svg");
+
+}
+
+
+input.sbagliato{
+  
+  border:solid red;
 
 }
