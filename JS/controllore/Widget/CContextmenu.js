@@ -14,7 +14,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             "note": {name: "Note", icon: "edit"},
             "promemoria": {name: "Promemoria", icon: "cut"},
             "gruppi": {name: "Gruppi", icon: "copy",
-                "items": {
+            "items": {
                 	// ajax per richiedere tutti i gruppi dell utente
                     "item1": {"name": "Nome_Gruppo"},
                     "item2": {"name": "Nome_Gruppo"},
@@ -38,6 +38,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                     }},
         }
     });
+	
 	
 	
 	

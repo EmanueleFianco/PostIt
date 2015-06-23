@@ -83,6 +83,7 @@ CRedactor.prototype.Inizializza = function(id_nota){
 						 $("#TestoNota"+id_nota).find(".redactor_").attr("contenteditable",false);
 						 $("#TitoloNota"+id_nota).attr("contenteditable",false);
 						 $("#time"+id_nota).prop("disabled",true);
+						
 						 }
 					 });
 					  
@@ -92,6 +93,8 @@ CRedactor.prototype.Inizializza = function(id_nota){
 					  $("#TestoNota"+id_nota).find(".redactor_").attr("contenteditable",true);
 					  $("#TitoloNota"+id_nota).attr("contenteditable",true);
 					  $("#time"+id_nota).prop("disabled",false);
+					  $("#TestoNota"+id_nota).find(".redactor_toolbar").css("display","block");
+					  
 					  flag="FALSE";
 					  var Data ={	
 								controller : "nota",
