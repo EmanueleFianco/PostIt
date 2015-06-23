@@ -23,6 +23,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                 }},          
              "cancella": {name: "Cancella", icon: "delete",
             	 callback:function(){
+            		 if($("#bloccata"+id_nota).css("display") != "block"){
                             var Dati={   
                                       id: id_nota,
                                       controller:"nota",
@@ -32,6 +33,8 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                             dati.setNote(Dati);
                             console.log(Dati);
                             $(this).parent(".nota").hide();
+                            
+            		 }
                     }},
         }
     });

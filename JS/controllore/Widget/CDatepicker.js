@@ -29,7 +29,7 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 		minuteText: 'Minuti',
 		currentText: 'Ora',
 		closeText: 'Chiudi',
-		onClose  : function(dateText) {
+		onClose  : function(dateText) {	
 			dateText = dateText + ":00";
 			if(dateText != ""){
 				console.log(dateText);

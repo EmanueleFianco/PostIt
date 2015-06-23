@@ -5,10 +5,13 @@ var CColorpicker = function(){
 CColorpicker.prototype.Inizializza = function(id_nota){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	$('#colorPicker'+id_nota).tinycolorpicker();
-	$('#colorPicker'+id_nota).bind("change", function(){		
+	
+	
+	$('#colorPicker'+id_nota).bind("change", function(){	
+		if($("#bloccata"+id_nota).css("display") != "block"){
 	        var colore = $(this).find(".colorInput").val();
 			$(this).parents(".nota,.NuovaNota").css('background-color',colore);
-						
+		}		
 		 });
 	
 		$('#colorPicker'+id_nota).mouseenter(function(){
