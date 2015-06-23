@@ -35,6 +35,9 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 				console.log(dateText);
 				StrutturaCartelle.AggiornaNota(id_nota,"ora_data_avviso",dateText);
 			}
+			$("#"+cartellaAttiva).packery( 'remove',$("#"+id_nota));
+			$("#"+id_nota).remove();
+			
 		
 		}
 	});

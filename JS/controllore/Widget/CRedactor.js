@@ -4,15 +4,12 @@ var CRedactor = function(){
 
 CRedactor.prototype.Inizializza = function(id_nota){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
-		
+	var dati =singleton.getInstance(CDati,"CDati");
+	flag = "FALSE";
+	
 	  $("#redactor"+id_nota).redactor({
 		  imageLink: false,  
-		  imageUpload : "Home.php?controller=nota&lavoro=upload",
-		    uploadStartCallback: function(e, formData)   
-		    {   
-		        console.log('My upload started!');    
-		    },
-		   
+		  imageUpload : "Home.php?controller=nota&lavoro=upload", 
 		  imageUploadCallback: function()
 		    {
 			  var delay=200; //1 seconds
@@ -27,7 +24,7 @@ CRedactor.prototype.Inizializza = function(id_nota){
 	  });
 	  
 	
-	
+
 	//-----------------------TESTO NOTA -----------------------------//
 		
 		$("#TestoNota"+id_nota).mouseenter(function() {
@@ -63,13 +60,33 @@ CRedactor.prototype.Inizializza = function(id_nota){
 		$("#TestoNota"+id_nota).keyup(function() {
 			//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
 					var id = $(this).parent().attr("id");
-					
 					var valore = $(this).find(".redactor_").html();
-					
 					StrutturaCartelle.AggiornaNota(id,"testo",valore);
-	//-------------------------------------------------------------------------------	
-					
-				})
+				});
+		
+		
+		$("#"+id_nota).focusin(function(event){
+			if(flag == "FALSE"){
+				flag="TRUE";
+					  var Data ={	
+								controller : "nota",
+								lavoro: "focus",
+								id: id_nota,
+								evento: "acquisito"
+							} 
+					  dati.setNote(Data);
+					  
+			}
+				  }).focusout(function(){
+					  flag="FALSE";
+					  var Data ={	
+								controller : "nota",
+								lavoro: "focus",
+								id: id_nota,
+								evento: "perso"
+							} 
+					  dati.setNote(Data);  
+				  });
 	//------------------------------------------------------------------------------
 		$("#TitoloNota"+id_nota).keyup(function() {
 	//  aggiornamento Struttura Dati (un aggiornamento nella struttura dati chiama Ajax)
