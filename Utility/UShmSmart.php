@@ -1,51 +1,121 @@
 <?php
+/**
+* @package Utility
+* @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
+**/
 class UshmSmart {
-	public $shm;            //holds shared memory resource
+	/**
+     *
+	 * @var maniglia per il segmento di risorsa condivisa
+	 * 
+	 */
+	public $shm;            
+	/**
+	 * Crea il segmento di memoria condivisa se è possibile
+	 */
 	public function __construct(){
 		if(function_exists("shm_attach")===FALSE){
-			die("\nYour PHP configuration needs adjustment. See: http://us2.php.net/manual/en/shmop.setup.php. To enable the System V shared memory support compile PHP with the option --enable-sysvshm.");
+			die("\nYour PHP configuration needs adjustment. See: http://us2.php.net/manual/en/shmop.setup.php. To enable the System V shared memory support compile PHP with the option --enable-sysvshm."); //in caso contrario lancia una eccezione
 		}
-		$this->attach();    //create resources (shared memory)
+		$this->attach(); 
 	}
+	 /**
+     * La funzione shm_attach() restituisce un identificativo che può essere utilizzato per accedere alla memoria condivisa identificata dalla chiave, la prima chiamata crea il segmento di memoria condivisa; Una seconda chiamata alla funzione shm_attach() con il medesimo parametro key restituirà un identificativo di memoria condivisa differente, ma entrambi accederanno alla medesima memoria condivisa sottostante.
+     */
 	public function attach(){
-		$this->shm=shm_attach(0x701da13b,33554432);    //allocate shared memory
+		$this->shm=shm_attach(0x701da13b,33554432);    
 	}
+	
+
+
+	/**
+	*La funzione shm_detach() disconnette dal segmento di memoria condivisa indicato dal parametro shm_identifier creato tramite la funzione shm_attach(). Si ricordi che la memoria condivisa continua a esistere nel sistema Unix e i dati sono ancora presenti. 
+	*@return unknown
+	**/
 	public function dettach(){
-		return shm_detach($this->shm);    //allocate shared memory
+		return shm_detach($this->shm);    
 	}
+	
+
+
+	/**
+	*La funzione rimuove un segmento di memoria condivisa dal sistema. Tutti i dati contenuti saranno persi. 
+	*@return unknown 
+	**/
 	public function remove(){
-		return shm_remove($this->shm);    //dallocate shared memory
+		return shm_remove($this->shm);    
 	}
+	
+
+	/**
+	*La funzione inserisce o aggiorna la variabile indicata in variable con chiave variable_key.
+	*@return unknown
+	**/
 	public function put($key,$var) {
-		return shm_put_var($this->shm,$this->shm_key($key),$var);    //store var
+		return shm_put_var($this->shm,$this->shm_key($key),$var);    
 	}
+	
+
+	/**
+	*La funzione shm_get_var() restituisce la variabile identificata dalla chiave variable_key. La variabile resta presente nella memoria condivisa. 
+	*@return unknown | boolean
+	**/
+
 	public function get($key){
 		if($this->has($key)){
-			return shm_get_var($this->shm,$this->shm_key($key));  //get var
+			return shm_get_var($this->shm,$this->shm_key($key));  
 		}else{
 			return false;
 		}
 	}
+	
+	/**
+	*Funzione che rimuove la variabile identificata da variable_key e libera la memoria occupata. 
+	*@return unknown | boolean
+	**/
+
 	public function del($key){
 		if($this->has($key)){
-			return shm_remove_var($this->shm,$this->shm_key($key)); // delete var
+			return shm_remove_var($this->shm,$this->shm_key($key)); 
 		}else{
 			return false;
 		}
 	}
+	
+
+	/**
+	* Funzione che verifica se è presente una specifica key all'interno di un segmento di memoria condivisa.
+	*@return boolen
+	**/
 	public function has($key){
-		if(shm_has_var($this->shm,$this->shm_key($key))){ // check is isset
+		if(shm_has_var($this->shm,$this->shm_key($key))){
 			return true;
 		}else{
 			return false;
 		}
 	}
-	public function shm_key($val){ // enable all world langs and chars !
-		return preg_replace("/[^0-9]/","",(preg_replace("/[^0-9]/","",md5($val))/35676248)/619876); // text to number system.
+	
+	/**
+	*Funzione che ricerca in una certa variabile dei caratteri non consentiti e li rimpiazza come specificato
+	*@return unknown
+	**/
+	public function shm_key($val){ 
+		return preg_replace("/[^0-9]/","",(preg_replace("/[^0-9]/","",md5($val))/35676248)/619876); 
 	}
+	
+	/**
+	*Lo scopo di tale funzione è quello di ristabilire le connessioni con il segmento di memoria condivisa che possono essere andate perse durante l'esecuzione di altre funzioni
+	**/
 	public function __wakeup() {
 		$this->attach();
 	}
+	
+	/**
+	*Funzione che viene richiamata quando non esistono altri riferimenti alla classe cui si riferisce
+	**/
 	public function __destruct() {
 		$this->dettach();
 		unset($this);
