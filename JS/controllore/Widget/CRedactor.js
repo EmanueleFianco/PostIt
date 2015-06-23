@@ -66,6 +66,7 @@ CRedactor.prototype.Inizializza = function(id_nota){
 		
 		
 		$("#"+id_nota).focusin(function(event){
+			
 			if(flag == "FALSE"){
 				flag="TRUE";
 					  var Data ={	
@@ -76,13 +77,16 @@ CRedactor.prototype.Inizializza = function(id_nota){
 							} 
 					  
 					 $.when(dati.setNote(Data)).done(function(DatiArrivati){
+						 DatiArrivati= $.parseJSON(DatiArrivati);
 						 if(Object.keys(DatiArrivati).length >0){
-						 alert("Nota Bloccata da :"+DatiArrivati.error);
+						 $("#"+id_nota).css("display","block").text("Nota Bloccata da:"+DatiArrivati.error);
+						 
 						 }
 					 });
 					  
 			}
 				  }).focusout(function(){
+					  $("#bloccata"+id_nota).css("display","none").text("Nota Bloccata");
 					  flag="FALSE";
 					  var Data ={	
 								controller : "nota",

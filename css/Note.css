@@ -1,3 +1,4 @@
+
 #nota_space{
    	float:left;
      width: 100%;
@@ -14,6 +15,15 @@
 #add{
 	margin:3px;
 	float:right;
+	
+}
+.block{
+	display:none;
+	width:100%;
+	float:left;
+	background-color:red;
+	border:solid;
+	text-align: center;
 	
 }
 
