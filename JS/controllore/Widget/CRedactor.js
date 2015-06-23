@@ -76,7 +76,9 @@ CRedactor.prototype.Inizializza = function(id_nota){
 							} 
 					  
 					 $.when(dati.setNote(Data)).done(function(DatiArrivati){
+						 if(Object.keys(DatiArrivati).length >0){
 						 alert("Nota Bloccata da :"+DatiArrivati.error);
+						 }
 					 });
 					  
 			}
