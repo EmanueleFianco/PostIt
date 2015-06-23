@@ -30,7 +30,7 @@ class ENota {
 	private $testo;
 	/**
      *
-	 * @var array $immagine Array contenente i nome delle immagini associate alla nota.
+	 * @var array $immagine Array contenente il nome delle immagini associate alla nota.
 	 * 
 	 */
 	private $immagine = array();
