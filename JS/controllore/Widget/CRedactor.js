@@ -80,16 +80,18 @@ CRedactor.prototype.Inizializza = function(id_nota){
 						 DatiArrivati= $.parseJSON(DatiArrivati);
 						 if(Object.keys(DatiArrivati).length >0){
 						 $("#bloccata"+id_nota).css("display","block").text("Nota Bloccata da:"+DatiArrivati.error);
-						 $("#TestoNota"+id_nota).find(".redactor_").attr("contenteditable","false");
-						 $("#TitoloNota"+id_nota).attr("contenteditable","false");
+						 $("#TestoNota"+id_nota).find(".redactor_").attr("contenteditable",false);
+						 $("#TitoloNota"+id_nota).attr("contenteditable",false);
+						 $("#time"+id_nota).prop("disabled",true);
 						 }
 					 });
 					  
 			}
 				  }).focusout(function(){
 					  $("#bloccata"+id_nota).css("display","none").text("Nota Bloccata");
-					  $("#TestoNota"+id_nota).find(".redactor_").attr("contenteditable","true");
-					  $("#TitoloNota"+id_nota).attr("contenteditable","true");
+					  $("#TestoNota"+id_nota).find(".redactor_").attr("contenteditable",true);
+					  $("#TitoloNota"+id_nota).attr("contenteditable",true);
+					  $("#time"+id_nota).prop("disabled",false);
 					  flag="FALSE";
 					  var Data ={	
 								controller : "nota",
