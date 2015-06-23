@@ -129,7 +129,7 @@ class CNota {
 					$query->commit();
 				}
 			} else {
-				throw new Exception("Operazione non consentita");
+				$VNota->invia(array("error","Operazione non consentita"));
 			} 
 		} catch (Exception $e) {
 			$query->rollback(); 
@@ -211,16 +211,16 @@ class CNota {
     		$nota = $fnota->getNotaById($id);
     		$nota = $nota[0];
     		if ($dati['evento'] == "perso") {
-    			if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
+    			if (($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) && $session->getValore("email") == $shm->get($id)) {
     				$shm->del($id);
     			}
     		} else {
     			if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
     				if ($shm->get($id)) {
-    					$chiave = $$id;
-    					$VNota->invia(array("error" => $shm->get($chiave['username'])));
+    					$VNota->invia(array("error" => $shm->get($id)));
     				} else {
-    					$shm->put($id,$session->getValore("username"));
+    					$shm->put($id,$session->getValore("email"));
+    					$VNota->invia(array());
     				}
     			}
     		}

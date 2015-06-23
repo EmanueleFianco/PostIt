@@ -123,7 +123,7 @@ class FRaccoglitore_note extends Fdb {
 	public function getRaccoglitoreByIdNota($_id_nota) {
 		$column = "*";
 		$this->db->setParam($this->table,"id_nota",":id_nota");
-		return $this->db->queryGenerica("*","=","id_nota");
+		return $this->db->queryGenerica("*","=",$_id_nota);
 	}
 	/**
 	 * Aggiorna lo stato del raccoglitore
