@@ -121,18 +121,31 @@ class CNota {
 				}
 			} elseif ($tipo_cartella == "privata" && $nota_condivisa == TRUE) {
 				if ($amministratore_cartella == $session->getValore("email") && $creatore_nota != $session->getValore("email")) {
-					$max_posizione_raccoglitore = $fraccoglitore->getRaccoglitoreByIdNota()
+					$raccoglitore_note = $fraccoglitore->getRaccoglitoreByIdNota($id_nota);
+					$n_tuple = count($raccoglitore_note);
+					if ($n_tuple == 2) {
+						$aggiornamenti = array("condiviso" => FALSE,
+											   "id" => $id_nota);
+						$fnota->updateNota($aggiornamenti);
+						$raccoglitore_note->deleteRaccoglitore(array("id_nota" => $id_nota,"email_utente" => $session->getValore("email")));
+					} else {
+						$raccoglitore_note->deleteRaccoglitore(array("id_nota" => $id_nota,"email_utente" => $session->getValore("email")));
+					}
+				} else {
+					$fnota->deleteNota(array("id" => $id_nota));
 				}
-				
-			} elseif ($nome_cartella != "Cestino" && $amministratore_cartella == $session->getValore("email")) {
-				$cestino = $fcartella->getCartellaByNomeEAmministratore("Cestino",$session->getValore("email"));
-				$id_cestino = $cestino[0]['id'];
-				$dati = array("id_cartella" => $id_cestino,
-							  "id_nota" => $dati['id_nota']);
-				$fraccoglitore->updateRaccoglitore($dati);
+			} elseif ($tipo_cartella == "privata" && $nota_condivisa == FALSE) {
+				if ($nome_cartella == "Cestino") {
+					$fnota->deleteNota(array("id" => $id_nota));
+				} else {
+					$cestino = $fcartella->getCartellaByNomeEAmministratore("Cestino",$session->getValore("email"));
+					$id_cestino = $cestino[0]['id'];
+					$aggiornamenti1 = array("id_cartella" => $id_cestino,"email_utente" => $session->getValore("email"),"id_nota" => $id_nota);
+					$fraccoglitore->updateRaccoglitore($aggiornamenti1);
+				}
 			} else {
-				$VNota->invia(array("error","Operazione non consentita"));
-			} 
+				//Permesso negato da concordare con gioele
+			}
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback(); 

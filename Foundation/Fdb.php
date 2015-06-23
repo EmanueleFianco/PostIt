@@ -174,9 +174,16 @@ class Fdb
 	  * @return int $result 1 se andata a buon fine, 0 altrimenti
 	  */
 	 public function delete($_value) {
-	 	$sql = "DELETE FROM ".$this->table." WHERE ".$this->keydb."=".$this->bind;
-	 	$query=$this->db->prepare($sql);
-	 	$query->bindValue($this->bind,$_value);
+	 	$sql = "DELETE FROM ".$this->table." WHERE ".$this->keydb[0]."=".$this->bind[0];
+	 	if (count($_value) == 2) {
+	 		$sql = $sql." AND ".$this->keydb[1]."=".$this->bind[1];
+	 		$query=$this->db->prepare($sql);
+	 		$query->bindValue($this->bind[0],$_value[0]);
+	 		$query->bindvalue($this->bind[1],$_value[1]);
+	 	} else {
+	 		$query=$this->db->prepare($sql);
+	 		$query->bindValue($this->bind[0],$_value[0]);
+	 	}
 	 	try {
 	 		$query->execute();
 	 		$result=$query->rowCount();
