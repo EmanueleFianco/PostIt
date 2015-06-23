@@ -52,6 +52,7 @@ class VNota extends View {
 			$testo = '/[.]{0,3000}/';
 			$colore = '/^#([A-F]|[0-9]){6}$/';
 			$tipo = '^(nota|promemoria)$/';
+			$evento = '^(acquisito|perso)$/';
 			$condiviso = '^(TRUE|FALSE)$/';
 			$note_presenti = $id;
 			$num_note = $id;
