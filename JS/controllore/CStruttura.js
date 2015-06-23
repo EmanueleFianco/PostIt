@@ -188,7 +188,7 @@ CStruttura.prototype.setBuffer = function(valore){
 CStruttura.prototype.AggiornaNota = function(id_nota,attributo,valore){
 	var dati =singleton.getInstance(CDati,"CDati");
 	
-	
+	if($("#bloccata"+id_nota).css("display") != "block"){
 	var cartella_attiva=this.getCartellaAttiva();
 	
 	if(id_nota === "Nuova" && this.getBuffer() == 0){
@@ -218,6 +218,7 @@ CStruttura.prototype.AggiornaNota = function(id_nota,attributo,valore){
 		dati.setNote(Data);	
 		
 	}
+}
 }
 
 
