@@ -1,6 +1,10 @@
 <?php
 /**
  * @package Utility
+ * @author Emanuele Fianco
+ * @author Fabio Di Sabatino
+ * @author Gioele Cicchini
+ * @author Federica Caruso
  */
 class USingleton
 {
