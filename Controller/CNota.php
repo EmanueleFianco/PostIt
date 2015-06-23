@@ -56,10 +56,12 @@ class CNota {
 			}
 			$dati['posizione'] = $max_posizione;
 			if ($dati['ora_data_avviso']) {
+				$format = 'Y-m-d H:i:s';
+				$data = DateTime::createFromFormat($format,$dati['ora_data_avviso']);
 				if ($dati['ultimo_a_modificare']) {
-					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['ora_data_avviso'], $dati['immagine'] = NULL);
+					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $data, $dati['immagine'] = NULL);
 				} else {
-					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ora_data_avviso']);
+					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $data);
 				}
 			} else {
 				if ($dati['ultimo_a_modificare']) {
@@ -118,7 +120,7 @@ class CNota {
 				if ($amministratore_cartella == $session->getValore("email")) {
 					unset($dati['id_cartella']);
 					$fnota->deleteNota($dati);
-					$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
+					$query1=$query->prepare("CALL AggiornaPosizioneNoteEmail(:pos,:cartella,:mail)");
 					$query1->bindParam(":pos",$nota['posizione']);
 					$query1->bindParam(":cartella",$nota['id_cartella']);
 					$query1->execute();
