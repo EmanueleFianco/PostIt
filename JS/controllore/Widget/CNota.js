@@ -16,6 +16,9 @@ CNota.prototype.Inizializza = function(){
 				nota["id_nota"] =$(".NuovaNota").attr("id");
 				
 				var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
+				if(nota.ora_data_avviso != ""){
+					
+				}
 				html=view.setNota(cartellaAttiva,nota,Template["Nota"],"TRUE");
 				$('#'+cartellaAttiva).packery( 'appended', html );
 				$(".NuovaNota").remove();

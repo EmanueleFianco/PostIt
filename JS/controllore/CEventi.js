@@ -3,11 +3,15 @@ var CEventi = function(){
 	
 }
 
-CEventi.prototype.InizializzaMenu = function(id_nota){
+CEventi.prototype.InizializzaMenu = function(){
 	var menu = singleton.getInstance(CMenu,"CMenu");
 	var packery = singleton.getInstance(CPackery,"CPackery");
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	menu.Inizializza();
-	packery.Ricarica();
+	if(StrutturaCartelle.getNumeroNoteByIdCartella > 0){
+		packery.Ricarica();
+	}
+	
 }
 CEventi.prototype.InizializzaNota = function(id_nota){
 	

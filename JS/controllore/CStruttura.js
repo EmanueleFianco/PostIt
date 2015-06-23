@@ -42,6 +42,10 @@ CStruttura.prototype.setCartellaAttiva = function(id_cartella){
 CStruttura.prototype.getCartellaAttiva = function(){
 	return cartellaAttiva;
 }
+CStruttura.prototype.getCartellaByNome = function(nome){
+	
+	return cartellaAttiva;
+}
 
 CStruttura.prototype.EliminaNoteByIdCartella = function(id_cartella){
 	delete Struttura[id_cartella].note;

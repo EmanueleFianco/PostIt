@@ -65,21 +65,19 @@ CHome.prototype.getDati=function(){
 					StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
 				}
 			});
-			console.log(StrutturaCartelle);
 			
 			view.aggiungiNuova(Template["NuovaNota"]);
 			
 			
 				$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),'0','12')).done(function(note){
 					var Note = $.parseJSON(note);
-					
+					if(Object.keys(Note).length >0){
 					$.each(Note,function(i,nota){
 						StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
-						
 					})
 					
+					}
 					eventi.InizializzaMenu();
-					
 				})
 /***********************************************************************/
 

@@ -3,7 +3,8 @@ var CContextmenu = function(){
 }
 
 CContextmenu.prototype.Inizializza = function(id_nota){
-	
+	var dati =singleton.getInstance(CDati,"CDati");
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	$.contextMenu({
         selector: '#editnota'+id_nota, 
         trigger: 'left',
@@ -25,7 +26,8 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             	 callback:function(){
             		 if($("#bloccata"+id_nota).css("display") != "block"){
                             var Dati={   
-                                      id: id_nota,
+                                      id_nota: id_nota,
+                                      id_cartella: StrutturaCartelle.getCartellaAttiva(),
                                       controller:"nota",
                                       lavoro:"cancella"
                                   };

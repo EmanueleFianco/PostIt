@@ -32,12 +32,13 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 		onClose  : function(dateText) {	
 			dateText = dateText + ":00";
 			if(dateText != ""){
-				console.log(dateText);
+			
 				StrutturaCartelle.AggiornaNota(id_nota,"ora_data_avviso",dateText);
 			}
+			if(id_nota != "Nuova"){
 			$("#"+cartellaAttiva).packery( 'remove',$("#"+id_nota));
 			$("#"+id_nota).remove();
-			
+			}
 		
 		}
 	});
