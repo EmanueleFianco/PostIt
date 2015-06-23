@@ -22,6 +22,8 @@ class CRegistrazione {
 				return $this->registra();
 			case 'attiva':
 				return $this->attivazione();
+			case 'controlla':
+				return $this->controllaEmail();
 		}
 	}
     /**
@@ -194,6 +196,18 @@ class CRegistrazione {
     			'Content-Type: text/html; charset=\"iso-8859-1\"\n' .
     			'Content-Transfer-Encoding: 7bit\n\n';
     	mail($to, $subject, $message, $headers);
+    }
+    
+    public function controllaEmail() {
+    	$VRegistrazione = USingleton::getInstance('VRegistrazione');
+    	$FUtente=USingleton::getInstance('FUtente');
+    	$dati = $VRegistrazione->getDati();
+    	$utente = $FUtente->getUtenteByEmail($dati['email']);
+    	if ($utente) {
+    		$VRegistrazione->invia(array("error" => "Email esistente"));
+    	} else {
+    		$VRegistrazione->invia(array());
+    	}
     }
 }
 ?>

@@ -24,7 +24,7 @@ class VNota extends View {
 			sort($posizioni);
 			foreach ($posizioni as $key => $val) {
 				if ($key != $val) {
-					throw new Exception("Valori delle posizioni sbagliati");
+					$this->invia(array("error","Valori delle posizioni sbagliati"));
 				}
 			}
 		} elseif ($_chiave == 'nota') {
@@ -41,7 +41,7 @@ class VNota extends View {
 				$format = 'Y-m-d H:i:s';
 				$date = DateTime::createFromFormat($format, $_valore);
 			} else {
-				throw new Exception("Data e ora errati");
+				$this->invia(array("error","Data e ora sbagliati"));
 			}
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
@@ -52,15 +52,15 @@ class VNota extends View {
 			$testo = '/[.]{0,3000}/';
 			$colore = '/^#([A-F]|[0-9]){6}$/';
 			$tipo = '^(nota|promemoria)$/';
-			$evento = '^(acquisito|perso)$/';
+			$evento = '/^(acquisito|perso)$/';
 			$condiviso = '^(TRUE|FALSE)$/';
 			$note_presenti = $id;
 			$num_note = $id;
 			if (!preg_match($$_chiave, $_valore)) {
-				throw new Exception(ucwords($_chiave)." errato!");
+				$this->invia(array("error",ucwords($_chiave)." errato!"));
 			}
 			if($_chiave == "ultimo_a_modificare" && !filter_var($_chiave,FILTER_VALIDATE_EMAIL)) {
-				throw new Exception(ucwords($_chiave)." errato!");
+				$this->invia(array("error",ucwords($_chiave)." errato!"));
 			}
 		}
 		
@@ -74,10 +74,10 @@ class VNota extends View {
 		if (is_int($_immagine['size']) && $_immagine['size'] < 2097152) {
 			$type = '/^image\/(gif)|(jpeg)|(jpg)|(pjpeg)|(png)$/';
 			if (!preg_match($type,$_immagine['type'])) {
-				throw new Exception("Mime Type non accettato!");
+				$this->invia(array("error","Mime Type non accettato!"));
 			}
 		} else {
-			throw new Exception("Immagine troppo grande!");
+			$this->invia(array("error","Immagine troppo grande!"));
 		}
 	}
 	/**
