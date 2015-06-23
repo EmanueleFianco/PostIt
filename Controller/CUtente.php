@@ -26,7 +26,8 @@ class CUtente {
 	public function getCartelle(){
 		$VCartella=USingleton::getInstance('VCartella');
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_cartelle');
-		$cartelle=$fraccoglitore->getCartelleByUtente('emanuele.fianco@gmail.com');
+		$session=USingleton::getInstance('USession');
+		$cartelle=$fraccoglitore->getCartelleByUtente($session->getValore("email"));
 		$VCartella->invia($cartelle);
 	}
 }

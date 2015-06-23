@@ -131,7 +131,6 @@ class CRegistrazione {
                 $this->inviaMailRegistrazione($dati['email']);
                 header('Location: Templates/success.html');
                 exit;
-
             } 
             catch (Exception $e) {
             	$query->rollback();
@@ -139,7 +138,6 @@ class CRegistrazione {
                 exit;
             }
         } else {
-        	
             header('Location: Templates/failed.html');
             exit;
         }

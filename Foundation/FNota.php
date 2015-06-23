@@ -45,7 +45,7 @@ class FNota extends Fdb {
 		}
 		if ($classe == 'ENotaCondivisa' || $classe == 'EPromemoriaCondiviso') {
 			$dati['condiviso'] = TRUE;
-			$dati['ultimo_a_modificare'] = 'emanuele.fianco@gmail.com';   //Da levare in futuro
+			$dati['ultimo_a_modificare'] = $_creata_da;   //Da levare in futuro
 			//Da vedere come prendere l'ultimo a modificare
 		}
 		$this->db->auto_increment = $this->auto_increment;

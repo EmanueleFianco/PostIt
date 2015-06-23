@@ -36,21 +36,22 @@ class CCartella {
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
 		$fcartella=USingleton::getInstance('FCartella');
 		$VCartella=USingleton::getInstance('VCartella');
+		$session = USingleton::getInstance('USession');
 		$dati = $VCartella->getDati();
 		$cartella = new ECartella($dati['nome'], $dati['posizione'], $dati['colore']);
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$fcartella->inserisciCartella($cartella,$dati['tipo'],$dati['amministratore']);
+			$fcartella->inserisciCartella($cartella,$dati['tipo'],$session->getValore["email"]);
 			$id = $query->lastInsertId();
-			$max_posizione = $fraccoglitoreCartelle->getMaxPosizioneCartellaByUtente('emanuele.fianco@gmail.com');
+			$max_posizione = $fraccoglitoreCartelle->getMaxPosizioneCartellaByUtente($session->getValore("email"));
 			if (isset($max[0]['max(posizione)'])) {
 				$max_posizione = $max[0]['max(posizione)']+1;
 			} else {
 				$max_posizione = 0;
 			}
 			$raccoglitore = array("id_cartella" => $id,
-								  "email_utente" => 'emanuele.fianco@gmail.com',
+								  "email_utente" => $session->getValore("email"),
 								  "posizione" => $max_posizione);
 			$fraccoglitoreCartelle->aggiungiAlRaccoglitoreNote($raccoglitore);
 			$query->commit();
@@ -67,12 +68,13 @@ class CCartella {
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
 		$fcartella=USingleton::getInstance('Fcartella');
 		$VCartella=USingleton::getInstance('VCartella');
+		$session = USingleton::getInstance('USession');
 		$dati = $VCartella->getDati();
-		$query=$fdb->getDb(); //Da introdurre i permessi per la cancellazione della cartella
+		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
 			$cartella_da_cancellare = $fcartella->getCartellaById($dati['id_cartella']);
-			if (isset($cartella_da_cancellare) && $cartella_da_cancellare[0]['amministratore'] == 'emanuele.fianco@gmail.com') { //in seguito da sostituire con la sessione
+			if (isset($cartella_da_cancellare) && $cartella_da_cancellare[0]['amministratore'] == $session->getValore("email")) { //in seguito da sostituire con la sessione
 				$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id_cartella']);
 				$fcartella->deleteCartella($dati);
 				foreach ($select as $key => $valore) {
@@ -83,7 +85,7 @@ class CCartella {
 				}
 				$query->commit();
 			} else {
-				throw new Exception("Permessi insufficienti");
+				$VCartella->invia(array("error","Permessi insufficienti"));
 			}
 		} catch (Exception $e) {
 			$query->rollback();
@@ -96,23 +98,24 @@ class CCartella {
 		$VNota=USingleton::getInstance('VNota');
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
+		$session = USingleton::getInstance('USession');
 		$dati = $VNota->getDati();
 		$id_cartella=$dati["id_cartella"];
 		$dati = $dati['posizioni'];
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$id_cartella);
+			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$id_cartella);
 			if (isset($max_posizione[0]["max(posizione)"])) {
 				$max_posizione = $max_posizione[0]["max(posizione)"];
+				foreach ($dati as $key => $value) {
+					$parametri['posizione'] = $max_posizione - $value['posizione'];
+					$parametri['email_utente'] = $session->getValore("email");
+					$parametri['id_nota'] = $value['id_nota'];
+					$fraccoglitoreNote->updateRaccoglitore($parametri);
+				}
 			} else {
-				throw new Exception("Cartella vuota");
-			}
-			foreach ($dati as $key => $value) {
-				$parametri['posizione'] = $max_posizione - $value['posizione'];
-				$parametri['email_utente'] = 'emanuele.fianco@gmail.com';
-				$parametri['id_nota'] = $value['id_nota'];
-				$fraccoglitoreNote->updateRaccoglitore($parametri);
+				$VNota->invia(array("error","Cartella vuota"));
 			}
 			$query->commit();
 		} catch (Exception $e) {
@@ -126,7 +129,7 @@ class CCartella {
 		$VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
 		$fnota=USingleton::getInstance('FNota');
-		$fcartella=USingleton::getInstance('FCartella');
+		$fcartella=USingleton::getInstance('FCartella'); //Vedere se c'è bisogno del controllo dell'email utente
 		$id_cartella_arrivo = $dati['id_cartella_arrivo'];
 		$id_nota = $dati['id_nota'];
 		$cartella = $fcartella->getCartellaById($id_cartella_arrivo);
@@ -166,14 +169,15 @@ class CCartella {
 		$dati = $VNota->getDati();
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
+		$session = USingleton::getInstance('USession');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$max = $fraccoglitore->getMaxPosizione('emanuele.fianco@gmail.com',$dati['id_cartella']);
+			$max = $fraccoglitore->getMaxPosizione($session->getValore("email"),$dati['id_cartella']);
 			if (isset($max[0]['posizione'])) {
 				$max_posizione = $max[0]['posizione'];
 				$posizione_iniziale = $max_posizione - $dati['note_presenti'];
-				$note = $fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$max_posizione,$posizione_iniziale);
+				$note = $fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$max_posizione,$posizione_iniziale);
 				$sbagliato = FALSE;
 				if (isset($dati['posizioni'])) {
 					$note_arrivate = $dati['posizioni'];
@@ -188,7 +192,6 @@ class CCartella {
 							$posizioni[$valore['posizione']] = $valore['id'];
 						}
 						krsort($posizioni);
-						//var_dump($posizioni);
 						foreach ($posizioni as $key => $val) {
 							if ($note[$i]['posizione'] != $key || $note[$i]['id_nota'] != $val) {
 								$sbagliato = TRUE;
@@ -203,12 +206,12 @@ class CCartella {
 					if ($posizione_iniziale<0) {
 						$posizione_iniziale = -1;
 					}
-					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$posizione_finale,$posizione_iniziale);
+					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
 				} else {
 					if ($max_posizione+1>$dati['note_presenti']) {
 						$posizione_finale = $max_posizione - $dati['note_presenti'];
 						$posizione_iniziale = $posizione_finale - $dati['num_note'];
-						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],'emanuele.fianco@gmail.com',$posizione_finale,$posizione_iniziale);
+						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
 					} else {
 						$note = array();
 					}

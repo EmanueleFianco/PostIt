@@ -24,6 +24,8 @@ class CNota {
                 return $this->Cancella();
             case 'setPromemoria':
             	return $this->setPromemoria();
+            case 'focus':
+            	return $this->focus();
             case 'prendiImmagine':
             	return $this->getImmagine();
             case 'upload':
@@ -40,11 +42,12 @@ class CNota {
 		$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
 		$fnota=USingleton::getInstance('FNota');
 		$fdb=USingleton::getInstance('Fdb');
+		$session = USingleton::getInstance('USession');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
 			$dati = $dati['nota'][0];
-			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$dati["id_cartella"]);
+			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$dati["id_cartella"]);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
 			if (isset($max_posizione)) {
 				$max_posizione += 1;
@@ -62,13 +65,13 @@ class CNota {
 				if ($dati['ultimo_a_modificare']) {
 					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $dati['immagine'], $dati['partecipanti']);
 				} else {
-					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']/*, $dati['immagine']*/);
+					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
 				}
 			}
-			$fnota->inserisciNota($nota,'emanuele.fianco@gmail.com');
+			$fnota->inserisciNota($nota,$session->getValore("email"));
 			$id = $query->lastInsertId();
 			$parametri = array("id_nota" => $id,
-							   "email_utente" => 'emanuele.fianco@gmail.com',
+							   "email_utente" => $session->getValore("email"),
 							   "id_cartella" => $dati['id_cartella'],
 							   "posizione" => $dati['posizione']);
 			$fraccoglitoreNote->aggiungiAlRaccoglitoreNote($parametri);
@@ -98,6 +101,7 @@ class CNota {
 		$fnota=USingleton::getInstance('FNota');
 		$fcartella=USingleton::getInstance('FCartella');
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
+		$session = USingleton::getInstance('USession');
 		$fdb=USingleton::getInstance('Fdb');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
@@ -109,7 +113,7 @@ class CNota {
 			$nome_cartella = $cartella[0]['nome'];
 			$tipo_cartella = $cartella[0]['tipo'];
 			$amministratore_cartella = $cartella[0]['amministratore'];
-			if ($amministratore_cartella == 'emanuele.fianco@gmail.com' || $creatore_nota == 'emanuele.fianco@gmail.com') {
+			if ($amministratore_cartella == $session->getValore("email") || $creatore_nota == $session->getValore("email")) {
 				if ($nome_cartella == "Cestino" || $tipo_cartella == "gruppo" || $nota_condivisa == TRUE) {
 					unset($dati['id_cartella']);
 					$fnota->deleteNota($dati);
@@ -138,6 +142,7 @@ class CNota {
     	$fnota=USingleton::getInstance('FNota');
     	$fcartella=USingleton::getInstance('FCartella');
     	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
+    	$session = USingleton::getInstance('USession');
     	$fdb=USingleton::getInstance('Fdb');
     	$aggiornamenti = array("tipo" => "promemoria",
     			  			   "id" => $dati['id']);
@@ -146,48 +151,68 @@ class CNota {
     	$query=$fdb->getDb();
     	$query->beginTransaction();
     	try {
-    		$nota = $fraccoglitore->getNotaByIdEUtente($dati['id'],'emanuele.fianco@gmail.com');
+    		$nota = $fraccoglitore->getNotaByIdEUtente($dati['id'],$session->getValore("email"));
     		$nota = $nota[0];
     		$nota_vera = $fnota->getNotaById($dati['id']);
     		$nota_vera = $nota_vera[0];
     		$cartella = $fcartella->getCartellaById($nota['id_cartella']);
     		$cartella = $cartella[0];
-    		if ($cartella['tipo'] == "privata") {
-    			$fnota->updateNota($aggiornamenti);
-    			$fnota->updateNota($aggiornamenti1);
-    			if ($nota_vera['condiviso'] == FALSE) {
-    				$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",'emanuele.fianco@gmail.com');
-    				$promemoria = $promemoria[0];
-    				$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
-    										"id_nota" => $dati['id']);
-    				$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente('emanuele.fianco@gmail.com',$promemoria['id']);
-    				$max_posizione = $max_posizione[0]['max(posizione)'];
-    				if (isset($max_posizione)) {
-    					$max_posizione += 1;
-    				} else {
-    					$max_posizione = 0;
-    				}
-    				$aggiornamenti3 = array("posizione" => $max_posizione,
-    										"id_nota" => $dati['id']);
-    				$fraccoglitore->updateRaccoglitore($aggiornamenti2);
-    				$fraccoglitore->updateRaccoglitore($aggiornamenti3);
-    				$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
-    				$query1->bindParam(":pos",$nota['posizione']);
-    				$query1->bindParam(":cartella",$nota['id_cartella']);
-    				$query1->execute();
+    		$fnota->updateNota($aggiornamenti);
+    		$fnota->updateNota($aggiornamenti1);
+    		if ($nota_vera['condiviso'] == FALSE) {
+    			$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$session->getValore("email"));
+    			$promemoria = $promemoria[0];
+    			$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
+    									"id_nota" => $dati['id']);
+    			$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$promemoria['id']);
+    			$max_posizione = $max_posizione[0]['max(posizione)'];
+    			if (isset($max_posizione)) {
+    				$max_posizione += 1;
     			} else {
-    				$aggiornamenti4 = array("ultimo_a_modificare" => 'emanuele.fianco@gmail.com',
-    										"id" => $dati['id_nota']);
-    				$fnota->updateNota($aggiornamenti4);
+    				$max_posizione = 0;
     			}
+    			$aggiornamenti3 = array("posizione" => $max_posizione,
+    									"id_nota" => $dati['id']);
+    			$fraccoglitore->updateRaccoglitore($aggiornamenti2);
+    			$fraccoglitore->updateRaccoglitore($aggiornamenti3);
+    			$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
+    			$query1->bindParam(":pos",$nota['posizione']);
+    			$query1->bindParam(":cartella",$nota['id_cartella']);
+    			$query1->execute();
     		} else {
-    			
+    			$aggiornamenti4 = array("ultimo_a_modificare" => $session->getValore("email"),
+    									"id" => $dati['id_nota']);
+    			$fnota->updateNota($aggiornamenti4);
     		}
     		$query->commit();
     	} catch (Exception $e) {
     		$query->rollback();
     	}
     }
+    
+    public function focus() {
+    	$VNota=USingleton::getInstance('VNota');
+    	$shm=USingleton::getInstance('UShmSmart');
+    	$dati = $VNota->getDati();
+    	$id = $dati['id'];
+    	$nota = $fnota->getNotaById($id);
+    	$nota = $nota[0];
+    	if ($dati['evento'] == "perso") {
+    		if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
+    			$shm->del($id);
+    		}
+    	} else {
+    		if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
+    			if ($shm->get($id)) {
+    				$chiave = $$id;
+    				$VNota->invia(array("error" => $shm->get($chiave['username'])));
+    			} else {
+    				$shm->put($id,$session->getValore("username"));
+    			}
+    		}
+    	}
+    }
+    
     /**
      * Restituisce un'immagine relativa ad una nota richiedente
      */
