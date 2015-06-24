@@ -139,6 +139,8 @@ class CRegistrazione {
     public function logout(){
         $session=USingleton::getInstance('USession');
         $session->end();
+        header('Location: index.php');
+        exit;
     }
     /**
      * Attiva l'utente verificandone l'email data alla registrazione

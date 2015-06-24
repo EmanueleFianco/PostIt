@@ -46,7 +46,7 @@ class Fdb
 	
 	      }
 	     catch(PDOException $e) {
-	    	echo "Errore durante la connessione al database!: ".$e->getMessage();
+	    	die("Errore durante la connessione al database!: ".$e->getMessage());
 	      }  
 	 }
 	 /**
