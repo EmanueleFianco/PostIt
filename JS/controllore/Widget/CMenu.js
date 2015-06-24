@@ -88,8 +88,15 @@ CMenu.prototype.Inizializza = function(){
 		var id_cartella=$(this).attr('id');	
 		StrutturaCartelle.setCartellaAttiva(id_cartella);
 		var packery = singleton.getInstance(CPackery,"CPackery");
-	
 		var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
+		
+		if(Struttura[id_cartella].nome == "Archivio" || Struttura[id_cartella].nome == "Cestino"){
+			$("#Nuova").css("display","none");
+		}
+		else{
+			$("#Nuova").css("display","block");
+		}
+		
 		
 		if (numeroNote>0){
 			var id;
