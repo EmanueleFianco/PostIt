@@ -73,6 +73,7 @@ class CRegistrazione {
         			$session->setValore('cognome',$utente['cognome']);
         			$session->setValore('email',$utente['email']);
         			$session->setValore('tipo_utente',$utente['tipo_utente']);
+        			$session->setValore('path',"Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine']);
         			$this->inviaInfo();
         		}
         	} else {
@@ -154,7 +155,6 @@ class CRegistrazione {
     	$futente=USingleton::getInstance('FUtente');
     	$utente = $futente->getUtenteByEmail($dati['email']);
     	$fdb=USingleton::getInstance('Fdb');
-    	$session=USingleton::getInstance('USession');
     	$query=$fdb->getDb();
     	$query->beginTransaction();
     	try {
@@ -175,14 +175,8 @@ class CRegistrazione {
     							"posizione" => $key);
     					$fraccoglitore->aggiungiAlRaccoglitoreCartelle($cart);
     				}
-    				$session->setValore('username',$utente['username']);
-    				$session->setValore('nome',$utente['nome']);
-    				$session->setValore('cognome',$utente['cognome']);
-    				$session->setValore('email',$utente['email']);
-    				$session->setValore('tipo_utente',$utente['tipo_utente']);
-    				$session->setValore('path',"Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine']);
     				$query->commit();
-    				header('Location: index.php');
+    				header('Location: Templates/successoAttivazione.html');
     				exit;
     			} else {
     				throw new Exception("Codice di attivazione errato");

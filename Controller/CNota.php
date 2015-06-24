@@ -304,12 +304,28 @@ class CNota {
     			$nota = $fnota->getNotaById($dati['id_nota']);
     			$nota = $nota[0];
     			if ($nota['tipo'] == "nota") {
-    				
+    				$cart = $fcartella->getCartellaByNomeEAmministratore("Note",$dati['email_utente']);
+    				$cart = $cart[0];
+    			} else {
+    				$cart = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$dati['email_utente']);
+    				$cart = $cart[0];
     			}
-
+    			$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente($dati['email_utente'],$cart['id']);
+    			if (!is_null($max_posizione[0]["max(posizione)"])) {
+    				$max_posizione = $max_posizione[0]["max(posizione)"]+1;
+    			} else {
+    				$max_posizione = 0;
+    			}
+    			$dati_raccoglitore = array("id_nota" => $dati['id_nota'],
+    									   "email_utente" => $dati['email_utente'],
+    									   "id_cartella" => $cart,
+    									   "posizione" => $max_posizione);
+    			$fraccoglitore->aggiungiAlRaccoglitoreNote($dati_raccoglitore);
     		}
+    		$query->commit();
     	} catch (Exception $e) {
-    		
+    		$query->rollback();
+    		throw new Exception($e->getMessage);
     	}
     }
     
