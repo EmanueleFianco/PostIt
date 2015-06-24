@@ -14,11 +14,12 @@ class CHome {
 	 * Imposta la pagina e verifica anche l'autenticazione.
 	 */
 	public function __construct(){
+		$View = USingleton::getInstance('View');
 		try {
 			$contenuto=$this->mux();
 			echo $contenuto;
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			$View->invia(array("error" => $e->getMessage()));
 		}
 	}
 	/**

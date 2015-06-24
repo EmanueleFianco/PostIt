@@ -329,9 +329,9 @@ class CNota {
     	$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
     	$session=USingleton::getInstance('USession');
     	$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$_id_cartella);
-    	$max_posizione = $max_posizione[0]["max(posizione)"];
-    	if (isset($max_posizione)) {
-    		$max_posizione += 1;
+    	if ($max_posizione) {
+    		$max_posizione = $max_posizione[0]["max(posizione)"];
+    		$max_posizione = $max_posizione +1;
     	} else {
     		$max_posizione = 0;
     	}
