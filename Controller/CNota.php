@@ -57,6 +57,12 @@ class CNota {
 			$dati['posizione'] = $max_posizione;
 			if ($dati['ora_data_avviso']) {
 				$format = 'Y-m-d H:i:s';
+<<<<<<< HEAD
+				$data = DateTime::createFromFormat($format,$dati['ora_data_avviso']);
+				$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $data);
+			} else {
+				$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
+=======
 				$data = DateTime::createFromFormat($format,$dati['ora_data_avviso']);
 				if ($dati['ultimo_a_modificare']) {
 					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $dati['ultimo_a_modificare'], $data, $dati['immagine'] = NULL);
@@ -69,6 +75,7 @@ class CNota {
 				} else {
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
 				}
+>>>>>>> e520b8024f746bcdc28e5abc97fb5df216a7d432
 			}
 			$fnota->inserisciNota($nota,$session->getValore("email"));
 			$id = $query->lastInsertId();
@@ -123,11 +130,15 @@ class CNota {
 				if ($amministratore_cartella == $session->getValore("email")) {
 					$fnota->deleteNota(array("id" => $id_nota));
 					foreach ($raccoglitore_note as $key => $valore) {
+<<<<<<< HEAD
+						$this->aggiornaPosizioniRaccoglitore($valore['posizione'], $dati['id_cartella'], $valore['email_utente']);
+=======
 						$query1=$query->prepare("CALL AggiornaPosizioneNoteEmail(:pos,:cartella,:mail)");
 						$query1->bindParam(":pos",$valore['posizione']);
 						$query1->bindParam(":cartella",$dati['id_cartella']);
 						$query1->bindParam(":mail",$valore['email_utente']);
 						$query1->execute();
+>>>>>>> e520b8024f746bcdc28e5abc97fb5df216a7d432
 					}
 				}
 			} elseif ($tipo_cartella == "privata" && $nota_condivisa == TRUE) {
@@ -141,6 +152,13 @@ class CNota {
 					} else {
 						$fraccoglitore->deleteRaccoglitore(array("id_nota" => $id_nota,"email_utente" => $session->getValore("email")));
 					}
+<<<<<<< HEAD
+					$this->aggiornaPosizioniRaccoglitore($raccoglitore['posizione'], $dati['id_cartella']);
+				} else {
+					$fnota->deleteNota(array("id" => $id_nota));
+					foreach ($raccoglitore_note as $key => $valore) {
+						$this->aggiornaPosizioniRaccoglitore($valore['posizione'], $dati['id_cartella'], $valore['email_utente']);
+=======
 					$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
 					$query1->bindParam(":pos",$raccoglitore['posizione']);
 					$query1->bindParam(":cartella",$dati['id_cartella']);
@@ -153,32 +171,42 @@ class CNota {
 						$query1->bindParam(":cartella",$dati['id_cartella']);
 						$query1->bindParam(":mail",$valore['email_utente']);
 						$query1->execute();
+>>>>>>> e520b8024f746bcdc28e5abc97fb5df216a7d432
 					}
 				}
 			} elseif ($tipo_cartella == "privata" && $nota_condivisa == FALSE) {
 				if ($nome_cartella == "Cestino") {
 					$fnota->deleteNota(array("id" => $id_nota));
+<<<<<<< HEAD
+					$this->aggiornaPosizioniRaccoglitore($raccoglitore['posizione'], $dati['id_cartella']);
+=======
 					$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
 					$query1->bindParam(":pos",$raccoglitore['posizione']);
 					$query1->bindParam(":cartella",$dati['id_cartella']);
 					$query1->execute();
+>>>>>>> e520b8024f746bcdc28e5abc97fb5df216a7d432
 				} else {
 					$cestino = $fcartella->getCartellaByNomeEAmministratore("Cestino",$session->getValore("email"));
 					$id_cestino = $cestino[0]['id'];
 					$aggiornamenti1 = array("id_cartella" => $id_cestino,"email_utente" => $session->getValore("email"),"id_nota" => $id_nota);
 					$max_pos = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$id_cestino);
 					if ($max_pos[0]['max(posizione)']) {
-						$max_pos = $max_pos[0]['max(posizione)']+1;
+						$max_pos = $max_pos[0]['max(posizione)'];
+						$max_pos += 1;
 					} else {
 						$max_pos =0;
 					}
 					$aggiornamenti2 = array("posizione" => $max_pos,"email_utente" => $session->getValore("email"),"id_nota" => $id_nota);
 					$fraccoglitore->updateRaccoglitore($aggiornamenti1);
 					$fraccoglitore->updateRaccoglitore($aggiornamenti2);
+<<<<<<< HEAD
+					$this->aggiornaPosizioniRaccoglitore($raccoglitore['posizione'], $dati['id_cartella']);
+=======
 					$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
 					$query1->bindParam(":pos",$raccoglitore['posizione']);
 					$query1->bindParam(":cartella",$dati['id_cartella']);
 					$query1->execute();
+>>>>>>> e520b8024f746bcdc28e5abc97fb5df216a7d432
 				}
 			} else {
 				$VNota->invia(array("error" => "Permesso Negato"));
@@ -189,6 +217,10 @@ class CNota {
 		}
     }
     
+
+    /**
+    * Imposta la nota come Promemoria
+    **/
     public function setPromemoria() {
     	$VNota=USingleton::getInstance('VNota');
     	$dati = $VNota->getDati();
@@ -212,6 +244,25 @@ class CNota {
     		$cartella = $cartella[0];
     		$fnota->updateNota($aggiornamenti);
     		$fnota->updateNota($aggiornamenti1);
+<<<<<<< HEAD
+    		if ($nota_vera['condiviso'] == FALSE) {
+    			$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$session->getValore("email"));
+    			$promemoria = $promemoria[0];
+    			$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
+    									"id_nota" => $dati['id']);
+    			$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$promemoria['id']);
+    			$max_posizione = $max_posizione[0]['max(posizione)'];
+    			if (isset($max_posizione)) {
+    				$max_posizione += 1;
+    			} else {
+    				$max_posizione = 0;
+    			}
+    			$aggiornamenti3 = array("posizione" => $max_posizione,
+    									"id_nota" => $dati['id']);
+    			$fraccoglitore->updateRaccoglitore($aggiornamenti2);
+    			$fraccoglitore->updateRaccoglitore($aggiornamenti3);
+    			$this->aggiornaPosizioniRaccoglitore($nota['posizione'], $nota['id_cartella']);
+=======
     		if ($nota_vera['condiviso'] == FALSE) {
     			$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$session->getValore("email"));
     			$promemoria = $promemoria[0];
@@ -232,6 +283,7 @@ class CNota {
     			$query1->bindParam(":pos",$nota['posizione']);
     			$query1->bindParam(":cartella",$nota['id_cartella']);
     			$query1->execute();
+>>>>>>> e520b8024f746bcdc28e5abc97fb5df216a7d432
     		} else {
     			$aggiornamenti4 = array("ultimo_a_modificare" => $session->getValore("email"),
     									"id" => $dati['id_nota']);
@@ -242,7 +294,9 @@ class CNota {
     		$query->rollback();
     	}
     }
-    
+    /**
+    *Funzione che controlla se qualcuno già sta modificando la nota e quindi in caso inibire le modifiche a chi sta cercando di accederci per ultimo
+    **/
     public function focus() {
     	$VNota=USingleton::getInstance('VNota');
     	$fnota=USingleton::getInstance('FNota');
@@ -309,6 +363,22 @@ class CNota {
     	$array = array('filelink' => 'Home.php?controller=nota&lavoro=prendiImmagine&file='.basename($immagine['tmp_name']));
     	unlink($immagine['tmp_name']);
     	return stripslashes(json_encode($array));
+    }
+    
+    public function aggiornaPosizioniRaccoglitore($_pos,$_id_cartella,$_email_utente = NULL) {
+    	$fdb=USingleton::getInstance('Fdb');
+		$query=$fdb->getDb();
+    	if ($_email_utente) {
+    		$query1=$query->prepare("CALL AggiornaPosizioneNoteEmail(:pos,:cartella,:mail)");
+    		$query1->bindParam(":pos",$_pos);
+    		$query1->bindParam(":cartella",$_id_cartella);
+    		$query1->bindParam(":mail",$_email_utente);
+    	} else {
+    		$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
+    		$query1->bindParam(":pos",$_pos);
+    		$query1->bindParam(":cartella",$_id_cartella);
+    	}
+    	$query1->execute();
     }
     
 }

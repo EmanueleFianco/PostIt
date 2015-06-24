@@ -21,6 +21,7 @@ Class FUtente extends Fdb {
 	    $this->keydb="(username,password,id_immagine,nome,cognome,email,codice_attivazione,stato_attivazione,tipo_utente)";
 	    $this->bind="(:username,:password,:id_immagine,:nome,:cognome,:email,:codice_attivazione,:stato_attivazione,:tipo_utente)";
 	}
+	
 	/**
 	 * Inserisce un'utente nel database
 	 * @param EUtente $_object Utente da inserire

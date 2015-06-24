@@ -17,8 +17,11 @@ CNota.prototype.Inizializza = function(){
 				
 				var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
 				if(nota.ora_data_avviso != ""){
-					
+					var id_cartella = StrutturaCartelle.getCartellaByNome("Promemoria");
+					console.log(id_cartella);
+					StrutturaCartelle.AggiornaNota(nota.id_nota,"ora_data_avviso",nota.ora_data_avviso);
 				}
+				else{
 				html=view.setNota(cartellaAttiva,nota,Template["Nota"],"TRUE");
 				$('#'+cartellaAttiva).packery( 'appended', html );
 				$(".NuovaNota").remove();
@@ -26,6 +29,9 @@ CNota.prototype.Inizializza = function(){
 				
 				$('#'+cartellaAttiva).packery('reloadItems');
 				$('#'+cartellaAttiva).packery();
+				
+				}
+				
 			
 			  });
 

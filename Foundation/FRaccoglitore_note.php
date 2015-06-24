@@ -108,7 +108,12 @@ class FRaccoglitore_note extends Fdb {
 		$_max = $_max[0]['max(posizione)'];
 		return $this->getMaxPosizioneNotaByCartellaEUtente($_email_utente, $_id_cartella, $_max);
 	}
-	
+	/**
+	*Restituisce il risultato della query sul database
+	*@param int $_id_nota Id della nota condizione della query
+	*@param string $_email_utente Email dell'utente condizione della query
+	*@return array Array contenente il risultato della query, ovvero la nota con Id e creatore passati come parametri
+	**/
 	public function getNotaByIdEUtente($_id_nota,$_email_utente) {
 		$column = "*";
 		$keydb = array("id_nota","email_utente");
@@ -119,7 +124,11 @@ class FRaccoglitore_note extends Fdb {
 		$this->db->setParam($this->table,$keydb,$bind);
 		return $this->db->queryGenerica($column,$_paragone,$_parametri,$_operatori);
 	}
-	
+	/**
+	*Restituisce il risultato della query, ovvero il raccoglitore delle note che contiene la nota con id passato come parametro
+	*@param int $_id_nota Id della nota condizione della query
+	*@return array Array contenente il risultato della query, ovvero il raccoglitore delle note
+	**/
 	public function getRaccoglitoreByIdNota($_id_nota) {
 		$column = "*";
 		$this->db->setParam($this->table,"id_nota",":id_nota");
