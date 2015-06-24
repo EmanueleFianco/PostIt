@@ -34,7 +34,7 @@ CWelcome.prototype.Inizializza= function(){
    });
 
    $("#cognome").focusout(function(){
-      var nam=/^[A-Za-z]{2,30}$/;
+      var nam=/^[A-Za-z\s]{2,30}$/;
       var cognome_reg=$(this).val();
       var okcognome=nam.test(cognome_reg);
       if(okcognome)
