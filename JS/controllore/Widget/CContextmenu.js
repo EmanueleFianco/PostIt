@@ -53,16 +53,17 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             		 if(key == "note"){
             			
             			 if(Struttura[cartellaAttiva].nome != "Note"){
+            				
             				var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Note");
             				 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione);
             				 contexmenu.Aggiorna(id_nota);
+            				
             			 }
             		 }
             		 if(key == "archivio"){
             			
             			 if(Struttura[cartellaAttiva].nome != "Archivio"){
             				var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Archivio");
-            				
             				 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione); 
             				 contexmenu.Aggiorna(id_nota);
             			 }
@@ -76,13 +77,12 @@ CContextmenu.prototype.Inizializza = function(id_nota){
            
             	 }	   
     });
-}
+
         $.contextMenu({
         selector: "#accountbotton", 
         trigger: 'left',
         events:{hide:function(){         
                 $("#image_botton").removeClass("ruota90").end().addClass("ruota270");
-                console.log("prova");
             }},
         zIndex:900,
         autoHide:true,
@@ -101,7 +101,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
              
         }
     });
-
+}
         
 CContextmenu.prototype.Aggiorna= function(id_nota){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
