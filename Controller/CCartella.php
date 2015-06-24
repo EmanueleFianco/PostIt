@@ -280,7 +280,7 @@ class CCartella {
 				$utente = $futente->getUtenteByEmail($valore['email_utente']);
 				$utente = $utente[0];
 				$condiviso[$key]["email"] = $valore['email_utente'];
-				$condiviso[$key]["path"] = "Home.php/controller=utente&lavoro=getImmagine&file=".$utente['id_immagine'];
+				$condiviso[$key]["path"] = "Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine'];
 			}	
 		}
 		return $condiviso;
