@@ -46,7 +46,6 @@
 <link rel="stylesheet"  href="css/demo.css"type="text/css" >
 <link rel="stylesheet"  href="css/component.css"type="text/css" >
 <link rel="stylesheet" href="css/example.css" type="text/css">
-<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
 <link href="css/Welcome.css" rel="stylesheet" type="text/css">		
 
 
