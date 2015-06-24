@@ -154,6 +154,10 @@ class CCartella {
 				if (($cartella_destinazione['tipo'] == "Promemoria" && $nota['tipo'] == "nota") || ($cartella_destinazione['tipo'] == "Nota" && $nota['tipo'] == "promemoria")) {
 					throw new Exception("Non puoi spostare una nota/promemoria nella cartella promemoria/note");
 				} else {
+					if ($cartella_destinazione['tipo'] == "gruppo") {
+						$agg = array("condiviso" => TRUE,"id" => $nota['id']);
+						$fnota->aggiornaNota($agg);
+					}
 					$raccoglitore = $fraccoglitore_note->getRaccoglitoreByIdNota($nota['id']);
 					foreach ($raccoglitore as $key => $valore) {
 						$max_cartella_destinazione = $fraccoglitore_note->getMaxPosizioneNotaByCartellaEUtente($valore['email_utente'],$cartella_destinazione['id']);
