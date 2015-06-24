@@ -24,6 +24,8 @@ class CRegistrazione {
 				return $this->attivazione();
 			case 'controlla':
 				return $this->controllaEmail();
+			case 'inviaInfo':
+				return $this->inviaInfo();
 		}
 	}
     /**
@@ -148,7 +150,8 @@ class CRegistrazione {
     	$query->beginTransaction();
     	try {
     		if (isset($utente)) {
-    			$cod_attivazione = $utente[0]['codice_attivazione'];
+    			$utente = $utente[0];
+    			$cod_attivazione = $utente['codice_attivazione'];
     			if ($dati['cod_attivazione'] == $cod_attivazione) {
     				$aggiornamento = array("stato_attivazione" => "attivato",
     						"email" => urldecode($dati['email']));
@@ -163,11 +166,6 @@ class CRegistrazione {
     							"posizione" => $key);
     					$fraccoglitore->aggiungiAlRaccoglitoreCartelle($cart);
     				}
-    				$info = array("username" => $utente['username'],
-    						"nome" => $utente['nome'],
-    						"cognome" => $utente['cognome'],
-    						"email" => $utente['email'],
-    						"tipo_utente" => $utente['tipo_utente']);
     				$session->setValore('username',$utente['username']);
     				$session->setValore('nome',$utente['nome']);
     				$session->setValore('cognome',$utente['cognome']);
@@ -175,7 +173,6 @@ class CRegistrazione {
     				$session->setValore('tipo_utente',$utente['tipo_utente']);
     				$query->commit();
     				header('Location: index.php');
-    				$VRegistrazione->invia($info);
     				exit;
     			} else {
     				$array = array("error" => "Codice di attivazione errato");
@@ -223,6 +220,17 @@ class CRegistrazione {
     	} else {
     		$VRegistrazione->invia(array());
     	}
+    }
+    
+    public function inviaInfo() {
+    	$session = USingleton::getInstance('USession');
+    	$View = USingleton::getInstance('View');
+    	$info = array("username" => $sessiongetValore('username'),
+    			"nome" => $session->getValore("nome"),
+    			"cognome" => $session->getValore("cognome"),
+    			"email" => $session->getValore("email"),
+    			"tipo_utente" => $session->getValore("tipo_utente"));
+    	$View->invia($info);
     }
 }
 ?>
