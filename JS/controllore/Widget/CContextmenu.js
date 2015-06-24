@@ -10,7 +10,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
 	var nomi_cartelle = new Object();
 	$.each(Struttura,function(i,cartella){
 		if(cartella.nome != "Note" && cartella.nome != "Promemoria" &&cartella.nome != "Archivio" &&cartella.nome != "Cestino"){
-		nomi_cartelle[i] ={
+		nomi_cartelle[cartella.nome] ={
 			name:cartella.nome,
 		}
 		}
@@ -33,7 +33,6 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             "cancella": {name: "Cancella", icon: "delete"},
         	},
             	 callback:function(key, options){
-            		 console.log(key);
             		 if(key == "cancella"){
             			 if($("#bloccata"+id_nota).css("display") != "block"){
                             var Dati={   
@@ -76,6 +75,12 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             				 contexmenu.Aggiorna(id_nota);
             			 }
             		 }
+            		 if(key != "archivio" && key != "note" && key != "cancella" && key != "promemoria"){
+            			 var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome(key);
+            			 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione);
+            			 contexmenu.Aggiorna(id_nota);
+            		 }
+            		 
            
             	 }	   
     });
