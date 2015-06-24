@@ -86,6 +86,7 @@ class CNota {
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollBack();
+			throw new Exception($e->getMessage());
 		}
 		$dati_da_inviare= array('id' => $id);
 		$VNota->invia($dati_da_inviare);
@@ -171,11 +172,12 @@ class CNota {
 					$this->aggiornaPosizioniRaccoglitore($raccoglitore['posizione'], $dati['id_cartella']);
 				}
 			} else {
-				$VNota->invia(array("error" => "Permesso Negato"));
+				throw new Exception("Permesso Negato");
 			}
 			$query->commit();
 		} catch (Exception $e) {
-			$query->rollback(); 
+			$query->rollback();
+			throw new Exception($e->getMessage());
 		}
     }
     /**
@@ -229,6 +231,7 @@ class CNota {
     		$query->commit();
     	} catch (Exception $e) {
     		$query->rollback();
+    		throw new Exception($e->getMessage());
     	}
     }
     /**
@@ -271,7 +274,7 @@ class CNota {
     			$VNota->invia(array());
     		}
     	} else {
-    		$VNota->invia(array("error" => "Permesso negato!"));
+    		throw new Exception("Permesso negato!");
     	}
     }
     
