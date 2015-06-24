@@ -134,6 +134,7 @@ class CCartella {
 		$dati = $VNota->getDati();
 		$cnota=USingleton::getInstance('CNota');
 		$fnota=USingleton::getInstance('FNota');
+		$fdb=USingleton::getInstance('Fdb');
 		$fcartella=USingleton::getInstance('FCartella');
 		$fraccoglitore_note=USingleton::getInstance('FRaccoglitore_note');
 		$query=$fdb->getDb();
@@ -150,17 +151,23 @@ class CCartella {
 			} elseif ($cartella_destinazione['tipo'] == "gruppo" && $nota['condiviso']) {
 				throw new Exception("Impossibile spostare una nota condivisa in un gruppo");
 			} elseif ($cartella_partenza['amministratore'] == $session->getValore("email")) {
-				if (($cartella_destinazione['tipo'] == "Promemoria" && $nota['tipo'] == "Nota") || ($cartella_destinazione['tipo'] == "Nota" && $nota['tipo'] == "Promemoria")) {
+				if (($cartella_destinazione['tipo'] == "Promemoria" && $nota['tipo'] == "nota") || ($cartella_destinazione['tipo'] == "Nota" && $nota['tipo'] == "promemoria")) {
 					throw new Exception("Non puoi spostare una nota/promemoria nella cartella promemoria/note");
 				} else {
 					$raccoglitore = $fraccoglitore_note->getRaccoglitoreByIdNota($nota['id']);
 					foreach ($raccoglitore as $key => $valore) {
 						$max_cartella_destinazione = $fraccoglitore_note->getMaxPosizioneNotaByCartellaEUtente($valore['email_utente'],$cartella_destinazione['id']);
 						$max_cartella_destinazione = $max_cartella_destinazione[0]['max(posizione)'];
-						$max_cartella_destinazione+=1;
-						$aggiornamento = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+						if ($max_cartella_destinazione) {
+							$max_cartella_destinazione+=1;
+						} else {
+							$max_cartella_destinazione = 0;
+						}
+						$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
 						$fraccoglitore_note->updateRaccoglitore($aggiornamento);
-						$cnota->aggiornaPosizioniRaccoglitore($raccoglitore['posizione'],$cartella_destinazione['id'],$valore['email_utente']);
+						$aggiornamento1 = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+						$fraccoglitore_note->updateRaccoglitore($aggiornamento1);
+						$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_destinazione['id'],$valore['email_utente']);
 					}
 				}
 			} else {
