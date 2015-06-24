@@ -1,24 +1,27 @@
 
-var CLogin = function(){    
+var CLogin = function(){  
+
+	
 
 }
 
 CLogin.prototype.logIn=function(){
+	 
 	var chome=singleton.getInstance(CHome,"CHome");
 	var vista = singleton.getInstance(View,"View");
 if(this.controllaDatiLogin())
 	{   var Data=this.preparaDati('login');
 	    $.when(this.inviaDati(Data)).done(function(ricevuta){   
-	    	    var esito=new Object();
- 				esito=$.parseJSON(ricevuta);
- 				if(esito['error']==null)//esito positivo 
+	    	    infologin=$.parseJSON(ricevuta);
+	    	    
+ 				if(infologin['error']==null)//esito positivo 
  				{
  					vista.smonta("#menu_welcome");
 					chome.getDati();
  				}
  				else
  				{
- 					alert("Attenzione:"+(esito['error']));
+ 					alert("Attenzione:"+(infologin['error']));
  				}
 	    	});
 	 }

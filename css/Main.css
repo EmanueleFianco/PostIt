@@ -55,14 +55,13 @@ body{
     font-family: "Roboto","Droid Sans",arial,sans-serif;
 
 }
-#account{
-    float:right;
-    margin-left: 200px;
-    height: 100%;
+#account{    
+    margin-left: 90%;
+    height: 30px;
     width: 50px;
-    z-index: 10000;
-    margin-top: 20px;
+    margin-top: -20px;
 }
+
 
 
 
@@ -161,4 +160,8 @@ font-size: 1rem;
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=270);    /* IE */
 
 }
-
+#name_account{
+    width: 20px;
+    font-size: 30px;
+    font-family: "Roboto","Droid Sans",arial,sans-serif;
+}

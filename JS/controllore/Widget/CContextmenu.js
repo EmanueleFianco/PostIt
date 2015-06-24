@@ -51,7 +51,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         trigger: 'left',
         events:{hide:function(){         
                 $("#image_botton").removeClass("ruota90").end().addClass("ruota270");
-                console.log("prova");
+                
             }},
         zIndex:900,
         autoHide:true,
@@ -70,6 +70,16 @@ CContextmenu.prototype.Inizializza = function(id_nota){
              
         }
     });
+CContextmenu.prototype.Aggiorna= function(id_nota){
+    var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+    
+    $("#"+id_nota).remove();
+     var nota = StrutturaCartelle.getNota(id_nota)
+    $('#'+cartellaAttiva).packery('remove',nota);
+    $('#'+cartellaAttiva).packery('reloadItems');
+    $('#'+cartellaAttiva).packery();
+}
+    
 
         
 	

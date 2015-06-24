@@ -1,4 +1,10 @@
 var CMenu = function(){
+	   
+    $.when(dati.getTemplate("profilo")).done(function(tmpl){
+    	var html = Mustache.to_html(tmpl,infologin);
+    	$("#infoutente").append(html);
+    });
+	
 	
 }
 
@@ -113,13 +119,15 @@ CMenu.prototype.Inizializza = function(){
 			
 		}
 		
+		var numero_note_presenti = StrutturaCartelle.getNumeroNoteByIdCartella(cartellaAttiva);
 		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Pos)).done(function(note){
 			var Note = $.parseJSON(note);
 			if(Object.keys(Note).length >0){
+				if(numero_note_presenti >0){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
 				$("#"+StrutturaCartelle.getCartellaAttiva()).children().remove();
-				$('#'+cartellaAttiva).packery();
 				$('#'+cartellaAttiva).packery('destroy');
+				};
 				$.each(Note,function(i,nota){
 					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 				})
@@ -135,6 +143,13 @@ CMenu.prototype.Inizializza = function(){
 	$("#accountbotton").click(function(){
 		$("#image_botton").addClass("ruota90");
 	});
+
+	   
+    $.when(dati.getTemplate("profilo")).done(function(tmpl){
+    	var html = Mustache.to_html(tmpl,infologin);
+    	$("#infoutente").append(html);
+    });
+	
 	
 	
 
