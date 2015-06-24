@@ -150,7 +150,7 @@ CMenu.prototype.Inizializza = function(){
     	var html = Mustache.to_html(tmpl1,infoutente);
     	$("#info_utente").append(html);
     	var tpl=Mustache.to_html(tmpl2,infoutente);
-    	$("#image_utente").append(tpl);
+    	$("#image_utente").render(tpl);
     });
 	
 	
