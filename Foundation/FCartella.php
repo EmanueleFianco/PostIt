@@ -48,7 +48,12 @@ class FCartella extends Fdb {
 		$this->db->setParam($this->table,"id",":id");
 	    return $this->db->queryGenerica("*","=",$_id);
 	}
-	
+	/**
+	* Restituisce il risultato della query, ovvero la cartella con nome e amministratore passati per parametro
+	* @param string $_nome nome della cartella da restituire
+	* @param string $_amministratore email dell'amministratore della cartella
+	* @return array contenente il risultato della query ovvero la cartella 
+	**/
 	public function getCartellaByNomeEAmministratore($_nome,$_amministratore) {
 		$column = "*";
 		$keydb = array("nome","amministratore");

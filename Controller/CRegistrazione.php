@@ -1,5 +1,6 @@
 <?php
 /**
+ *Classe Cregistrazione che gestisce la registrazione 
  * @package Controller
  * @author Emanuele Fianco
  * @author Fabio Di Sabatino
@@ -212,7 +213,9 @@ class CRegistrazione {
     			'Content-Transfer-Encoding: 7bit\n\n';
     	mail($to, $subject, $message, $headers);
     }
-    
+    /**
+    *Verifica se l'email risulta già stata utilizzata in fase di registrazione
+    **/
     public function controllaEmail() {
     	$VRegistrazione = USingleton::getInstance('VRegistrazione');
     	$FUtente=USingleton::getInstance('FUtente');

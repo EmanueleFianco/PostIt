@@ -189,6 +189,10 @@ class CNota {
 		}
     }
     
+
+    /**
+    * Imposta la nota come Promemoria
+    **/
     public function setPromemoria() {
     	$VNota=USingleton::getInstance('VNota');
     	$dati = $VNota->getDati();
@@ -242,7 +246,9 @@ class CNota {
     		$query->rollback();
     	}
     }
-    
+    /**
+    *Funzione che controlla se qualcuno già sta modificando la nota e quindi in caso inibire le modifiche a chi sta cercando di accederci per ultimo
+    **/
     public function focus() {
     	$VNota=USingleton::getInstance('VNota');
     	$fnota=USingleton::getInstance('FNota');
