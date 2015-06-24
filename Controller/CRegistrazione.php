@@ -73,18 +73,13 @@ class CRegistrazione {
         			$session->setValore('cognome',$utente['cognome']);
         			$session->setValore('email',$utente['email']);
         			$session->setValore('tipo_utente',$utente['tipo_utente']);
-        			$info = array("username" => $utente['username'],
-        						  "nome" => $utente['nome'],
-        						  "cognome" => $utente['cognome'],
-        						  "email" => $utente['email'],
-        						  "tipo_utente" => $utente['tipo_utente']);
-        			$VRegistrazione->invia($info);
+        			$this->inviaInfo();
         		}
         	} else {
-        		$VRegistrazione->invia(array("error" => "Login errato"));
+        		throw new Exception("Login errato");
         	}
         } else {
-        	$VRegistrazione->invia(array("error" => "Utente errato"));
+        	throw new Exception("Utente errato");
         }
     }
     
@@ -138,8 +133,14 @@ class CRegistrazione {
      */ 
     public function logout(){
         $session=USingleton::getInstance('USession');
-        $session->end();
-        header('Location: index.php');
+        $View=USingleton::getInstance('View');
+        try {
+        	$session->end();
+        	$View->invia(array("success" => TRUE));
+        } catch (Exception $e) {
+        	$View->invia(array("success" => FALSE));
+        }
+        
         exit;
     }
     /**
@@ -179,16 +180,15 @@ class CRegistrazione {
     				$session->setValore('cognome',$utente['cognome']);
     				$session->setValore('email',$utente['email']);
     				$session->setValore('tipo_utente',$utente['tipo_utente']);
+    				$session->setValore('path',"Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine']);
     				$query->commit();
     				header('Location: index.php');
     				exit;
     			} else {
-    				$array = array("error" => "Codice di attivazione errato");
-    				$VRegistrazione->invia($array);
+    				throw new Exception("Codice di attivazione errato");
     			}
     		} else {
-    			$array = array("error" => "Utente inesistente");
-    			$VRegistrazione->invia($array);
+    			throw new Exception("Utente inesistente");
     		}
     	} catch (Exception $e) {
     		$query->rollback();
@@ -226,7 +226,7 @@ class CRegistrazione {
     	$dati = $VRegistrazione->getDati();
     	$utente = $FUtente->getUtenteByEmail($dati['email']);
     	if ($utente) {
-    		$VRegistrazione->invia(array("error" => "Email esistente"));
+    		throw new Exception("Email esistente");
     	} else {
     		$VRegistrazione->invia(array());
     	}
@@ -235,11 +235,12 @@ class CRegistrazione {
     public function inviaInfo() {
     	$session = USingleton::getInstance('USession');
     	$View = USingleton::getInstance('View');
-    	$info = array("username" => $sessiongetValore('username'),
+    	$info = array("username" => $session->getValore('username'),
     			"nome" => $session->getValore("nome"),
     			"cognome" => $session->getValore("cognome"),
     			"email" => $session->getValore("email"),
-    			"tipo_utente" => $session->getValore("tipo_utente"));
+    			"tipo_utente" => $session->getValore("tipo_utente"),
+    			"path" => $session->getValore("path"));
     	$View->invia($info);
     }
 }

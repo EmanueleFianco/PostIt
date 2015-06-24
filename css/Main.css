@@ -55,6 +55,15 @@ body{
     font-family: "Roboto","Droid Sans",arial,sans-serif;
 
 }
+#account{
+    float:right;
+    margin-left: 200px;
+    height: 100%;
+    width: 50px;
+    z-index: 10000;
+    margin-top: 20px;
+}
+
 
 
 
@@ -135,4 +144,21 @@ font-size: 1rem;
 	html{
 		font-size: 20px;
 		}
-	
+}
+
+.ruota90{
+    transform: rotate(90deg);         /* standard */
+    -webkit-transform: rotate(90deg);     /* Chrome - Safari */
+    -moz-transform: rotate(90deg);    /* Firefox */
+    -o-transform: rotate(90deg);      /* Opera */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=90);    /* IE */
+}
+.ruotameno45{
+     transform: rotate(270deg);         /* standard */
+    -webkit-transform: rotate(270deg);     /* Chrome - Safari */
+    -moz-transform: rotate(270deg);    /* Firefox */
+    -o-transform: rotate(270deg);      /* Opera */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=270);    /* IE */
+
+}
+

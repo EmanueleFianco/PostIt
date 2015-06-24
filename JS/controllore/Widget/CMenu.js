@@ -130,7 +130,14 @@ CMenu.prototype.Inizializza = function(){
 			
 		})
 		
-	})
+	});
+
+	$("#accountbotton").click(function(){
+		$("#image_botton").addClass("ruota90");
+	});
+	
+	
+
     
     
 
