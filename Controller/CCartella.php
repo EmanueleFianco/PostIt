@@ -236,7 +236,7 @@ class CCartella {
 					if ($tipo_cart == "privata") {
 						foreach ($note as $key => $value) {
 							if ($valore['condiviso'] == TRUE) {
-								$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+								$valore["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 							}
 						}
 					}
@@ -250,7 +250,7 @@ class CCartella {
 						if ($tipo_cart == "privata") {
 							foreach ($note as $key => $value) {
 								if ($value['condiviso'] == TRUE) {
-									$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+									$value["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 								}
 							}
 						}
