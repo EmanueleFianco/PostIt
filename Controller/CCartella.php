@@ -235,9 +235,8 @@ class CCartella {
 					$tipo_cart = $cart[0]["tipo"];
 					if ($tipo_cart == "privata") {
 						foreach ($note as $key => $value) {
-							//var_dump($value);
 							if ($valore['condiviso'] == TRUE) {
-								$valore["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+								$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 							}
 						}
 					}
@@ -251,9 +250,8 @@ class CCartella {
 						if ($tipo_cart == "privata") {
 							foreach ($note as $key => $value) {
 								if ($value['condiviso'] == TRUE) {
-									$value["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+									$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 								}
-								//var_dump($value);
 							}
 						}
 					} else {
@@ -285,7 +283,6 @@ class CCartella {
 				$condiviso[$key]["path"] = "Home.php/controller=utente&lavoro=getImmagine&file=".$utente['id_immagine'];
 			}	
 		}
-		var_dump($condiviso);
 		return $condiviso;
 	}
 }
