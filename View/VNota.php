@@ -47,7 +47,8 @@ class VNota extends View {
 			$id = '/^[[:digit:]]{1,11}$/';
 			$id_nota = $id;
 			$id_cartella = $id;
-			$id_cartella_arrivo = $id;
+			$partenza = $id;
+			$destinazione = $id;
 			$titolo = '/[.]{0,40}/';
 			$testo = '/[.]{0,3000}/';
 			$colore = '/^#([A-F]|[0-9]){6}$/';

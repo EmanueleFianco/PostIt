@@ -20,6 +20,8 @@ class CUtente {
 				return $this->getCartelle();
 			case 'getImmagine':
 				return $this->getImmagine();
+			case 'inviaInfo':
+				return $this->inviaInfo();
 		}
 	}
 	/**
@@ -43,6 +45,18 @@ class CUtente {
 		header('Content-Length: ' . $image[0]['size']);
 		echo file_get_contents($file);
 		unlink($file);
+	}
+	
+	public function inviaInfo() {
+		$session = USingleton::getInstance('USession');
+		$View = USingleton::getInstance('View');
+		$info = array("username" => $session->getValore('username'),
+					  "nome" => $session->getValore("nome"),
+					  "cognome" => $session->getValore("cognome"),
+					  "email" => $session->getValore("email"),
+					  "tipo_utente" => $session->getValore("tipo_utente"),
+					  "path" => $session->getValore("path"));
+		$View->invia($info);
 	}
 }
 ?>

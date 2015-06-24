@@ -192,6 +192,7 @@ class CRegistrazione {
     		}
     	} catch (Exception $e) {
     		$query->rollback();
+    		throw new Exception($e->getMessage());
     	}
     }
     

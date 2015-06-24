@@ -22,7 +22,7 @@ class CCartella {
 				return $this->Cancella();
 			case 'aggiornaPosizioni':
 				return $this->AggiornaPosizioni();
-			case 'sposta':
+			case 'spostaNote':
 				return $this->spostaNote();
 			case 'getNote':
 				return $this->getNote();
@@ -57,6 +57,7 @@ class CCartella {
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback();
+			throw new Exception($e->getMessage());
 		}
 		
 	}
@@ -85,10 +86,11 @@ class CCartella {
 				}
 				$query->commit();
 			} else {
-				$VCartella->invia(array("error","Permessi insufficienti"));
+				throw new Exception("Permessi insufficienti");
 			}
 		} catch (Exception $e) {
 			$query->rollback();
+			throw new Exception($e->getMessage());
 		}
 	}
 	/**
@@ -115,11 +117,12 @@ class CCartella {
 					$fraccoglitoreNote->updateRaccoglitore($parametri);
 				}
 			} else {
-				$VNota->invia(array("error","Cartella vuota"));
+				throw new Exception("Cartella vuota");
 			}
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollBack();
+			throw new Exception($e->getMessage());
 		}
 	}
 	/**
@@ -127,37 +130,52 @@ class CCartella {
 	 */
 	public function spostaNote() {
 		$VNota=USingleton::getInstance('VNota');
+		$session=USingleton::getInstance('USession');
 		$dati = $VNota->getDati();
+		$cnota=USingleton::getInstance('CNota');
 		$fnota=USingleton::getInstance('FNota');
-		$fcartella=USingleton::getInstance('FCartella'); //Vedere se c'è bisogno del controllo dell'email utente
-		$id_cartella_arrivo = $dati['id_cartella_arrivo'];
-		$id_nota = $dati['id_nota'];
-		$cartella = $fcartella->getCartellaById($id_cartella_arrivo);
-		$nota = $fnota->getNotaById($id_nota);
-		$tipo_nota = $nota[0]['tipo'];
-		$tipo_cartella_arrivo = $cartella[0]['tipo']; 
-		//if () Introdurre qui il controllo se è un promemoria o una nota (conpatibilità con la cartella di destinazione)
-		$posizione_iniziale = $nota[0]['posizione'];
-		$id_cartella_partenza = $nota[0]['id_cartella'];
-		$parametri = array('id_cartella' => $id_cartella_arrivo,
-						   'id' => $id_nota);
+		$fdb=USingleton::getInstance('Fdb');
+		$fcartella=USingleton::getInstance('FCartella');
+		$fraccoglitore_note=USingleton::getInstance('FRaccoglitore_note');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$fnota->updateNota($parametri);
-			$max_posizione_arrivo = $fnota->getMaxPosizioneNotaByCartella($id_cartella_arrivo);
-			$max_posizione_arrivo = $max_posizione_arrivo[0]["max(posizione)"];
-			$posizione_arrivo = $max_posizione_arrivo++;
-			$parametri1 = array('posizione' => $posizione_arrivo,
-					'id' => $id_nota);
-			$fnota->updateNota($parametri1);
-			$query1=$query->prepare("CALL AggiornaPosizioneNote(:pos,:cartella)");
-			$query1->bindParam(":pos",$posizione_iniziale);
-			$query1->bindParam(":cartella",$id_cartella_partenza);
-			$query1->execute();
+			$cartella_partenza = $fcartella->getCartellaById($dati['partenza']);
+			$cartella_partenza = $cartella_partenza[0];
+			$cartella_destinazione = $fcartella->getCartellaById($dati['destinazione']);
+			$cartella_destinazione = $cartella_destinazione[0];
+			$nota = $fnota->getNotaById($dati['id_nota']);
+			$nota = $nota[0];
+			if ($cartella_partenza['tipo'] == "gruppo") {
+				throw new Exception("Impossibile spostare da gruppo");
+			} elseif ($cartella_destinazione['tipo'] == "gruppo" && $nota['condiviso']) {
+				throw new Exception("Impossibile spostare una nota condivisa in un gruppo");
+			} elseif ($cartella_partenza['amministratore'] == $session->getValore("email")) {
+				if (($cartella_destinazione['tipo'] == "Promemoria" && $nota['tipo'] == "nota") || ($cartella_destinazione['tipo'] == "Nota" && $nota['tipo'] == "promemoria")) {
+					throw new Exception("Non puoi spostare una nota/promemoria nella cartella promemoria/note");
+				} else {
+					$raccoglitore = $fraccoglitore_note->getRaccoglitoreByIdNota($nota['id']);
+					foreach ($raccoglitore as $key => $valore) {
+						$max_cartella_destinazione = $fraccoglitore_note->getMaxPosizioneNotaByCartellaEUtente($valore['email_utente'],$cartella_destinazione['id']);
+						if (!is_null($max_cartella_destinazione[0]["max(posizione)"])) {
+							$max_cartella_destinazione = $max_cartella_destinazione[0]['max(posizione)']+1;
+						} else {
+							$max_cartella_destinazione = 0;
+						}
+						$aggiornamento1 = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+						$fraccoglitore_note->updateRaccoglitore($aggiornamento1);
+						$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+						$fraccoglitore_note->updateRaccoglitore($aggiornamento);
+						$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_partenza['id'],$valore['email_utente']);
+					}
+				}
+			} else {
+				throw new Exception("Permesso Negato");
+			}
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback();
+			throw new Exception($e->getMessage());
 		}
 	}
 	/**
@@ -224,6 +242,7 @@ class CCartella {
 			$VCartella->invia($note);
 		} catch (Exception $e) {
 			$query->rollback();
+			throw new Exception($e->getMessage());
 		}
 	}
 }

@@ -118,7 +118,7 @@ CMenu.prototype.Inizializza = function(){
 			});
 			
 		}
-		
+
 		var numero_note_presenti = StrutturaCartelle.getNumeroNoteByIdCartella(cartellaAttiva);
 		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Pos)).done(function(note){
 			var Note = $.parseJSON(note);
