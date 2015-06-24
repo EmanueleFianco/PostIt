@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Giu 23, 2015 alle 11:24
+-- Generation Time: Giu 24, 2015 alle 14:01
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -37,6 +37,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneNote`(IN `pos` INT
 UPDATE raccoglitore_note SET posizione=posizione-1
 WHERE posizione>pos AND id_cartella = cartella$$
 
+DROP PROCEDURE IF EXISTS `AggiornaPosizioneNoteEmail`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AggiornaPosizioneNoteEmail`(IN `pos` INT(11), IN `cartella` INT(11), IN `mail` VARCHAR(40))
+    NO SQL
+UPDATE raccoglitore_note SET posizione=posizione-1
+WHERE posizione>pos AND id_cartella = cartella AND email_utente = mail$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -52,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `cartella` (
   `tipo` enum('gruppo','privata') COLLATE utf8_unicode_ci NOT NULL,
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `cartella`:
@@ -94,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `creata_da` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `ultimo_a_modificare` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ora_data_avviso` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `nota`:
@@ -220,12 +226,12 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `cartella`
 --
 ALTER TABLE `cartella`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- Limiti per le tabelle scaricate
 --
