@@ -252,12 +252,12 @@ class CNota {
     		$nota = $fnota->getNotaById($id);
     		$nota = $nota[0];
     		if ($dati['evento'] == "perso") {
-    			if (($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) && $session->getValore("email") == $shm->get($id)) {
+    			if ($nota['condiviso'] == TRUE && $session->getValore("email") == $shm->get($id)) {
     				$shm->del($id);
     			}
     			$VNota->invia(array());
     		} else {
-    			if ($nota['tipo'] == "gruppo" || $nota['condiviso'] == TRUE) {
+    			if ($nota['condiviso'] == TRUE) {
     				if ($shm->get($id)) {
     					$VNota->invia(array("error" => $shm->get($id)));
     				} else {
