@@ -157,17 +157,16 @@ class CCartella {
 					$raccoglitore = $fraccoglitore_note->getRaccoglitoreByIdNota($nota['id']);
 					foreach ($raccoglitore as $key => $valore) {
 						$max_cartella_destinazione = $fraccoglitore_note->getMaxPosizioneNotaByCartellaEUtente($valore['email_utente'],$cartella_destinazione['id']);
-						$max_cartella_destinazione = $max_cartella_destinazione[0]['max(posizione)'];
-						if ($max_cartella_destinazione) {
-							$max_cartella_destinazione+=1;
+						if (!is_null($max_cartella_destinazione[0]["max(posizione)"])) {
+							$max_cartella_destinazione = $max_cartella_destinazione[0]['max(posizione)']+1;
 						} else {
 							$max_cartella_destinazione = 0;
 						}
-						$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
-						$fraccoglitore_note->updateRaccoglitore($aggiornamento);
 						$aggiornamento1 = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
 						$fraccoglitore_note->updateRaccoglitore($aggiornamento1);
-						$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_destinazione['id'],$valore['email_utente']);
+						$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+						$fraccoglitore_note->updateRaccoglitore($aggiornamento);
+						$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_partenza['id'],$valore['email_utente']);
 					}
 				}
 			} else {
