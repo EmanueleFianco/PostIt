@@ -11,17 +11,17 @@ CLogin.prototype.logIn=function(){
 	var vista = singleton.getInstance(View,"View");
 if(this.controllaDatiLogin())
 	{   var Data=this.preparaDati('login');
-	    $.when(this.inviaDati(Data)).done(function(ricevuta){   
-	    	    infologin=$.parseJSON(ricevuta);
-	    	    
- 				if(infologin['error']==null)//esito positivo 
+	    $.when(this.inviaDati(Data)).done(function(ricevuta){  
+	             
+	    	    infoutente=$.parseJSON(ricevuta);	    	    
+ 				if(infoutente['error']==null)//esito positivo 
  				{
  					vista.smonta("#menu_welcome");
 					chome.getDati();
  				}
  				else
  				{
- 					alert("Attenzione:"+(infologin['error']));
+ 					alert("Attenzione:"+(infoutente['error']));
  				}
 	    	});
 	 }

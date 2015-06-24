@@ -102,6 +102,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
              
         }
     });
+}
 
         
 CContextmenu.prototype.Aggiorna= function(id_nota){

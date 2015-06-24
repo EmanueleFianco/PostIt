@@ -2,6 +2,7 @@
 var CHome = function(){
 	singleton = new Singleton();
 	Template = new Array();
+	infoutente=new Object();
 	var dati =singleton.getInstance(CDati,"CDati");
 	var eventi = singleton.getInstance(CEventi,"CEventi");
 	var view = singleton.getInstance(View,"View");

@@ -146,8 +146,8 @@ CMenu.prototype.Inizializza = function(){
 
 	   
     $.when(dati.getTemplate("profilo")).done(function(tmpl){
-    	var html = Mustache.to_html(tmpl,infologin);
-    	$("#infoutente").append(html);
+    	var html = Mustache.to_html(tmpl,infoutente);
+    	$("#infou_tente").append(html);
     });
 	
 	
