@@ -265,6 +265,7 @@ class CNota {
     					$VNota->invia(array());
     				}
     			}
+    			$VNota->invia(array());
     		}
     	} else {
     		$VNota->invia(array("error" => "Permesso negato!"));
