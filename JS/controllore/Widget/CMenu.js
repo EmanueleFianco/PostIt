@@ -92,11 +92,21 @@ CMenu.prototype.Inizializza = function(){
 		var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
 		
 		if (numeroNote>0){
+			var id;
+			var posizione;
 			var Posizioni = new Array();
+			var Pos = new Object();
 			Posizioni = view.getPosizioni();	
+			$.each(Posizioni,function(i,elemento){
+				Pos[i]={
+						id : elemento.id,
+						posizione : i,	
+				  }
+			});
+			
 		}
 		
-		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Posizioni)).done(function(note){
+		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Pos)).done(function(note){
 			var Note = $.parseJSON(note);
 			if(Object.keys(Note).length >0){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);

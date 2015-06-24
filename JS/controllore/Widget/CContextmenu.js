@@ -23,7 +23,8 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             
                 }},          
              "cancella": {name: "Cancella", icon: "delete",
-            	 callback:function(){
+            	 callback:function(key, options){
+            		 if(key == "cancella"){
             		 if($("#bloccata"+id_nota).css("display") != "block"){
                             var Dati={   
                                       id_nota: id_nota,
@@ -33,9 +34,13 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                                   };
                             
                             dati.setNote(Dati);
-                            console.log(Dati);
-                            $(this).parent(".nota").hide();
-                            
+                            $("#"+id_nota).remove();
+                            StrutturaCartelle.EliminaNota(id_nota);
+                            var nota = StrutturaCartelle.getNota(id_nota)
+                            $('#'+cartellaAttiva).packery('remove',nota);
+                            $('#'+cartellaAttiva).packery('reloadItems');
+                            $('#'+cartellaAttiva).packery();
+            		 }     
             		 }
                     }},
         }

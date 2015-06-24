@@ -73,9 +73,11 @@ CStruttura.prototype.getNota = function(id_nota){
 
 
 CStruttura.prototype.EliminaNota = function(id_nota){
+	console.log(Struttura);
 	var cartella_attiva=this.getCartellaAttiva();
 	
 	delete Struttura[cartella_attiva]["note"][id_nota];
+	console.log(Struttura);
 }
 
 CStruttura.prototype.CreaNota = function(attributo,valore,ricevuto){
@@ -95,8 +97,6 @@ CStruttura.prototype.CreaNota = function(attributo,valore,ricevuto){
 			posizione:0,
 			colore: "#FF2222",
 			tipo: "nota",
-			condiviso: "FALSE",
-			ultimo_a_modificare: 0,
 			ora_data_avviso: ""
 			
 		}
