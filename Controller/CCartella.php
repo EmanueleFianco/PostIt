@@ -156,7 +156,7 @@ class CCartella {
 				} else {
 					if ($cartella_destinazione['tipo'] == "gruppo") {
 						$agg = array("condiviso" => TRUE,"id" => $nota['id']);
-						$fnota->aggiornaNota($agg);
+						$fnota->UpdateNota($agg);
 					}
 					$raccoglitore = $fraccoglitore_note->getRaccoglitoreByIdNota($nota['id']);
 					foreach ($raccoglitore as $key => $valore) {
