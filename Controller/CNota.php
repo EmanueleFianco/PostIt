@@ -183,7 +183,9 @@ class CNota {
 			$query->rollback(); 
 		}
     }
-    
+    /**
+    * Imposta la nota come un promemoria
+    **/
     public function setPromemoria() {
     	$VNota=USingleton::getInstance('VNota');
     	$dati = $VNota->getDati();
@@ -234,7 +236,9 @@ class CNota {
     		$query->rollback();
     	}
     }
-    
+    /**
+    *Funzione utilizzata per vedere se qualcuno già sta modificando la nota e quindi nel caso inibire le modifiche a chi sta cercando di accederci per ultimo
+    **/
     public function focus() {
     	$VNota=USingleton::getInstance('VNota');
     	$fnota=USingleton::getInstance('FNota');
@@ -304,7 +308,12 @@ class CNota {
     	unlink($immagine['tmp_name']);
     	return stripslashes(json_encode($array));
     }
-    
+    /**
+    *Funzione che esegue l'aggiornamento delle posizioni all'interno del raccoglitore
+    *@param int $_pos posizione all'interno del raccoglitore
+    *@param int $_id_cartella
+    *@param string $_email_utente 
+    **/
     public function aggiornaPosizioniRaccoglitore($_pos,$_id_cartella,$_email_utente = NULL) {
     	$fdb=USingleton::getInstance('Fdb');
 		$query=$fdb->getDb();
