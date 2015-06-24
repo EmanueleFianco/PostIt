@@ -145,11 +145,12 @@ CMenu.prototype.Inizializza = function(){
 	});
 
 	   
-    $.when(dati.getTemplate("profilo"))
-    	   .done(function(tmpl1){
+    $.when(dati.getTemplate("profilo"),
+    	   dati.getTemplate("immagineprofilo")).done(function(tmpl1,tmpl2){
     	var html = Mustache.to_html(tmpl1,infoutente);
     	$("#info_utente").append(html);
-    	
+    	var tpl=Mustache.to_html(tmpl2,infoutente);
+    	$("#image_utente").append(tpl);
     });
 	
 	
