@@ -45,6 +45,33 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                     }},
         }
     });
+
+        $.contextMenu({
+        selector: "#accountbotton", 
+        trigger: 'left',
+        events:{hide:function(){         
+                $("#image_botton").removeClass("ruota90").end().addClass("ruota270");
+                console.log("prova");
+            }},
+        zIndex:900,
+        autoHide:true,
+        animation:{duration:800,show:"show",hide:"fadeOut"},
+        items: {
+            "note": {name: "Note", icon: "edit"},
+            "promemoria": {name: "Promemoria", icon: "cut"},
+            "cartelle": {name: "Cartelle", icon: "copy",
+            "items": {
+                    // ajax per richiedere tutti i gruppi dell utente
+                    "item1": {"name": "Nome_Gruppo"},
+                    "item2": {"name": "Nome_Gruppo"},
+                    "item3": {"name": "Nome_Gruppo"}
+            
+                }},          
+             
+        }
+    });
+
+        
 	
 	
 	

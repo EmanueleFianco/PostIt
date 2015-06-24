@@ -45,7 +45,7 @@ var CHome = function(){
 	
 
 CHome.prototype.getDati=function(){
-	console.log("getDati");
+	
 	var dati =singleton.getInstance(CDati,"CDati");
 	var eventi = singleton.getInstance(CEventi,"CEventi");
 	var view = singleton.getInstance(View,"View");
