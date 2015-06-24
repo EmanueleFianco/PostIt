@@ -8,7 +8,8 @@ CEventi.prototype.InizializzaMenu = function(){
 	var packery = singleton.getInstance(CPackery,"CPackery");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	menu.Inizializza();
-	if(StrutturaCartelle.getNumeroNoteByIdCartella > 0){
+	var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
+	if(StrutturaCartelle.getNumeroNoteByIdCartella(cartellaAttiva) > 0){
 		packery.Ricarica();
 	}
 	

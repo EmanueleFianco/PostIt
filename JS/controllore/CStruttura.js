@@ -22,6 +22,24 @@ CStruttura.prototype.aggiungiCartella = function(cartella){
 	//view.setCartella(cartella);
 
 }
+CStruttura.prototype.SpostaNota = function(id_nota,id_cartella_destinazione){
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	var dati =singleton.getInstance(CDati,"CDati");
+	
+	var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
+	var nota = Struttura[cartellaAttiva]["note"][id_nota];
+	StrutturaCartelle.EliminaNota[id_nota];
+	StrutturaCartelle.aggiungiNota(id_cartella_destinazione,nota);
+	
+	var Data = {
+			controller : "cartella",
+			lavoro: "spostacartella",
+			id : id_nota,
+			destinazione : id_cartella_destinazione
+	}
+	dati.setNote(Data);
+	
+}
 
 CStruttura.prototype.aggiungiNota = function(id_cartella,nota){
 	
@@ -117,8 +135,6 @@ CStruttura.prototype.CreaNota = function(attributo,valore,ricevuto){
 		StrutturaCartelle.EliminaNota("Nuova");
 		Struttura[cartella_attiva]["note"][id]=Elemento[id];
 		$(".NuovaNota").attr("id",id);
-		$("#timeNuova").attr("id","time"+id);
-		datepicker.Inizializza(id);
 		StrutturaCartelle.setBuffer(0);
 	});
 	
@@ -131,7 +147,7 @@ CStruttura.prototype.getAttributo = function(id_nota,attributo){
 }
 
 CStruttura.prototype.getDataAjaxAttributi= function(id_nota,attributo){
-	if(attributo=="ora_data_avviso"){
+	if(attributo=="ora_data_avviso" && $("#time"+id_nota).attr("id") != "timeNuova" ){
 		var Data ={	
 				controller : "nota",
 				lavoro: "setPromemoria"

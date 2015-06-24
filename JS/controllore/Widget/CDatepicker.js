@@ -21,7 +21,6 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 			yearSuffix: '',
 			
 		};
-	
 	$.datepicker.setDefaults($.datepicker.regional['it']);
 	$("#time"+id_nota).datetimepicker({
 		timeText: 'Orario',
@@ -30,15 +29,18 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 		currentText: 'Ora',
 		closeText: 'Chiudi',
 		onClose  : function(dateText) {	
+			if(id_nota == "Nuova"){
+			var id_nota_nuova = $("#NuovaNotaSpace").find(".NuovaNota").attr("id");
+			}
+			else{
+				id_nota_nuova = id_nota;
+			}
+			console.log(id_nota_nuova);
 			dateText = dateText + ":00";
 			if(dateText != ""){
+				StrutturaCartelle.AggiornaNota(id_nota_nuova,"ora_data_avviso",dateText);
+			}
 			
-				StrutturaCartelle.AggiornaNota(id_nota,"ora_data_avviso",dateText);
-			}
-			if(id_nota != "Nuova"){
-			$("#"+cartellaAttiva).packery( 'remove',$("#"+id_nota));
-			$("#"+id_nota).remove();
-			}
 		
 		}
 	});
