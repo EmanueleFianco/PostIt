@@ -107,6 +107,7 @@ class CRegistrazione {
             		$immagine = new EImmagine(basename($image['tmp_name']), $image['size'], $image['type'], $image['tmp_name']);
             		$FImmagine=USingleton::getInstance('FImmagine');
             		$FImmagine->inserisciImmagine($immagine);
+            		unlink($image['tmp_name']);
             	} else {
             		$immagine = NULL;
             	}
