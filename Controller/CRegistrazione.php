@@ -234,7 +234,7 @@ class CRegistrazione {
     public function inviaInfo() {
     	$session = USingleton::getInstance('USession');
     	$View = USingleton::getInstance('View');
-    	$info = array("username" => $sessiongetValore('username'),
+    	$info = array("username" => $session->getValore('username'),
     			"nome" => $session->getValore("nome"),
     			"cognome" => $session->getValore("cognome"),
     			"email" => $session->getValore("email"),
