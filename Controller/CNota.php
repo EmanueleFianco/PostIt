@@ -41,12 +41,19 @@ class CNota {
 		$dati = $VNota->getDati();
 		$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
 		$fnota=USingleton::getInstance('FNota');
+		$fcartella=USingleton::getInstance('FCartella');
 		$fdb=USingleton::getInstance('Fdb');
 		$session = USingleton::getInstance('USession');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
 			$dati = $dati['nota'][0];
+			$cartella = $fcartella->getCartellaById($dati['id_cartella']);
+			if ($cartella[0]['tipo'] == "gruppo") {
+				$dati['condiviso'] = TRUE;
+			} else {
+				$dati['condiviso'] = FALSE;
+			}
 			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$dati["id_cartella"]);
 			$max_posizione = $max_posizione[0]["max(posizione)"];
 			if (isset($max_posizione)) {
@@ -58,9 +65,17 @@ class CNota {
 			if ($dati['ora_data_avviso'] != "") {
 				$format = 'Y-m-d H:i:s';
 				$data = DateTime::createFromFormat($format,$dati['ora_data_avviso']);
-				$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $data);
+				if ($dati['condiviso']) {
+					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'],$session->getValore("email"), $data);
+				} else {
+					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $data);
+				}
 			} else {
-				$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
+				if ($dati['condiviso']) {
+					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'],$session->getValore("email"));
+				} else {
+					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
+				}
 			}
 			$fnota->inserisciNota($nota,$session->getValore("email"));
 			$id = $query->lastInsertId();
