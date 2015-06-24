@@ -32,7 +32,9 @@ class CUtente {
 		$cartelle=$fraccoglitore->getCartelleByUtente($session->getValore("email"));
 		$VCartella->invia($cartelle);
 	}
-	
+	/**
+	*Restituisce l'immagine associata all'utente
+	*/
 	public function getImmagine(){
 		$FImmagine=USingleton::getInstance('FImmagine');
 		$image = $FImmagine->getImmagineByNome($_REQUEST['file']);

@@ -324,7 +324,11 @@ class CNota {
     	}
     	$query1->execute();
     }
-    
+    /**
+    *Funzione che restituisce la posizione occupata dalla nota
+    *@param int $_id_cartella
+    *@return int posizione massima occupata
+    **/
     public function getPosizioneOccupata($_id_cartella) {
     	$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
     	$session=USingleton::getInstance('USession');
