@@ -14,16 +14,7 @@ body{
 	float:left;
 	width:60px;
 }
-#menutext{
-	float:left;
-	width:60px;
-	position: absolute;
-	left:70px;
-	top:9px;
-	text-align: center;
-	vertical-align: middle;
-	
-}
+
 
 #menu{
 	width:300px;
@@ -61,6 +52,7 @@ body{
     width: 50px;
     margin-top: -20px;
 }
+
 
 
 
@@ -162,6 +154,48 @@ font-size: 1rem;
 }
 #name_account{
     width: 20px;
-    font-size: 30px;
+    font-size: 20px;
     font-family: "Roboto","Droid Sans",arial,sans-serif;
 }
+
+
+#info_utente{
+ display:inline;
+ float: right;
+ margin-right: 50px;
+ margin-top: 6px;
+
+}
+#accountbotton{
+    display: inline;
+    float: right;
+    margin-top: 8px;
+    
+}
+#menutext{
+    display: inline;
+    float: left;
+    margin-top: 6px;
+    
+    
+}
+#showMenu{
+    display: inline;
+    float: left;
+    margin-top: -5px;
+    width: 50px;
+    
+    
+}
+#image_utente{
+    display: inline;
+    float: right;
+    border:solid black;
+    margin-top: 6px;
+    margin-right: 10px;
+    border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-border-radius: 15px;
+}
+
+
