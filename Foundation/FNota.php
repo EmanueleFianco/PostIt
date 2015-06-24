@@ -32,7 +32,7 @@ class FNota extends Fdb {
 		$dati=$_object->getAsArray();
 		unset($dati['posizione']);
 		$dati['condiviso']=FALSE;
-		$dati['ora-data_avviso'] = FALSE;
+		$dati['ora_data_avviso'] = FALSE;
 		$dati['creata_da'] = $_creata_da;
 		$dati['ultimo_a_modificare'] = $_creata_da;
 		$classe=get_class($_object);
@@ -44,7 +44,6 @@ class FNota extends Fdb {
 		if ($classe == 'ENotaCondivisa' || $classe == 'EPromemoriaCondiviso') {
 			$dati['condiviso'] = TRUE;
 		}
-		var_dump($dati);
 		$this->db->auto_increment = $this->auto_increment;
 		$this->db->setParam($this->table,$this->keydb,$this->bind);
 		return $this->db->inserisci($dati);
