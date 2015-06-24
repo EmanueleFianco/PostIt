@@ -54,14 +54,13 @@ class CNota {
 			} else {
 				$dati['condiviso'] = FALSE;
 			}
-			$dati['posizione'] = $max_posizione;
 			if ($dati['ora_data_avviso'] != "") {
 				$format = 'Y-m-d H:i:s';
 				$data = DateTime::createFromFormat($format,$dati['ora_data_avviso']);
 				if (!$dati['condiviso']) {
 					$CartellaPromemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$session->getValore("email"));
 					$dati['id_cartella'] = $CartellaPromemoria[0]['id'];
-					$this->getPosizioneOccupata($dati['id_cartella']);
+					$max_posizione = $this->getPosizioneOccupata($dati['id_cartella']);
 					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $data);
 				} else {
 					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'],$session->getValore("email"), $data);
@@ -70,7 +69,7 @@ class CNota {
 				if (!$dati['condiviso']) {
 					$CartellaNote = $fcartella->getCartellaByNomeEAmministratore("Note",$session->getValore("email"));
 					$dati['id_cartella'] = $CartellaNote[0]['id'];
-					$this->getPosizioneOccupata($dati['id_cartella']);
+					$max_posizione = $this->getPosizioneOccupata($dati['id_cartella']);
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
 				} else {
 					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'],$session->getValore("email"));
@@ -326,6 +325,8 @@ class CNota {
     }
     
     public function getPosizioneOccupata($_id_cartella) {
+    	$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
+    	$session=USingleton::getInstance('USession');
     	$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$_id_cartella);
     	$max_posizione = $max_posizione[0]["max(posizione)"];
     	if (isset($max_posizione)) {
