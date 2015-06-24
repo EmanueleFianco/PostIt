@@ -233,9 +233,11 @@ class CCartella {
 					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
 					$cart = $fcartella->getCartellaById($dati['id_cartella']);
 					$tipo_cart = $cart[0]["tipo"];
-					foreach ($note as $key => $value) {
-						if ($valore['condiviso'] == TRUE && $tipo_cart == "privata") {
-							$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+					if ($tipo_cart == "privata") {
+						foreach ($note as $key => $value) {
+							if ($valore['condiviso'] == TRUE) {
+								$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+							}
 						}
 					}
 				} else {
@@ -243,9 +245,13 @@ class CCartella {
 						$posizione_finale = $max_posizione - $dati['note_presenti'];
 						$posizione_iniziale = $posizione_finale - $dati['num_note'];
 						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
-						foreach ($note as $key => $value) {
-							if ($valore['condiviso'] == TRUE && $tipo_cart == "privata") {
-								$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+						$cart = $fcartella->getCartellaById($dati['id_cartella']);
+						$tipo_cart = $cart[0]["tipo"];
+						if ($tipo_cart == "privata") {
+							foreach ($note as $key => $value) {
+								if ($valore['condiviso'] == TRUE) {
+									$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+								}
 							}
 						}
 					} else {
