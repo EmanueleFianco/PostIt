@@ -25,7 +25,6 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         animation:{duration:800,show:"show",hide:"fadeOut"},
         items: {
             "note": {name: "Note", icon: "edit"},
-            "promemoria": {name: "Promemoria", icon: "cut"},
             "archivio" : {name: "Archivio", icon: "paste"},
             "gruppi": {name: "Gruppi", icon: "copy",
             	"items":nomi_cartelle },          
@@ -59,18 +58,11 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             				 contexmenu.Aggiorna(id_nota);
             			 }
             		 }
-            		 if(key == "promemoria"){
-            			 
-            			 if(Struttura[cartellaAttiva].nome != "Promemoria"){
-            				var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Promemoria");
-            				 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione); 
-            				 contexmenu.Aggiorna(id_nota);
-            			 }
-            		 }
             		 if(key == "archivio"){
             			
             			 if(Struttura[cartellaAttiva].nome != "Archivio"){
             				var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Archivio");
+            				
             				 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione); 
             				 contexmenu.Aggiorna(id_nota);
             			 }
