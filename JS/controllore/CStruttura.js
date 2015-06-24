@@ -33,9 +33,10 @@ CStruttura.prototype.SpostaNota = function(id_nota,id_cartella_destinazione){
 	
 	var Data = {
 			controller : "cartella",
-			lavoro: "spostacartella",
-			id : id_nota,
-			destinazione : id_cartella_destinazione
+			lavoro: "spostaNote",
+			id_nota : id_nota,
+			destinazione : id_cartella_destinazione,
+			partenza : cartellaAttiva
 	}
 	dati.setNote(Data);
 	
