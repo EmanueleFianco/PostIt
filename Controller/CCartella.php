@@ -235,9 +235,7 @@ class CCartella {
 					$tipo_cart = $cart[0]["tipo"];
 					if ($tipo_cart == "privata") {
 						foreach ($note as $key => $value) {
-							if ($valore['condiviso'] == TRUE) {
-								$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
-							}
+							$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 						}
 					}
 				} else {
@@ -249,9 +247,7 @@ class CCartella {
 						$tipo_cart = $cart[0]["tipo"];
 						if ($tipo_cart == "privata") {
 							foreach ($note as $key => $value) {
-								if ($value['condiviso'] == TRUE) {
-									$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
-								}
+								$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 							}
 						}
 					} else {

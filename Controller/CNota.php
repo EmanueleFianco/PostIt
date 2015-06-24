@@ -26,6 +26,8 @@ class CNota {
             	return $this->setPromemoria();
             case 'focus':
             	return $this->focus();
+            case 'condividi':
+            	return $this->condividi();
             case 'prendiImmagine':
             	return $this->getImmagine();
             case 'upload':
@@ -275,6 +277,24 @@ class CNota {
     		}
     	} else {
     		throw new Exception("Permesso negato!");
+    	}
+    }
+    
+    public function condividi() {
+    	$session=USingleton::getInstance('USession');
+    	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
+    	$fcartella=USingleton::getInstance('FCartella');
+    	$fdb=USingleton::getInstance('Fdb');
+    	$VNota=USingleton::getInstance('FVNota');
+    	$dati = $VNota->getDati();
+    	$query=$fdb->getDb();
+    	$query->beginTransaction();
+    	try {
+    		$raccoglitore = $fraccoglitore->getNotaByIdEUtente($dati['id_nota'],$session->getValore("email"));
+    		$raccoglitore = $raccoglitore[0];
+    		$cartella = $fcartella->getCartellaById($raccoglitore["id_cartella"]);
+    	} catch (Exception $e) {
+    		
     	}
     }
     

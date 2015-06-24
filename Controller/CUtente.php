@@ -32,20 +32,29 @@ class CUtente {
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_cartelle');
 		$futente=USingleton::getInstance('FUtente');
 		$session=USingleton::getInstance('USession');
-		$cartelle=$fraccoglitore->getCartelleByUtente($session->getValore("email"));
-		foreach ($cartelle as $key => $valore) {
-			$tipo_cart = $valore['tipo'];
-			if ($tipo_cart == "gruppo") {
-				$cartelle[$key]['partecipanti'] = $this->inviaPartecipanti($valore['id_cartella']);
+		$fdb=USingleton::getInstance('Fdb');
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$cartelle=$fraccoglitore->getCartelleByUtente($session->getValore("email"));
+			foreach ($cartelle as $key => $valore) {
+				$tipo_cart = $valore['tipo'];
+				if ($tipo_cart == "gruppo") {
+					$cartelle[$key]['partecipanti'] = $this->inviaPartecipanti($valore['id_cartella']);
+				}
 			}
+			$VCartella->invia($cartelle);
+			$query->commit();
+		} catch (Exception $e) {
+			$query->rollback();
+			throw new Exception($e->getMessage());
 		}
-		$VCartella->invia($cartelle);
 	}
 	
 	public function getImmagine(){
 		$FImmagine=USingleton::getInstance('FImmagine');
 		if ($_REQUEST['file'] == NULL) {
-			$file = "./tmp/".$_REQUEST['file'];
+			$file = "./tmp/utenteDefault.png";
 			echo file_get_contents($file);
 		} else {
 			$image = $FImmagine->getImmagineByNome($_REQUEST['file']);
