@@ -237,7 +237,7 @@ class CCartella {
 						foreach ($note as $key => $value) {
 							//var_dump($value);
 							if ($valore['condiviso'] == TRUE) {
-								$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+								$valore["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 							}
 						}
 					}
@@ -250,10 +250,10 @@ class CCartella {
 						$tipo_cart = $cart[0]["tipo"];
 						if ($tipo_cart == "privata") {
 							foreach ($note as $key => $value) {
-								//var_dump($value);
 								if ($value['condiviso'] == TRUE) {
-									$key["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+									$value["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 								}
+								//var_dump($value);
 							}
 						}
 					} else {
@@ -276,6 +276,7 @@ class CCartella {
 		$session = USingleton::getInstance('USession');
 		$futente=USingleton::getInstance('FUtente');
 		$raccoglitore = $fraccoglitore->getRaccoglitoreByIdNota($_id_nota);
+		$condiviso = array();
 		foreach ($raccoglitore as $key => $valore) {
 			if ($valore['email_utente'] != $session->getValore("email")) {
 				$utente = $futente->getUtenteByEmail($valore['email_utente']);
@@ -284,6 +285,7 @@ class CCartella {
 				$condiviso[$key]["path"] = "Home.php/controller=utente&lavoro=getImmagine&file=".$utente['id_immagine'];
 			}	
 		}
+		var_dump($condiviso);
 		return $condiviso;
 	}
 }
