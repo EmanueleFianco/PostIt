@@ -101,7 +101,7 @@ class CRegistrazione {
         $query->beginTransaction();
         if (!$futente->getUtenteByEmail($dati["email"])) { //utente non esistente
             try {
-            	if (isset($_FILES['file'])) {
+            	if ($_FILES['file']['tmp_name']) {
             		$image = $VRegistrazione->getImmagine();
             		move_uploaded_file($_FILES['file']['tmp_name'], $image['tmp_name']);
             		$immagine = new EImmagine(basename($image['tmp_name']), $image['size'], $image['type'], $image['tmp_name']);
@@ -113,7 +113,11 @@ class CRegistrazione {
             	}
             	$utente=new EUtente($dati["username"], $dati["password"], $dati["nome"], $dati["cognome"],$dati["email"],"nonattivato","normale");
                 $utente->setCodiceAttivazione();
-            	$futente->inserisciUtente($utente,$immagine->getNome());
+                if ($immagine) {
+                	$futente->inserisciUtente($utente,$immagine->getNome());
+                } else {
+                	$futente->inserisciUtente($utente);
+                }
                 $query->commit();
                 $this->inviaMailRegistrazione($dati['email']);
                 header('Location: Templates/success.html');

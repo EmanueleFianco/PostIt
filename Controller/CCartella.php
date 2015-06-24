@@ -189,7 +189,8 @@ class CCartella {
 					}
 					while ($sbagliato == FALSE && $i<count($note)) {
 						foreach ($note_arrivate as $key => $valore) {
-							$posizioni[$valore['posizione']] = $valore['id'];
+							$posizione_relativa = $max_posizione - $valore['posizione'];
+							$posizioni[$posizione_relativa] = $valore['id'];
 						}
 						krsort($posizioni);
 						foreach ($posizioni as $key => $val) {

@@ -63,6 +63,10 @@ class CNota {
 			}
 			$dati['posizione'] = $max_posizione;
 			if ($dati['ora_data_avviso'] != "") {
+				if (!$dati['condiviso']) {
+					$Promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$session->getValore("email"));
+					$dati['id_cartella'] = $Promemoria[0]['id'];
+				}
 				$format = 'Y-m-d H:i:s';
 				$data = DateTime::createFromFormat($format,$dati['ora_data_avviso']);
 				if ($dati['condiviso']) {
