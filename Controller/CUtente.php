@@ -71,7 +71,6 @@ class CUtente {
 		$session = USingleton::getInstance('USession');
 		$futente=USingleton::getInstance('FUtente');
 		$raccoglitore = $fraccoglitore->getTupleByIdCartella($_id_cartella);
-		var_dump($raccoglitore);
 		$condiviso = array();
 		foreach ($raccoglitore as $key => $valore) {
 			if ($valore['email_utente'] != $session->getValore("email")) {
