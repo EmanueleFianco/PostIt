@@ -54,10 +54,11 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             			
             			 if(Struttura[cartellaAttiva].nome != "Note"){
             				
-            				var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Note");
-            				 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione);
-            				 contexmenu.Aggiorna(id_nota);
-            				
+            				 if(Struttura[cartellaAttiva].tipo != "gruppo"){
+            					 var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Note");
+            					 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione);
+            					 contexmenu.Aggiorna(id_nota);
+            				 }
             			 }
             		 }
             		 if(key == "archivio"){
