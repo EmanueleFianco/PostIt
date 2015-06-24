@@ -180,6 +180,7 @@ class CRegistrazione {
     				$session->setValore('cognome',$utente['cognome']);
     				$session->setValore('email',$utente['email']);
     				$session->setValore('tipo_utente',$utente['tipo_utente']);
+    				$session->setValore('path',"Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine']);
     				$query->commit();
     				header('Location: index.php');
     				exit;
@@ -238,7 +239,8 @@ class CRegistrazione {
     			"nome" => $session->getValore("nome"),
     			"cognome" => $session->getValore("cognome"),
     			"email" => $session->getValore("email"),
-    			"tipo_utente" => $session->getValore("tipo_utente"));
+    			"tipo_utente" => $session->getValore("tipo_utente"),
+    			"path" => $session->getValore("path"));
     	$View->invia($info);
     }
 }
