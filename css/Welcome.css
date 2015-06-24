@@ -13,7 +13,7 @@
     top: 0px;
     left: 50%;
     margin-left:-202px;
-    top:100px;
+    top:50px;
     width:420px;
     height: 640px;
     display: none;
@@ -394,4 +394,16 @@ input.sbagliato{
   
   border:solid red;
 
+}
+
+@media screen and (max-device-width:1360px){
+  .registrazione{
+    height: 500px;
+  }
+ .textinputregistrazione{
+  padding: 4px;
+ }
+ .linked{
+  padding-top: 40px;
+ }
 }
