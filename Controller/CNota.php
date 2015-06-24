@@ -26,6 +26,8 @@ class CNota {
             	return $this->setPromemoria();
             case 'focus':
             	return $this->focus();
+            case 'condividi':
+            	return $this->condividi();
             case 'prendiImmagine':
             	return $this->getImmagine();
             case 'upload':
@@ -275,6 +277,39 @@ class CNota {
     		}
     	} else {
     		throw new Exception("Permesso negato!");
+    	}
+    }
+    
+    public function condividi() {
+    	$session=USingleton::getInstance('USession');
+    	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
+    	$fcartella=USingleton::getInstance('FCartella');
+    	$fnota=USingleton::getInstance('FNota');
+    	$fdb=USingleton::getInstance('Fdb');
+    	$VNota=USingleton::getInstance('FVNota');
+    	$dati = $VNota->getDati();
+    	$query=$fdb->getDb();
+    	$query->beginTransaction();
+    	try {
+    		$raccoglitore = $fraccoglitore->getNotaByIdEUtente($dati['id_nota'],$session->getValore("email"));
+    		$raccoglitore = $raccoglitore[0];
+    		$cartella = $fcartella->getCartellaById($raccoglitore["id_cartella"]);
+    		$cartella = $cartella[0];
+    		if ($cartella['tipo'] == "gruppo") {
+    			throw new Exception("Non puoi condividere una nota interna ad un gruppo");
+    		} elseif ($cartella['nome'] == "Cestino") {
+    			throw new Exception("Non puoi condividere una nota interna al cestino");
+    		} else {
+    			$fnota->updateNota(array("condiviso" => TRUE,"id" => $dati['id_nota']));
+    			$nota = $fnota->getNotaById($dati['id_nota']);
+    			$nota = $nota[0];
+    			if ($nota['tipo'] == "nota") {
+    				
+    			}
+
+    		}
+    	} catch (Exception $e) {
+    		
     	}
     }
     

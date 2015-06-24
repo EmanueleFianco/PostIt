@@ -64,6 +64,7 @@ CHome.prototype.getDati=function(){
 		
 			 view.disegna(Template["Main"],Cartelle);
 			$.each(Cartelle['Cartelle'],function(i,Cartella){
+				console.log(Cartella.partecipanti);
 				StrutturaCartelle.aggiungiCartella(Cartella);
 				if(Cartella.nome == "Note"){				
 					StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);

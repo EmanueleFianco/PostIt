@@ -7,12 +7,21 @@ CContextmenu.prototype.Inizializza = function(id_nota){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	var contexmenu = singleton.getInstance(CContextmenu,"CContextmenu");
 	
-	var nomi_cartelle = new Object();
+	var nomi_cartelle_gruppo = new Object();
+	var nomi_cartelle_private = new Object();
 	$.each(Struttura,function(i,cartella){
 		if(cartella.nome != "Note" && cartella.nome != "Promemoria" &&cartella.nome != "Archivio" &&cartella.nome != "Cestino"){
-		nomi_cartelle[cartella.nome] ={
-			name:cartella.nome,
-		}
+			if(cartella.tipo == "gruppo"){
+				nomi_cartelle_gruppo[cartella.nome] ={
+						name:cartella.nome,
+				}
+			}
+			if(cartella.tipo == "privata"){
+				nomi_cartelle_private[cartella.nome] ={
+				name:cartella.nome,
+				}
+			}
+		
 		}
 		
 	});
@@ -26,8 +35,10 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         items: {
             "note": {name: "Note", icon: "edit"},
             "archivio" : {name: "Archivio", icon: "paste"},
+            "private" : {name : "Private",
+            	"items":nomi_cartelle_private},
             "gruppi": {name: "Gruppi", icon: "copy",
-            	"items":nomi_cartelle },          
+            	"items":nomi_cartelle_gruppo },          
             	"sep1": "---------",
             "cancella": {name: "Cancella", icon: "delete"},
         	},
@@ -59,20 +70,36 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             					 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione);
             					 contexmenu.Aggiorna(id_nota);
             				 }
+            				 else{
+            					 $("#bloccata"+id_nota).css("display","block").text("Non puoi spostare una nota da un Gruppo a Note");
+            					 $("#bloccata"+id_nota).fadeOut(6000);
+            				 }
             			 }
             		 }
             		 if(key == "archivio"){
             			
             			 if(Struttura[cartellaAttiva].nome != "Archivio"){
-            				var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Archivio");
-            				 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione); 
-            				 contexmenu.Aggiorna(id_nota);
+            				 if(Struttura[cartellaAttiva].tipo != "gruppo"){
+            					 var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome("Archivio");
+            					 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione); 
+            					 contexmenu.Aggiorna(id_nota);
+            				 }
+            				 else{
+            					 $("#bloccata"+id_nota).css("display","block").text("Non puoi spostare una nota da un Gruppo ad Archivio");
+            					 $("#bloccata"+id_nota).fadeOut(6000);
+            				 }
             			 }
             		 }
             		 if(key != "archivio" && key != "note" && key != "cancella" && key != "promemoria"){
+            			 if(Struttura[cartellaAttiva].tipo != "gruppo"){
             			 var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome(key);
             			 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione);
             			 contexmenu.Aggiorna(id_nota);
+            			 }
+            			 else{
+        					 $("#bloccata"+id_nota).css("display","block").text("Non puoi spostare una nota da un Gruppo a Privata");
+        					 $("#bloccata"+id_nota).fadeOut(6000);
+        				 }
             		 }
             		 
            
@@ -103,7 +130,41 @@ CContextmenu.prototype.Inizializza = function(id_nota){
              
         }
     });
+        
+     
+
+        $.contextMenu({
+        selector: "#condividi"+id_nota, 
+        trigger: 'left',
+        events:{hide:function(){         
+                $("#image_botton").removeClass("ruota90").end().addClass("ruota270");
+
+            }},
+        zIndex:900,
+        autoHide:true,
+        animation:{duration:800,show:"show",hide:"fadeOut"},
+        items: {
+        	   email: {
+                   name: "Condividi Con Email:", 
+                   type: 'text', 
+                   value: "", 
+                   events: {
+                       keyup: function(e) {
+                          console.log("ajax");
+                       }
+                   }
+               },
+               key: {
+                   name: "Condividi", 
+                   callback: function(){
+                	   console.log("ajax");
+                   }
+               }
+        }
+    });    
+        
 }
+
 
         
 CContextmenu.prototype.Aggiorna= function(id_nota){
