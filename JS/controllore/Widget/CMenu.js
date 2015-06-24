@@ -118,7 +118,7 @@ CMenu.prototype.Inizializza = function(){
 			if(Object.keys(Note).length >0){
 				StrutturaCartelle.EliminaNoteByIdCartella(id_cartella);
 				$("#"+StrutturaCartelle.getCartellaAttiva()).children().remove();
-				$('#'+cartellaAttiva).packery();
+				
 				$('#'+cartellaAttiva).packery('destroy');
 				$.each(Note,function(i,nota){
 					StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
