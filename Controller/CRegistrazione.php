@@ -104,7 +104,7 @@ class CRegistrazione {
             	if (isset($_FILES['file'])) {
             		$image = $VRegistrazione->getImmagine();
             		move_uploaded_file($_FILES['file']['tmp_name'], $image['tmp_name']);
-            		$immagine = new EImmagine($image['tmp_name'], $image['size'], $image['type'], $image['tmp_name']);
+            		$immagine = new EImmagine(basename($image['tmp_name']), $image['size'], $image['type'], $image['tmp_name']);
             		$FImmagine=USingleton::getInstance('FImmagine');
             		$FImmagine->inserisciImmagine($immagine);
             	} else {
@@ -112,7 +112,7 @@ class CRegistrazione {
             	}
             	$utente=new EUtente($dati["username"], $dati["password"], $dati["nome"], $dati["cognome"],$dati["email"],"nonattivato","normale");
                 $utente->setCodiceAttivazione();
-            	$futente->inserisciUtente($utente,$immagine);
+            	$futente->inserisciUtente($utente,$immagine->getNome());
                 $query->commit();
                 $this->inviaMailRegistrazione($dati['email']);
                 header('Location: Templates/success.html');
