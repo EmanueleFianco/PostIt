@@ -43,8 +43,13 @@ CStruttura.prototype.getCartellaAttiva = function(){
 	return cartellaAttiva;
 }
 CStruttura.prototype.getCartellaByNome = function(nome){
-	
-	return cartellaAttiva;
+	var id_cartella_nome;
+	$.each(Struttura,function(i,Cartella){
+		if(Cartella.nome === nome){
+		id_cartella_nome = Cartella.id;	
+		}
+	})
+	return id_cartella_nome;
 }
 
 CStruttura.prototype.EliminaNoteByIdCartella = function(id_cartella){
@@ -76,6 +81,7 @@ CStruttura.prototype.EliminaNota = function(id_nota){
 CStruttura.prototype.CreaNota = function(attributo,valore,ricevuto){
 	var dati =singleton.getInstance(CDati,"CDati");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	var datepicker = singleton.getInstance(CDatepicker,"CDatepicker");
 	
 	if(this.getBuffer()==1){
 
@@ -91,7 +97,7 @@ CStruttura.prototype.CreaNota = function(attributo,valore,ricevuto){
 			tipo: "nota",
 			condiviso: "FALSE",
 			ultimo_a_modificare: 0,
-			ora_data_avviso: 0
+			ora_data_avviso: ""
 			
 		}
 	Struttura[cartella_attiva]["note"]["Nuova"][attributo]=valore;
@@ -111,6 +117,8 @@ CStruttura.prototype.CreaNota = function(attributo,valore,ricevuto){
 		StrutturaCartelle.EliminaNota("Nuova");
 		Struttura[cartella_attiva]["note"][id]=Elemento[id];
 		$(".NuovaNota").attr("id",id);
+		$("#timeNuova").attr("id","time"+id);
+		datepicker.Inizializza(id);
 		StrutturaCartelle.setBuffer(0);
 	});
 	

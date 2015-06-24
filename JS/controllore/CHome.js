@@ -77,6 +77,7 @@ CHome.prototype.getDati=function(){
 					})
 					
 					}
+					console.log(Struttura);
 					eventi.InizializzaMenu();
 				})
 /***********************************************************************/
