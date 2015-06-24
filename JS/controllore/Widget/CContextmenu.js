@@ -84,6 +84,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         trigger: 'left',
         events:{hide:function(){         
                 $("#image_botton").removeClass("ruota90").end().addClass("ruota270");
+
             }},
         zIndex:900,
         autoHide:true,
@@ -102,7 +103,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
              
         }
     });
-}
+
         
 CContextmenu.prototype.Aggiorna= function(id_nota){
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");

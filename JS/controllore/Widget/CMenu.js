@@ -1,4 +1,10 @@
 var CMenu = function(){
+	   
+    $.when(dati.getTemplate("profilo")).done(function(tmpl){
+    	var html = Mustache.to_html(tmpl,infologin);
+    	$("#infoutente").append(html);
+    });
+	
 	
 }
 
@@ -112,6 +118,7 @@ CMenu.prototype.Inizializza = function(){
 			});
 			
 		}
+
 		var numero_note_presenti = StrutturaCartelle.getNumeroNoteByIdCartella(cartellaAttiva);
 		$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),numeroNote,'12',Pos)).done(function(note){
 			var Note = $.parseJSON(note);
@@ -136,6 +143,13 @@ CMenu.prototype.Inizializza = function(){
 	$("#accountbotton").click(function(){
 		$("#image_botton").addClass("ruota90");
 	});
+
+	   
+    $.when(dati.getTemplate("profilo")).done(function(tmpl){
+    	var html = Mustache.to_html(tmpl,infologin);
+    	$("#infoutente").append(html);
+    });
+	
 	
 	
 
