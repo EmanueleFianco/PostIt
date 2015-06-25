@@ -72,7 +72,7 @@ CHome.prototype.getDati=function(){
 
 				    	$("#info_utente").append(html);
 				    	var tpl=Mustache.to_html(tmpl2[0],infoutente);
-				    	console.log(tpl);
+				    	
 				    	$("#image_utente").append(tpl);
 				    	})
 		    	      });
@@ -91,6 +91,7 @@ CHome.prototype.getDati=function(){
 									var Note = $.parseJSON(note);
 									if(Object.keys(Note).length >0){
 									$.each(Note,function(i,nota){
+										console.log("info:"+infoutente["path"]);
 										nota["immagine"]=infoutente["path"];
 										StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 									})
