@@ -264,7 +264,11 @@ class CCartella {
 			throw new Exception($e->getMessage());
 		}
 	}
-	
+	/**
+	*Funzione che restituisce un array contenente i partecipanti alla nota con Id passato per parametro
+	*@param int $_id_nota Id della nota
+	*@return array Array che contiene i partecipanti 
+	**/
 	public function inviaPartecipanti($_id_nota) {
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
 		$session = USingleton::getInstance('USession');
