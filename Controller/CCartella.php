@@ -172,8 +172,10 @@ class CCartella {
 			} elseif ($cartella_partenza['amministratore'] == $session->getValore("email")) {
 				if (($cartella_destinazione['nome'] == "Promemoria" && $nota['tipo'] == "nota") || ($cartella_destinazione['nome'] == "Nota" && $nota['tipo'] == "promemoria")) {
 					throw new Exception("Non puoi spostare una nota/promemoria nella cartella promemoria/note");
-				} elseif($nota['tipo'] == "Promemoria" && $cartella_destinazione['nome'] != "Promemoria") {
+				} elseif($nota['tipo'] == "promemoria" && $cartella_destinazione['nome'] != "Promemoria") {
 					throw new Exception("Non puoi spostare un promemoria in una cartella diversa da un gruppo o da Promemoria");
+				} elseif ($nota['tipo'] == "nota" && $cartella_destinazione['nome'] == "Promemoria") {
+					throw new Exception("Non puoi spostare una nota in Promemoria");
 				} else {
 					$pos_iniziale = $fraccoglitore_note->getNotaByIdEUtente($nota['id'],$session->getValore("email"));
 					$raccoglitore_cartella = $fraccoglitore_cartelle->getTupleByIdCartella($cartella_destinazione['id']);
@@ -347,6 +349,39 @@ class CCartella {
 	}
 	
 	public function aggiungiPartecipante() {
+		$session=USingleton::getInstance('USession');
+		$VCartella=USingleton::getInstance('VCartella');
+		$fcartella=USingleton::getInstance('FCartella');
+		$fdb=USingleton::getInstance('Fdb');
+		$fraccoglitore_cartelle=USingleton::getInstance('FRaccoglitore_cartelle');
+		$dati = $VCartella->getDati();
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$tuple = $fraccoglitore_cartelle->getTupleByIdCartella($dati['id_cartella']);
+			$permesso = FALSE;
+			$trovato = FALSE;
+			foreach ($tuple as $key => $valore) {
+				if ($session->getValore("email") == $valore['email_utente']) {
+					$permesso = TRUE;
+				}
+				if ($dati['email_utente'] == $valore['email_utente']) {
+					$trovato = TRUE;
+				}
+			}
+			if (!$permesso) {
+				throw new Exception("Permessi insufficienti");
+			} elseif ($trovato) {
+				throw new Exception("L'utente già partecipa al gruppo");
+			} else {
+					
+			}
+		} catch (Exception $e) {
+			$query->rollback();
+			throw new Exception($e->getMessage());
+		}
+		
+		
 		
 	}
 			
