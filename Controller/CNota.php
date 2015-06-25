@@ -247,6 +247,27 @@ class CNota {
     			$fraccoglitore->updateRaccoglitore($aggiornamenti3);
     			$this->aggiornaPosizioniRaccoglitore($nota['posizione'], $nota['id_cartella']);
     		} else {
+    			$racc = $fraccoglitore->getRaccoglitoreByIdNota($nota['id']);
+    			foreach ($racc as $key => $valore) {
+    				$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$valore["email_utente"]);
+    				$promemoria = $promemoria[0];
+    				$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
+    										"id_nota" => $nota['id'],
+    										"email_utente" => $valore['email_utente']);
+    				$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente($valore["email_utente"],$promemoria['id']);
+    				if (!is_null($max_posizione[0]["max(posizione)"])) {
+    					$max_posizione = $max_posizione[0]["max(posizione)"]+1;
+    				} else {
+    					$max_posizione = 0;
+    				}
+    				$aggiornamenti3 = array("posizione" => $max_posizione,
+    										"id_nota" => $dati['id'],
+    										"email_utente" => $valore['email_utente']);
+    				$fraccoglitore->updateRaccoglitore($aggiornamenti2);
+    				$fraccoglitore->updateRaccoglitore($aggiornamenti3);
+    				$this->aggiornaPosizioniRaccoglitore($max_posizione, $valore['id_cartella'],$valore['emai_utente']);
+    			}
+    			
     			$aggiornamenti4 = array("ultimo_a_modificare" => $session->getValore("email"),
     									"id" => $dati['id']);
     			$fnota->updateNota($aggiornamenti4);
