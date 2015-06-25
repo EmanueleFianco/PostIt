@@ -28,6 +28,8 @@ class CCartella {
 				return $this->getNote();
 			case 'aggiungiPartecipante':
 				return $this->aggiungiPartecipante();
+			case 'rimuoviPartecipante':
+				return $this->rimuoviPartecipante();
 		}
 	}
 	/**
@@ -384,17 +386,19 @@ class CCartella {
 				$fraccoglitore_cartelle->aggiungiAlRaccoglitoreCartelle($aggiunta);
 				$raccoglitore_note = $fraccoglitore_note->getNoteByCartella($dati['id_cartella']);
 				foreach ($raccoglitore_note as $key => $valore) {
-					//if 
+					if ($valore['email_utente'] == $session->getValore("email")) {
+						$data = array("id_nota" => $valore['id_nota'],
+									  "email_utente" => $dati['email_utente'],
+									  "id_cartella" => $dati['id_cartella'],
+									  "posizione" => $valore['posizione']);
+						$fraccoglitore_note->aggiungiAlRaccoglitoreNote($data);
+					}
 				}
 			}
 		} catch (Exception $e) {
 			$query->rollback();
 			throw new Exception($e->getMessage());
 		}
-		
-		
-		
-	}
-			
+	}	
 }
 ?>
