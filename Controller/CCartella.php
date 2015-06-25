@@ -168,6 +168,7 @@ class CCartella {
 							} else {
 								$max_cartella_destinazione = 0;
 							}
+							var_dump($max_cartella_destinazione);
 							$aggiornamento1 = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
 							$fraccoglitore_note->updateRaccoglitore($aggiornamento1);
 							$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
