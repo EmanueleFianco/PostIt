@@ -249,7 +249,7 @@ CContextmenu.prototype.GestioneCartelle= function(){
                     
                     var Data = {
                    		 controller:"cartella",
-                   		 lavoro: "condividi",
+                   		 lavoro: "nuova",
                    		 nome_cartella: $this.data().nome,
                    		 tipo : Tipo,
                    		 colore: "#FFFFFF"
