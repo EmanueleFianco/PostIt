@@ -226,7 +226,9 @@ class CRegistrazione {
     		$VRegistrazione->invia(array());
     	}
     }
-    
+    /**
+    *Funzione che permette la visualizzazione delle informazioni relative all'utente
+    **/
     public function inviaInfo() {
     	$session = USingleton::getInstance('USession');
     	$View = USingleton::getInstance('View');

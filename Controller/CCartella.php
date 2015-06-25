@@ -175,6 +175,14 @@ class CCartella {
 							$fraccoglitore_note->updateRaccoglitore($aggiornamento);
 							$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_partenza['id'],$valore['email_utente']);
 						}
+
+						$aggiornamento1 = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+						$fraccoglitore_note->updateRaccoglitore($aggiornamento1);
+						$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+						$fraccoglitore_note->updateRaccoglitore($aggiornamento);
+						$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_partenza['id'],$valore['email_utente']);
+					}
+
 				}
 			} else {
 				throw new Exception("Permesso Negato");
@@ -237,6 +245,18 @@ class CCartella {
 					$cart = $fcartella->getCartellaById($dati['id_cartella']);
 					$tipo_cart = $cart[0]["tipo"];
 					if ($tipo_cart == "privata") {
+
+						foreach ($note as $key => $value) {
+							$note[$key]["partecipanti"] = array();
+							$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+						}
+					}
+				} else {
+					if ($max_posizione+1>$dati['note_presenti']) {
+						$posizione_finale = $max_posizione - $dati['note_presenti'];
+						$posizione_iniziale = $posizione_finale - $dati['num_note'];
+						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
+						//var_dump($note);
 						foreach ($note as $key => $value) {
 							$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 						}
@@ -246,6 +266,7 @@ class CCartella {
 						$posizione_finale = $max_posizione - $dati['note_presenti'];
 						$posizione_iniziale = $posizione_finale - $dati['num_note'];
 						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
+
 						$cart = $fcartella->getCartellaById($dati['id_cartella']);
 						$tipo_cart = $cart[0]["tipo"];
 						if ($tipo_cart == "privata") {
@@ -267,7 +288,11 @@ class CCartella {
 			throw new Exception($e->getMessage());
 		}
 	}
-	
+	/**
+	*Funzione che restituisce un array contenente i partecipanti alla nota con Id passato per parametro
+	*@param int $_id_nota Id della nota
+	*@return array Array che contiene i partecipanti 
+	**/
 	public function inviaPartecipanti($_id_nota) {
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
 		$session = USingleton::getInstance('USession');
