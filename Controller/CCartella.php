@@ -231,12 +231,10 @@ class CCartella {
 						$posizione_iniziale = -1;
 					}
 					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
-					//var_dump($note);
 					$cart = $fcartella->getCartellaById($dati['id_cartella']);
 					$tipo_cart = $cart[0]["tipo"];
 					if ($tipo_cart == "privata") {
 						foreach ($note as $key => $value) {
-							$note[$key]["partecipanti"] = array();
 							$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 						}
 					}
@@ -245,12 +243,10 @@ class CCartella {
 						$posizione_finale = $max_posizione - $dati['note_presenti'];
 						$posizione_iniziale = $posizione_finale - $dati['num_note'];
 						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
-						//var_dump($note);
 						$cart = $fcartella->getCartellaById($dati['id_cartella']);
 						$tipo_cart = $cart[0]["tipo"];
 						if ($tipo_cart == "privata") {
 							foreach ($note as $key => $value) {
-								$note[$key]["partecipanti"] = array();
 								$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 							}
 						}
@@ -275,13 +271,21 @@ class CCartella {
 		$futente=USingleton::getInstance('FUtente');
 		$raccoglitore = $fraccoglitore->getRaccoglitoreByIdNota($_id_nota);
 		$condiviso = array();
+		$scala = FALSE;
 		foreach ($raccoglitore as $key => $valore) {
 			if ($valore['email_utente'] != $session->getValore("email")) {
 				$utente = $futente->getUtenteByEmail($valore['email_utente']);
 				$utente = $utente[0];
-				$condiviso[$key]["email"] = $valore['email_utente'];
-				$condiviso[$key]["path"] = "Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine'];
-			}	
+				if ($scala) {
+					$condiviso[$key-1]["email"] = $valore['email_utente'];
+					$condiviso[$key-1]["path"] = "Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine'];
+				} else {
+					$condiviso[$key]["email"] = $valore['email_utente'];
+					$condiviso[$key]["path"] = "Home.php?controller=utente&lavoro=getImmagine&file=".$utente['id_immagine'];
+				}
+			} else {
+				$scala = TRUE;
+			}
 		}
 		return $condiviso;
 	}
