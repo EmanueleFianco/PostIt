@@ -382,7 +382,10 @@ class CCartella {
 								  "email_utente" => $dati['email_utente'],
 								  "posizione" => $max_cartelle);
 				$fraccoglitore_cartelle->aggiungiAlRaccoglitoreCartelle($aggiunta);
-				$raccoglitore_note = $fraccoglitore_note->
+				$raccoglitore_note = $fraccoglitore_note->getNoteByCartella($dati['id_cartella']);
+				foreach ($raccoglitore_note as $key => $valore) {
+					//if 
+				}
 			}
 		} catch (Exception $e) {
 			$query->rollback();
