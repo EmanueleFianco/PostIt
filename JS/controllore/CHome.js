@@ -61,11 +61,11 @@ CHome.prototype.getDati=function(){
 		
 			 view.disegna(Template["Main"],Cartelle);
 			$.each(Cartelle['Cartelle'],function(i,Cartella){
-				console.log(Cartella.partecipanti);
 				StrutturaCartelle.aggiungiCartella(Cartella);
 				if(Cartella.nome == "Note"){				
 					StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
 				}
+			
 			});
 			
 			view.aggiungiNuova(Template["NuovaNota"]);
@@ -75,10 +75,12 @@ CHome.prototype.getDati=function(){
 					var Note = $.parseJSON(note);
 					if(Object.keys(Note).length >0){
 					$.each(Note,function(i,nota){
+						console.log(nota.partecipanti);
 						StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 					})
 					
 					}
+					console.log(Struttura);
 					eventi.InizializzaMenu();
 				})
 /***********************************************************************/
