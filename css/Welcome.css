@@ -62,11 +62,10 @@
 
 #accedi{
   color:black;
+  
 }
 
-#accedi:focus{
-  font-style: underline;
-}
+
 #registrati{
   color:black;
 }
@@ -407,3 +406,16 @@ input.sbagliato{
   padding-top: 40px;
  }
 }
+@media screen and (max-device-width:1920px){
+  .registrazione{
+    height: 500px;
+  }
+ .textinputregistrazione{
+  padding: 4px;
+ }
+ .linked{
+  padding-top: 30px;
+ }
+}
+
+

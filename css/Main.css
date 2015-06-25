@@ -162,8 +162,10 @@ font-size: 1rem;
 #info_utente{
  display:inline;
  float: right;
- margin-right: 50px;
+ margin-right: 100px;
  margin-top: 6px;
+ margin-left: 5px;
+ width: 20px;
 
 }
 #accountbotton{
@@ -191,11 +193,20 @@ font-size: 1rem;
     display: inline;
     float: right;
     border:solid black;
+    
     margin-top: 6px;
-    margin-right: 10px;
+    
     border-radius: 15px;
 -moz-border-radius: 15px;
 -webkit-border-radius: 15px;
+}
+
+#imageaccount
+{
+    width:20px;
+height: 20px;
+  
+
 }
 
 

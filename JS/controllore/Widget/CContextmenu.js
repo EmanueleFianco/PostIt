@@ -136,30 +136,40 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         $.contextMenu({
         selector: "#condividi"+id_nota, 
         trigger: 'left',
-        events:{hide:function(){         
-                $("#image_botton").removeClass("ruota90").end().addClass("ruota270");
-
-            }},
+       
         zIndex:900,
-        autoHide:true,
+        autoHide:false,
         animation:{duration:800,show:"show",hide:"fadeOut"},
         items: {
         	   email: {
                    name: "Condividi Con Email:", 
+                   
                    type: 'text', 
                    value: "", 
-                   events: {
-                       keyup: function(e) {
-                          console.log("ajax");
-                       }
-                   }
+                 
                },
-               key: {
-                   name: "Condividi", 
+              
+               button: {   name: "Condividi", 
                    callback: function(){
-                	   console.log("ajax");
-                   }
+                	 
+                   }   
+                   
                }
+        },
+        events: {
+        	 hide: function(opt) {
+                 var $this = this;
+                 $.contextMenu.getInputValues(opt, $this.data());
+                 var Data = {
+                		 controller:"nota",
+                		 lavoro: "condividi",
+                		 id_nota: id_nota,
+                		 email_utente: $this.data().email 		 
+                 }
+               dati.setNote(Data);
+                 
+             }
+        	
         }
     });    
         
