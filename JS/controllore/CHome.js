@@ -64,11 +64,14 @@ CHome.prototype.getDati=function(){
 		    	   .done(function(tmpl1,tmpl2){
 
 
+
 				    	var html = Mustache.to_html(tmpl1,infoutente);
 				    	
+
 				    	$("#info_utente").append(html);
-				    	var tpl=Mustache.render(tmpl2,infoutente);
-				    	$("#image_utente").render(tpl);
+				    	var tpl=Mustache.to_html(tmpl2[0],infoutente);
+				    	console.log(tpl);
+				    	$("#image_utente").append(tpl);
 				    	})
 		    	      });
 							$.each(Cartelle['Cartelle'],function(i,Cartella){
