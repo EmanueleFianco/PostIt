@@ -91,6 +91,15 @@ CMenu.prototype.Inizializza = function(){
 	
 	$(".iconmenu").click(function(){
 		
+		$.when(dati.getCartelle()).done(function(cartelle){
+			
+			
+			
+			
+			
+		});
+		
+		
 		
 		var id_cartella=$(this).attr('id');	
 		StrutturaCartelle.setCartellaAttiva(id_cartella);
