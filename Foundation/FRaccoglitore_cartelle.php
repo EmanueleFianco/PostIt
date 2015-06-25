@@ -79,7 +79,7 @@ class FRaccoglitore_cartelle extends Fdb {
 	 */
 	public function getTupleByIdCartella($_id_cartella) {
 		$this->db->setParam($this->table,"id_cartella",":id_cartella");
-		return $this->db->queryGenerica("email_utente,posizione", "=",$_id_cartella);				
+		return $this->db->queryGenerica("email_utente,posizione,id_cartella", "=",$_id_cartella);				
 	}
 	/**
 	 * Aggiorna lo stato del raccoglitore

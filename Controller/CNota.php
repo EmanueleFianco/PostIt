@@ -134,6 +134,8 @@ class CNota {
 					foreach ($raccoglitore_note as $key => $valore) {
 						$this->aggiornaPosizioniRaccoglitore($valore['posizione'], $dati['id_cartella'], $valore['email_utente']);
 					}
+				} else {
+					throw new Exception("Permesso Negato");
 				}
 			} elseif ($tipo_cartella == "privata" && $nota_condivisa == TRUE) {
 				if ($amministratore_cartella == $session->getValore("email") && $creatore_nota != $session->getValore("email")) {
@@ -279,14 +281,16 @@ class CNota {
     		throw new Exception("Permesso negato!");
     	}
     }
-    
+    /*
+    *Funzione che permette la condivisione della nota
+    */
     public function condividi() {
     	$session=USingleton::getInstance('USession');
     	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
     	$fcartella=USingleton::getInstance('FCartella');
     	$fnota=USingleton::getInstance('FNota');
     	$fdb=USingleton::getInstance('Fdb');
-    	$VNota=USingleton::getInstance('FVNota');
+    	$VNota=USingleton::getInstance('VNota');
     	$dati = $VNota->getDati();
     	$query=$fdb->getDb();
     	$query->beginTransaction();

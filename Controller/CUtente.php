@@ -37,12 +37,6 @@ class CUtente {
 		$query->beginTransaction();
 		try {
 			$cartelle=$fraccoglitore->getCartelleByUtente($session->getValore("email"));
-			foreach ($cartelle as $key => $valore) {
-				$tipo_cart = $valore['tipo'];
-				if ($tipo_cart == "gruppo") {
-					$cartelle[$key]['partecipanti'] = $this->inviaPartecipanti($valore['id_cartella']);
-				}
-			}
 			$VCartella->invia($cartelle);
 			$query->commit();
 		} catch (Exception $e) {
@@ -67,7 +61,9 @@ class CUtente {
 			unlink($file);
 		}
 	}
-	
+	/**
+	*Funzione che permette la visualizzazione delle informazioni relative all'utente
+	**/
 	public function inviaInfo() {
 		$session = USingleton::getInstance('USession');
 		$View = USingleton::getInstance('View');
@@ -79,7 +75,11 @@ class CUtente {
 					  "path" => $session->getValore("path"));
 		$View->invia($info);
 	}
-	
+	/**
+	*Funzione che restituisce un array contenente i partecipanti alla cartella con Id passato per parametro
+	*@param int $_id_cartella Id della cartella
+	*@return array Array contenente i partecipanti alla cartella
+	**/
 	public function inviaPartecipanti($_id_cartella) {
 		$fraccoglitore=USingleton::getInstance('FRaccoglitore_cartelle');
 		$session = USingleton::getInstance('USession');

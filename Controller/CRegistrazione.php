@@ -137,7 +137,8 @@ class CRegistrazione {
         $View=USingleton::getInstance('View');
         try {
         	$session->end();
-        	$View->invia(array("success" => TRUE));
+        	header('Location: index.php');
+            exit;
         } catch (Exception $e) {
         	$View->invia(array("success" => FALSE));
         }
@@ -226,7 +227,9 @@ class CRegistrazione {
     		$VRegistrazione->invia(array());
     	}
     }
-    
+    /**
+    *Funzione che permette la visualizzazione delle informazioni relative all'utente
+    **/
     public function inviaInfo() {
     	$session = USingleton::getInstance('USession');
     	$View = USingleton::getInstance('View');
