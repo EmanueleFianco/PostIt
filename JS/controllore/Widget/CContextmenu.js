@@ -207,6 +207,54 @@ CContextmenu.prototype.Aggiorna= function(id_nota){
     $('#'+cartellaAttiva).packery('reloadItems');
     $('#'+cartellaAttiva).packery();
 }
+
+CContextmenu.prototype.GestioneCartelle= function(){
+	var dati =singleton.getInstance(CDati,"CDati");
+	
+	$.contextMenu({
+        selector: "#CreaCartella", 
+        trigger: 'left',
+       
+        zIndex:900,
+        autoHide:false,
+        animation:{duration:800,show:"show",hide:"fadeOut"},
+        items: {
+        	nome : {name:"Nome",
+                	type: 'text', 
+                	value: ""}
+        	,
+        	gruppi: {
+                name: "Gruppi", 
+                type: 'checkbox', 
+                selected: false
+            },
+            inserisici: {
+            	name: "Inserisci",
+            	callback: function(){
+             		
+                }   
+            	
+            }},
+            events: {
+           	 hide: function(opt) {
+                    var $this = this;
+                    $.contextMenu.getInputValues(opt, $this.data());
+                    console.log($this.data());
+                    var Data = {
+                   		 controller:"cartella",
+                   		 lavoro: "condividi",
+                   		 nome_cartella: $this.data().nome,
+                   		 gruppo : $this.data().gruppi,
+                    }
+                  dati.setNote(Data);
+                    
+                }
+           	
+           
+        }
+        })
+	
+}
 	
 	
 	
