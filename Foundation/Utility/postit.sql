@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Giu 24, 2015 alle 14:01
+-- Generation Time: Giu 25, 2015 alle 23:51
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `cartella` (
   `tipo` enum('gruppo','privata') COLLATE utf8_unicode_ci NOT NULL,
   `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `colore` varchar(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `cartella`:
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `creata_da` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `ultimo_a_modificare` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ora_data_avviso` datetime DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- RELATIONS FOR TABLE `nota`:
@@ -118,7 +118,7 @@ DROP TABLE IF EXISTS `raccoglitore_cartelle`;
 CREATE TABLE IF NOT EXISTS `raccoglitore_cartelle` (
   `id_cartella` int(11) NOT NULL,
   `email_utente` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `posizione` int(11) NOT NULL
+  `posizione` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `raccoglitore_note` (
   `id_nota` int(11) NOT NULL,
   `email_utente` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `id_cartella` int(11) NOT NULL,
-  `posizione` int(11) NOT NULL
+  `posizione` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -177,6 +177,16 @@ CREATE TABLE IF NOT EXISTS `utente` (
 --   `id_immagine`
 --       `immagine` -> `nome`
 --
+
+--
+-- Trigger `utente`
+--
+DROP TRIGGER IF EXISTS `DeleteImmagine`;
+DELIMITER //
+CREATE TRIGGER `DeleteImmagine` AFTER DELETE ON `utente`
+ FOR EACH ROW DELETE FROM immagine where OLD.id_immagine = nome
+//
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -216,7 +226,7 @@ ALTER TABLE `raccoglitore_note`
 -- Indexes for table `utente`
 --
 ALTER TABLE `utente`
- ADD PRIMARY KEY (`email`), ADD KEY `id_immagine` (`id_immagine`);
+ ADD PRIMARY KEY (`email`), ADD UNIQUE KEY `id_immagine` (`id_immagine`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -226,12 +236,12 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `cartella`
 --
 ALTER TABLE `cartella`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=108;
 --
 -- Limiti per le tabelle scaricate
 --

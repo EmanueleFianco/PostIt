@@ -354,6 +354,7 @@ class CCartella {
 		$fcartella=USingleton::getInstance('FCartella');
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitore_cartelle=USingleton::getInstance('FRaccoglitore_cartelle');
+		$fraccoglitore_note=USingleton::getInstance('FRaccoglitore_note');
 		$dati = $VCartella->getDati();
 		$query=$fdb->getDb();
 		$query->beginTransaction();
@@ -374,7 +375,14 @@ class CCartella {
 			} elseif ($trovato) {
 				throw new Exception("L'utente già partecipa al gruppo");
 			} else {
-					
+				$max_cartelle = $fraccoglitore_cartelle->getMaxPosizioneCartellaByUtente($dat['email_utente']);
+				$max_cartelle = $max_cartelle[0]['max(posizione)'];
+				$max_cartelle = $max_cartelle+1;
+				$aggiunta = array("id_cartella" => $dati['id_cartella'],
+								  "email_utente" => $dati['email_utente'],
+								  "posizione" => $max_cartelle);
+				$fraccoglitore_cartelle->aggiungiAlRaccoglitoreCartelle($aggiunta);
+				$raccoglitore_note = $fraccoglitore_note->
 			}
 		} catch (Exception $e) {
 			$query->rollback();

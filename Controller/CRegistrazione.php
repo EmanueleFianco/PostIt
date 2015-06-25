@@ -201,12 +201,12 @@ class CRegistrazione {
     	$email_url = urlencode($email);
     	$codice_attivazione=$FUtente->getUtenteByEmail($email);
     	$codice_attivazione = $codice_attivazione[0]['codice_attivazione'];
-    	$url = "http://postit.altervista.org/Home.php?controller=registrazione&lavoro=attiva&codice_attivazione=".$codice_attivazione."&mail=".$email_url;
+    	$url = "http://postitnote.altervista.org/Home.php?controller=registrazione&lavoro=attiva&codice_attivazione=".$codice_attivazione."&mail=".$email_url;
     	$to = $mail;
     	$subject = 'Benvenuto in PostIt';
     	$message = "Clicca sul seguente link per attivare il tuo account: " . $url;
-    	$headers = 'From: postit@altervista.org' . "\r\n" .
-    			'Reply-To: cookwithus@altervista.org' . "\r\n" .
+    	$headers = 'From: postitnote@altervista.org' . "\r\n" .
+    			'Reply-To: postitnote@altervista.org' . "\r\n" .
     			'X-Mailer: PHP/' . phpversion();
     			'MIME-Version: 1.0\n' .
     			'Content-Type: text/html; charset=\"iso-8859-1\"\n' .
