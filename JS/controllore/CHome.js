@@ -91,6 +91,7 @@ CHome.prototype.getDati=function(){
 									var Note = $.parseJSON(note);
 									if(Object.keys(Note).length >0){
 									$.each(Note,function(i,nota){
+										nota["immagine"]=infoutente["path"];
 										StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 									})
 									
