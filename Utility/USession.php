@@ -41,6 +41,7 @@ class USession {
      * Termina la sessione distruggendola
      */
     function end(){
+        
     	unset($_SESSION);
     	session_destroy();
     }

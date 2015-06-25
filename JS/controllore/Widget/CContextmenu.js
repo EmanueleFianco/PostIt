@@ -143,8 +143,9 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         callback:function(key,opt){
             if(key=="logout")
             {
-                var login=singleton.getInstance(CLogin,"CLogin");
-                login.logout();
+                
+                location.replace('Home.php?controller=registrazione&lavoro=logout');
+
                     
                 
             }
