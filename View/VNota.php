@@ -43,6 +43,10 @@ class VNota extends View {
 			} else {
 				throw new Exception("Data e ora sbagliati");
 			}
+		} elseif($_chiave == "email_utente") {
+				if (!filter_var($_valore,FILTER_VALIDATE_EMAIL)) {
+					throw new Exception(ucwords($_chiave)." errato!");
+				}
 		} else {
 			$id = '/^[[:digit:]]{1,11}$/';
 			$id_nota = $id;

@@ -137,7 +137,8 @@ class CRegistrazione {
         $View=USingleton::getInstance('View');
         try {
         	$session->end();
-        	$View->invia(array("success" => TRUE));
+        	 header('Location: index.php');
+            exit;
         } catch (Exception $e) {
         	$View->invia(array("success" => FALSE));
         }
