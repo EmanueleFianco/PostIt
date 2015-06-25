@@ -228,8 +228,6 @@ class CNota {
     		$nota = $nota[0];
     		$nota_vera = $fnota->getNotaById($dati['id']);
     		$nota_vera = $nota_vera[0];
-    		$cartella = $fcartella->getCartellaById($nota['id_cartella']);
-    		$cartella = $cartella[0];
     		$fnota->updateNota($aggiornamenti);
     		$fnota->updateNota($aggiornamenti1);
     		if ($nota_vera['condiviso'] == FALSE) {
@@ -238,9 +236,8 @@ class CNota {
     			$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
     									"id_nota" => $dati['id']);
     			$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$promemoria['id']);
-    			$max_posizione = $max_posizione[0]['max(posizione)'];
-    			if (isset($max_posizione)) {
-    				$max_posizione += 1;
+    			if (!is_null($max_posizione[0]["max(posizione)"])) {
+    				$max_posizione = $max_posizione[0]["max(posizione)"]+1;
     			} else {
     				$max_posizione = 0;
     			}
@@ -251,7 +248,7 @@ class CNota {
     			$this->aggiornaPosizioniRaccoglitore($nota['posizione'], $nota['id_cartella']);
     		} else {
     			$aggiornamenti4 = array("ultimo_a_modificare" => $session->getValore("email"),
-    									"id" => $dati['id_nota']);
+    									"id" => $dati['id']);
     			$fnota->updateNota($aggiornamenti4);
     		}
     		$query->commit();

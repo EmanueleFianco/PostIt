@@ -24,7 +24,8 @@ class VCartella extends View {
 		} else {
 			$tipo = '/^(privata|gruppo)$/';
 			$id_cartella = '/^[[:digit:]]{1,11}$/';
-			$nome_cartella = '/[.]{0,30}/';
+			$id = $id_cartella;
+			$nome_cartella = '/[.]{3,30}/';
 			$colore = '/^#([A-F]|[0-9]){6}$/';
 			if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");

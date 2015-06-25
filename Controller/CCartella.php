@@ -26,6 +26,8 @@ class CCartella {
 				return $this->spostaNote();
 			case 'getNote':
 				return $this->getNote();
+			case 'aggiungiPartecipante':
+				return $this->aggiungiPartecipante();
 		}
 	}
 	/**
@@ -71,15 +73,22 @@ class CCartella {
 	public function Cancella(){
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
+		$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
 		$fcartella=USingleton::getInstance('FCartella');
+		$fnota=USingleton::getInstance('FNota');
 		$VCartella=USingleton::getInstance('VCartella');
 		$session = USingleton::getInstance('USession');
 		$dati = $VCartella->getDati();
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
+			$note_della_cartella = $fraccoglitoreNote->getNoteByCartella($dati['id'],$session->getValore("email"));
 			$cartella_da_cancellare = $fcartella->getCartellaById($dati['id']);
-			if (isset($cartella_da_cancellare) && $cartella_da_cancellare[0]['amministratore'] == $session->getValore("email")) { 
+			$cartella_da_cancellare = $cartella_da_cancellare[0];
+			if ($cartella_da_cancellare['nome'] == "Note" || $cartella_da_cancellare['nome'] == "Promemoria" || $cartella_da_cancellare['nome'] == "Archivio" || $cartella_da_cancellare['nome'] == "Cestino") {
+				throw new Exception("Non puoi cancellare le cartelle di default");
+			}
+			if ($cartella_da_cancellare && $cartella_da_cancellare['amministratore'] == $session->getValore("email")) { 
 				$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id']);
 				$fcartella->deleteCartella($dati);
 				foreach ($select as $key => $valore) {
@@ -87,6 +96,11 @@ class CCartella {
 					$query1->bindParam(":pos",$valore['posizione']);
 					$query1->bindParam(":email_delete",$valore['email_utente']);
 					$query1->execute();
+				}
+				foreach ($note_della_cartella as $key => $valore) {
+					if (!$valore['condiviso']) {
+						$fnota->deleteNota($valore['id_nota']);
+					}
 				}
 				$query->commit();
 			} else {
@@ -158,6 +172,8 @@ class CCartella {
 			} elseif ($cartella_partenza['amministratore'] == $session->getValore("email")) {
 				if (($cartella_destinazione['nome'] == "Promemoria" && $nota['tipo'] == "nota") || ($cartella_destinazione['nome'] == "Nota" && $nota['tipo'] == "promemoria")) {
 					throw new Exception("Non puoi spostare una nota/promemoria nella cartella promemoria/note");
+				} elseif($nota['tipo'] == "Promemoria" && $cartella_destinazione['nome'] != "Promemoria") {
+					throw new Exception("Non puoi spostare un promemoria in una cartella diversa da un gruppo o da Promemoria");
 				} else {
 					$pos_iniziale = $fraccoglitore_note->getNotaByIdEUtente($nota['id'],$session->getValore("email"));
 					$raccoglitore_cartella = $fraccoglitore_cartelle->getTupleByIdCartella($cartella_destinazione['id']);
@@ -328,6 +344,10 @@ class CCartella {
 			}
 		}	
 		return $ritorno;
+	}
+	
+	public function aggiungiPartecipante() {
+		
 	}
 			
 }
