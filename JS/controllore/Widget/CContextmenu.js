@@ -143,7 +143,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         callback:function(key,opt){
             if(key=="logout")
             {
-                
+                localStorage.setItem('login',false);
                 location.replace('Home.php?controller=registrazione&lavoro=logout');
 
                     

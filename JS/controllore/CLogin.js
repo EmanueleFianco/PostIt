@@ -15,9 +15,11 @@ if(this.controllaDatiLogin())
 	             
 	    	    infoutente=$.parseJSON(ricevuta);	    	    
  				if(infoutente['error']==null)//esito positivo 
- 				{
+ 				{   
+ 					localStorage.setItem('login',true);
  					vista.smonta("#menu_welcome");
 					chome.getDati();
+
  				}
  				else
  				{
