@@ -18,21 +18,22 @@ CNota.prototype.Inizializza = function(){
 				var cartellaAttiva = StrutturaCartelle.getCartellaAttiva();
 				var nomeCartellaAttiva = Struttura[cartellaAttiva].nome;
 				
-				if(nota.ora_data_avviso == "" && nomeCartellaAttiva == "Note" ){
-				html=view.setNota(cartellaAttiva,nota,Template["Nota"],"TRUE");
-				$('#'+cartellaAttiva).packery( 'appended', html );
+				if((nota.ora_data_avviso == "" && nomeCartellaAttiva == "Promemoria") ||(nota.ora_data_avviso != "" && nomeCartellaAttiva == "Note") ){
+					$(".NuovaNota").remove();
+					view.aggiungiNuova(Template["NuovaNota"]);
+					$('#'+cartellaAttiva).packery('reloadItems');
+					$('#'+cartellaAttiva).packery();
 				}
-				if(nota.ora_data_avviso != "" && nomeCartellaAttiva == "Promemoria" ){
+				else{
 					html=view.setNota(cartellaAttiva,nota,Template["Nota"],"TRUE");
 					$('#'+cartellaAttiva).packery( 'appended', html );
-					}
+					$(".NuovaNota").remove();
+					view.aggiungiNuova(Template["NuovaNota"]);
+					$('#'+cartellaAttiva).packery('reloadItems');
+					$('#'+cartellaAttiva).packery();
+				}
 				
-				$(".NuovaNota").remove();
-				view.aggiungiNuova(Template["NuovaNota"]);
-				$('#'+cartellaAttiva).packery('reloadItems');
-				$('#'+cartellaAttiva).packery();
-				
-				
+		
 				
 			
 			  });
