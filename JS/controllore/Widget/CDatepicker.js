@@ -35,10 +35,18 @@ CDatepicker.prototype.Inizializza = function(id_nota){
 			else{
 				id_nota_nuova = id_nota;
 			}
-			console.log(id_nota_nuova);
+		
 			dateText = dateText + ":00";
 			if(dateText != ""){
+
 				StrutturaCartelle.AggiornaNota(id_nota_nuova,"ora_data_avviso",dateText);
+				
+				if(id_nota != "Nuova"){
+					StrutturaCartelle.EliminaNota(id_nota_nuova);
+					$("#"+cartellaAttiva).packery( 'remove',$("#"+id_nota));
+					$("#"+id_nota).remove();
+					$("#"+cartellaAttiva).packery();
+					}
 			}
 			
 		
