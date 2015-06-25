@@ -151,7 +151,7 @@ class CCartella {
 			} elseif ($cartella_destinazione['tipo'] == "gruppo" && $nota['condiviso']) {
 				throw new Exception("Impossibile spostare una nota condivisa in un gruppo");
 			} elseif ($cartella_partenza['amministratore'] == $session->getValore("email")) {
-				if (($cartella_destinazione['tipo'] == "Promemoria" && $nota['tipo'] == "nota") || ($cartella_destinazione['tipo'] == "Nota" && $nota['tipo'] == "promemoria")) {
+				if (($cartella_destinazione['nome'] == "Promemoria" && $nota['tipo'] == "nota") || ($cartella_destinazione['nome'] == "Nota" && $nota['tipo'] == "promemoria")) {
 					throw new Exception("Non puoi spostare una nota/promemoria nella cartella promemoria/note");
 				} else {
 					if ($cartella_destinazione['tipo'] == "gruppo") {
@@ -235,7 +235,7 @@ class CCartella {
 					$tipo_cart = $cart[0]["tipo"];
 					if ($tipo_cart == "privata") {
 						foreach ($note as $key => $value) {
-							$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+							$note[]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 						}
 					}
 				} else {
@@ -247,7 +247,7 @@ class CCartella {
 						$tipo_cart = $cart[0]["tipo"];
 						if ($tipo_cart == "privata") {
 							foreach ($note as $key => $value) {
-								$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+								$note[]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 							}
 						}
 					} else {
