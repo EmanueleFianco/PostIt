@@ -52,13 +52,22 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                                       lavoro:"cancella"
                                   };
                             
-                            dati.setNote(Dati);
-                            $("#"+id_nota).remove();
-                            StrutturaCartelle.EliminaNota(id_nota);
-                            var nota = StrutturaCartelle.getNota(id_nota)
-                            $('#'+cartellaAttiva).packery('remove',nota);
-                            $('#'+cartellaAttiva).packery('reloadItems');
-                            $('#'+cartellaAttiva).packery();
+                            $.when(dati.setNote(Dati)).done(function(dati){
+                            	var data = $.parseJSON(dati);
+                            	if(Object.keys(data).length == 0){
+                            		  $("#"+id_nota).remove();
+                                      StrutturaCartelle.EliminaNota(id_nota);
+                                      var nota = StrutturaCartelle.getNota(id_nota)
+                                      $('#'+cartellaAttiva).packery('remove',nota);
+                                      $('#'+cartellaAttiva).packery('reloadItems');
+                                      $('#'+cartellaAttiva).packery();
+                            	}
+                            	else{
+                            	$("#bloccata"+id_nota).css("display","block").text("Non hai i permessi per cancellare la nota");
+               					 $("#bloccata"+id_nota).fadeOut(6000);
+                            	}	
+                            });
+                          
             		 	}     
             		 }
             		 if(key == "note"){
