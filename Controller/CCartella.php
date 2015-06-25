@@ -353,7 +353,6 @@ class CCartella {
 	public function aggiungiPartecipante() {
 		$session=USingleton::getInstance('USession');
 		$VCartella=USingleton::getInstance('VCartella');
-		$fcartella=USingleton::getInstance('FCartella');
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitore_cartelle=USingleton::getInstance('FRaccoglitore_cartelle');
 		$fraccoglitore_note=USingleton::getInstance('FRaccoglitore_note');
@@ -395,10 +394,60 @@ class CCartella {
 					}
 				}
 			}
+			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback();
 			throw new Exception($e->getMessage());
 		}
 	}	
+	
+	public function rimuoviPartecipante() {
+		$session=USingleton::getInstance('USession');
+		$VCartella=USingleton::getInstance('VCartella');
+		$fcartella=USingleton::getInstance('FCartella');
+		$fdb=USingleton::getInstance('Fdb');
+		$fraccoglitore_cartelle=USingleton::getInstance('FRaccoglitore_cartelle');
+		$fraccoglitore_note=USingleton::getInstance('FRaccoglitore_note');
+		$dati = $VCartella->getDati();
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$tuple = $fraccoglitore_cartelle->getTupleByIdCartella($dati['id_cartella']);
+			$cartella = $fcartella->getCartellaById($dati['id_cartella']);
+			$amministratore = $cartella[0]['amministratore'];
+			if ($amministratore == $dati['utente']) {
+				throw new Exception("Non si può cancellare l'amministratore del gruppo");
+			}
+			$permesso = FALSE;
+			$trovato = FALSE;
+			foreach ($tuple as $key => $valore) {
+				if ($session->getValore("email") == $valore['email_utente']) {
+					$permesso = TRUE;
+				}
+				if ($dati['email_utente'] == $valore['email_utente']) {
+					$trovato = TRUE;
+					$posizione = $valore['posizione'];
+				}
+			}
+			if (!$permesso) {
+				throw new Exception("Permessi insufficienti");
+			} elseif (!$trovato) {
+				throw new Exception("L'utente non partecipa al gruppo");
+			} else {
+				$data = array("id_cartella" => $dati['id_cartella'],
+							  "email_utente" => $dati['email_utente']);
+				$fraccoglitore_cartelle->deleteRaccoglitore($data);
+				$query1=$query->prepare("CALL AggiornaPosizioneCartelle(:pos,:email_delete)");
+				$query1->bindParam(":pos",$posizione);
+				$query1->bindParam(":email_delete",$dati['email_utente']);
+				$query1->execute();
+			}
+			$query->commit();
+		} catch (Exception $e) {
+			$query->rollback();
+			throw new Exception($e->getMessage());
+			
+		}
+	}
 }
 ?>
