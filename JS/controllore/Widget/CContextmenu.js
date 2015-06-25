@@ -239,12 +239,19 @@ CContextmenu.prototype.GestioneCartelle= function(){
            	 hide: function(opt) {
                     var $this = this;
                     $.contextMenu.getInputValues(opt, $this.data());
-                    console.log($this.data());
+                    var Tipo;
+                    if($this.data().gruppi){
+                    	Tipo = "gruppo"
+                    }
+                    else{
+                    	Tipo = "privata"
+                    }
+                    
                     var Data = {
                    		 controller:"cartella",
                    		 lavoro: "condividi",
                    		 nome_cartella: $this.data().nome,
-                   		 gruppo : $this.data().gruppi,
+                   		 tipo : Tipo,
                     }
                   dati.setNote(Data);
                     
