@@ -42,6 +42,7 @@ class CNota {
 		$VNota=USingleton::getInstance('VNota');
 		$dati = $VNota->getDati();
 		$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
+		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
 		$fnota=USingleton::getInstance('FNota');
 		$fcartella=USingleton::getInstance('FCartella');
 		$fdb=USingleton::getInstance('Fdb');
@@ -80,11 +81,14 @@ class CNota {
 			}
 			$fnota->inserisciNota($nota,$session->getValore("email"));
 			$id = $query->lastInsertId();
-			$parametri = array("id_nota" => $id,
-							   "email_utente" => $session->getValore("email"),
-							   "id_cartella" => $dati['id_cartella'],
-							   "posizione" => $dati['posizione']);
-			$fraccoglitoreNote->aggiungiAlRaccoglitoreNote($parametri);
+			$cart = $fraccoglitoreCartelle->getTupleByIdCartella($cartella[0]['id']);
+			foreach ($cart as $key => $valore) {
+				$parametri = array("id_nota" => $id,
+								   "email_utente" => $valore['email_utente'],
+								   "id_cartella" => $dati['id_cartella'],
+								   "posizione" => $dati['posizione']);
+				$fraccoglitoreNote->aggiungiAlRaccoglitoreNote($parametri);
+			}
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollBack();
