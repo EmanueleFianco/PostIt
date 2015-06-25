@@ -23,6 +23,14 @@ CNota.prototype.Inizializza = function(){
 					view.aggiungiNuova(Template["NuovaNota"]);
 					$('#'+cartellaAttiva).packery('reloadItems');
 					$('#'+cartellaAttiva).packery();
+					if(nomeCartellaAttiva == "Promemoria"){
+					$("#bloccata").css("display","block").text("Nota Spostata in Note");
+  					$("#bloccata").fadeOut(6000);
+					}
+					else{
+						$("#bloccata").css("display","block").text("Nota Spostata in Promemoria");
+	  					$("#bloccata").fadeOut(6000);
+					}
 				}
 				else{
 					html=view.setNota(cartellaAttiva,nota,Template["Nota"],"TRUE");
