@@ -101,10 +101,23 @@ class CNota {
 	 * Permette di aggiornare lo stato di una nota
 	 */
 	public function Aggiorna(){
-		$VNota=USingleton::getInstance('VNota');
-		$dati = $VNota->getDati();
-		$fnota=USingleton::getInstance('FNota');
-		$fnota->updateNota($dati);
+		$session = USingleton::getInstance('USession');
+		$fdb=USingleton::getInstance('Fdb');
+		$query=$fdb->getDb();
+		$query->beginTransaction();
+		try {
+			$VNota=USingleton::getInstance('VNota');
+			$dati = $VNota->getDati();
+			$fnota=USingleton::getInstance('FNota');
+			$fnota->updateNota($dati);
+			$ultimo = array("ultimo_a_modificare" => $session->getValore("email"),
+							"id" => $dati['id']);
+			$fnota->updateNota($ultimo);
+			$query->commit();
+		} catch (Exception $e) {
+			$query->rollback();
+			throw new Exception($e->getMessage());			
+		}
 	}
 	/**
 	 * Permette di cancellare una nota e di mandarla nel cestino (se già si trova nel cestino si elimina
@@ -182,6 +195,7 @@ class CNota {
 			} else {
 				throw new Exception("Permesso Negato");
 			}
+			$VNota->invia(array());
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback();
@@ -278,8 +292,9 @@ class CNota {
     					$shm->put($id,$session->getValore("email"));
     					$VNota->invia(array());
     				}
+    			} else {
+    				$VNota->invia(array());
     			}
-    			$VNota->invia(array());
     		}
     	} else {
     		throw new Exception("Permesso negato!");
