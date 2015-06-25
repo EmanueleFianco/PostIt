@@ -252,6 +252,7 @@ CContextmenu.prototype.GestioneCartelle= function(){
                    		 lavoro: "condividi",
                    		 nome_cartella: $this.data().nome,
                    		 tipo : Tipo,
+                   		 colore: "#FFFFFF"
                     }
                   dati.setNote(Data);
                     
