@@ -51,7 +51,10 @@ CHome.prototype.getDati=function(){
 	var eventi = singleton.getInstance(CEventi,"CEventi");
 	var view = singleton.getInstance(View,"View");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
-	StrutturaCartelle.Inizializza();		
+	StrutturaCartelle.Inizializza();
+	$.when(dati.getInfoUtente()).done(function(info){
+		infoutente=$.parseJSON(info);
+	})		
     $.when(dati.getCartelle()).done(function(cartelle){
     var Cartelle = new Object();
 	//controlla dati arrivati 

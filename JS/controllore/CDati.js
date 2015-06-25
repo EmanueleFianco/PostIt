@@ -67,3 +67,14 @@ CDati.prototype.setNote = function(data){
 	});
 	
 }
+
+CDati.prototype.getInfoUtente=function(){
+	return $.ajax({
+		type:'POST',
+		url:'Home.php',
+		data:{
+			  controller:'utente',
+			  lavoro:'inviaInfo'
+		}
+	});
+}
