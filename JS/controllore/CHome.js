@@ -6,9 +6,10 @@ var CHome = function(){
 	var dati =singleton.getInstance(CDati,"CDati");
 	var eventi = singleton.getInstance(CEventi,"CEventi");
 	var view = singleton.getInstance(View,"View");
-
-	if($.pgwCookie({name:'PHPSESSID'})!=null && localStorage.getItem('login')==0)
-	{   var vista=singleton.getInstance(View,"View");
+   
+	if($.pgwCookie({name:'PHPSESSID'})!=null && $.jStorage.get('login')==true)
+	{   
+		var vista=singleton.getInstance(View,"View");
         vista.smonta("#menu_welcome"); 
         $.when(dati.getTemplate("Main"),
 			dati.getTemplate("Nota"),
@@ -20,12 +21,13 @@ var CHome = function(){
 		Template["NuovaNota"]= N3[0];
 		Template["Cartella"]=N4[0]});
 		this.getDati();
+
 	   
 
 	}
 	else
 	{
-	
+	$.jStorage.set('login',false);
 	$.when(dati.getTemplate("Main"),
 			dati.getTemplate("Nota"),
 			dati.getTemplate("NuovaNota"),
@@ -89,6 +91,7 @@ CHome.prototype.getDati=function(){
 									var Note = $.parseJSON(note);
 									if(Object.keys(Note).length >0){
 									$.each(Note,function(i,nota){
+										nota["immagine"]=infoutente["path"];
 										StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 									})
 									
