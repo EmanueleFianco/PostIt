@@ -192,6 +192,32 @@ font-size: 1rem;
     
     
 }
+#CreaCartella{
+    float: right;
+    display: inline;
+    width: 180px;
+    margin-top: 8px;
+    margin-right: 10px;
+    border:solid;
+     border-radius: 10px;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+
+    
+}
+
+#EliminaCartella{
+     float: right;
+    display: inline;
+    width: 180px;
+    margin-top: 8px;
+    border:solid;
+    margin-right: 20px;
+     border-radius: 10px;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+
+}
 #image_utente{
     display: inline;
     float: right;
