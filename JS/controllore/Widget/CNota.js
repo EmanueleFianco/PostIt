@@ -33,9 +33,9 @@ CNota.prototype.Inizializza = function(){
 					}
 				}
 				else{
+					$(".NuovaNota").remove();
 					html=view.setNota(cartellaAttiva,nota,Template["Nota"],"TRUE");
 					$('#'+cartellaAttiva).packery( 'appended', html );
-					$(".NuovaNota").remove();
 					view.aggiungiNuova(Template["NuovaNota"]);
 					$('#'+cartellaAttiva).packery('reloadItems');
 					$('#'+cartellaAttiva).packery();
