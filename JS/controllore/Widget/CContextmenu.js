@@ -211,7 +211,7 @@ CContextmenu.prototype.Aggiorna= function(id_nota){
 CContextmenu.prototype.GestioneCartelle= function(){
 	var dati =singleton.getInstance(CDati,"CDati");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
-	var contexmenu = singleton.getInstance(CContextmenu,"CContextmenu");
+	var eventi = singleton.getInstance(CEventi,"CEventi");
 	
 	$.contextMenu({
         selector: "#CreaCartella", 
@@ -232,10 +232,7 @@ CContextmenu.prototype.GestioneCartelle= function(){
             },
             inserisici: {
             	name: "Inserisci",
-            	callback: function(){
-             		
-                }   
-            	
+            
             }},
             events: {
            	 hide: function(opt) {
@@ -255,10 +252,13 @@ CContextmenu.prototype.GestioneCartelle= function(){
                    		 nome_cartella: $this.data().nome,
                    		 tipo : Tipo,
                    		 colore: "#FFFFFF"
-                    }
+                    };
+                    
                   dati.setNote(Data);
-                   var append= "<div name="+$this.data().nome+" id="+id_cartella+" class="+"cartella"+"></div>";
-                   contexmenu.GestioneCartelle();
+                	  
+             
+                 
+                   
                 }
            	
            
