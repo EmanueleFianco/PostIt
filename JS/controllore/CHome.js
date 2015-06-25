@@ -7,7 +7,7 @@ var CHome = function(){
 	var eventi = singleton.getInstance(CEventi,"CEventi");
 	var view = singleton.getInstance(View,"View");
 
-	if($.cookie('PHPSESSID')!=null)
+	if($.pgwCookie({name:'PHPSESSID'})!=null)
 	{   var vista=singleton.getInstance(View,"View");
         vista.smonta("#menu_welcome"); 
         $.when(dati.getTemplate("Main"),
