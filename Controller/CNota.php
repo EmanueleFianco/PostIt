@@ -281,7 +281,9 @@ class CNota {
     		throw new Exception("Permesso negato!");
     	}
     }
-    
+    /*
+    *Funzione che permette la condivisione della nota
+    */
     public function condividi() {
     	$session=USingleton::getInstance('USession');
     	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
