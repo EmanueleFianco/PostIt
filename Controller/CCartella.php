@@ -157,21 +157,23 @@ class CCartella {
 					if ($cartella_destinazione['tipo'] == "gruppo") {
 						$agg = array("condiviso" => TRUE,"id" => $nota['id']);
 						$fnota->UpdateNota($agg);
+						$raccoglitore = $fraccoglitore_note->getRaccoglitoreByIdNota($nota['id']);
+					} else {
+						$raccoglitore = $fraccoglitore_note->getNotaByIdEUtente($nota['id'],$session->getValore("email"));
 					}
-					$raccoglitore = $fraccoglitore_note->getRaccoglitoreByIdNota($nota['id']);
-					foreach ($raccoglitore as $key => $valore) {
-						$max_cartella_destinazione = $fraccoglitore_note->getMaxPosizioneNotaByCartellaEUtente($valore['email_utente'],$cartella_destinazione['id']);
-						if (!is_null($max_cartella_destinazione[0]["max(posizione)"])) {
-							$max_cartella_destinazione = $max_cartella_destinazione[0]['max(posizione)']+1;
-						} else {
-							$max_cartella_destinazione = 0;
+						foreach ($raccoglitore as $key => $valore) {
+							$max_cartella_destinazione = $fraccoglitore_note->getMaxPosizioneNotaByCartellaEUtente($valore['email_utente'],$cartella_destinazione['id']);
+							if (!is_null($max_cartella_destinazione[0]["max(posizione)"])) {
+								$max_cartella_destinazione = $max_cartella_destinazione[0]['max(posizione)']+1;
+							} else {
+								$max_cartella_destinazione = 0;
+							}
+							$aggiornamento1 = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+							$fraccoglitore_note->updateRaccoglitore($aggiornamento1);
+							$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
+							$fraccoglitore_note->updateRaccoglitore($aggiornamento);
+							$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_partenza['id'],$valore['email_utente']);
 						}
-						$aggiornamento1 = array("posizione" => $max_cartella_destinazione,"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
-						$fraccoglitore_note->updateRaccoglitore($aggiornamento1);
-						$aggiornamento = array("id_cartella" => $cartella_destinazione['id'],"id_nota" => $nota['id'],"email_utente" => $valore['email_utente']);
-						$fraccoglitore_note->updateRaccoglitore($aggiornamento);
-						$cnota->aggiornaPosizioniRaccoglitore($valore['posizione'],$cartella_partenza['id'],$valore['email_utente']);
-					}
 				}
 			} else {
 				throw new Exception("Permesso Negato");
