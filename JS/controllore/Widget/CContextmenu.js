@@ -211,6 +211,7 @@ CContextmenu.prototype.Aggiorna= function(id_nota){
 CContextmenu.prototype.GestioneCartelle= function(){
 	var dati =singleton.getInstance(CDati,"CDati");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
+	var contexmenu = singleton.getInstance(CContextmenu,"CContextmenu");
 	
 	$.contextMenu({
         selector: "#CreaCartella", 
@@ -256,7 +257,8 @@ CContextmenu.prototype.GestioneCartelle= function(){
                    		 colore: "#FFFFFF"
                     }
                   dati.setNote(Data);
-                    
+                   var append= "<div name="+$this.data().nome+" id="+id_cartella+" class="+"cartella"+"></div>";
+                   contexmenu.GestioneCartelle();
                 }
            	
            
@@ -305,7 +307,7 @@ CContextmenu.prototype.GestioneCartelle= function(){
         		var Data = {
                    		 controller:"cartella",
                    		 lavoro: "elimina",
-                   		 id_cartella : id_cartella_elimina
+                   		 id: id_cartella_elimina
                     }
         		
                   dati.setNote(Data);
