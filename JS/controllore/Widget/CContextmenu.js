@@ -146,7 +146,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                 var login=singleton.getInstance(CLogin,"CLogin");
                 login.logout();
                     
-                })
+                
             }
         }
     });
