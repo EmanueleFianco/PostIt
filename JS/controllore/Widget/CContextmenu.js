@@ -9,6 +9,9 @@ CContextmenu.prototype.Inizializza = function(id_nota){
 	
 	var nomi_cartelle_gruppo = new Object();
 	var nomi_cartelle_private = new Object();
+	
+
+	
 	$.each(Struttura,function(i,cartella){
 		if(cartella.nome != "Note" && cartella.nome != "Promemoria" &&cartella.nome != "Archivio" &&cartella.nome != "Cestino"){
 			if(cartella.tipo == "gruppo"){
@@ -232,6 +235,9 @@ CContextmenu.prototype.GestioneCartelle= function(){
             },
             inserisici: {
             	name: "Inserisci",
+            	callback : function(key){
+            		
+            	}
             
             }},
             events: {
@@ -316,8 +322,91 @@ CContextmenu.prototype.GestioneCartelle= function(){
            	
            
         
-        })
+        });
+        
+        
+        //******************************************************
 	
+       $.contextMenu({
+        selector: "#aggiungiPartecipante", 
+        trigger: 'left',
+       
+        zIndex:900,
+        autoHide:false,
+        animation:{duration:800,show:"show",hide:"fadeOut"},
+        items:{
+     	   email: {
+                name: "Condividi Con Email:", 
+                type: 'text', 
+                value: "", 
+              
+            },
+           
+            button: {   name: "Condividi", 
+                callback: function(){
+             	 
+                }   
+                
+            }
+        	},
+        	events: {
+        		hide: function(opt) {
+        			var $this = this;
+        			$.contextMenu.getInputValues(opt, $this.data());
+        			var Data = {
+        					controller:"cartella",
+        					lavoro: "aggiungiPartecipante",
+        					email_utente: $this.data().email,
+        					id_cartella: StrutturaCartelle.getCartellaAttiva()
+        			}
+        			dati.setNote(Data);
+              
+          }
+     	
+     } 
+        
+        }) 
+        
+   //************************************************************     
+        $.contextMenu({
+            selector: "#eliminaPartecipante", 
+            trigger: 'left',
+            zIndex:900,
+            autoHide:false,
+            animation:{duration:800,show:"show",hide:"fadeOut"},
+            items:{
+         	   email: {
+                    name: "Elimina Partecipante:", 
+                    type: 'text', 
+                    value: "", 
+                  
+                },
+               
+                button: {   name: "Elimina", 
+                    callback: function(){
+                 	 
+                    }   
+                    
+                }
+            	},
+            	events: {
+            		hide: function(opt) {
+            			var $this = this;
+            			$.contextMenu.getInputValues(opt, $this.data());
+            			var Data = {
+            					controller:"cartella",
+            					lavoro: "rimuoviPartecipante",
+            					email_utente: $this.data().email,
+            					id_cartella: StrutturaCartelle.getCartellaAttiva()
+            			}
+            			dati.setNote(Data);
+                  
+              }
+         	
+         }
+        });
+           
+            
 }
 	
 	

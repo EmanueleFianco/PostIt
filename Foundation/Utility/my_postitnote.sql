@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Giu 25, 2015 alle 23:51
+-- Generation Time: Giu 26, 2015 alle 00:05
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -17,21 +17,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `u837991451_posti`
+-- Database: `my_postitnote`
 --
 
-
-USE `u837991451_posti`;
-
-
---
-
+-- --------------------------------------------------------
 
 --
 -- Struttura della tabella `cartella`
 --
 
-DROP TABLE IF EXISTS `cartella`;
 CREATE TABLE IF NOT EXISTS `cartella` (
 `id` int(11) NOT NULL,
   `amministratore` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
@@ -52,7 +46,6 @@ CREATE TABLE IF NOT EXISTS `cartella` (
 -- Struttura della tabella `immagine`
 --
 
-DROP TABLE IF EXISTS `immagine`;
 CREATE TABLE IF NOT EXISTS `immagine` (
   `nome` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `size` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
@@ -69,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `immagine` (
 -- Struttura della tabella `nota`
 --
 
-DROP TABLE IF EXISTS `nota`;
 CREATE TABLE IF NOT EXISTS `nota` (
 `id` int(11) NOT NULL,
   `titolo` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
@@ -94,7 +86,6 @@ CREATE TABLE IF NOT EXISTS `nota` (
 -- Struttura della tabella `raccoglitore_cartelle`
 --
 
-DROP TABLE IF EXISTS `raccoglitore_cartelle`;
 CREATE TABLE IF NOT EXISTS `raccoglitore_cartelle` (
   `id_cartella` int(11) NOT NULL,
   `email_utente` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
@@ -115,7 +106,6 @@ CREATE TABLE IF NOT EXISTS `raccoglitore_cartelle` (
 -- Struttura della tabella `raccoglitore_note`
 --
 
-DROP TABLE IF EXISTS `raccoglitore_note`;
 CREATE TABLE IF NOT EXISTS `raccoglitore_note` (
   `id_nota` int(11) NOT NULL,
   `email_utente` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
@@ -139,7 +129,6 @@ CREATE TABLE IF NOT EXISTS `raccoglitore_note` (
 -- Struttura della tabella `utente`
 --
 
-DROP TABLE IF EXISTS `utente`;
 CREATE TABLE IF NOT EXISTS `utente` (
   `username` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `password` char(32) COLLATE utf8_unicode_ci NOT NULL,
@@ -157,16 +146,6 @@ CREATE TABLE IF NOT EXISTS `utente` (
 --   `id_immagine`
 --       `immagine` -> `nome`
 --
-
---
--- Trigger `utente`
---
-DROP TRIGGER IF EXISTS `DeleteImmagine`;
-DELIMITER //
-CREATE TRIGGER `DeleteImmagine` AFTER DELETE ON `utente`
- FOR EACH ROW DELETE FROM immagine where OLD.id_immagine = nome
-//
-DELIMITER ;
 
 --
 -- Indexes for dumped tables

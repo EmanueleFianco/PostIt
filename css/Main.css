@@ -220,6 +220,34 @@ background-color: #9A9A80;
 -webkit-border-radius: 10px;
 
 }
+
+#aggiungiPartecipante{
+	display:none;
+     float: right;
+    width: 180px;
+    margin-top: 8px;
+    border:solid;
+    background-color: #9A9A80;
+    margin-right: 20px;
+     border-radius: 10px;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+
+}
+#eliminaPartecipante{
+	display:none;
+     float: right;
+    width: 180px;
+    margin-top: 8px;
+    border:solid;
+    background-color: #9A9A80;
+    margin-right: 20px;
+     border-radius: 10px;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+
+}
+
 #image_utente{
     display: inline;
     float: right;
