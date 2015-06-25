@@ -144,7 +144,7 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             if(key=="logout")
             {
                 var login=singleton.getInstance(CLogin,"CLogin");
-                login.logout());
+                login.logout();
                     
                 })
             }
