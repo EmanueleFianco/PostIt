@@ -135,8 +135,19 @@ CContextmenu.prototype.Inizializza = function(id_nota){
                     "item2": {"name": "Nome_Gruppo"},
                     "item3": {"name": "Nome_Gruppo"}
             
-                }},          
+                }}, 
+            "logout":{name:"logout",icon:"door"}    
+
              
+        },
+        callback:function(key,opt){
+            if(key=="logout")
+            {
+                var login=singleton.getInstance(CLogin,"CLogin");
+                login.logout();
+                    
+                })
+            }
         }
     });
         

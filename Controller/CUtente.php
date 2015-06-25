@@ -37,12 +37,6 @@ class CUtente {
 		$query->beginTransaction();
 		try {
 			$cartelle=$fraccoglitore->getCartelleByUtente($session->getValore("email"));
-			foreach ($cartelle as $key => $valore) {
-				$tipo_cart = $valore['tipo'];
-				if ($tipo_cart == "gruppo") {
-					$cartelle[$key]['partecipanti'] = $this->inviaPartecipanti($valore['id_cartella']);
-				}
-			}
 			$VCartella->invia($cartelle);
 			$query->commit();
 		} catch (Exception $e) {

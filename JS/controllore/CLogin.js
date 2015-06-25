@@ -130,3 +130,14 @@ CLogin.prototype.controllaEmail=function(){
 	})
 
 }
+
+CLogin.prototype.logout=function(){
+	$.ajax({
+		type:'POST',
+		url:'Home.php',
+		data:{
+			  controller:'registrazione',
+			  lavoro:'logout'		
+			}
+	})
+}
