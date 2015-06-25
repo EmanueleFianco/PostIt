@@ -42,7 +42,7 @@ class USession {
      */
     function end(){
         
-    	unset($_SESSION);
+    	session_start();
     	session_destroy();
     }
 }
