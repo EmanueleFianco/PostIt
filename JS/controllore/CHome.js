@@ -63,11 +63,12 @@ CHome.prototype.getDati=function(){
 		   				 	dati.getTemplate("immagineprofilo"))
 		    	   .done(function(tmpl1,tmpl2){
 
-				    	var html = Mustache.to_html(tmpl1,infoutente);
+				    	var html = Mustache.to_html(tmpl1[0],infoutente);
 				    	console.log(html);
 				    	$("#info_utente").append(html);
-				    	var tpl=Mustache.render(tmpl2,infoutente);
-				    	$("#image_utente").render(tpl);
+				    	var tpl=Mustache.to_html(tmpl2[0],infoutente);
+				    	console.log(tpl);
+				    	$("#image_utente").append(tpl);
 				    	})
 		    	      });
 							$.each(Cartelle['Cartelle'],function(i,Cartella){
