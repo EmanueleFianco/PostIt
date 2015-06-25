@@ -52,44 +52,55 @@ CHome.prototype.getDati=function(){
 	var view = singleton.getInstance(View,"View");
 	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	StrutturaCartelle.Inizializza();
-	$.when(dati.getInfoUtente()).done(function(info){
-		infoutente=$.parseJSON(info);
-	})		
-    $.when(dati.getCartelle()).done(function(cartelle){
-    var Cartelle = new Object();
-	//controlla dati arrivati 
-
-/*********************login a buon fine******************************/
-			 Cartelle['Cartelle'] = $.parseJSON(cartelle);			
-		
-			 view.disegna(Template["Main"],Cartelle);
-			$.each(Cartelle['Cartelle'],function(i,Cartella){
-				StrutturaCartelle.aggiungiCartella(Cartella);
-				if(Cartella.nome == "Note"){				
-					StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
-				}
-			
-			});
-			
-			view.aggiungiNuova(Template["NuovaNota"]);
-			
-			
-				$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),'0','12')).done(function(note){
-					var Note = $.parseJSON(note);
-					if(Object.keys(Note).length >0){
-					$.each(Note,function(i,nota){
-						console.log(nota.partecipanti);
-						StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
-					})
-					
-					}
-					console.log(Struttura);
-					eventi.InizializzaMenu();
-				})
-/***********************************************************************/
+	$.when(dati.getCartelle()).done(function(cartelle){
+				    	
+				    	var Cartelle = new Object();
+						Cartelle['Cartelle'] = $.parseJSON(cartelle);							
+					    view.disegna(Template["Main"],Cartelle);
+						$.when(dati.getInfoUtente()).done(function(info){
+						infoutente=$.parseJSON(info);	
+		   				 $.when(dati.getTemplate("profilo"),
+		   				 	dati.getTemplate("immagineprofilo"))
+		    	   .done(function(tmpl1,tmpl2){
 
 
-})//end getDati
+				    	var html = Mustache.to_html(tmpl1,infoutente);
+				    	
+				    	$("#info_utente").append(html);
+				    	var tpl=Mustache.render(tmpl2,infoutente);
+				    	$("#image_utente").render(tpl);
+				    	})
+		    	      });
+							$.each(Cartelle['Cartelle'],function(i,Cartella){
+							
+								StrutturaCartelle.aggiungiCartella(Cartella);
+								if(Cartella.nome == "Note"){				
+									StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
+								}
+							});
+							
+							view.aggiungiNuova(Template["NuovaNota"]);
+							
+							
+								$.when(dati.getNote(StrutturaCartelle.getCartellaAttiva(),'0','12')).done(function(note){
+									var Note = $.parseJSON(note);
+									if(Object.keys(Note).length >0){
+									$.each(Note,function(i,nota){
+										StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
+									})
+									
+									}
+									eventi.InizializzaMenu();
+								})
+
+
+
+
+				
+    		})
+
+
+   
 			
 	
 			

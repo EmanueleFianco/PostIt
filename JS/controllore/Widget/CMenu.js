@@ -144,14 +144,7 @@ CMenu.prototype.Inizializza = function(){
 		$("#image_botton").addClass("ruota90");
 	});
 
-	   
-    $.when(dati.getTemplate("profilo"),
-    	   dati.getTemplate("immagineprofilo")).done(function(tmpl1,tmpl2){
-    	var html = Mustache.to_html(tmpl1,infoutente);
-    	$("#info_utente").append(html);
-    	var tpl=Mustache.render(tmpl2,infoutente);
-    	$("#image_utente").append(tpl);
-    });
+
 	
 	
 	
