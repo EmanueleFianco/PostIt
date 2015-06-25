@@ -258,6 +258,7 @@ class CCartella {
 				$note = array();
 			}
 			$query->commit();
+			var_dump($note);
 			$VCartella->invia($note);
 		} catch (Exception $e) {
 			$query->rollback();
