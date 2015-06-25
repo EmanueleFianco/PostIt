@@ -65,7 +65,7 @@ CHome.prototype.getDati=function(){
 
 
 
-				    	var html = Mustache.to_html(tmpl1,infoutente);
+				    	var html = Mustache.to_html(tmpl1[0],infoutente);
 				    	
 
 				    	$("#info_utente").append(html);
