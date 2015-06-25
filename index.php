@@ -14,6 +14,7 @@
 <script src="JS/Utility/leanModal.min.js"type="text/javascript"></script>
 <script  src="JS/Utility/jquery.slides.min.js" type="text/javascript"></script>
 <script  src="JS/Utility/jquery.cookie.js" type="text/javascript"></script>
+<script  src="JS/Utility/jstorage.min.js" type="text/javascript"></script>
 
 
 
