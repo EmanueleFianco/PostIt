@@ -231,11 +231,12 @@ class CCartella {
 						$posizione_iniziale = -1;
 					}
 					$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
+					var_dump($note);
 					$cart = $fcartella->getCartellaById($dati['id_cartella']);
 					$tipo_cart = $cart[0]["tipo"];
 					if ($tipo_cart == "privata") {
 						foreach ($note as $key => $value) {
-							$note[]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+							$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 						}
 					}
 				} else {
@@ -243,11 +244,12 @@ class CCartella {
 						$posizione_finale = $max_posizione - $dati['note_presenti'];
 						$posizione_iniziale = $posizione_finale - $dati['num_note'];
 						$note=$fraccoglitore->getNoteByCartella($dati['id_cartella'],$session->getValore("email"),$posizione_finale,$posizione_iniziale);
+						var_dump($note);
 						$cart = $fcartella->getCartellaById($dati['id_cartella']);
 						$tipo_cart = $cart[0]["tipo"];
 						if ($tipo_cart == "privata") {
 							foreach ($note as $key => $value) {
-								$note[]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
+								$note[$key]["partecipanti"] = $this->inviaPartecipanti($value['id_nota']);
 							}
 						}
 					} else {
@@ -258,7 +260,6 @@ class CCartella {
 				$note = array();
 			}
 			$query->commit();
-			var_dump($note);
 			$VCartella->invia($note);
 		} catch (Exception $e) {
 			$query->rollback();
