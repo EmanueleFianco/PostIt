@@ -297,7 +297,11 @@ class CCartella {
 		}
 		return $condiviso;
 	}
-	
+	/**
+	*Funzione che restituisce la massima posizione della cartella all'interno del raccoglitore
+	*@param array $_raccoglitore
+	*@return array
+	**/
 	public function cercaNelRaccoglitoreMaxPosizione($_raccoglitore) {
 		$session=USingleton::getInstance('USession');
 		$fraccoglitore = USingleton::getInstance('FRaccoglitore_note');
