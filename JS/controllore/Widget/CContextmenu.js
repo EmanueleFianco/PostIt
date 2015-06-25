@@ -210,6 +210,7 @@ CContextmenu.prototype.Aggiorna= function(id_nota){
 
 CContextmenu.prototype.GestioneCartelle= function(){
 	var dati =singleton.getInstance(CDati,"CDati");
+	var StrutturaCartelle = singleton.getInstance(CStruttura,"CStruttura");
 	
 	$.contextMenu({
         selector: "#CreaCartella", 
@@ -260,6 +261,59 @@ CContextmenu.prototype.GestioneCartelle= function(){
            	
            
         }
+        });
+	
+	var nomi_cartelle_gruppo = new Object();
+	var nomi_cartelle_private = new Object();
+	$.each(Struttura,function(i,cartella){
+		if(cartella.nome != "Note" && cartella.nome != "Promemoria" &&cartella.nome != "Archivio" &&cartella.nome != "Cestino"){
+			if(cartella.tipo == "gruppo"){
+				nomi_cartelle_gruppo[cartella.nome] ={
+						name:cartella.nome,
+				}
+			}
+			if(cartella.tipo == "privata"){
+				nomi_cartelle_private[cartella.nome] ={
+				name:cartella.nome,
+				}
+			}
+		
+		}
+		
+	});
+	
+	
+	
+	$.contextMenu({
+        selector: "#EliminaCartella", 
+        trigger: 'left',
+       
+        zIndex:900,
+        autoHide:false,
+        animation:{duration:800,show:"show",hide:"fadeOut"},
+        items: {
+        	"private" : {name : "Private",
+            	"items":nomi_cartelle_private},
+            "gruppi": {name: "Gruppi", icon: "copy",
+            	"items":nomi_cartelle_gruppo },          
+            	"sep1": "---------",
+        	},
+        callback:function(key, options){
+            
+        var id_cartella_elimina = StrutturaCartelle.getCartellaByNome(key);
+                   
+        		var Data = {
+                   		 controller:"cartella",
+                   		 lavoro: "elimina",
+                   		 id_cartella : id_cartella_elimina
+                    }
+        		
+                  dati.setNote(Data);
+                    
+                }
+           	
+           
+        
         })
 	
 }

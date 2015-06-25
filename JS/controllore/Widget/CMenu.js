@@ -91,6 +91,7 @@ CMenu.prototype.Inizializza = function(){
 	
 	$(".iconmenu").click(function(){
 		
+		
 		var id_cartella=$(this).attr('id');	
 		StrutturaCartelle.setCartellaAttiva(id_cartella);
 		var packery = singleton.getInstance(CPackery,"CPackery");
