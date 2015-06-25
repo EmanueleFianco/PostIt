@@ -9,7 +9,7 @@
  */
 class USession {
 	/**
-	 * Inizializza la sessione e controlla se è già presente
+	 * Inizializza la sessione e controlla se ï¿½ giï¿½ presente
 	 */
     public function __construct() {
         session_start();
@@ -41,7 +41,7 @@ class USession {
      * Termina la sessione distruggendola
      */
     function end(){
-    	unset($_SESSION);
+    	session_unset();
     	session_destroy();
     }
 }
