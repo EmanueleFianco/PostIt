@@ -62,18 +62,22 @@ class CNota {
 				$format = 'Y-m-d H:i:s';
 				$data = DateTime::createFromFormat($format,$dati['ora_data_avviso']);
 				if (!$dati['condiviso']) {
-					$CartellaPromemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$session->getValore("email"));
-					$dati['id_cartella'] = $CartellaPromemoria[0]['id'];
-					$dati['posizione'] = $this->getPosizioneOccupata($dati['id_cartella']);
+					if ($cartella[0]['nome'] == "Note") {
+						$CartellaPromemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$session->getValore("email"));
+						$dati['id_cartella'] = $CartellaPromemoria[0]['id'];
+						$dati['posizione'] = $this->getPosizioneOccupata($dati['id_cartella']);
+					}
 					$nota = new EPromemoria($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'], $data);
 				} else {
 					$nota = new EPromemoriaCondiviso($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'],$session->getValore("email"), $data);
 				}
 			} else {
 				if (!$dati['condiviso']) {
-					$CartellaNote = $fcartella->getCartellaByNomeEAmministratore("Note",$session->getValore("email"));
-					$dati['id_cartella'] = $CartellaNote[0]['id'];
-					$dati['posizione'] = $this->getPosizioneOccupata($dati['id_cartella']);
+					if ($cartella[0]['nome'] == "Promemoria") {
+						$CartellaNote = $fcartella->getCartellaByNomeEAmministratore("Note",$session->getValore("email"));
+						$dati['id_cartella'] = $CartellaNote[0]['id'];
+						$dati['posizione'] = $this->getPosizioneOccupata($dati['id_cartella']);
+					}
 					$nota = new ENota($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore']);
 				} else {
 					$nota = new ENotaCondivisa($dati['titolo'], $dati['testo'], $dati['posizione'], $dati['colore'],$session->getValore("email"));
@@ -341,7 +345,7 @@ class CNota {
     			}
     			$dati_raccoglitore = array("id_nota" => $dati['id_nota'],
     									   "email_utente" => $dati['email_utente'],
-    									   "id_cartella" => $cart,
+    									   "id_cartella" => $cart['id'],
     									   "posizione" => $max_posizione);
     			$fraccoglitore->aggiungiAlRaccoglitoreNote($dati_raccoglitore);
     		}

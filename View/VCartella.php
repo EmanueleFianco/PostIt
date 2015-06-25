@@ -17,13 +17,15 @@ class VCartella extends View {
 	 * @throws Exception $e Se i parametri non sono conformi alle aspettative
 	 */
 	static function controllaInput($_chiave, $_valore) {
-		if($_chiave == "email" || $_chiave = "amministratore") {
+		if($_chiave == "email" || $_chiave == "amministratore") {
 			if (!filter_var($_valore,FILTER_VALIDATE_EMAIL)) {
 				throw new Exception(ucwords($_chiave)." errato!");
 			}
 		} else {
 			$tipo = '/^(privata|gruppo)$/';
 			$id_cartella = '/^[[:digit:]]{1,11}$/';
+			$nome_cartella = '/[.]{0,30}/';
+			$colore = '/^#([A-F]|[0-9]){6}$/';
 			if (!preg_match($$_chiave, $_valore)) {
 				throw new Exception(ucwords($_chiave)." errato!");
 			}

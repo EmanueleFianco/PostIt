@@ -18,7 +18,7 @@ class CCartella {
 		switch ($VCartella->getTask()) {
 			case 'nuova':
 				return $this->Nuova();
-			case 'cancella':
+			case 'elimina':
 				return $this->Cancella();
 			case 'aggiornaPosizioni':
 				return $this->AggiornaPosizioni();
@@ -38,22 +38,26 @@ class CCartella {
 		$VCartella=USingleton::getInstance('VCartella');
 		$session = USingleton::getInstance('USession');
 		$dati = $VCartella->getDati();
-		$cartella = new ECartella($dati['nome'], $dati['posizione'], $dati['colore']);
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$fcartella->inserisciCartella($cartella,$dati['tipo'],$session->getValore["email"]);
-			$id = $query->lastInsertId();
+			if ($fcartella->getCartellaByNomeEAmministratore($dati['nome_cartella'],$session->getValore("email"))) {
+				throw new Exception("Hai già una cartella con lo stesso nome");
+			}
 			$max_posizione = $fraccoglitoreCartelle->getMaxPosizioneCartellaByUtente($session->getValore("email"));
-			if (isset($max[0]['max(posizione)'])) {
-				$max_posizione = $max[0]['max(posizione)']+1;
+			if (isset($max_posizione[0]['max(posizione)'])) {
+				$max_posizione = $max_posizione[0]['max(posizione)']+1;
 			} else {
 				$max_posizione = 0;
 			}
+			$cartella = new ECartella($dati['nome_cartella'], $max_posizione, $dati['colore']);
+			$fcartella->inserisciCartella($cartella,$dati['tipo'],$session->getValore("email"));
+			$id = $query->lastInsertId();
 			$raccoglitore = array("id_cartella" => $id,
 								  "email_utente" => $session->getValore("email"),
 								  "posizione" => $max_posizione);
-			$fraccoglitoreCartelle->aggiungiAlRaccoglitoreNote($raccoglitore);
+			$fraccoglitoreCartelle->aggiungiAlRaccoglitoreCartelle($raccoglitore);
+			$VCartella->invia(array("id" => $id));
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback();
@@ -67,16 +71,16 @@ class CCartella {
 	public function Cancella(){
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitoreCartelle=USingleton::getInstance('FRaccoglitore_cartelle');
-		$fcartella=USingleton::getInstance('Fcartella');
+		$fcartella=USingleton::getInstance('FCartella');
 		$VCartella=USingleton::getInstance('VCartella');
 		$session = USingleton::getInstance('USession');
 		$dati = $VCartella->getDati();
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$cartella_da_cancellare = $fcartella->getCartellaById($dati['id_cartella']);
-			if (isset($cartella_da_cancellare) && $cartella_da_cancellare[0]['amministratore'] == $session->getValore("email")) { //in seguito da sostituire con la sessione
-				$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id_cartella']);
+			$cartella_da_cancellare = $fcartella->getCartellaById($dati['id']);
+			if (isset($cartella_da_cancellare) && $cartella_da_cancellare[0]['amministratore'] == $session->getValore("email")) { 
+				$select = $fraccoglitoreCartelle->getTupleByIdCartella($dati['id']);
 				$fcartella->deleteCartella($dati);
 				foreach ($select as $key => $valore) {
 					$query1=$query->prepare("CALL AggiornaPosizioneCartelle(:pos,:email_delete)");

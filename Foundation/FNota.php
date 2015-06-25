@@ -32,11 +32,11 @@ class FNota extends Fdb {
 		$dati=$_object->getAsArray();
 		unset($dati['posizione']);
 		$dati['condiviso']=FALSE;
-		$dati['ora_data_avviso'] = NULL;
 		$dati['creata_da'] = $_creata_da;
 		$dati['ultimo_a_modificare'] = $_creata_da;
 		$classe=get_class($_object);
 		if ($classe == 'ENota' || $classe == 'ENotaCondivisa') {
+			$dati['ora_data_avviso'] = NULL;
 			$dati['tipo'] = 'nota';
 		} else {
 			$dati['tipo'] = 'promemoria';
