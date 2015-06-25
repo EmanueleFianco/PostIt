@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Giu 26, 2015 alle 00:02
+-- Generation Time: Giu 26, 2015 alle 00:05
 -- Versione del server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `postit`
+-- Database: `my_postitnote`
 --
 
 -- --------------------------------------------------------
@@ -146,15 +146,6 @@ CREATE TABLE IF NOT EXISTS `utente` (
 --   `id_immagine`
 --       `immagine` -> `nome`
 --
-
---
--- Trigger `utente`
---
-DELIMITER //
-CREATE TRIGGER `DeleteImmagine` AFTER DELETE ON `utente`
- FOR EACH ROW DELETE FROM immagine where OLD.id_immagine = nome
-//
-DELIMITER ;
 
 --
 -- Indexes for dumped tables
