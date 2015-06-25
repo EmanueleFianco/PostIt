@@ -182,6 +182,7 @@ class CNota {
 			} else {
 				throw new Exception("Permesso Negato");
 			}
+			$VNota->invia(array());
 			$query->commit();
 		} catch (Exception $e) {
 			$query->rollback();
