@@ -105,7 +105,8 @@ CMenu.prototype.Inizializza = function(){
 					$("#Nuova").css("display","block");
 				}
 				
-				if(Struttura[id_cartella].tipo == "gruppo"){
+				if(Struttura[id_cartella].tipo == "gruppo" && infoutente.email == Struttura[id_cartella].amministratore){
+					console.log(infoutente.email,Struttura[id_cartella].amministratore);
 					$("#aggiungiPartecipante").css("display","inline");
 					$("#eliminaPartecipante").css("display","inline");
 				}

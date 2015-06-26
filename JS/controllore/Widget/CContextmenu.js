@@ -103,6 +103,8 @@ CContextmenu.prototype.Inizializza = function(id_nota){
             			 }
             		 }
             		 if(key != "archivio" && key != "note" && key != "cancella" && key != "promemoria"){
+            			
+            			 
             			 if(Struttura[cartellaAttiva].tipo != "gruppo"){
             			 var id_cartella_destinazione = StrutturaCartelle.getCartellaByNome(key);
             			 StrutturaCartelle.SpostaNota(id_nota,id_cartella_destinazione);
