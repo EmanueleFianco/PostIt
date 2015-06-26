@@ -12,8 +12,8 @@ class VRegistrazione extends View{
 				throw new Exception(ucwords($_chiave)." errato!");
 			}
 		} else {
-			$nome = '/^[[:alpha:] \']{2,30}$/';
-			$cognome = '/^[[:alpha:] \']{2,30}$/';
+			$nome = '/[[:alpha:] \']{2,30}/';
+			$cognome = '/[[:alpha:] \']{2,30}/';
 			$username = '/^[[:alnum:]_\.-]{5,15}$/';
 			$password = '/^[[:alnum:][:punct:]]{6,20}$/';
 			$repassword = $password;

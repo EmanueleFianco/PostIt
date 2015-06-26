@@ -365,11 +365,11 @@ class CCartella {
 			$cartella = $cartella[0];
 			$tuple = $fraccoglitore_cartelle->getTupleByIdCartella($dati['id_cartella']);
 			$permesso = FALSE;
+			if ($session->getValore("email") == $cartella['amministratore']) {
+				$permesso = TRUE;
+			}
 			$trovato = FALSE;
 			foreach ($tuple as $key => $valore) {
-				if ($session->getValore("email") == $valore['email_utente']) {
-					$permesso = TRUE;
-				}
 				if ($dati['email_utente'] == $valore['email_utente']) {
 					$trovato = TRUE;
 				}
@@ -422,11 +422,11 @@ class CCartella {
 				throw new Exception("Non si può cancellare l'amministratore del gruppo");
 			}
 			$permesso = FALSE;
+			if ($session->getValore("email") == $amministratore) {
+				$permesso = TRUE;
+			}
 			$trovato = FALSE;
 			foreach ($tuple as $key => $valore) {
-				if ($session->getValore("email") == $valore['email_utente']) {
-					$permesso = TRUE;
-				}
 				if ($dati['email_utente'] == $valore['email_utente']) {
 					$trovato = TRUE;
 					$posizione = $valore['posizione'];

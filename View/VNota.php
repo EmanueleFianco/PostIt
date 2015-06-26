@@ -53,7 +53,7 @@ class VNota extends View {
 			$id_cartella = $id;
 			$partenza = $id;
 			$destinazione = $id;
-			$titolo = '/^[[:alpha:]]{3,40}$/';
+			$titolo = '/[[:alpha:]]{3,40}/';
 			$testo = '/[.]{0,3000}/';
 			$colore = '/^#([A-F]|[0-9]){6}$/';
 			$tipo = '^(nota|promemoria)$/';
