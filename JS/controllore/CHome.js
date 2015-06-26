@@ -92,13 +92,13 @@ CHome.prototype.getDati=function(){
 									var Note = $.parseJSON(note);
 									if(Object.keys(Note).length >0){
 									$.each(Note,function(i,nota){
-										console.log("info:"+infoutente["path"]);
+										
 										nota["immagine"]=infoutente["path"];
 										StrutturaCartelle.aggiungiNota(StrutturaCartelle.getCartellaAttiva(),nota);
 									})
 									
 									}
-									console.log(Struttura);
+								
 									eventi.InizializzaMenu();
 								})
 
