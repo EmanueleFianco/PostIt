@@ -79,7 +79,8 @@ CHome.prototype.getDati=function(){
 							$.each(Cartelle['Cartelle'],function(i,Cartella){
 							
 								StrutturaCartelle.aggiungiCartella(Cartella);
-								if(Cartella.nome == "Note"){				
+								if(Cartella.nome == "Note"){
+									$("#cartellaattiva").text("Note");
 									StrutturaCartelle.setCartellaAttiva(Cartella.id_cartella);
 								}
 							});

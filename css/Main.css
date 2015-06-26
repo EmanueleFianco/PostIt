@@ -269,4 +269,21 @@ background-color: #9A9A80;
 
 }
 
+#cartellaattiva{
+	text-align:center;
+	font-size:1.3rem;
+     float: left;
+    width: 180px;
+    margin-top:4px;
+    margin-left:100px;
+    border:solid;
+    background-color: #bfbfbf;
+    margin-right: 20px;
+     border-radius: 10px;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+	
+	
+}
+
 

@@ -129,16 +129,6 @@ CContextmenu.prototype.Inizializza = function(id_nota){
         autoHide:true,
         animation:{duration:800,show:"show",hide:"fadeOut"},
         items: {
-            "note": {name: "Note", icon: "edit"},
-            "promemoria": {name: "Promemoria", icon: "cut"},
-            "cartelle": {name: "Cartelle", icon: "copy",
-            "items": {
-                    // ajax per richiedere tutti i gruppi dell utente
-                    "item1": {"name": "Nome_Gruppo"},
-                    "item2": {"name": "Nome_Gruppo"},
-                    "item3": {"name": "Nome_Gruppo"}
-            
-                }}, 
             "logout":{name:"logout",icon:"door"}    
 
              

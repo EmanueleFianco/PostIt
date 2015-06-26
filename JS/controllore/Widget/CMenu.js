@@ -92,6 +92,8 @@ CMenu.prototype.Inizializza = function(){
 	
 			var id_cartella=$(this).attr('id'); 
 				
+			var nome_cartella = Struttura[id_cartella].nome;
+			$("#cartellaattiva").text(nome_cartella);
 				StrutturaCartelle.setCartellaAttiva(id_cartella);
 				var packery = singleton.getInstance(CPackery,"CPackery");
 				var numeroNote =StrutturaCartelle.getNumeroNoteByIdCartella(id_cartella);
