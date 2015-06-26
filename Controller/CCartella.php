@@ -128,7 +128,7 @@ class CCartella {
 		$query->beginTransaction();
 		try {
 			$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$id_cartella);
-			if (isset($max_posizione[0]["max(posizione)"])) {
+			if (!is_null($max_posizione[0]["max(posizione)"])) {
 				$max_posizione = $max_posizione[0]["max(posizione)"];
 				foreach ($dati as $key => $value) {
 					$parametri['posizione'] = $max_posizione - $value['posizione'];
@@ -353,6 +353,7 @@ class CCartella {
 	public function aggiungiPartecipante() {
 		$session=USingleton::getInstance('USession');
 		$VCartella=USingleton::getInstance('VCartella');
+		$FCartella=USingleton::getInstance('FCartella');
 		$fdb=USingleton::getInstance('Fdb');
 		$fraccoglitore_cartelle=USingleton::getInstance('FRaccoglitore_cartelle');
 		$fraccoglitore_note=USingleton::getInstance('FRaccoglitore_note');
@@ -360,6 +361,8 @@ class CCartella {
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
+			$cartella = $FCartella->getCartellaById($dati['id_cartella']);
+			$cartella = $cartella[0];
 			$tuple = $fraccoglitore_cartelle->getTupleByIdCartella($dati['id_cartella']);
 			$permesso = FALSE;
 			$trovato = FALSE;
@@ -376,14 +379,14 @@ class CCartella {
 			} elseif ($trovato) {
 				throw new Exception("L'utente già partecipa al gruppo");
 			} else {
-				$max_cartelle = $fraccoglitore_cartelle->getMaxPosizioneCartellaByUtente($dat['email_utente']);
+				$max_cartelle = $fraccoglitore_cartelle->getMaxPosizioneCartellaByUtente($dati['email_utente']);
 				$max_cartelle = $max_cartelle[0]['max(posizione)'];
 				$max_cartelle = $max_cartelle+1;
 				$aggiunta = array("id_cartella" => $dati['id_cartella'],
 								  "email_utente" => $dati['email_utente'],
 								  "posizione" => $max_cartelle);
 				$fraccoglitore_cartelle->aggiungiAlRaccoglitoreCartelle($aggiunta);
-				$raccoglitore_note = $fraccoglitore_note->getNoteByCartella($dati['id_cartella']);
+				$raccoglitore_note = $fraccoglitore_note->getNoteByCartella($dati['id_cartella'],$session->getValore("email"));
 				foreach ($raccoglitore_note as $key => $valore) {
 					if ($valore['email_utente'] == $session->getValore("email")) {
 						$data = array("id_nota" => $valore['id_nota'],
@@ -415,7 +418,7 @@ class CCartella {
 			$tuple = $fraccoglitore_cartelle->getTupleByIdCartella($dati['id_cartella']);
 			$cartella = $fcartella->getCartellaById($dati['id_cartella']);
 			$amministratore = $cartella[0]['amministratore'];
-			if ($amministratore == $dati['utente']) {
+			if ($amministratore == $dati['email_utente']) {
 				throw new Exception("Non si può cancellare l'amministratore del gruppo");
 			}
 			$permesso = FALSE;
@@ -441,6 +444,9 @@ class CCartella {
 				$query1->bindParam(":pos",$posizione);
 				$query1->bindParam(":email_delete",$dati['email_utente']);
 				$query1->execute();
+				$data = array("id_cartella" => $dati['id_cartella'],
+							  "email_utente" => $dati['email_utente']);
+				$fraccoglitore_note->deleteRaccoglitore($data);
 			}
 			$query->commit();
 		} catch (Exception $e) {

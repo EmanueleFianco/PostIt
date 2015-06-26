@@ -40,7 +40,7 @@ class FRaccoglitore_cartelle extends Fdb {
 	 * @return array Array contenente le tuple
 	 */
 	public function getCartelleByUtente($_email_utente,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
-		$column = "r.id_cartella,r.email_utente,c.tipo,c.nome,r.posizione,c.colore";
+		$column = "r.id_cartella,r.email_utente,c.tipo,c.nome,r.posizione,c.colore,c.amministratore";
 		$table = 'raccoglitore_cartelle as r, utente, cartella as c';
 		if (!isset($_posizione_iniziale)) {
 			$keydb = array("email_utente",'email','email_utente','id','id_cartella');

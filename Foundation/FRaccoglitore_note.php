@@ -42,12 +42,12 @@ class FRaccoglitore_note extends Fdb {
 	 */
 	public function getNoteByCartella($_id_cartella,$_email_utente,$_posizione_finale = NULL,$_posizione_iniziale = NULL,$_tipo_ordinamento = NULL) {
 		$table = "nota as n, raccoglitore_note as r";
-		$column = "id_nota,posizione,titolo,testo,ora_data_avviso,colore,creata_da,ultimo_a_modificare,condiviso";
+		$column = "id_nota,posizione,titolo,testo,ora_data_avviso,colore,creata_da,ultimo_a_modificare,condiviso,email_utente";
 		if (!isset($_posizione_iniziale)) {
 			$keydb = array("id","id_nota","id_cartella","email_utente");
 			$bind = array(":".$keydb[2],":".$keydb[3]);
 			$_paragone = array('=','=','=');
-			$_parametri = array($id_cartella,$_email_utente);
+			$_parametri = array($_id_cartella,$_email_utente);
 			$_operatori = array("AND","AND","AND");
 		} else {
 			$keydb = array("id","id_nota","id_cartella","email_utente","posizione","posizione","posizione");

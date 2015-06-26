@@ -17,7 +17,7 @@ class VCartella extends View {
 	 * @throws Exception $e Se i parametri non sono conformi alle aspettative
 	 */
 	static function controllaInput($_chiave, $_valore) {
-		if($_chiave == "email" || $_chiave == "amministratore") {
+		if($_chiave == "email" || $_chiave == "amministratore" || $_chiave == "email_utente") {
 			if (!filter_var($_valore,FILTER_VALIDATE_EMAIL)) {
 				throw new Exception(ucwords($_chiave)." errato!");
 			}

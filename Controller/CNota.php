@@ -107,12 +107,12 @@ class CNota {
 	public function Aggiorna(){
 		$session = USingleton::getInstance('USession');
 		$fdb=USingleton::getInstance('Fdb');
+		$VNota=USingleton::getInstance('VNota');
+		$dati = $VNota->getDati();
+		$fnota=USingleton::getInstance('FNota');
 		$query=$fdb->getDb();
 		$query->beginTransaction();
 		try {
-			$VNota=USingleton::getInstance('VNota');
-			$dati = $VNota->getDati();
-			$fnota=USingleton::getInstance('FNota');
 			$fnota->updateNota($dati);
 			$ultimo = array("ultimo_a_modificare" => $session->getValore("email"),
 							"id" => $dati['id']);
@@ -247,12 +247,12 @@ class CNota {
     			$fraccoglitore->updateRaccoglitore($aggiornamenti3);
     			$this->aggiornaPosizioniRaccoglitore($nota['posizione'], $nota['id_cartella']);
     		} else {
-    			$racc = $fraccoglitore->getRaccoglitoreByIdNota($nota['id']);
+    			$racc = $fraccoglitore->getRaccoglitoreByIdNota($dati['id']);
     			foreach ($racc as $key => $valore) {
     				$promemoria = $fcartella->getCartellaByNomeEAmministratore("Promemoria",$valore["email_utente"]);
     				$promemoria = $promemoria[0];
     				$aggiornamenti2 = array("id_cartella" => $promemoria["id"],
-    										"id_nota" => $nota['id'],
+    										"id_nota" => $dati['id'],
     										"email_utente" => $valore['email_utente']);
     				$max_posizione = $fraccoglitore->getMaxPosizioneNotaByCartellaEUtente($valore["email_utente"],$promemoria['id']);
     				if (!is_null($max_posizione[0]["max(posizione)"])) {
@@ -265,9 +265,8 @@ class CNota {
     										"email_utente" => $valore['email_utente']);
     				$fraccoglitore->updateRaccoglitore($aggiornamenti2);
     				$fraccoglitore->updateRaccoglitore($aggiornamenti3);
-    				$this->aggiornaPosizioniRaccoglitore($max_posizione, $valore['id_cartella'],$valore['emai_utente']);
+    				$this->aggiornaPosizioniRaccoglitore($valore['posizione'], $valore['id_cartella'],$valore['email_utente']);
     			}
-    			
     			$aggiornamenti4 = array("ultimo_a_modificare" => $session->getValore("email"),
     									"id" => $dati['id']);
     			$fnota->updateNota($aggiornamenti4);
@@ -432,7 +431,7 @@ class CNota {
     	$fraccoglitoreNote=USingleton::getInstance('FRaccoglitore_note');
     	$session=USingleton::getInstance('USession');
     	$max_posizione = $fraccoglitoreNote->getMaxPosizioneNotaByCartellaEUtente($session->getValore("email"),$_id_cartella);
-    	if ($max_posizione) {
+    	if (!is_null($max_posizione[0]["max(posizione)"])) {
     		$max_posizione = $max_posizione[0]["max(posizione)"];
     		$max_posizione = $max_posizione +1;
     	} else {
