@@ -349,7 +349,9 @@ class CCartella {
 		}	
 		return $ritorno;
 	}
-	
+	/**
+	*Funzione che serve per aggiungere un partecipante ad una cartella
+	**/
 	public function aggiungiPartecipante() {
 		$session=USingleton::getInstance('USession');
 		$VCartella=USingleton::getInstance('VCartella');
@@ -403,7 +405,9 @@ class CCartella {
 			throw new Exception($e->getMessage());
 		}
 	}	
-	
+	/**
+	*Funzione che serve per rimuovere un partecipante da una cartella
+	**/
 	public function rimuoviPartecipante() {
 		$session=USingleton::getInstance('USession');
 		$VCartella=USingleton::getInstance('VCartella');

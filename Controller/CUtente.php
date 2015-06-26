@@ -50,7 +50,9 @@ class CUtente {
 			throw new Exception($e->getMessage());
 		}
 	}
-	
+	/**
+	*Funzione che restituisce l'immagine associata all'utente
+	**/
 	public function getImmagine(){
 		$FImmagine=USingleton::getInstance('FImmagine');
 		if ($_REQUEST['file'] == NULL) {
