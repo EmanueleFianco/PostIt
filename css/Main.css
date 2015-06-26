@@ -193,6 +193,7 @@ font-size: 1rem;
     
 }
 #CreaCartella{
+	text-align:center;
     float: right;
     display: inline;
     width: 180px;
@@ -208,6 +209,7 @@ background-color: #9A9A80;
 }
 
 #EliminaCartella{
+	text-align:center;
      float: right;
     display: inline;
     width: 180px;
@@ -222,6 +224,7 @@ background-color: #9A9A80;
 }
 
 #aggiungiPartecipante{
+	text-align:center;
 	display:none;
      float: right;
     width: 180px;
@@ -235,6 +238,7 @@ background-color: #9A9A80;
 
 }
 #eliminaPartecipante{
+	text-align:center;
 	display:none;
      float: right;
     width: 180px;
