@@ -27,6 +27,7 @@ class USingleton
 
    /**
    * Il metodo statico che si occupa di restituire l'istanza univoca della classe.
+   * @param unknown $c
    */
    public static function getInstance($c)
    {

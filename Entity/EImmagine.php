@@ -120,6 +120,7 @@ class EImmagine {
 	}
 	
 	/**
+	 *funzione che restitusce il nome dell'immagine
 	 * @return string Nome dell'immagine
 	 */
 	public function getNome() {
@@ -127,6 +128,7 @@ class EImmagine {
 	}
 	
 	/**
+	 *funzione che restituisce la grandezza dell'immagine
 	 * @return int La grandezza dell'immagine in byte
 	 */
 	public function getSize() {
@@ -134,13 +136,14 @@ class EImmagine {
 	}
 	
 	/**
+	 *funzione che restituisce il mime-type dell'immagine
 	 * @return string Mime-Type dell'immagine
 	 */
 	public function getType() {
 		return $this->type;
 	}
 	/**
-	 * 
+	 * funzione che restituisce l'immagine nella dimensione richiesta
 	 * @param string $_grandezza
 	 * @return Ritorna l'immagine nella dimensione richiesta
 	 */
@@ -157,7 +160,7 @@ class EImmagine {
 	}
 	
 	/**
-	 *
+	 *funzione che restituisce l'array associativo associato all'oggetto immagine
 	 * @return array Trasforma l'oggetto in una array associativo
 	 *
 	 */

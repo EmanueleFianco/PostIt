@@ -125,7 +125,7 @@ class ECartella{
 	}
 	
      /**
-     * 
+     * Funzione che restituisce l'Id della cartella
      * @return int Numero intero che indica il numero identificativo della cartella.
      *
      */
@@ -134,7 +134,7 @@ class ECartella{
 	}
 
  	 /**
-     * 
+     * funzione che restituisce il nome della cartella
      * @return string Stringa che contiene il nome della cartella.
      *
      */
@@ -143,7 +143,7 @@ class ECartella{
 	}
 	
 	 /**
-     * 
+     * funzione che restituisce la posizione della cartella
      * @return int Numero che indica la posizione della cartella.
      *
      */
@@ -152,7 +152,7 @@ class ECartella{
 	}
 
 	 /**
-     * 
+     * funzione che restituisce il colore della cartella
      * @return string Stringa che contiene il colore della cartella.
      *
      */
@@ -161,7 +161,7 @@ class ECartella{
 	}
 
 	 /**
-     * 
+     * funzione che restituisce il contenuto della cartella
      * @return array Array che contiene gli identificativi delle note contenute nella cartella.
      *
      */
@@ -170,7 +170,7 @@ class ECartella{
 	}
 	
 	/**
-	 * 
+	 * funzione che restituisce l'array associativo frutto della trasformazione dell'oggetto cartella
 	 * @return array Trasforma l'oggetto in una array associativo
 	 * 
 	 */

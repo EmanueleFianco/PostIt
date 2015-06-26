@@ -323,7 +323,7 @@ class CNota {
     }
     /*
     *Funzione che permette la condivisione della nota
-    */
+    **/
     public function condividi() {
     	$session=USingleton::getInstance('USession');
     	$fraccoglitore=USingleton::getInstance('FRaccoglitore_note');
@@ -375,7 +375,7 @@ class CNota {
     
     /**
      * Restituisce un'immagine relativa ad una nota richiedente
-     */
+     **/
     public function getImmagine(){
     	$FImmagine=USingleton::getInstance('FImmagine');
     	$image = $FImmagine->getImmagineByNome($_REQUEST['file']);
@@ -389,7 +389,7 @@ class CNota {
     }
     /**
      * Permette di aggiungere un'immagine relativa ad una nota
-     */
+     **/
     public function aggiungiImmagine(){ //Da vedere con il fatto di id_nota
     	$VNota=USingleton::getInstance('VNota');
     	$FImmagine=USingleton::getInstance('FImmagine');

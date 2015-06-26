@@ -24,11 +24,10 @@ class EPromemoria extends ENota {
     * 
     * @param string $_titolo
     * @param string $_testo
-    * @param string $_colore
-    * @param string $_immagine
     * @param int $_posizione
     * @param string $_colore
     * @param DateTime $_ora_data_avviso
+    * @param string $_immagine
     * 
     */
     public function __construct($_titolo, $_testo, $_posizione, $_colore,DateTime $_ora_data_avviso, $_immagine = NULL) {
@@ -45,7 +44,7 @@ class EPromemoria extends ENota {
 	}
 	
 	/**
-	*
+	* funzione che restituisce l'ora e la data definite per il promemoria
 	* @return DateTime Ora e data definiti per il promemoria.
 	*
 	*/
@@ -54,7 +53,7 @@ class EPromemoria extends ENota {
 	}
 	
 	/**
-	 *
+	 * funzione che restituisce l'array associativo associato all'oggetto promemoria
 	 * @return array Trasforma l'oggetto in una array associativo
 	 *
 	 */

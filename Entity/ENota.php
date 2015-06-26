@@ -53,9 +53,9 @@ class ENota {
     * @throws Exception Se i parametri non sono tutti stringhe formattate secondo le regole descritte in SetTitolo(),SetTesto(),SetPosizione(),SetColore(). 
     * @param string $_titolo
     * @param string $_testo
-    * @param string $_immagine
     * @param int $_posizione
     * @param string $_colore
+    * @param string $_immagine
     *
     */
 	 public function __construct($_titolo, $_testo, $_posizione, $_colore, $_immagine = NULL) {
@@ -135,7 +135,7 @@ class ENota {
 	}
 	
      /**
-     * 
+     * funzione che restituisce l'Id della nota
      * @return int Numero intero che indica il numero identificativo della nota.
      *
      */
@@ -144,7 +144,7 @@ class ENota {
 	}
 
 	 /**
-     * 
+     * funzione che restituisce il titolo della nota
      * @return string Stringa contenente il titolo della nota.
      *
      */
@@ -153,7 +153,7 @@ class ENota {
 	}
 
 	 /**
-     * 
+     * funzione che restituisce il testo contenuto all'interno della nota
      * @return string Testo contenuto all'interno della nota.
      *
      */
@@ -162,7 +162,7 @@ class ENota {
 	}
 
 	 /**
-     * 
+     * funzione che restituisce il percorso relativo dell'immagine associata alla nota
      * @return string Stringa contenente il percorso relativo dell'immagine associata alla nota.
      *
      */
@@ -171,7 +171,7 @@ class ENota {
 	}
 
 	 /**
-     * 
+     * funzione che restituisce il colore dello sfondo della nota
      * @return string Stringa contenente il colore dello sfondo della nota.
      *
      */
@@ -180,7 +180,7 @@ class ENota {
 	}
 
 	 /**
-     * 
+     * funzione che restituisce la posizione della nota
      * @return int Numero che rappresenta la posizione della nota nella cartella.
      */
 	public function getPosizione() {
@@ -188,7 +188,7 @@ class ENota {
 	}
 	
 	/**
-	 *
+	 * funzione che restituisce l'array associativo associato all'oggetto nota
 	 * @return array Trasforma l'oggetto in una array associativo
 	 *
 	 */

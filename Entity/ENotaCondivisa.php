@@ -22,10 +22,10 @@ class ENotaCondivisa extends ENota {
     *
     * @param string $_titolo
     * @param string $_testo
-    * @param string $_immagine
     * @param int $_posizione
     * @param string $_colore
-    * @param array $_partecipanti
+    * @param string $_ultimo_a_modificare
+    * @param string $_immagine
     * 
     */
 	public function __construct($_titolo, $_testo, $_posizione, $_colore,$_ultimo_a_modificare, $_immagine = NULL) {
@@ -43,8 +43,8 @@ class ENotaCondivisa extends ENota {
 		$this->ultimo_a_modificare = $_ultimo_a_modificare;
 	}
 
-	 /**
-	*
+	/**
+	*Funzione che restituisce l'ultimo utente che ha modificato la nota condivisa
 	* @return string Email dell'utente che ha modificato per ultimo la nota condivisa.
 	*
 	*/

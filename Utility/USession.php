@@ -16,6 +16,9 @@ class USession {
     }
     /**
      * Imposta un valore in sessione
+     * @param unknown $_chiave
+     * @param unknown $_valore
+     *
      */
     function setValore($_chiave,$_valore) {
         $_SESSION[$_chiave]=$_valore;
@@ -29,6 +32,7 @@ class USession {
     }
     /**
      * Restituisce un valore dalla sessione se presente
+     * @param unknown $_chiave
      * @return unknown|boolean
      */
     function getValore($_chiave) {

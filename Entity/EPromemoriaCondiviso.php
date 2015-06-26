@@ -22,12 +22,12 @@ class EPromemoriaCondiviso extends EPromemoria {
     *
     * @param string $_titolo
     * @param string $_testo
-    * @param string $_immagine
     * @param int $_posizione
     * @param string $_colore
-    * @param string $_ultimo_a_modificare
-    * @param DateTime $_ora_data_avviso
-    * 
+	* @param string $_ultimo_a_modificare
+    * @param DateTime $_ora_data_avviso 
+    * @param string $_immagine
+    *
     */
     public function __construct($_titolo, $_testo, $_posizione, $_colore,$_ultimo_a_modificare,DateTime $_ora_data_avviso, $_immagine = NULL) {
 		parent::__construct($_titolo, $_testo, $_posizione, $_colore, $_ora_data_avviso, $_immagine);
@@ -46,7 +46,7 @@ class EPromemoriaCondiviso extends EPromemoria {
 	}
 	
    /**
-	*
+	*funzione che restituisce l'email dell'ultimo utente che ha modificato il promemoria
 	* @return string Email dell'utente che ha modificato per ultimo il promemoria condiviso.
 	*
 	*/

@@ -52,6 +52,8 @@ class UshmSmart {
 
 	/**
 	*La funzione inserisce o aggiorna la variabile indicata in variable con chiave variable_key.
+	*@param unknown $key
+	*@param unknown $var
 	*@return unknown
 	**/
 	public function put($key,$var) {
@@ -61,6 +63,7 @@ class UshmSmart {
 
 	/**
 	*La funzione shm_get_var() restituisce la variabile identificata dalla chiave variable_key. La variabile resta presente nella memoria condivisa. 
+	*@param unknown $key
 	*@return unknown | boolean
 	**/
 
@@ -74,6 +77,7 @@ class UshmSmart {
 	
 	/**
 	*Funzione che rimuove la variabile identificata da variable_key e libera la memoria occupata. 
+	*@param unknown $key
 	*@return unknown | boolean
 	**/
 
@@ -88,6 +92,7 @@ class UshmSmart {
 
 	/**
 	* Funzione che verifica se è presente una specifica key all'interno di un segmento di memoria condivisa.
+	*@param unknown $key
 	*@return boolen
 	**/
 	public function has($key){
@@ -100,6 +105,7 @@ class UshmSmart {
 	
 	/**
 	*Funzione che ricerca in una certa variabile dei caratteri non consentiti e li rimpiazza come specificato
+	*@param unknown $val
 	*@return unknown
 	**/
 	public function shm_key($val){ 

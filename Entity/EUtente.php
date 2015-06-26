@@ -197,7 +197,7 @@ class EUtente
     
 
      /**
-     * 
+     * Funzione che restituisce il nome dell'utente
      * @return string Stringa contenente il nome dell'utente.
      *
      */
@@ -207,7 +207,7 @@ class EUtente
 
 
      /**
-     * 
+     * funzione che restituisce il cognome dell'utente
      * @return string Stringa contenente il cognome dell'utente
      *
      */
@@ -217,7 +217,7 @@ class EUtente
      }
 
      /**
-     * 
+     * funzione che restituisce l'email dell'utente
      * @return string Stringa contenente l'email dell'utente.
      *
      */
@@ -226,7 +226,7 @@ class EUtente
         return $this->email;
     }
      /**
-     * 
+     * funzione che restituisce la password dell'utente
      * @return string Stringa contenente la password dell'utente.
      */
     public function getPassword()
@@ -234,7 +234,7 @@ class EUtente
         return $this->password;
     }
      /**
-     * 
+     * funzione che restituisce l'username dell'utente
      * @return string Stringa contenente l'username dell'utente.
      *
      */    
@@ -244,7 +244,7 @@ class EUtente
     }
    
      /**
-     * 
+     * funzione che restituisce il codice di attivazione dell'utente
      * @return string Stringa contenente il codice attivazione dell'utente.
      *
      */    
@@ -254,7 +254,7 @@ class EUtente
     }
 
      /**
-     * 
+     * funzione che restituisce lo stato di attivazione dell'utente
      * @return string Stringa contenente lo stato di attivazione dell'utente.
      *
      */
@@ -264,7 +264,7 @@ class EUtente
     }
     
      /**
-     * 
+     * funzione che restituisce il tipo dell'utente
      * @return string Stringa contenente il tipo dell'utente.
      *
      */    
@@ -273,7 +273,7 @@ class EUtente
     }
 
      /**
-     * 
+     * funzione che restituisce un array contenente le cartelle dell'utente
      * @return array Array contenente le cartelle dell'utente
      *
      */    
@@ -282,7 +282,7 @@ class EUtente
     }
     
     /**
-     *
+     *funzione che restituisce l'array associativo associato all'utente
      * @return array Trasforma l'oggetto in una array associativo
      *
      */
